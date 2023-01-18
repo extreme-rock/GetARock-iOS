@@ -43,7 +43,7 @@
 		B88E1B9E2977A70E006072B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B88E1BA02977A70E006072B7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B88E1BA72977A70F006072B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B88E1BAC2977A70F006072B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B88E1BAC2977A70F006072B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = GetARock/Global/Supports/Info.plist; sourceTree = SOURCE_ROOT; };
 		B88E1BB12977A70F006072B7 /* GetARockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GetARockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B88E1BB52977A70F006072B7 /* GetARockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetARockTests.swift; sourceTree = "<group>"; };
 		B88E1BBB2977A70F006072B7 /* GetARockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GetARockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
