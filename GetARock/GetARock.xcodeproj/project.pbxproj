@@ -84,7 +84,9 @@
 				B88E1BBE2977A70F006072B7 /* GetARockUITests */,
 				B88E1B9C2977A70E006072B7 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		B88E1B9C2977A70E006072B7 /* Products */ = {
 			isa = PBXGroup;
