@@ -18,5 +18,4 @@ jobs:
       - name: 🎸 GetARock Build Test
         run: |
           pod install --repo-update --clean-install --project-directory=./GetARock/
-          xcodebuild test -workspace ./GetARock/GetARock.xcworkspace -scheme GetARock -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=15.0"
-         
+          xcodebuild test -workspace ./GetARock/GetARock.xcworkspace -scheme GetARock -destination "platform=iOS Simulator,name=iPhone 13 Pro,OS=latest"
