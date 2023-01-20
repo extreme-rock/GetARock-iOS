@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "settingButton.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
