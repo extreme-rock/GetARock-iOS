@@ -32,6 +32,8 @@ final class MainMapViewController: UIViewController {
 
 }
 
+// MARK: - GMSMapViewDelegate
+
 extension MainMapViewController: GMSMapViewDelegate {
     
 }
