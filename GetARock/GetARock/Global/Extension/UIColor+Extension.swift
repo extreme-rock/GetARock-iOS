@@ -43,15 +43,15 @@ extension UIColor {
     
     // MARK: - bule
     
-    static var blue01: UIColor {
+    static var bule01: UIColor {
         return UIColor(hex: "#4A87FF")
     }
     
-    static var blue02: UIColor {
+    static var bule02: UIColor {
         return UIColor(hex: "#6D7EF7")
     }
     
-    static var blue03: UIColor {
+    static var bule03: UIColor {
         return UIColor(hex: "#CAD2FF")
     }
     
