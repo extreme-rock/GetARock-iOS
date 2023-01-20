@@ -9,10 +9,67 @@ import UIKit
 
 extension UIColor {
     
-    static var exampleGray: UIColor {
-        return UIColor(hex: "#f3f3f3")
+    // MARK: - background
+    
+    static var dark01: UIColor {
+        return UIColor(hex: "#17171B")
     }
     
+    static var dark02: UIColor {
+        return UIColor(hex: "#202026")
+    }
+    
+    static var dark03: UIColor {
+        return UIColor(hex: "#2E2E36")
+    }
+    
+    static var dark04: UIColor {
+        return UIColor(hex: "#43434D")
+    }
+    
+    // MARK: - purple
+    
+    static var activeGradationPurple: UIColor {
+        return UIColor(hex: "#411A59")
+    }
+    
+    static var mainPurple: UIColor {
+        return UIColor(hex: "#AF4DEC")
+    }
+    
+    static var lightPurple: UIColor {
+        return UIColor(hex: "#ECCDFF")
+    }
+    
+    // MARK: - bule
+    
+    static var bule01: UIColor {
+        return UIColor(hex: "#4A87FF")
+    }
+    
+    static var bule02: UIColor {
+        return UIColor(hex: "#6D7EF7")
+    }
+    
+    static var bule03: UIColor {
+        return UIColor(hex: "#CAD2FF")
+    }
+    
+    // MARK: - gray
+    
+    static var gray01: UIColor {
+        return UIColor(hex: "#5F5F5F")
+    }
+    
+    static var gray02: UIColor {
+        return UIColor(hex: "#AFAFAF")
+    }
+    
+    // MARK: - etc
+    
+    static var warningRed: UIColor {
+        return UIColor(hex: "#CA0000")
+    }
 }
 
 extension UIColor {
