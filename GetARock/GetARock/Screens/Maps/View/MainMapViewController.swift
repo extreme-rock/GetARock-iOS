@@ -138,5 +138,15 @@ extension MainMapViewController: GMSMapViewDelegate {
 // MARK: - CLLocationManagerDelegate
 
 extension MainMapViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        default:
+            print("위치 서비스를 허용하지 않음")
+        }
+    }
     
 }
