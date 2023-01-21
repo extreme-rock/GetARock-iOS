@@ -14,8 +14,6 @@ final class MainMapViewController: UIViewController {
     
     // MARK: - Property
     
-    private var mapView: GMSMapView!
-    
     private var currentLocationLabel: UILabel = {
         $0.text = "포항시 남구 효자동"
         $0.textColor = .white
@@ -65,6 +63,7 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private var mapView: GMSMapView!
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
     private let zoomInRange: Float = 15
