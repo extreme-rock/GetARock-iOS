@@ -39,6 +39,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -61,7 +62,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
                                      padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
     }
     
-    private func configure(data: Position) {
+    func configure(data: Position) {
         self.positionImageView.image = UIImage(named: data.imageName)
         self.positionNameLabel.text = data.instrumentName
     }
