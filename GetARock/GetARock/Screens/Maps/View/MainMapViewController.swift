@@ -65,6 +65,7 @@ final class MainMapViewController: UIViewController {
     
     private var mapView: GMSMapView!
     private var myLocationMarker = GMSMarker()
+    private var camera: GMSCameraPosition?
     
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
@@ -83,6 +84,7 @@ final class MainMapViewController: UIViewController {
         myLocationMarker.title = "현재 위치"
         myLocationMarker.map = mapView
         
+        guard let camera = camera else { return }
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
         self.view = mapView
         mapView.delegate = self
