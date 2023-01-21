@@ -1,0 +1,21 @@
+name: GetARock Build Test
+
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, release, hotfix, feature ]
+
+jobs:
+  build:
+    name: Build and Test by Swift
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+        
+      - name: 🎸 GetARock Build Test
+        run: |
+          pod install --repo-update --clean-install --project-directory=./GetARock/
+          xcodebuild test -workspace ./GetARock/GetARock.xcworkspace -scheme GetARock -destination "platform=iOS Simulator,name=iPhone 13 Pro,OS=latest"
