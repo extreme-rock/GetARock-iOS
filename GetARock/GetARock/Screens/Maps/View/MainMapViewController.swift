@@ -82,6 +82,7 @@ final class MainMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
+        self.setLocationManager()
     }
     
     // MARK: - Method
@@ -110,6 +111,11 @@ final class MainMapViewController: UIViewController {
         
     }
     
+    private func setLocationManager() {
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.requestWhenInUseAuthorization()
+    }
 }
 
 // MARK: - GMSMapViewDelegate
