@@ -66,12 +66,15 @@ final class MainMapViewController: UIViewController {
     }(UIButton())
     
     private var locationManager = CLLocationManager()
+    private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
+    private let zoomInRange: Float = 15
+    
     // MARK: - Life Cycle
     
     override func loadView() {
-        let camera: GMSCameraPosition = GMSCameraPosition.camera(withLatitude: -33.86,
-                                                                 longitude: 151.20,
-                                                                 zoom: 11)
+        camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
+                                          longitude: currentCoordinate.longitude,
+                                          zoom: zoomInRange)
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
         
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
