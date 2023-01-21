@@ -64,6 +64,8 @@ final class MainMapViewController: UIViewController {
     }(UIButton())
     
     private var mapView: GMSMapView!
+    private var myLocationMarker = GMSMarker()
+    
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
     private let zoomInRange: Float = 15
@@ -75,6 +77,11 @@ final class MainMapViewController: UIViewController {
                                           longitude: currentCoordinate.longitude,
                                           zoom: zoomInRange)
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
+        
+        myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
+                                                   longitude: currentCoordinate.longitude)
+        myLocationMarker.title = "현재 위치"
+        myLocationMarker.map = mapView
         
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
         self.view = mapView
