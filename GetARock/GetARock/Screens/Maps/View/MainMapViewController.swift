@@ -71,7 +71,9 @@ final class MainMapViewController: UIViewController {
     // MARK: - Life Cycle
     
     override func loadView() {
-        let camera: GMSCameraPosition = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 11)
+        let camera: GMSCameraPosition = GMSCameraPosition.camera(withLatitude: -33.86,
+                                                                 longitude: 151.20,
+                                                                 zoom: 11)
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
         
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
