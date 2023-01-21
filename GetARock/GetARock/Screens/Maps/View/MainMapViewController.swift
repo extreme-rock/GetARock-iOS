@@ -15,6 +15,13 @@ final class MainMapViewController: UIViewController {
     
     private var mapView: GMSMapView!
     
+    private var currentLocationLabel: UILabel = {
+        $0.text = "포항시 남구 효자동"
+        $0.textColor = .white
+        $0.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        return $0
+    }(UILabel())
+    
     private let bottomButtonStackView: UIStackView = {
         $0.axis = .horizontal
         return $0
@@ -80,6 +87,13 @@ final class MainMapViewController: UIViewController {
     // MARK: - Method
     
     private func setupLayout() {
+        self.view.addSubview(self.currentLocationLabel)
+        self.currentLocationLabel.constraint(
+            top: self.view.safeAreaLayoutGuide.topAnchor,
+            leading: self.view.leadingAnchor,
+            padding: UIEdgeInsets(top: 26, left: 26, bottom: 0, right: 0)
+        )
+        
         self.view.addSubview(self.bottomButtonStackView)
         self.bottomButtonStackView.constraint(
             bottom: self.view.bottomAnchor,
