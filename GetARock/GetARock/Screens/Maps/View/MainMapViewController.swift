@@ -5,6 +5,7 @@
 //  Created by Mijoo Kim on 2023/01/20.
 //
 
+import CoreLocation
 import UIKit
 
 import GoogleMaps
@@ -64,6 +65,7 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private var locationManager = CLLocationManager()
     // MARK: - Life Cycle
     
     override func loadView() {
@@ -113,5 +115,11 @@ final class MainMapViewController: UIViewController {
 // MARK: - GMSMapViewDelegate
 
 extension MainMapViewController: GMSMapViewDelegate {
+    
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension MainMapViewController: CLLocationManagerDelegate {
     
 }
