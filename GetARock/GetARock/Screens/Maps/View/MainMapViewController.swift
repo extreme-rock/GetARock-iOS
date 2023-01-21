@@ -22,48 +22,42 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private let bottomButtonStackView: UIStackView = {
+    private lazy var bottomButtonStackView: UIStackView = {
         $0.axis = .horizontal
         return $0
-    }(UIStackView())
+    }(UIStackView(arrangedSubviews: [createEventsButton, myBandsButton, myPageButton]))
     
-    private let topButtonStackView: UIStackView = {
+    private lazy var topButtonStackView: UIStackView = {
         $0.axis = .vertical
         return $0
-    }(UIStackView())
+    }(UIStackView(arrangedSubviews: [notificationButton, settingButton, currentLocationButton]))
     
     private let createEventsButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "createEventsButton"), for: .normal)
         return $0
     }(UIButton())
     
     private let myBandsButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "myBandsButton"), for: .normal)
         return $0
     }(UIButton())
     
     private let myPageButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "myPageButton"), for: .normal)
         return $0
     }(UIButton())
     
     private let notificationButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "notificationButton"), for: .normal)
         return $0
     }(UIButton())
     
     private let settingButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "settingButton"), for: .normal)
         return $0
     }(UIButton())
     
     private let currentLocationButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
         return $0
     }(UIButton())
@@ -103,10 +97,6 @@ final class MainMapViewController: UIViewController {
             padding: UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         )
         
-        bottomButtonStackView.addArrangedSubview(self.createEventsButton)
-        bottomButtonStackView.addArrangedSubview(self.myBandsButton)
-        bottomButtonStackView.addArrangedSubview(self.myPageButton)
-        
         self.view.addSubview(self.topButtonStackView)
         self.topButtonStackView.constraint(
             top: self.view.safeAreaLayoutGuide.topAnchor,
@@ -114,9 +104,6 @@ final class MainMapViewController: UIViewController {
             padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 26)
         )
         
-        topButtonStackView.addArrangedSubview(self.notificationButton)
-        topButtonStackView.addArrangedSubview(self.settingButton)
-        topButtonStackView.addArrangedSubview(self.currentLocationButton)
     }
     
 }
