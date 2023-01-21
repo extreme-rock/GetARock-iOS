@@ -41,7 +41,7 @@ extension UIColor {
         return UIColor(hex: "#ECCDFF")
     }
     
-    // MARK: - bule
+    // MARK: - blue
     
     static var blue01: UIColor {
         return UIColor(hex: "#4A87FF")
