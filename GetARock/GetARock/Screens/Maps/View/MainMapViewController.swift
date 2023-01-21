@@ -16,8 +16,12 @@ final class MainMapViewController: UIViewController {
     private var mapView: GMSMapView!
     
     private let bottomButtonStackView: UIStackView = {
-        $0.alignment = .center
         $0.axis = .horizontal
+        return $0
+    }(UIStackView())
+    
+    private let topButtonStackView: UIStackView = {
+        $0.axis = .vertical
         return $0
     }(UIStackView())
     
@@ -36,6 +40,24 @@ final class MainMapViewController: UIViewController {
     private let myPageButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setImage(UIImage(named: "myPageButton"), for: .normal)
+        return $0
+    }(UIButton())
+    
+    private let notificationButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setImage(UIImage(named: "notificationButton"), for: .normal)
+        return $0
+    }(UIButton())
+    
+    private let settingButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setImage(UIImage(named: "settingButton"), for: .normal)
+        return $0
+    }(UIButton())
+    
+    private let currentLocationButton: UIButton = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
         return $0
     }(UIButton())
     
@@ -68,6 +90,17 @@ final class MainMapViewController: UIViewController {
         bottomButtonStackView.addArrangedSubview(self.createEventsButton)
         bottomButtonStackView.addArrangedSubview(self.myBandsButton)
         bottomButtonStackView.addArrangedSubview(self.myPageButton)
+        
+        self.view.addSubview(self.topButtonStackView)
+        self.topButtonStackView.constraint(
+            top: self.view.safeAreaLayoutGuide.topAnchor,
+            trailing: self.view.trailingAnchor,
+            padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 26)
+        )
+        
+        topButtonStackView.addArrangedSubview(self.notificationButton)
+        topButtonStackView.addArrangedSubview(self.settingButton)
+        topButtonStackView.addArrangedSubview(self.currentLocationButton)
     }
     
 }
