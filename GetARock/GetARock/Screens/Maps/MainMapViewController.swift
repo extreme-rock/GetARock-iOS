@@ -18,7 +18,7 @@ final class MainMapViewController: UIViewController {
     private var currentLocationLabel: UILabel = {
         $0.text = "포항시 남구 효자동"
         $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        $0.font = UIFont.setFont(.largeTitle02)
         return $0
     }(UILabel())
     
