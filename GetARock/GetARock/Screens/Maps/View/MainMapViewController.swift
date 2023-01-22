@@ -170,6 +170,23 @@ extension MainMapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocation = locations.first else { return }
         moveLocation(to: currentLocation.coordinate)
+        
+        CLGeocoder().reverseGeocodeLocation(
+            currentLocation,
+            completionHandler: {(placemarks, _) -> Void in
+                guard let currentPlacemark = placemarks?.first else { return }
+                var address: String = ""
+                if currentPlacemark.locality != nil {
+                    address += " "
+                    address += currentPlacemark.locality!
+                }
+                if currentPlacemark.thoroughfare != nil {
+                    address += " "
+                    address += currentPlacemark.thoroughfare!
+                }
+                self.currentLocationLabel.text = address
+            }
+        )
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
