@@ -87,7 +87,7 @@ final class MainMapViewController: UIViewController {
         self.currentLocationLabel.constraint(
             top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.leadingAnchor,
-            padding: UIEdgeInsets(top: 26, left: 26, bottom: 0, right: 0)
+            padding: UIEdgeInsets(top: 26, left: 25, bottom: 0, right: 0)
         )
         
         self.view.addSubview(self.bottomButtonStackView)
@@ -101,7 +101,7 @@ final class MainMapViewController: UIViewController {
         self.topButtonStackView.constraint(
             top: self.view.safeAreaLayoutGuide.topAnchor,
             trailing: self.view.trailingAnchor,
-            padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 26)
+            padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 25)
         )
         
     }
