@@ -17,7 +17,7 @@ final class MainMapViewController: UIViewController {
     private var currentLocationLabel: UILabel = {
         $0.text = "포항시 남구 효자동"
         $0.textColor = .white
-        $0.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        $0.font = UIFont.setFont(.largeTitle02)
         return $0
     }(UILabel())
     
@@ -29,9 +29,7 @@ final class MainMapViewController: UIViewController {
     private lazy var topButtonStackView: UIStackView = {
         $0.axis = .vertical
         return $0
-    }(UIStackView(arrangedSubviews: [notificationButton,
-                                     settingButton,
-                                     moveToCurrentLocationButton]))
+    }(UIStackView(arrangedSubviews: [notificationButton, settingButton, moveToCurrentLocationButton]))
     
     private let createEventsButton: UIButton = {
         $0.setImage(UIImage(named: "createEventsButton"), for: .normal)
@@ -103,7 +101,7 @@ final class MainMapViewController: UIViewController {
         self.currentLocationLabel.constraint(
             top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.leadingAnchor,
-            padding: UIEdgeInsets(top: 26, left: 26, bottom: 0, right: 0)
+            padding: UIEdgeInsets(top: 26, left: 25, bottom: 0, right: 0)
         )
         
         self.view.addSubview(self.bottomButtonStackView)
@@ -117,7 +115,7 @@ final class MainMapViewController: UIViewController {
         self.topButtonStackView.constraint(
             top: self.view.safeAreaLayoutGuide.topAnchor,
             trailing: self.view.trailingAnchor,
-            padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 26)
+            padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 25)
         )
         
     }
