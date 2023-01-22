@@ -141,17 +141,9 @@
 		B8468F62297A94B900A9E77E /* Maps */ = {
 			isa = PBXGroup;
 			children = (
-				B8468F63297AD7AD00A9E77E /* View */,
-			);
-			path = Maps;
-			sourceTree = "<group>";
-		};
-		B8468F63297AD7AD00A9E77E /* View */ = {
-			isa = PBXGroup;
-			children = (
 				B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */,
 			);
-			path = View;
+			path = Maps;
 			sourceTree = "<group>";
 		};
 		B88E1B922977A70E006072B7 = {
@@ -284,17 +276,9 @@
 		B88E1BE22977AE1D006072B7 /* Landing */ = {
 			isa = PBXGroup;
 			children = (
-				B88E1BE32977AEB4006072B7 /* View */,
-			);
-			path = Landing;
-			sourceTree = "<group>";
-		};
-		B88E1BE32977AEB4006072B7 /* View */ = {
-			isa = PBXGroup;
-			children = (
 				B88E1BE42977AEC2006072B7 /* LandingViewController.swift */,
 			);
-			path = View;
+			path = Landing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
