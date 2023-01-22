@@ -30,9 +30,7 @@ final class MainMapViewController: UIViewController {
     private lazy var topButtonStackView: UIStackView = {
         $0.axis = .vertical
         return $0
-    }(UIStackView(arrangedSubviews: [notificationButton,
-                                     settingButton,
-                                     moveToCurrentLocationButton]))
+    }(UIStackView(arrangedSubviews: [notificationButton, settingButton, moveToCurrentLocationButton]))
     
     private let createEventsButton: UIButton = {
         $0.setImage(UIImage(named: "createEventsButton"), for: .normal)
