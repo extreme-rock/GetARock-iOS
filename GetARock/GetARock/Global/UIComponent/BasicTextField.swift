@@ -15,7 +15,7 @@ final class BasicTextField: UIView {
     init(placeholder: String) {
         self.placeholder = placeholder
         super.init(frame: .zero)
-        setupLayout()
+        self.setupLayout()
     }
     
     private func setupLayout() {
