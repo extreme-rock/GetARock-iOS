@@ -14,7 +14,6 @@
 		9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */; };
 		9A29E6E8297E223A00D4A433 /* DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* DeviceSize.swift */; };
 		9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E9297E233900D4A433 /* BasicTextField.swift */; };
-		9A29E6EC297E292200D4A433 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6EB297E292200D4A433 /* UIViewController+Extension.swift */; };
 		A769E177D6AA52251CAA0997 /* Pods_GetARockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
 		B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */; };
@@ -64,7 +63,6 @@
 		9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		9A29E6E7297E223A00D4A433 /* DeviceSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSize.swift; sourceTree = "<group>"; };
 		9A29E6E9297E233900D4A433 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
-		9A29E6EB297E292200D4A433 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8468F5E29797E7D00A9E77E /* MapsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MapsInfo.plist; sourceTree = "<group>"; };
 		B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -254,7 +252,6 @@
 				7BEA1874297AA10800A40488 /* UIFont+Extension.swift */,
 				B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */,
 				9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */,
-				9A29E6EB297E292200D4A433 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -531,7 +528,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A29E6EC297E292200D4A433 /* UIViewController+Extension.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
