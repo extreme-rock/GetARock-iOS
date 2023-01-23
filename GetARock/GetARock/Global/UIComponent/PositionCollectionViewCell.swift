@@ -9,6 +9,10 @@ import UIKit
 
 final class PositionCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+
+    // MARK: - View
+    
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -38,6 +42,8 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    //MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -46,6 +52,8 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - method
     
     private func setupLayout() {
         contentView.addSubview(containerView)
