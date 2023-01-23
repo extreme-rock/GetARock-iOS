@@ -15,10 +15,10 @@ class BaseViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
+        self.view.endEditing(true)
     }
     
     private func attribute() {
-        view.backgroundColor = .dark01
+        self.view.backgroundColor = .dark01
     }
 }
