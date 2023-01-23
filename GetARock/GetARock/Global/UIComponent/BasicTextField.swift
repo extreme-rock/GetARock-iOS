@@ -23,7 +23,7 @@ final class BasicTextField: UIView {
         self.constraint(.heightAnchor, constant: 55)
 
         self.addSubview(textField)
-        textField.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor)
+        textField.constraint(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor)
     }
 
     required init(coder: NSCoder) {
