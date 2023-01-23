@@ -10,27 +10,23 @@ extension UITextField {
     static func makeBasicTextField(placeholder: String, characterLimit: Int? = nil) -> UITextField {
         let textField: UITextField = {
             
-            let textField = UITextField(frame: .zero)
-            textField.constraint(.widthAnchor, constant: DeviceSize.width * 0.9)
-            textField.constraint(.heightAnchor, constant: DeviceSize.width * 0.9 * 0.15)
+            $0.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.gray02, .font: UIFont.setFont(.content)])
             
-            textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.gray02, .font: UIFont.setFont(.content)])
+            if let characterLimit { $0.maxCount = characterLimit }
             
-            if let characterLimit {
-                textField.maxCount = characterLimit
-            }
-            textField.layer.borderWidth = 2
-            textField.layer.cornerRadius = 10
-            textField.layer.borderColor = UIColor.white.cgColor
-            textField.backgroundColor = .dark02
-            textField.textColor = .white
+            $0.layer.borderWidth = 2
+            $0.layer.cornerRadius = 10
+            $0.layer.borderColor = UIColor.white.cgColor
+            $0.backgroundColor = .dark02
+            $0.textColor = .white
             
-            textField.leftView = EmptyView()
+            $0.leftView = EmptyView()
+            $0.leftViewMode = .always
             
-            textField.rightViewMode = .never
-            textField.leftViewMode = .always
-            return textField
-        }()
+            $0.rightViewMode = .never
+
+            return $0
+        }(UITextField(frame: .zero))
         return textField
     }
 }
