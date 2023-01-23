@@ -7,15 +7,17 @@
 
 import UIKit
 
- class LandingViewController: UIViewController {
+ class LandingViewController: BaseViewController {
+     
+     let testTextField = BasicTextField(placeholder: "테스트 용입니다")
 
      override func viewDidLoad() {
          super.viewDidLoad()
-
-         // Do any additional setup after loading the view.
+//         hidekeyboardWhenTappedAround()
+         self.view.addSubview(testTextField)
+         testTextField.constraint(.widthAnchor, constant: 250)
+         testTextField.constraint(centerX: self.view.centerXAnchor, centerY: self.view.centerYAnchor)
      }
-
-
      /*
      // MARK: - Navigation
 
