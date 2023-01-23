@@ -27,6 +27,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.numberOfLines = 2
+        label.textColor = .white
         return label
     }()
     
