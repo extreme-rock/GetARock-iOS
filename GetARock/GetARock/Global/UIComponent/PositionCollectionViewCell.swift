@@ -10,7 +10,13 @@ import UIKit
 final class PositionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
-
+    
+    override var isSelected: Bool {
+        didSet {
+            applySelectedState()
+        }
+    }
+    
     // MARK: - View
     
     private let containerView: UIView = {
@@ -71,15 +77,20 @@ final class PositionCollectionViewCell: UICollectionViewCell {
                                      padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
     }
     
-    func configure(data: Position) {
-        self.positionImageView.image = UIImage(named: data.imageName)
-        self.positionNameLabel.text = data.instrumentName
-    }
-    
     private func setupDeleteButtonLayout() {
         containerView.addSubview(deleteButton)
         deleteButton.constraint(top: containerView.topAnchor,
                                 trailing: containerView.trailingAnchor,
                                 padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
     }
+    
+    private func applySelectedState() {
+        containerView.backgroundColor = isSelected ? .mainPurple : .black
+    }
+    
+    func configure(data: Position) {
+        self.positionImageView.image = UIImage(named: data.imageName)
+        self.positionNameLabel.text = data.instrumentName
+    }
+
 }
