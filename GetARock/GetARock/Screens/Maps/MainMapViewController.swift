@@ -90,11 +90,17 @@ final class MainMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.setupLayout()
+        self.attribute()
         self.setLocationManager()
     }
     
     // MARK: - Method
+    
+    private func attribute() {
+        self.setMarkers()
+    }
     
     private func setupLayout() {
         self.view.addSubview(self.currentLocationLabel)
@@ -124,6 +130,10 @@ final class MainMapViewController: UIViewController {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    private func setMarkers() {
+        myLocationMarker.icon = UIImage(named: "myLocationMarker")
     }
     
     private func moveLocation(to coordinate: CLLocationCoordinate2D?) {
