@@ -49,7 +49,7 @@ extension UITextField {
     }
 }
 
-class EmptyView: UIView {
+final class EmptyView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
