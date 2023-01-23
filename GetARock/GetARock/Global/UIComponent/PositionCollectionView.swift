@@ -39,13 +39,15 @@ final class PositionCollectionView: UIView {
     private var collectionView: UICollectionView = {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(174),
                                               heightDimension: .absolute(140))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let item1 = NSCollectionLayoutItem(layoutSize: itemSize)
+        let item2 = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                heightDimension: .absolute(140))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                       subitems: [item])
+                                                       subitems: [item1, item2])
+        
         group.interItemSpacing = .fixed(10)
         
         let section = NSCollectionLayoutSection(group: group)
