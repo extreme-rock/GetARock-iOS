@@ -85,7 +85,8 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     }
     
     private func applySelectedState() {
-        containerView.backgroundColor = isSelected ? .mainPurple : .black
+        containerView.backgroundColor = isSelected ? .activeGradationPurple : .black
+        containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
     }
     
     func configure(data: Position) {

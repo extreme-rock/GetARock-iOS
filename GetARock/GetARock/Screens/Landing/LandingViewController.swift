@@ -13,7 +13,7 @@ import UIKit
      
      override func viewDidLoad() {
          super.viewDidLoad()
-         view.backgroundColor = .white
+         view.backgroundColor = .black
          view.addSubview(collectionView)
          collectionView.constraint(top: view.topAnchor,
                                    leading: view.leadingAnchor, bottom: view.bottomAnchor,
