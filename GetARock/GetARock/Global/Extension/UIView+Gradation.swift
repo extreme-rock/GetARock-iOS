@@ -17,12 +17,13 @@ extension UIView {
         gradient.endPoint = endPoint
         gradient.locations = [0.0, 1.0]
         gradient.colors = colors.map { $0.cgColor }
-//        guard
-//        self.bounds != .zero,
-//        self.layer.sublayers?.contains(where: { $0 is CAGradientLayer }) == false
-//        else { return }
+        guard
+            self.superview?.layer.sublayers?.contains(where: { $0 is CAGradientLayer }) == false
+           else { return }
         self.layer.insertSublayer(gradient, at: 0)
     }
+    
+    // MARK: - Gradient Method
     
     func applyMainGradient() {
         applyGradient(
