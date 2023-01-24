@@ -10,17 +10,20 @@ extension UITextField {
     static func makeBasicTextField(placeholder: String, characterLimit: Int? = nil) -> UITextField {
         let textField: UITextField = {
             
-            $0.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.gray02, .font: UIFont.setFont(.content)])
+            $0.attributedPlaceholder = NSAttributedString(
+                string: placeholder,
+                attributes: [.foregroundColor: UIColor.gray02, .font: UIFont.setFont(.content)]
+            )
             
             if let characterLimit { $0.maxCount = characterLimit }
             
-            $0.layer.borderWidth = 2
+            $0.layer.borderWidth = 1
             $0.layer.cornerRadius = 10
             $0.layer.borderColor = UIColor.white.cgColor
             $0.backgroundColor = .dark02
             $0.textColor = .white
             
-            $0.leftView = EmptyView()
+            $0.leftView = TextFieldPaddingView()
             $0.leftViewMode = .always
             
             $0.rightViewMode = .never
@@ -45,7 +48,7 @@ extension UITextField {
     }
 }
 
-final class EmptyView: UIView {
+final class TextFieldPaddingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
