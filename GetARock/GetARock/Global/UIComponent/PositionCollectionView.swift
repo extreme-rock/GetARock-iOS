@@ -12,7 +12,8 @@ enum PositionSection: Int {
 }
 
 enum entryPoint {
-    case needSelect
+    case band
+    case exceptBand
 }
 //
 // 내 밴드
@@ -45,6 +46,9 @@ struct Position: Hashable {
 //isETC: true // name중 기본 name에 없는 것을 etc로 판단할지, isetc를 넣을지? etc는 x를 넣어줘야함
 //
 
+// selection이 있는 경우 : 모두 선택 / 최대2개 -> protocol로 조절
+// selection이 없는 경우 : delegate를 쓰지 않음,
+// 추가버튼 있는 것과, + 버튼은 어떻게?
 protocol PositionCollectionViewDelegate: AnyObject {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool
 }
@@ -81,8 +85,9 @@ final class PositionCollectionView: UIView {
         return collectionView
     }()
     
-    private var dataSource: UICollectionViewDiffableDataSource<PositionSection, Position>?
+    private lazy var dataSource = makeDataSource()
     weak var delegate: PositionCollectionViewDelegate?
+    private var entryPoint: entryPoint
     
     private var positions: [Position] = [Position(instrumentName: "기타", imageName: "guitar", isETC: false),
                                          Position(instrumentName: "드럼", imageName: "drum", isETC: false),
@@ -92,7 +97,8 @@ final class PositionCollectionView: UIView {
     
     // MARK: - init
     
-    init() {
+    init(entryPoint: entryPoint) {
+        self.entryPoint = entryPoint
         super.init(frame: .zero)
         configureDataSource()
         setupLayout()
@@ -115,6 +121,14 @@ final class PositionCollectionView: UIView {
 // MARK: - diffable
 
 extension PositionCollectionView {
+    private func makeDataSource() -> UICollectionViewDiffableDataSource<PositionSection, Position> {
+        return UICollectionViewDiffableDataSource<PositionSection, Position>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, position in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.className, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
+            cell.configure(data: position)
+            return cell
+        })
+    }
+    
     private func configureDataSource() {
         self.dataSource = UICollectionViewDiffableDataSource<PositionSection, Position>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, position in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.className, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
@@ -124,18 +138,19 @@ extension PositionCollectionView {
     }
     
     func applySnapshot(with snapshot: NSDiffableDataSourceSnapshot<PositionSection, Position>) {
-        self.dataSource?.apply(snapshot, animatingDifferences: true)
+        self.dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     func configureSelectColorView() {
         var snapshot = NSDiffableDataSourceSnapshot<PositionSection, Position>()
         snapshot.appendSections([.main])
         snapshot.appendItems(positions, toSection: .main)
-        self.dataSource?.apply(snapshot, animatingDifferences: true)
+        self.dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
 extension PositionCollectionView: UICollectionViewDelegate {
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         let selectedPositionCount = collectionView.indexPathsForSelectedItems?.count ?? 0
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }

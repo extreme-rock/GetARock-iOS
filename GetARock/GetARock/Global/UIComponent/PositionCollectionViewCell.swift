@@ -48,6 +48,14 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    private lazy var mainLabel: UILabel = {
+       let label = UILabel()
+        label.text = "main"
+        label.font = .setFont(.content)
+        label.textColor = .mainPurple
+        return label
+    }()
+    
     //MARK: - Init
     
     override init(frame: CGRect) {
@@ -69,12 +77,19 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         
         containerView.addSubview(positionImageView)
         positionImageView.constraint(to: containerView)
-        
+ 
         containerView.addSubview(positionNameLabel)
         positionNameLabel.constraint(top: containerView.topAnchor,
                                      leading: containerView.leadingAnchor,
                                      trailing: containerView.trailingAnchor,
                                      padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
+    }
+    
+    private func setupMainLabelLayout() {
+        containerView.addSubview(mainLabel)
+        mainLabel.constraint(leading: containerView.leadingAnchor,
+                             bottom: containerView.bottomAnchor,
+                             padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
     }
     
     private func setupDeleteButtonLayout() {
