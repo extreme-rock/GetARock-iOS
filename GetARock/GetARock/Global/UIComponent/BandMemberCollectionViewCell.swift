@@ -13,7 +13,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .dark01
         view.layer.cornerRadius = 15
         view.layer.borderColor = UIColor.white.cgColor
         view.layer.borderWidth = 1
