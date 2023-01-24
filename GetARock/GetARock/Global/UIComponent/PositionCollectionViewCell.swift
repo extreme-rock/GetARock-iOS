@@ -105,7 +105,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(data: Position) {
-        self.positionImageView.image = UIImage(named: data.imageName)
+        self.positionImageView.image = UIImage(named: data.instrumentImageName)
         self.positionNameLabel.text = data.instrumentName
     }
 }

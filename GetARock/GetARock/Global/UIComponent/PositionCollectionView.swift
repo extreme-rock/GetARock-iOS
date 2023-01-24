@@ -130,11 +130,11 @@ extension PositionCollectionView: UICollectionViewDelegate {
 class TestViewController: UIViewController {
     
     //entrypOint position 테스트코드
-    private let collectionView = PositionCollectionView(entryPoint: .position, items: [.position(Position(instrumentName: "기타", imageName: "guitar", isETC: false)),
-                                                                                   .position(Position(instrumentName: "베이스", imageName: "bass", isETC: false)),
-                                                                                   .position(Position(instrumentName: "보컬", imageName: "vocal", isETC: false)),
-                                                                                   .position(Position(instrumentName: "drum", imageName: "drum", isETC: false)),
-                                                                                       .position(Position(instrumentName: "콘트라베이스으으으", imageName: "etc", isETC: false)),
+    private let collectionView = PositionCollectionView(entryPoint: .position, items: [.position(Position(instrumentName: "기타", instrumentImageName: "guitar", isETC: false)),
+                                                                                   .position(Position(instrumentName: "베이스", instrumentImageName: "bass", isETC: false)),
+                                                                                   .position(Position(instrumentName: "보컬", instrumentImageName: "vocal", isETC: false)),
+                                                                                   .position(Position(instrumentName: "drum", instrumentImageName: "drum", isETC: false)),
+                                                                                       .position(Position(instrumentName: "콘트라베이스으으으", instrumentImageName: "etc", isETC: false)),
     ])
     
     //entrypOint band 테스트코드
