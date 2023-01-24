@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum PositionSection: Int {
+enum Section: Int {
     case main
 }
 
@@ -16,14 +16,10 @@ enum entryPoint {
     case exceptBand
 }
 
-
-
-// 내 밴드
-//isUser: true,
-//isLeader: true,
-//userName: "기타",
-//imageName: "guitar",
-//다루는악기: ["기타", "보컬"]
+enum Item: Hashable {
+    case bandMember(BandMember)
+    case position(Position)
+}
 
 struct BandMember: Hashable {
     let id = UUID()
@@ -86,23 +82,22 @@ final class PositionCollectionView: UIView {
         collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.className)
         return collectionView
     }()
-    
-    private lazy var dataSource = makeDataSource()
-    weak var delegate: PositionCollectionViewDelegate?
     private var entryPoint: entryPoint
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.testConfigureBandMemberDataSource()
+    weak var delegate: PositionCollectionViewDelegate?
     
-    private var positions: [Position] = [Position(instrumentName: "기타", imageName: "guitar", isETC: false),
-                                         Position(instrumentName: "드럼", imageName: "drum", isETC: false),
-                                         Position(instrumentName: "보컬", imageName: "vocal", isETC: false),
-                                         Position(instrumentName: "베이스콘트라베이", imageName: "bass", isETC: false)]
     
+    private var positions: [Item] = [.position(Position(instrumentName: "기타", imageName: "guitar", isETC: false)),
+                                     .position(Position(instrumentName: "베이스", imageName: "bass", isETC: false)),
+                                     .position(Position(instrumentName: "보컬", imageName: "vocal", isETC: false)),
+                                     .position(Position(instrumentName: "콘트라베이스으으으", imageName: "drum", isETC: false)),]
+    private var bandMemberDummy: [BandMember] = [BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]), BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]), BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]), ]
     
     // MARK: - init
     
     init(entryPoint: entryPoint) {
         self.entryPoint = entryPoint
         super.init(frame: .zero)
-        configureDataSource()
         setupLayout()
         configureSelectColorView()
     }
@@ -123,28 +118,44 @@ final class PositionCollectionView: UIView {
 // MARK: - diffable
 
 extension PositionCollectionView {
-    private func makeDataSource() -> UICollectionViewDiffableDataSource<PositionSection, Position> {
-        return UICollectionViewDiffableDataSource<PositionSection, Position>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, position in
+    
+    private func testConfigureBandMemberDataSource() -> UICollectionViewDiffableDataSource<Section, Item> {
+        return UICollectionViewDiffableDataSource<Section, Item>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
+            switch item {
+            case .bandMember(let bandMember):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemeberCollectionViewCell.className, for: indexPath) as? BandMemeberCollectionViewCell else { return UICollectionViewCell() }
+                cell.configure(data: bandMember)
+                return cell
+            case .position(let position):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.className, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
+                cell.configure(data: position)
+                return cell
+            }
+        })
+    }
+    
+    private func configureBandMemberDataSource() -> UICollectionViewDiffableDataSource<Section, BandMember> {
+        return UICollectionViewDiffableDataSource<Section, BandMember>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, bandMember in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemeberCollectionViewCell.className, for: indexPath) as? BandMemeberCollectionViewCell else { return UICollectionViewCell() }
+            cell.configure(data: bandMember)
+            return cell
+        })
+    }
+    
+    private func configurePositionDataSource() -> UICollectionViewDiffableDataSource<Section, Position>{
+        return UICollectionViewDiffableDataSource<Section, Position>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, position in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.className, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
             cell.configure(data: position)
             return cell
         })
     }
     
-    private func configureDataSource() {
-        self.dataSource = UICollectionViewDiffableDataSource<PositionSection, Position>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, position in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.className, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
-            cell.configure(data: position)
-            return cell
-        })
-    }
-    
-    func applySnapshot(with snapshot: NSDiffableDataSourceSnapshot<PositionSection, Position>) {
+    func applySnapshot(with snapshot: NSDiffableDataSourceSnapshot<Section, Item>) {
         self.dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     func configureSelectColorView() {
-        var snapshot = NSDiffableDataSourceSnapshot<PositionSection, Position>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems(positions, toSection: .main)
         self.dataSource.apply(snapshot, animatingDifferences: true)
