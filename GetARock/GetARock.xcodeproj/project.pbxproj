@@ -14,7 +14,6 @@
 		4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */; };
 		4AC4CE41297FB85B00BB823C /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE40297FB85B00BB823C /* Position.swift */; };
 		4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE42297FB8AD00BB823C /* BandMember.swift */; };
-		4AC4CE45297FBCCD00BB823C /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE44297FBCCD00BB823C /* TestViewController.swift */; };
 		4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF584592978E497008F4068 /* UIView+Constraints.swift */; };
 		7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA1874297AA10800A40488 /* UIFont+Extension.swift */; };
 		943928805D82F089F179FC19 /* Pods_GetARock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */; };
@@ -64,7 +63,6 @@
 		4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AC4CE40297FB85B00BB823C /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		4AC4CE42297FB8AD00BB823C /* BandMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMember.swift; sourceTree = "<group>"; };
-		4AC4CE44297FBCCD00BB823C /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		4AF584592978E497008F4068 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		6CC3391D5CB01B869CFE1F20 /* Pods-GetARock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.release.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.release.xcconfig"; sourceTree = "<group>"; };
 		73E771CD1A9B64570FE2B572 /* Pods-GetARock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.debug.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -313,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				B88E1BE42977AEC2006072B7 /* LandingViewController.swift */,
-				4AC4CE44297FBCCD00BB823C /* TestViewController.swift */,
 			);
 			path = Landing;
 			sourceTree = "<group>";
@@ -557,7 +554,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
-				4AC4CE45297FBCCD00BB823C /* TestViewController.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,

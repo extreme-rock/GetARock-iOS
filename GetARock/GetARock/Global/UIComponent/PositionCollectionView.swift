@@ -125,3 +125,36 @@ extension PositionCollectionView: UICollectionViewDelegate {
         return canSelect
     }
 }
+
+// 머지 이전 삭제 예정
+class TestViewController: UIViewController {
+    
+    //entrypOint position 테스트코드
+    private let collectionView = PositionCollectionView(entryPoint: .position, items: [.position(Position(instrumentName: "기타", imageName: "guitar", isETC: false)),
+                                                                                   .position(Position(instrumentName: "베이스", imageName: "bass", isETC: false)),
+                                                                                   .position(Position(instrumentName: "보컬", imageName: "vocal", isETC: false)),
+                                                                                   .position(Position(instrumentName: "drum", imageName: "drum", isETC: false)),
+                                                                                       .position(Position(instrumentName: "콘트라베이스으으으", imageName: "etc", isETC: false)),
+    ])
+    
+    //entrypOint band 테스트코드
+//    private let collectionView = PositionCollectionView(entryPoint: .band, items: [.bandMember(BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: true, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: true, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: false, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]))
+//    ])
+//
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .black
+        view.addSubview(collectionView)
+        collectionView.constraint(top: view.topAnchor,
+                                  leading: view.leadingAnchor, bottom: view.bottomAnchor,
+                                  trailing: view.trailingAnchor,
+        padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        collectionView.delegate = self
+    }
+}
+
+extension TestViewController: PositionCollectionViewDelegate {
+   func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
+       return true
+   }
+}
