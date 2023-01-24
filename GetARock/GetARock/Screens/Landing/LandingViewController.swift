@@ -7,19 +7,11 @@
 
 import UIKit
 
- class LandingViewController: UIViewController {
-     
-     private let collectionView = PositionCollectionView()
-     
+class LandingViewController: UIViewController {
+
      override func viewDidLoad() {
          super.viewDidLoad()
          view.backgroundColor = .black
-         view.addSubview(collectionView)
-         collectionView.constraint(top: view.topAnchor,
-                                   leading: view.leadingAnchor, bottom: view.bottomAnchor,
-                                   trailing: view.trailingAnchor,
-         padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-         // Do any additional setup after loading the view.
      }
 
 
