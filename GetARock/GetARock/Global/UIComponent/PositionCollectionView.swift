@@ -31,6 +31,8 @@ final class PositionCollectionView: UIView {
     
     private var entryPoint: EntryPoint
     weak var delegate: PositionCollectionViewDelegate?
+    
+    private var items: [Item] = []
     private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
     
     // MARK: - View
@@ -67,8 +69,6 @@ final class PositionCollectionView: UIView {
         }
         return collectionView
     }()
-
-    private var items: [Item] = []
     
     // MARK: - init
     
