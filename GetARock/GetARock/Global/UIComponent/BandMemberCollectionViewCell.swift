@@ -34,7 +34,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     
     private let memberNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont.setFont(.headline01)
         label.numberOfLines = 2
         label.textColor = .white
         return label
