@@ -79,19 +79,23 @@ final class PositionCollectionView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.allowsMultipleSelection = true
         collectionView.delegate = self
-        collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.className)
+        switch entryPoint {
+        case .band:
+            collectionView.register(BandMemeberCollectionViewCell.self, forCellWithReuseIdentifier: BandMemeberCollectionViewCell.className)
+        case .exceptBand:
+            collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.className)
+        }
         return collectionView
     }()
     private var entryPoint: entryPoint
-    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.testConfigureBandMemberDataSource()
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
     weak var delegate: PositionCollectionViewDelegate?
-    
     
     private var positions: [Item] = [.position(Position(instrumentName: "기타", imageName: "guitar", isETC: false)),
                                      .position(Position(instrumentName: "베이스", imageName: "bass", isETC: false)),
                                      .position(Position(instrumentName: "보컬", imageName: "vocal", isETC: false)),
                                      .position(Position(instrumentName: "콘트라베이스으으으", imageName: "drum", isETC: false)),]
-    private var bandMemberDummy: [BandMember] = [BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]), BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]), BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]), ]
+    private var bandMemberDummy: [Item] = [.bandMember(BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: true, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: true, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: false, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]))]
     
     // MARK: - init
     
@@ -99,7 +103,13 @@ final class PositionCollectionView: UIView {
         self.entryPoint = entryPoint
         super.init(frame: .zero)
         setupLayout()
-        configureSelectColorView()
+        switch entryPoint {
+        case .band:
+            configureBandMemeberView()
+        case .exceptBand:
+            configurePositionView()
+        }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -114,12 +124,11 @@ final class PositionCollectionView: UIView {
     }
 }
 
-
 // MARK: - diffable
 
 extension PositionCollectionView {
     
-    private func testConfigureBandMemberDataSource() -> UICollectionViewDiffableDataSource<Section, Item> {
+    private func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Item> {
         return UICollectionViewDiffableDataSource<Section, Item>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
             switch item {
             case .bandMember(let bandMember):
@@ -154,10 +163,17 @@ extension PositionCollectionView {
         self.dataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    func configureSelectColorView() {
+    func configurePositionView() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems(positions, toSection: .main)
+        self.dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func configureBandMemeberView() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(bandMemberDummy, toSection: .main)
         self.dataSource.apply(snapshot, animatingDifferences: true)
     }
 }

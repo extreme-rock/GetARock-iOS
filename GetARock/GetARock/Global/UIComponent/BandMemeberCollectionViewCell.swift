@@ -42,8 +42,8 @@ final class BandMemeberCollectionViewCell: UICollectionViewCell {
     
     private let linkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.tintColor = .white
+        button.setImage(UIImage(systemName: "arrow.up.right"), for: .normal)
+        button.tintColor = .mainPurple
         return button
     }()
 
@@ -58,7 +58,7 @@ final class BandMemeberCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - method
+    //MARK: - Method
     
     private func setupLayout() {
         contentView.addSubview(containerView)
@@ -94,26 +94,46 @@ final class BandMemeberCollectionViewCell: UICollectionViewCell {
         containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
     }
     
+    private func configureLeaderUI() {
+        let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 18)
+        let crownImage = UIImageView()
+        crownImage.image = UIImage(systemName: "crown", withConfiguration: imageConfiguation)
+        crownImage.tintColor = .white
+        containerView.addSubview(crownImage)
+        crownImage.constraint(top: containerView.topAnchor,
+                              leading: memberNameLabel.trailingAnchor,
+                              padding: UIEdgeInsets(top: 14, left: -5, bottom: 0, right: 0))
+    }
+    
+    private func configureUserUI() {
+        containerView.addSubview(linkButton)
+        linkButton.constraint(top: containerView.topAnchor,
+                              trailing: containerView.trailingAnchor,
+        padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
+    }
+    
+    private func configureInstrumentNameUI(with instrumentNames: [String]) {
+        instrumentNames.forEach { [weak self] in
+            let label = UILabel()
+            label.text = $0
+            label.font = UIFont.setFont(.caption)
+            label.textColor = .white
+            self?.informationStackView.addArrangedSubview(label)
+        }
+    }
+    
     func configure(data: BandMember) {
         self.positionImageView.image = UIImage(named: data.imageName)
         self.memberNameLabel.text = data.userName
-        // 리더면 왕관 추가
-        if data.isLeader {
-            let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 18)
-            let crownImage = UIImageView()
-            crownImage.image = UIImage(systemName: "crown", withConfiguration: imageConfiguation)
-            containerView.addSubview(crownImage)
-            crownImage.constraint(top: containerView.topAnchor,
-                                  leading: memberNameLabel.trailingAnchor,
-                                  padding: UIEdgeInsets(top: 16, left: 2, bottom: 0, right: 0))
+        applyUserState(isUser: data.isUser)
+        configureInstrumentNameUI(with: data.instrumentNames)
+        
+        if data.isUser {
+            configureUserUI()
         }
         
-        data.instrumentNames.forEach { [weak self] in
-            let label = UILabel()
-            label.text = $0
-            self?.informationStackView.addArrangedSubview(label)
+        if data.isLeader {
+            configureLeaderUI()
         }
-
     }
-
 }
