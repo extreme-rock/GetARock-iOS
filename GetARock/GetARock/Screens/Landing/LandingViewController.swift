@@ -9,9 +9,14 @@ import UIKit
 
  class LandingViewController: UIViewController {
 
+     private let button = BottomButton()
      override func viewDidLoad() {
          super.viewDidLoad()
-
+         view.addSubview(button)
+         view.backgroundColor = .white
+         button.setTitle("다음", for: .normal)
+//         button.isEnabled = false
+         button.constraint( centerX: view.centerXAnchor, centerY: view.centerYAnchor)
          // Do any additional setup after loading the view.
      }
 
