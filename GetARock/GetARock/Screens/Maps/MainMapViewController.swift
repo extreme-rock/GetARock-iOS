@@ -63,7 +63,9 @@ final class MainMapViewController: UIViewController {
     
     private var mapView: GMSMapView!
     private var myLocationMarker = GMSMarker()
-    private var camera: GMSCameraPosition?
+    private lazy var camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
+                                                       longitude: currentCoordinate.longitude,
+                                                       zoom: zoomInRange)
     
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
@@ -72,9 +74,6 @@ final class MainMapViewController: UIViewController {
     // MARK: - Life Cycle
     
     override func loadView() {
-        camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
-                                          longitude: currentCoordinate.longitude,
-                                          zoom: zoomInRange)
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
         
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
@@ -82,7 +81,6 @@ final class MainMapViewController: UIViewController {
         myLocationMarker.title = "현재 위치"
         myLocationMarker.map = mapView
         
-        guard let camera = camera else { return }
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
         self.view = mapView
         mapView.delegate = self
@@ -137,17 +135,12 @@ final class MainMapViewController: UIViewController {
     }
     
     private func moveLocation(to coordinate: CLLocationCoordinate2D?) {
-        guard let coordinate = coordinate else { return }
-        
-        self.currentCoordinate.latitude = coordinate.latitude
-        self.currentCoordinate.longitude = coordinate.longitude
-        
+        guard let coordinate else { return }
+        self.currentCoordinate = coordinate
         camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
                                           longitude: currentCoordinate.longitude,
                                           zoom: zoomInRange)
-        guard let camera = camera else { return }
         mapView.camera = camera
-        
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
                                                            longitude: currentCoordinate.longitude)
         myLocationMarker.map = mapView
@@ -181,16 +174,14 @@ extension MainMapViewController: CLLocationManagerDelegate {
         
         CLGeocoder().reverseGeocodeLocation(
             currentLocation,
-            completionHandler: {(placemarks, _) -> Void in
+            completionHandler: { placemarks, _ in
                 guard let currentPlacemark = placemarks?.first else { return }
                 var address: String = ""
-                if currentPlacemark.locality != nil {
-                    address += " "
-                    address += currentPlacemark.locality!
+                if let city = currentPlacemark.locality {
+                    address += city
                 }
-                if currentPlacemark.thoroughfare != nil {
-                    address += " "
-                    address += currentPlacemark.thoroughfare!
+                if let street = currentPlacemark.thoroughfare {
+                    address += " \(street)"
                 }
                 self.currentLocationLabel.text = address
             }
