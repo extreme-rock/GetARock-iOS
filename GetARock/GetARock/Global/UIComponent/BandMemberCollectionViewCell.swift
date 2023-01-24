@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BandMemeberCollectionViewCell: UICollectionViewCell {
+final class BandMemberCollectionViewCell: UICollectionViewCell {
 
     // MARK: - View
     

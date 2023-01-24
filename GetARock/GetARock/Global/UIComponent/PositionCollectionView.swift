@@ -61,7 +61,7 @@ final class PositionCollectionView: UIView {
         collectionView.delegate = self
         switch self.entryPoint {
         case .band:
-            collectionView.register(BandMemeberCollectionViewCell.self, forCellWithReuseIdentifier: BandMemeberCollectionViewCell.className)
+            collectionView.register(BandMemberCollectionViewCell.self, forCellWithReuseIdentifier: BandMemberCollectionViewCell.className)
         case .position:
             collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.className)
         }
@@ -99,7 +99,7 @@ extension PositionCollectionView {
         return UICollectionViewDiffableDataSource<Section, Item>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
             switch item {
             case .bandMember(let bandMember):
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemeberCollectionViewCell.className, for: indexPath) as? BandMemeberCollectionViewCell else { return UICollectionViewCell() }
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemberCollectionViewCell.className, for: indexPath) as? BandMemberCollectionViewCell else { return UICollectionViewCell() }
                 cell.configure(data: bandMember)
                 return cell
             case .position(let position):

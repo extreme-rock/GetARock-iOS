@@ -11,7 +11,7 @@
 		4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */; };
 		4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */; };
 		4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */; };
-		4AC4CE3D297F7EED00BB823C /* BandMemeberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE3C297F7EED00BB823C /* BandMemeberCollectionViewCell.swift */; };
+		4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */; };
 		4AC4CE41297FB85B00BB823C /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE40297FB85B00BB823C /* Position.swift */; };
 		4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE42297FB8AD00BB823C /* BandMember.swift */; };
 		4AC4CE45297FBCCD00BB823C /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE44297FBCCD00BB823C /* TestViewController.swift */; };
@@ -61,7 +61,7 @@
 		4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionView.swift; sourceTree = "<group>"; };
 		4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
-		4AC4CE3C297F7EED00BB823C /* BandMemeberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemeberCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AC4CE40297FB85B00BB823C /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		4AC4CE42297FB8AD00BB823C /* BandMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMember.swift; sourceTree = "<group>"; };
 		4AC4CE44297FBCCD00BB823C /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -304,7 +304,7 @@
 				B88E1BDE2977ACB6006072B7 /* SampleView.swift */,
 				4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */,
 				4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */,
-				4AC4CE3C297F7EED00BB823C /* BandMemeberCollectionViewCell.swift */,
+				4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -574,7 +574,7 @@
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
 				4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */,
 				B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */,
-				4AC4CE3D297F7EED00BB823C /* BandMemeberCollectionViewCell.swift in Sources */,
+				4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
