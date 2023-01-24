@@ -8,7 +8,7 @@ import UIKit
 
 final class BasicTextField: UIView {
 
-    var placeholder: String
+    private let placeholder: String
 
     private lazy var textField: UITextField = UITextField.makeBasicTextField(placeholder: placeholder)
 
@@ -23,7 +23,7 @@ final class BasicTextField: UIView {
         self.constraint(.heightAnchor, constant: TextFieldSize.height)
 
         self.addSubview(textField)
-        textField.constraint(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor)
+        textField.constraint(to: self)
     }
 
     required init(coder: NSCoder) {
