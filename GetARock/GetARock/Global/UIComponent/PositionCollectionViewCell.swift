@@ -9,7 +9,7 @@ import UIKit
 
 final class PositionCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: - Property
     
     override var isSelected: Bool {
         didSet {
@@ -67,7 +67,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - method
+    //MARK: - Method
     
     private func setupLayout() {
         contentView.addSubview(containerView)
@@ -108,5 +108,4 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         self.positionImageView.image = UIImage(named: data.imageName)
         self.positionNameLabel.text = data.instrumentName
     }
-
 }

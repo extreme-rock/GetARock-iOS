@@ -105,13 +105,6 @@ final class BandMemeberCollectionViewCell: UICollectionViewCell {
                               padding: UIEdgeInsets(top: 14, left: -5, bottom: 0, right: 0))
     }
     
-    private func configureUserUI() {
-        containerView.addSubview(linkButton)
-        linkButton.constraint(top: containerView.topAnchor,
-                              trailing: containerView.trailingAnchor,
-        padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
-    }
-    
     private func configureInstrumentNameUI(with instrumentNames: [String]) {
         instrumentNames.forEach { [weak self] in
             let label = UILabel()
@@ -129,7 +122,7 @@ final class BandMemeberCollectionViewCell: UICollectionViewCell {
         configureInstrumentNameUI(with: data.instrumentNames)
         
         if data.isUser {
-            configureUserUI()
+            setupLinkButtonLayout()
         }
         
         if data.isLeader {
