@@ -26,7 +26,7 @@ final class PositionCollectionView: UIView {
     
     enum EntryPoint {
         case band
-        case exceptBand
+        case position
     }
     
     private var entryPoint: EntryPoint
@@ -62,30 +62,22 @@ final class PositionCollectionView: UIView {
         switch self.entryPoint {
         case .band:
             collectionView.register(BandMemeberCollectionViewCell.self, forCellWithReuseIdentifier: BandMemeberCollectionViewCell.className)
-        case .exceptBand:
+        case .position:
             collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.className)
         }
         return collectionView
     }()
 
-    private var positions: [Item] = [.position(Position(instrumentName: "기타", imageName: "guitar", isETC: false)),
-                                     .position(Position(instrumentName: "베이스", imageName: "bass", isETC: false)),
-                                     .position(Position(instrumentName: "보컬", imageName: "vocal", isETC: false)),
-                                     .position(Position(instrumentName: "콘트라베이스으으으", imageName: "drum", isETC: false)),]
-    private var bandMemberDummy: [Item] = [.bandMember(BandMember(isUser: true, isLeader: true, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: true, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: true, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"])), .bandMember(BandMember(isUser: false, isLeader: false, userName: "콘르아잉이잉베", imageName: "guitar", instrumentNames: ["베이스", "보컬"]))]
+    private var items: [Item] = []
     
     // MARK: - init
     
-    init(entryPoint: EntryPoint) {
+    init(entryPoint: EntryPoint, items: [Item]) {
         self.entryPoint = entryPoint
+        self.items = items
         super.init(frame: .zero)
         setupLayout()
-        switch entryPoint {
-        case .band:
-            configureBandMemeberView()
-        case .exceptBand:
-            configurePositionView()
-        }
+        applySnapshot(with: items)
     }
     
     required init?(coder: NSCoder) {
@@ -118,21 +110,10 @@ extension PositionCollectionView {
         })
     }
     
-    func applySnapshot(with snapshot: NSDiffableDataSourceSnapshot<Section, Item>) {
-        self.dataSource.apply(snapshot, animatingDifferences: true)
-    }
-    
-    func configurePositionView() {
+    func applySnapshot(with items: [Item]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(positions, toSection: .main)
-        self.dataSource.apply(snapshot, animatingDifferences: true)
-    }
-    
-    func configureBandMemeberView() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(bandMemberDummy, toSection: .main)
+        snapshot.appendItems(items, toSection: .main)
         self.dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
