@@ -15,7 +15,9 @@ enum entryPoint {
     case band
     case exceptBand
 }
-//
+
+
+
 // 내 밴드
 //isUser: true,
 //isLeader: true,
