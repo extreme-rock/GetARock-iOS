@@ -19,8 +19,8 @@ final class BasicTextField: UIView {
     }
     
     private func setupLayout() {
-        self.constraint(.widthAnchor, constant: DeviceSize.width * 0.9)
-        self.constraint(.heightAnchor, constant: 55)
+        self.constraint(.widthAnchor, constant: TextFieldSize.width)
+        self.constraint(.heightAnchor, constant: TextFieldSize.height)
 
         self.addSubview(textField)
         textField.constraint(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor)
