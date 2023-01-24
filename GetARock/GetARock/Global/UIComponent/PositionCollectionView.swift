@@ -76,8 +76,8 @@ final class PositionCollectionView: UIView {
         self.entryPoint = entryPoint
         self.items = items
         super.init(frame: .zero)
-        setupLayout()
-        applySnapshot(with: items)
+        self.setupLayout()
+        self.applySnapshot(with: items)
     }
     
     required init?(coder: NSCoder) {
@@ -88,7 +88,7 @@ final class PositionCollectionView: UIView {
     
     private func setupLayout() {
         addSubview(collectionView)
-        collectionView.constraint(to: self)
+        self.collectionView.constraint(to: self)
     }
 }
 

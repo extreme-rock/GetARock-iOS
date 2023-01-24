@@ -61,37 +61,37 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     //MARK: - Method
     
     private func setupLayout() {
-        contentView.addSubview(containerView)
-        containerView.constraint(to: contentView)
-        containerView.constraint(.widthAnchor, constant: 172)
-        containerView.constraint(.heightAnchor, constant: 138)
+        self.contentView.addSubview(containerView)
+        self.containerView.constraint(to: contentView)
+        self.containerView.constraint(.widthAnchor, constant: 172)
+        self.containerView.constraint(.heightAnchor, constant: 138)
         
-        containerView.addSubview(positionImageView)
-        positionImageView.constraint(to: containerView)
+        self.containerView.addSubview(positionImageView)
+        self.positionImageView.constraint(to: containerView)
  
-        containerView.addSubview(memberNameLabel)
-        memberNameLabel.constraint(top: containerView.topAnchor,
+        self.containerView.addSubview(memberNameLabel)
+        self.memberNameLabel.constraint(top: containerView.topAnchor,
                                      leading: containerView.leadingAnchor,
                                      trailing: containerView.trailingAnchor,
                                      padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
         
-        containerView.addSubview(informationStackView)
-        informationStackView.constraint(top: memberNameLabel.bottomAnchor,
+        self.containerView.addSubview(informationStackView)
+        self.informationStackView.constraint(top: memberNameLabel.bottomAnchor,
                                         leading: containerView.leadingAnchor,
                                         trailing: containerView.trailingAnchor,
                                         padding: UIEdgeInsets(top: 3, left: 15, bottom: 0, right: 101))
     }
 
     private func setupLinkButtonLayout() {
-        containerView.addSubview(linkButton)
-        linkButton.constraint(top: containerView.topAnchor,
+        self.containerView.addSubview(linkButton)
+        self.linkButton.constraint(top: containerView.topAnchor,
                                 trailing: containerView.trailingAnchor,
                                 padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
     }
     
     private func applyUserState(isUser: Bool) {
-        containerView.backgroundColor = isUser ? .activeGradationPurple : .black
-        containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
+        self.containerView.backgroundColor = isUser ? .activeGradationPurple : .black
+        self.containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
     }
     
     private func configureLeaderUI() {
@@ -99,7 +99,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         let crownImage = UIImageView()
         crownImage.image = UIImage(systemName: "crown", withConfiguration: imageConfiguation)
         crownImage.tintColor = .white
-        containerView.addSubview(crownImage)
+        self.containerView.addSubview(crownImage)
         crownImage.constraint(top: containerView.topAnchor,
                               leading: memberNameLabel.trailingAnchor,
                               padding: UIEdgeInsets(top: 14, left: -5, bottom: 0, right: 0))
@@ -118,8 +118,8 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     func configure(data: BandMember) {
         self.positionImageView.image = UIImage(named: data.imageName)
         self.memberNameLabel.text = data.userName
-        applyUserState(isUser: data.isUser)
-        configureInstrumentNameUI(with: data.instrumentNames)
+        self.applyUserState(isUser: data.isUser)
+        self.configureInstrumentNameUI(with: data.instrumentNames)
         
         if data.isUser {
             setupLinkButtonLayout()

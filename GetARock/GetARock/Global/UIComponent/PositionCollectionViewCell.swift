@@ -13,7 +13,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            applySelectedState()
+            self.applySelectedState()
         }
     }
     
@@ -60,7 +60,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
+        self.setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -70,38 +70,38 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     //MARK: - Method
     
     private func setupLayout() {
-        contentView.addSubview(containerView)
-        containerView.constraint(to: contentView)
-        containerView.constraint(.widthAnchor, constant: 172)
-        containerView.constraint(.heightAnchor, constant: 138)
+        self.contentView.addSubview(containerView)
+        self.containerView.constraint(to: contentView)
+        self.containerView.constraint(.widthAnchor, constant: 172)
+        self.containerView.constraint(.heightAnchor, constant: 138)
         
-        containerView.addSubview(positionImageView)
-        positionImageView.constraint(to: containerView)
+        self.containerView.addSubview(positionImageView)
+        self.positionImageView.constraint(to: containerView)
  
-        containerView.addSubview(positionNameLabel)
-        positionNameLabel.constraint(top: containerView.topAnchor,
+        self.containerView.addSubview(positionNameLabel)
+        self.positionNameLabel.constraint(top: containerView.topAnchor,
                                      leading: containerView.leadingAnchor,
                                      trailing: containerView.trailingAnchor,
                                      padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
     }
     
     private func setupMainLabelLayout() {
-        containerView.addSubview(mainLabel)
-        mainLabel.constraint(leading: containerView.leadingAnchor,
+        self.containerView.addSubview(mainLabel)
+        self.mainLabel.constraint(leading: containerView.leadingAnchor,
                              bottom: containerView.bottomAnchor,
                              padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
     }
     
     private func setupDeleteButtonLayout() {
-        containerView.addSubview(deleteButton)
-        deleteButton.constraint(top: containerView.topAnchor,
+        self.containerView.addSubview(deleteButton)
+        self.deleteButton.constraint(top: containerView.topAnchor,
                                 trailing: containerView.trailingAnchor,
                                 padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
     }
     
     private func applySelectedState() {
-        containerView.backgroundColor = isSelected ? .activeGradationPurple : .black
-        containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
+        self.containerView.backgroundColor = isSelected ? .activeGradationPurple : .black
+        self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
     }
     
     func configure(data: Position) {
