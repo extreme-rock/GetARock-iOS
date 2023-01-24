@@ -167,11 +167,11 @@ extension MainMapViewController: CLLocationManagerDelegate {
             completionHandler: { placemarks, _ in
                 guard let currentPlacemark = placemarks?.first else { return }
                 var address: String = ""
-                if currentPlacemark.locality != nil {
-                    address += currentPlacemark.locality!
+                if let city = currentPlacemark.locality {
+                    address += city
                 }
-                if currentPlacemark.thoroughfare != nil {
-                    address += " \(currentPlacemark.thoroughfare!)"
+                if let street = currentPlacemark.thoroughfare {
+                    address += " \(street)"
                 }
                 self.currentLocationLabel.text = address
             }
