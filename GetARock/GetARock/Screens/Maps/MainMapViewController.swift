@@ -128,16 +128,12 @@ final class MainMapViewController: UIViewController {
     
     private func moveLocation(to coordinate: CLLocationCoordinate2D?) {
         guard let coordinate else { return }
-        
-        self.currentCoordinate.latitude = coordinate.latitude
-        self.currentCoordinate.longitude = coordinate.longitude
-        
+        self.currentCoordinate = coordinate
         camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
                                           longitude: currentCoordinate.longitude,
                                           zoom: zoomInRange)
         guard let camera = camera else { return }
         mapView.camera = camera
-        
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
                                                            longitude: currentCoordinate.longitude)
         myLocationMarker.map = mapView
