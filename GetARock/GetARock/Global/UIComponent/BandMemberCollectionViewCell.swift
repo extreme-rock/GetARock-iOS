@@ -90,7 +90,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     }
     
     private func applyUserState(isUser: Bool) {
-        self.containerView.backgroundColor = isUser ? .activeGradationPurple : .black
+        self.containerView.backgroundColor = isUser ? .activeGradationPurple : .dark01
         self.containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
     }
     
