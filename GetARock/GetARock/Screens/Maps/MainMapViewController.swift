@@ -127,7 +127,7 @@ final class MainMapViewController: UIViewController {
     }
     
     private func moveLocation(to coordinate: CLLocationCoordinate2D?) {
-        guard let coordinate = coordinate else { return }
+        guard let coordinate else { return }
         
         self.currentCoordinate.latitude = coordinate.latitude
         self.currentCoordinate.longitude = coordinate.longitude
