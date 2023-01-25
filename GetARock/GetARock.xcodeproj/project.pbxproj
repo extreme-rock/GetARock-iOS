@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A35EDA1F6F1B54EC4E9AEF0 /* Pods_GetARock_GetARockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */; };
+		4AC4CE4B2980B41400BB823C /* ActiveGradationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4A2980B41400BB823C /* ActiveGradationButton.swift */; };
 		4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF584592978E497008F4068 /* UIView+Constraints.swift */; };
 		7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA1874297AA10800A40488 /* UIFont+Extension.swift */; };
 		943928805D82F089F179FC19 /* Pods_GetARock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */; };
@@ -51,6 +52,7 @@
 		159F0019C5C9AB3A427BD907 /* Pods-GetARockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.release.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.release.xcconfig"; sourceTree = "<group>"; };
 		1C72EC7590FAAB055CED6028 /* Pods-GetARockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.debug.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock_GetARockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AC4CE4A2980B41400BB823C /* ActiveGradationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveGradationButton.swift; sourceTree = "<group>"; };
 		4AF584592978E497008F4068 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		6CC3391D5CB01B869CFE1F20 /* Pods-GetARock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.release.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.release.xcconfig"; sourceTree = "<group>"; };
 		73E771CD1A9B64570FE2B572 /* Pods-GetARock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.debug.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				B88E1BDE2977ACB6006072B7 /* SampleView.swift */,
+				4AC4CE4A2980B41400BB823C /* ActiveGradationButton.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
+				4AC4CE4B2980B41400BB823C /* ActiveGradationButton.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
