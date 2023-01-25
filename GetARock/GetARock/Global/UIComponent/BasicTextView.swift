@@ -4,7 +4,6 @@
 //
 //  Created by Jisu Jang on 2023/01/25.
 //
-
 import UIKit
 
 class BasicTextView: UIView {
@@ -73,7 +72,6 @@ extension BasicTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         // text 숫자 업데이트
         countLabel.text = "\(textView.text.count)/\(maxCount)"
-
         // 최대 글자수 제한 로직
         if let text = textView.text {
             if text.count >= maxCount {
@@ -96,3 +94,35 @@ extension BasicTextView: UITextViewDelegate {
         }
     }
 }
+
+//MARK: Test code case1
+// 기본 텍스트뷰 (글자수 제한 300) + UIStackView에 사용하는 경우 (stackView의 크기에 맞춤)
+class BasicTextViewTestClass: UIViewController {
+
+    let firstTestTextView = BasicTextView(placeholder: "테스트용 텍스트뷰 입니다")
+
+    lazy var stackView = UIStackView(arrangedSubviews: [firstTestTextView])
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(stackView)
+        stackView.constraint(centerX: view.centerXAnchor, centerY: view.centerYAnchor)
+        stackView.constraint(.widthAnchor, constant: 200)
+        stackView.constraint(.heightAnchor, constant: 400)
+    }
+}
+
+//MARK: Test code case2
+// 글자수 제한 30 + x,y 위치만 잡아주는 경우 (클래스 내에서 지정된 원래 크기로 할당됨)
+class BasicTextViewSecondTestClass: UIViewController {
+
+    let secondTestTextView = BasicTextView(placeholder: "테스트용", maxCount: 30)
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.addSubview(secondTestTextView)
+        secondTestTextView.constraint(centerX: view.centerXAnchor, centerY: view.centerYAnchor, padding: UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0))
+    }
+}
+
