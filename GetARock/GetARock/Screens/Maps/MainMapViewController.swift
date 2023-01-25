@@ -92,6 +92,11 @@ final class MainMapViewController: UIViewController {
         self.setLocationManager()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        moveMap()
+    }
+
     // MARK: - Method
     
     private func setupLayout() {
