@@ -10,7 +10,6 @@ import UIKit
 extension UIView {
     
     func applyGradient( colors: [UIColor], startPoint: CGPoint, endPoint: CGPoint ) {
-        assert(colors.count >= 2, "Colors must be at least 2.")
         let gradient = CAGradientLayer()
         gradient.frame = self.bounds
         gradient.startPoint = startPoint
