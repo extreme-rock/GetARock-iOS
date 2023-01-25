@@ -124,13 +124,16 @@ final class MainMapViewController: UIViewController {
         self.locationManager.requestWhenInUseAuthorization()
     }
     
-    private func moveLocation(to coordinate: CLLocationCoordinate2D?) {
-        guard let coordinate else { return }
-        self.currentCoordinate = coordinate
+    private func moveMap() {
         camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
                                           longitude: currentCoordinate.longitude,
                                           zoom: zoomInRange)
         mapView.camera = camera
+    }
+    
+    private func moveMyLocationMarker(to coordinate: CLLocationCoordinate2D?) {
+        guard let coordinate else { return }
+        self.currentCoordinate = coordinate
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
                                                            longitude: currentCoordinate.longitude)
         myLocationMarker.map = mapView
@@ -160,7 +163,7 @@ extension MainMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocation = locations.first else { return }
-        moveLocation(to: currentLocation.coordinate)
+        moveMyLocationMarker(to: currentLocation.coordinate)
         
         CLGeocoder().reverseGeocodeLocation(
             currentLocation,
