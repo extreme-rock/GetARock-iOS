@@ -78,7 +78,7 @@ final class MainMapViewController: UIViewController {
         
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
                                                    longitude: currentCoordinate.longitude)
-        myLocationMarker.title = "현재 위치"
+        myLocationMarker.icon = UIImage(named: "myLocationMarker")
         myLocationMarker.map = mapView
         
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
