@@ -25,8 +25,7 @@ class BasicTextView: UIView {
         $0.textColor = .white
         $0.backgroundColor = .dark02
 
-//        $0.delegate = self
-
+        $0.delegate = self
         return $0
     }(UITextView())
 
@@ -66,5 +65,34 @@ class BasicTextView: UIView {
 
         self.addSubview(placeholderLabel)
         placeholderLabel.constraint(top: self.topAnchor, leading: self.leadingAnchor, padding: UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 0))
+    }
+}
+
+extension BasicTextView: UITextViewDelegate {
+
+    func textViewDidChange(_ textView: UITextView) {
+        // text 숫자 업데이트
+        countLabel.text = "\(textView.text.count)/\(maxCount)"
+
+        // 최대 글자수 제한 로직
+        if let text = textView.text {
+            if text.count >= maxCount {
+                let maxCountIndex = text.index(text.startIndex, offsetBy: maxCount)
+                let fixedText = String(text[text.startIndex..<maxCountIndex])
+                textView.text = fixedText + " "
+                self.countLabel.text = "\(maxCount)/\(maxCount)"
+                self.textView.text = fixedText
+            }
+        }
+    }
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        placeholderLabel.isHidden = true
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            placeholderLabel.isHidden = false
+        }
     }
 }
