@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class BasicTextView: UIView {
+final class BasicTextView: UIView {
 
     private let placeholder: String
 

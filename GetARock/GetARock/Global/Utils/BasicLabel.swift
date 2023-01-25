@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class BasicLabel: UILabel {
+final class BasicLabel: UILabel {
 
     private let contentText: String
     private let fontStyle: FontType
