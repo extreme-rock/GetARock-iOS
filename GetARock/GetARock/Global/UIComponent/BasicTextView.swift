@@ -96,27 +96,10 @@ extension BasicTextView: UITextViewDelegate {
 }
 
 //MARK: Test code case1
-// 기본 텍스트뷰 (글자수 제한 300) + UIStackView에 사용하는 경우 (stackView의 크기에 맞춤)
-class BasicTextViewTestClass: UIViewController {
+// 기본 글자수 제한 300 + x,y 위치만 잡아주는 경우 (클래스 내에서 지정된 원래 크기로 할당됨)
+class BasicTextViewfirstTestClass: BaseViewController {
 
-    let firstTestTextView = BasicTextView(placeholder: "테스트용 텍스트뷰 입니다")
-
-    lazy var stackView = UIStackView(arrangedSubviews: [firstTestTextView])
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.addSubview(stackView)
-        stackView.constraint(centerX: view.centerXAnchor, centerY: view.centerYAnchor)
-        stackView.constraint(.widthAnchor, constant: 200)
-        stackView.constraint(.heightAnchor, constant: 400)
-    }
-}
-
-//MARK: Test code case2
-// 글자수 제한 30 + x,y 위치만 잡아주는 경우 (클래스 내에서 지정된 원래 크기로 할당됨)
-class BasicTextViewSecondTestClass: UIViewController {
-
-    let secondTestTextView = BasicTextView(placeholder: "테스트용", maxCount: 30)
+    let secondTestTextView = BasicTextView(placeholder: "테스트용 텍스트뷰 입니다")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,3 +109,19 @@ class BasicTextViewSecondTestClass: UIViewController {
     }
 }
 
+//MARK: Test code case2
+// 글자수 제한 30 + UIStackView에 사용하는 경우 (stackView의 크기에 맞춤)
+class BasicTextViewSecondTestClass: BaseViewController {
+
+    let firstTestTextView = BasicTextView(placeholder: "테스트용", maxCount: 30)
+
+    lazy var stackView = UIStackView(arrangedSubviews: [firstTestTextView])
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(stackView)
+        stackView.constraint(centerX: view.centerXAnchor, centerY: view.centerYAnchor)
+        stackView.constraint(.widthAnchor, constant: 300)
+        stackView.constraint(.heightAnchor, constant: 200)
+    }
+}
