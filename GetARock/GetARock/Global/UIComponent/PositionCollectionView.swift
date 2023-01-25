@@ -24,12 +24,12 @@ final class PositionCollectionView: UIView {
     
     // MARK: - Property
     
-    enum EntryPoint {
+    enum CellType {
         case band
         case position
     }
     
-    private var entryPoint: EntryPoint
+    private var entryPoint: CellType
     weak var delegate: PositionCollectionViewDelegate?
     
     private var items: [Item] = []
@@ -72,7 +72,7 @@ final class PositionCollectionView: UIView {
     
     // MARK: - init
     
-    init(entryPoint: EntryPoint, items: [Item]) {
+    init(entryPoint: CellType, items: [Item]) {
         self.entryPoint = entryPoint
         self.items = items
         super.init(frame: .zero)
