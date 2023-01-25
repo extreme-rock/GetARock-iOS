@@ -15,7 +15,7 @@ final class BasicTextView: UIView {
     private lazy var textView: UITextView = {
         // 행간 세팅
         let style = NSMutableParagraphStyle()
-        let attributedString = NSMutableAttributedString(string: textView.text)
+        let attributedString = NSMutableAttributedString(string: $0.text)
         style.lineSpacing = CGFloat(7)
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedString.length))
 
