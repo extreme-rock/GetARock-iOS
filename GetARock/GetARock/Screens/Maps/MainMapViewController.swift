@@ -96,7 +96,7 @@ final class MainMapViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        moveMap()
+        moveMap(to: currentCoordinate)
     }
 
     // MARK: - Method
@@ -151,11 +151,10 @@ final class MainMapViewController: UIViewController {
         }
     }
     
-    private func moveMap() {
-        camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
-                                          longitude: currentCoordinate.longitude,
-                                          zoom: zoomInRange)
-        mapView.camera = camera
+    private func moveMap(to coordinate: CLLocationCoordinate2D?) {
+        guard let coordinate else { return }
+        let camera = GMSCameraUpdate.setTarget(coordinate, zoom: zoomInRange)
+        mapView.animate(with: camera)
     }
     
     private func moveMyLocationMarker(to coordinate: CLLocationCoordinate2D?) {
