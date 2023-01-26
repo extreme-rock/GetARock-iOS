@@ -65,6 +65,11 @@ final class SelectCollectionView: UIView {
         self.addSubview(collectionView)
         collectionView.constraint(to: self)
     }
+    
+    func selectedItem() -> String {
+        let selectedIndex = collectionView.indexPathsForSelectedItems?.first
+        return items[selectedIndex?.item ?? 0]
+    }
 }
 
 extension SelectCollectionView: UICollectionViewDataSource {
