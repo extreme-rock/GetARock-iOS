@@ -178,7 +178,6 @@ extension MainMapViewController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         // 이전에 선택한 마커와 같은 마커를 선택하면 별다른 동작 없이 return
         if self.mapView.selectedMarker == marker {
-            print("같은 마커 선택")
             return true
         }
         
@@ -187,7 +186,6 @@ extension MainMapViewController: GMSMapViewDelegate {
         if previousSelectedMarker != nil {
             previousSelectedMarker!.changeBandMarkerImageWhenDeselected()
             self.mapView.selectedMarker = nil
-            print("didTap 실행")
         }
 
         // mapView의 selectedMarker를 현재 선택한 마커로 변경, 핀 모양 이미지로 변경
@@ -201,11 +199,9 @@ extension MainMapViewController: GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        print("didTapAt 실행")
         if self.previousSelectedMarker != nil {
             let previousSelectedMarker = self.previousSelectedMarker as! CustomMarker
             previousSelectedMarker.changeBandMarkerImageWhenDeselected()
-            print("didTapAt guard문 아래로 실행")
         }
     }
 }
