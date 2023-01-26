@@ -137,6 +137,18 @@ final class MainMapViewController: UIViewController {
     
     private func setMarkers() {
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
+        
+        for band in testBands {
+            let marker = BandMarker(labelText: band.name)
+            marker.position = band.location.coordinate.toCLLocationCoordinate2D()
+            marker.map = mapView
+        }
+        for event in testEvents {
+            // TODO: 이벤트 이름 -> 밴드 이름으로 변경
+            let marker = EventMarker(labelText: event.name)
+            marker.position = event.location.coordinate.toCLLocationCoordinate2D()
+            marker.map = mapView
+        }
     }
     
     private func moveMap() {
