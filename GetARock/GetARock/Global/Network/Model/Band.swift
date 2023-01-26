@@ -24,7 +24,7 @@ var testBands: [Band] = [
         address: "대구광역시 남구 명덕로 102",
         additionalAddress: "레드제플린",
         coordinate: Coordinate(latitude: 35.85672, longitude: 128.58130))),
-    Band(name: "블랙로즈", location: Location(
+    Band(name: "블랙로즈블랙로즈블랙", location: Location(
         name: "블랙로즈",
         address: "대한민국 대구광역시 중구 태평로2가 17-11",
         additionalAddress: nil,
