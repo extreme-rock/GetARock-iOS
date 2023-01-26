@@ -16,7 +16,7 @@ final class BasicTextView: UIView {
         // 행간 세팅
         let style = NSMutableParagraphStyle()
         let attributedString = NSMutableAttributedString(string: $0.text)
-        style.lineSpacing = CGFloat(7)
+        style.lineSpacing = CGFloat(10)
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedString.length))
 
         $0.attributedText = attributedString
@@ -28,7 +28,7 @@ final class BasicTextView: UIView {
         return $0
     }(UITextView())
 
-    private lazy var countLabel = BasicLabel(contentText: "\(textView.text.count)/\(maxCount)", fontStyle: .headline01, textColorInfo: .gray02)
+    private lazy var countLabel = BasicLabel(contentText: "\(textView.text.count)/\(maxCount)", fontStyle: .content, textColorInfo: .gray02)
 
     private lazy var placeholderLabel: UILabel = BasicLabel(contentText: placeholder, fontStyle: .content, textColorInfo: .gray02)
 
