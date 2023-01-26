@@ -20,7 +20,7 @@ final class MainMapViewController: UIViewController {
     
     private var mapView: GMSMapView!
     private var myLocationMarker = GMSMarker()
-    private var previousSelectedMaker: GMSMarker?
+    private var previousSelectedMarker: GMSMarker?
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
 
@@ -175,7 +175,39 @@ final class MainMapViewController: UIViewController {
 // MARK: - GMSMapViewDelegate
 
 extension MainMapViewController: GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        // 이전에 선택한 마커와 같은 마커를 선택하면 별다른 동작 없이 return
+        if self.mapView.selectedMarker == marker {
+            print("같은 마커 선택")
+            return true
+        }
+        
+        // 이전에 선택된 마커 이미지를 원래대로 변경
+        let previousSelectedMarker = self.mapView.selectedMarker as? CustomMarker
+        if previousSelectedMarker != nil {
+            previousSelectedMarker!.changeBandMarkerImageWhenDeselected()
+            self.mapView.selectedMarker = nil
+            print("didTap 실행")
+        }
+
+        // mapView의 selectedMarker를 현재 선택한 마커로 변경, 핀 모양 이미지로 변경
+        self.mapView.selectedMarker = marker
+        let selectedMarker = self.mapView.selectedMarker as! CustomMarker
+        selectedMarker.changeBandMarkerImageWhenSelected()
+        self.previousSelectedMarker = selectedMarker
+        moveMap(to: selectedMarker.position)
+        
+        return true
+    }
     
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        print("didTapAt 실행")
+        if self.previousSelectedMarker != nil {
+            let previousSelectedMarker = self.previousSelectedMarker as! CustomMarker
+            previousSelectedMarker.changeBandMarkerImageWhenDeselected()
+            print("didTapAt guard문 아래로 실행")
+        }
+    }
 }
 
 // MARK: - CLLocationManagerDelegate

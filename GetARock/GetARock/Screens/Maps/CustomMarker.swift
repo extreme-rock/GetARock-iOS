@@ -68,4 +68,16 @@ final class CustomMarker: GMSMarker {
         
         self.iconView = stackView
     }
+    
+    func changeBandMarkerImageWhenSelected() {
+        if markerImage.image == UIImage(named: "bandMarker") {
+            markerImage.image = UIImage(named: "selectedBandMarker")
+        }
+    }
+    
+    func changeBandMarkerImageWhenDeselected() {
+        if markerImage.image == UIImage(named: "selectedBandMarker") {
+            markerImage.image = UIImage(named: "bandMarker")
+        }
+    }
 }
