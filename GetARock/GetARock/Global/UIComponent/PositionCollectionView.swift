@@ -20,6 +20,7 @@ enum Item: Hashable {
     case position(Position)
 }
 
+
 final class PositionCollectionView: UIView {
     
     // MARK: - Property
@@ -56,7 +57,8 @@ final class PositionCollectionView: UIView {
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        $0.collectionViewLayout = layout
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.allowsMultipleSelection = true
@@ -68,7 +70,7 @@ final class PositionCollectionView: UIView {
             collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.classIdentifier)
         }
         return collectionView
-    }()
+    }(UICollectionView())
     
     // MARK: - init
     
@@ -130,11 +132,11 @@ extension PositionCollectionView: UICollectionViewDelegate {
 class TestViewController: UIViewController {
     
     //entrypOint position 테스트코드
-    private let collectionView = PositionCollectionView(entryPoint: .position, items: [.position(Position(instrumentName: "기타", instrumentImageName: "guitar", isETC: false)),
-                                                                                   .position(Position(instrumentName: "베이스", instrumentImageName: "bass", isETC: false)),
-                                                                                   .position(Position(instrumentName: "보컬", instrumentImageName: "vocal", isETC: false)),
-                                                                                   .position(Position(instrumentName: "drum", instrumentImageName: "drum", isETC: false)),
-                                                                                       .position(Position(instrumentName: "콘트라베이스으으으", instrumentImageName: "etc", isETC: false)),
+    private let collectionView = PositionCollectionView(entryPoint: .position, items: [.position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
+                                                                                       .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
+                                                                                       .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
+                                                                                       .position(Position(instrumentName: "drum", instrumentImageName: .drum, isETC: false)),
+                                                                                       .position(Position(instrumentName: "콘트라베이스으으으", instrumentImageName: .etc, isETC: false)),
     ])
     
     //entrypOint band 테스트코드

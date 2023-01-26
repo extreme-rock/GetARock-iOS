@@ -10,6 +10,6 @@ import Foundation
 struct Position: Hashable {
     let id = UUID()
     let instrumentName: String
-    let instrumentImageName: String
+    let instrumentImageName: InstrumentImageName
     let isETC: Bool
 }
