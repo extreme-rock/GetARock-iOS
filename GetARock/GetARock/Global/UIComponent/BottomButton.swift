@@ -9,6 +9,10 @@ import UIKit
 
 final class BottomButton: UIButton {
     
+    override func setNeedsLayout() {
+        self.applyMainGradient()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -24,7 +28,6 @@ final class BottomButton: UIButton {
         layer.cornerRadius = 10
         titleLabel?.font = UIFont.setFont(.headline02)
         setBackgroundColor(.dark04, for: .disabled)
-        setBackgroundColor(.mainPurple, for: .normal)
         setTitleColor(.white, for: .normal)
     }
 
