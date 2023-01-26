@@ -7,19 +7,19 @@
 
 import UIKit
 
+enum WidthState {
+    case fixedWidth
+    case flexableWidth
+}
+
 final class SelectCollectionView: UIView {
     
     // MARK: - Property
     
     private let items: [String]
-    private var entryPoint: EntryPoint
+    private var widthState: WidthState
     private var widthSize: CGFloat
-    
-    enum EntryPoint {
-        case fixedWidth
-        case flexableWidth
-    }
-    
+
     // MARK: - View
     
     private lazy var collectionView: UICollectionView = {
@@ -31,7 +31,7 @@ final class SelectCollectionView: UIView {
                                                heightDimension: .absolute(46))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
-                                                        subitems: [item])
+                                                       subitems: [item])
         group.interItemSpacing = .fixed(5)
         
         let section = NSCollectionLayoutSection(group: group)
@@ -47,18 +47,19 @@ final class SelectCollectionView: UIView {
         return collectionView
     }()
     
-    init(entryPoint: EntryPoint, items: [String], widthSize: CGFloat) {
-        self.entryPoint = entryPoint
+    init(widthState: WidthState, items: [String], widthSize: CGFloat) {
+        self.widthState = widthState
         self.items = items
         self.widthSize = widthSize
         super.init(frame: .zero)
         setupLayout()
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Method
     
     private func setupLayout() {
         self.addSubview(collectionView)
@@ -68,7 +69,6 @@ final class SelectCollectionView: UIView {
 
 extension SelectCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(items)
         return items.count
     }
     
@@ -78,24 +78,18 @@ extension SelectCollectionView: UICollectionViewDataSource {
         var width: CGFloat
         var backgroundColor: UIColor
         
-        switch entryPoint {
+        switch widthState {
         case .fixedWidth:
             width = widthSize
             backgroundColor = .dark03
         case .flexableWidth:
-//            width = items[indexPath.item].size(withAttributes: [
-//                .font : UIFont.setFont(.content)
-//            ]).width + widthSize * 2
             width = widthSize
-            print(width, "width")
             backgroundColor = .dark02
         }
         
-        DispatchQueue.main.async {
-            cell.setupLayout(width: width)
-            cell.configure(color: backgroundColor, text: self.items[indexPath.item])
-        }
+        cell.setupLayout(width: width, widthState: widthState)
+        cell.configure(color: backgroundColor, text: self.items[indexPath.item])
+        
         return cell
     }
-    
 }
