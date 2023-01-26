@@ -31,6 +31,8 @@
 		B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88E1BDE2977ACB6006072B7 /* SampleView.swift */; };
 		B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88E1BE02977AD2D006072B7 /* UIColor+Extension.swift */; };
 		B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88E1BE42977AEC2006072B7 /* LandingViewController.swift */; };
+		B8B17C522980B93300806899 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C512980B93300806899 /* Location.swift */; };
+		B8B17C542980B99900806899 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C532980B99900806899 /* Coordinate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		B88E1BDE2977ACB6006072B7 /* SampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleView.swift; sourceTree = "<group>"; };
 		B88E1BE02977AD2D006072B7 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		B88E1BE42977AEC2006072B7 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		B8B17C512980B93300806899 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		B8B17C532980B99900806899 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +212,7 @@
 		B88E1BCE2977A8C6006072B7 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				B8B17C4B2980A25C00806899 /* Network */,
 				4AF584582978E46A008F4068 /* Utils */,
 				B88E1BD12977A944006072B7 /* Base */,
 				B88E1BD02977A921006072B7 /* Supports */,
@@ -291,6 +296,23 @@
 				B88E1BE42977AEC2006072B7 /* LandingViewController.swift */,
 			);
 			path = Landing;
+			sourceTree = "<group>";
+		};
+		B8B17C4B2980A25C00806899 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B8B17C4D2980B44D00806899 /* Model */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B8B17C4D2980B44D00806899 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B8B17C512980B93300806899 /* Location.swift */,
+				B8B17C532980B99900806899 /* Coordinate.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -538,6 +560,7 @@
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
+				B8B17C522980B93300806899 /* Location.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
 				9A29E6E8297E223A00D4A433 /* TextFieldSize.swift in Sources */,
@@ -547,6 +570,7 @@
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
 				7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */,
 				B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */,
+				B8B17C542980B99900806899 /* Coordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
