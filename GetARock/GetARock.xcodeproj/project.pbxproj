@@ -16,6 +16,8 @@
 		9A29E6E8297E223A00D4A433 /* TextFieldSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* TextFieldSize.swift */; };
 		9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E9297E233900D4A433 /* BasicTextField.swift */; };
 		A769E177D6AA52251CAA0997 /* Pods_GetARockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */; };
+		B808B69029826E1F00A1A9E2 /* BandMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B68F29826E1F00A1A9E2 /* BandMarker.swift */; };
+		B808B692298291DE00A1A9E2 /* EventMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B691298291DE00A1A9E2 /* EventMarker.swift */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
 		B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */; };
 		B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */; };
@@ -70,6 +72,8 @@
 		9A29E6E7297E223A00D4A433 /* TextFieldSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSize.swift; sourceTree = "<group>"; };
 		9A29E6E9297E233900D4A433 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B808B68F29826E1F00A1A9E2 /* BandMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMarker.swift; sourceTree = "<group>"; };
+		B808B691298291DE00A1A9E2 /* EventMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMarker.swift; sourceTree = "<group>"; };
 		B8468F5E29797E7D00A9E77E /* MapsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MapsInfo.plist; sourceTree = "<group>"; };
 		B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */,
+				B808B68F29826E1F00A1A9E2 /* BandMarker.swift */,
+				B808B691298291DE00A1A9E2 /* EventMarker.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -573,11 +579,13 @@
 				9A29E6E8297E223A00D4A433 /* TextFieldSize.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
+				B808B692298291DE00A1A9E2 /* EventMarker.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
 				7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */,
 				B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */,
+				B808B69029826E1F00A1A9E2 /* BandMarker.swift in Sources */,
 				B8B17C542980B99900806899 /* Coordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
