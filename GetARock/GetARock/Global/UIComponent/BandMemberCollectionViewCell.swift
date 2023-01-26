@@ -13,9 +13,9 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .dark01
+        view.backgroundColor = .dark02
         view.layer.cornerRadius = 15
-        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderColor = UIColor.gray02.cgColor
         view.layer.borderWidth = 1
         return view
     }()
@@ -90,8 +90,8 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     }
     
     private func applyUserState(isUser: Bool) {
-        self.containerView.backgroundColor = isUser ? .activeGradationPurple : .dark01
-        self.containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.white.cgColor
+        self.containerView.backgroundColor = isUser ? .activeGradationPurple : .dark02
+        self.containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
     
     private func configureLeaderUI() {
