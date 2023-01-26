@@ -17,8 +17,11 @@ final class BasicTextView: UIView {
         let style = NSMutableParagraphStyle()
         let attributedString = NSMutableAttributedString(string: $0.text)
         style.lineSpacing = CGFloat(10)
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedString.length))
-
+        attributedString.addAttribute(
+            NSAttributedString.Key.paragraphStyle,
+            value: style,
+            range: NSRange(location: 0, length: attributedString.length)
+        )
         $0.attributedText = attributedString
         $0.font = UIFont.setFont(.content)
         $0.textColor = .white
@@ -28,9 +31,17 @@ final class BasicTextView: UIView {
         return $0
     }(UITextView())
 
-    private lazy var countLabel = BasicLabel(contentText: "\(textView.text.count)/\(maxCount)", fontStyle: .content, textColorInfo: .gray02)
+    private lazy var countLabel = BasicLabel(
+        contentText: "\(textView.text.count)/\(maxCount)",
+        fontStyle: .content,
+        textColorInfo: .gray02
+    )
 
-    private lazy var placeholderLabel: UILabel = BasicLabel(contentText: placeholder, fontStyle: .content, textColorInfo: .gray02)
+    private lazy var placeholderLabel: UILabel = BasicLabel(
+        contentText: placeholder,
+        fontStyle: .content,
+        textColorInfo: .gray02
+    )
 
     init(placeholder: String, maxCount: Int? = nil) {
         self.placeholder = placeholder
@@ -57,13 +68,27 @@ final class BasicTextView: UIView {
         self.constraint(.heightAnchor, constant: TextViewSize.height)
 
         self.addSubview(textView)
-        textView.constraint(top: self.topAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom:50, right: 10))
+        textView.constraint(
+            top: self.topAnchor,
+            leading: self.leadingAnchor,
+            bottom: self.bottomAnchor,
+            trailing: self.trailingAnchor,
+            padding: UIEdgeInsets(top: 10, left: 10, bottom:50, right: 10)
+        )
 
         self.addSubview(countLabel)
-        countLabel.constraint(bottom: self.bottomAnchor, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20))
+        countLabel.constraint(
+            bottom: self.bottomAnchor,
+            trailing: self.trailingAnchor,
+            padding: UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
+        )
 
         self.addSubview(placeholderLabel)
-        placeholderLabel.constraint(top: self.topAnchor, leading: self.leadingAnchor, padding: UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 0))
+        placeholderLabel.constraint(
+            top: self.topAnchor,
+            leading: self.leadingAnchor,
+            padding: UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 0)
+        )
     }
 }
 
@@ -105,7 +130,11 @@ class BasicTextViewfirstTestClass: BaseViewController {
         super.viewDidLoad()
 
         view.addSubview(secondTestTextView)
-        secondTestTextView.constraint(centerX: view.centerXAnchor, centerY: view.centerYAnchor, padding: UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0))
+        secondTestTextView.constraint(
+            centerX: view.centerXAnchor,
+            centerY: view.centerYAnchor,
+            padding: UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 0)
+        )
     }
 }
 
@@ -119,6 +148,7 @@ class BasicTextViewSecondTestClass: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.addSubview(stackView)
         stackView.constraint(centerX: view.centerXAnchor, centerY: view.centerYAnchor)
         stackView.constraint(.widthAnchor, constant: 300)
