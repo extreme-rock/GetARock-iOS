@@ -13,7 +13,7 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            
+            applySelectedState()
         }
     }
     
@@ -35,8 +35,14 @@ final class SelectCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private var cellColor: UIColor? = nil
+    
     // MARK: - Init
-
+    
+    override func setNeedsLayout() {
+        self.contentView.applyActiveGradation()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -73,9 +79,10 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     func configure(color: UIColor, text: String) {
         self.containerView.backgroundColor = color
         self.label.text = text
+        self.cellColor = color
     }
     
     private func applySelectedState() {
-        
+        self.containerView.backgroundColor = isSelected ? .clear : self.cellColor
     }
 }
