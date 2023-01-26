@@ -13,4 +13,3 @@ struct Song: Hashable {
     let artist: String
     let link: String?
 }
-
