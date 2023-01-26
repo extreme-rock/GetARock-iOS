@@ -14,6 +14,19 @@ final class MainMapViewController: UIViewController {
     
     // MARK: - Property
     
+    private lazy var camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
+                                                       longitude: currentCoordinate.longitude,
+                                                       zoom: zoomInRange)
+    
+    private var mapView: GMSMapView!
+    private var myLocationMarker = GMSMarker()
+    private var previousSelectedMaker: GMSMarker?
+    private var locationManager = CLLocationManager()
+    private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
+
+
+    private let zoomInRange: Float = 15
+    
     private var currentLocationLabel: UILabel = {
         $0.text = "포항시 남구 효자동"
         $0.textColor = .white
@@ -60,16 +73,6 @@ final class MainMapViewController: UIViewController {
         $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
         return $0
     }(UIButton())
-    
-    private var mapView: GMSMapView!
-    private var myLocationMarker = GMSMarker()
-    private lazy var camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
-                                                       longitude: currentCoordinate.longitude,
-                                                       zoom: zoomInRange)
-    
-    private var locationManager = CLLocationManager()
-    private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
-    private let zoomInRange: Float = 15
     
     // MARK: - Life Cycle
     
