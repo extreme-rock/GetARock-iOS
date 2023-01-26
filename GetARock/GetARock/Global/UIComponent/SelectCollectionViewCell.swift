@@ -8,7 +8,16 @@
 import UIKit
 
 final class SelectCollectionViewCell: UICollectionViewCell {
-    // 간격 입력받고, 테두리 배경색 입력받고,
+    
+    // MARK: - Property
+    
+    override var isSelected: Bool {
+        didSet {
+            
+        }
+    }
+    
+    // MARK: - View
     
     private let containerView: UIView = {
         let view = UIView()
@@ -26,6 +35,8 @@ final class SelectCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -33,6 +44,8 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Method
     
     func setupLayout(width: CGFloat, widthState: WidthState) {
         self.contentView.addSubview(containerView)
@@ -60,5 +73,9 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     func configure(color: UIColor, text: String) {
         self.containerView.backgroundColor = color
         self.label.text = text
+    }
+    
+    private func applySelectedState() {
+        
     }
 }
