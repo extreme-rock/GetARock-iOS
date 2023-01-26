@@ -139,14 +139,16 @@ final class MainMapViewController: UIViewController {
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
         
         for band in testBands {
-            let marker = BandMarker(labelText: band.name)
-            marker.position = band.location.coordinate.toCLLocationCoordinate2D()
+            let marker = CustomMarker(bandName: band.name,
+                                      coordinate: band.location.coordinate.toCLLocationCoordinate2D(),
+                                      category: .band)
             marker.map = mapView
         }
         for event in testEvents {
             // TODO: 이벤트 이름 -> 밴드 이름으로 변경
-            let marker = EventMarker(labelText: event.name)
-            marker.position = event.location.coordinate.toCLLocationCoordinate2D()
+            let marker = CustomMarker(bandName: event.name,
+                                      coordinate: event.location.coordinate.toCLLocationCoordinate2D(),
+                                      category: .event)
             marker.map = mapView
         }
     }
