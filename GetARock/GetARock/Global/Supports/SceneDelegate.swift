@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = TestViewController()
+        window.rootViewController = LandingViewController()
         window.makeKeyAndVisible()
         self.window = window
     }
