@@ -8,7 +8,6 @@
 import Foundation
 
 struct Song: Hashable {
-    let id = UUID()
     let title: String
     let artist: String
     let link: String?
