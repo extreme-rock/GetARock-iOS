@@ -10,25 +10,26 @@ import UIKit
 class SongListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Property
+    
     private let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 20)
     
     // MARK: - View
     
-    private var songTitleLabel: UILabel = {
+    let songTitleLabel: UILabel = {
         $0.font = UIFont.setFont(.content)
         $0.numberOfLines = 2
         $0.textColor = .white
         return $0
     }(UILabel())
     
-    private var artistLabel: UILabel = {
+    let artistLabel: UILabel = {
         $0.font = UIFont.setFont(.content)
         $0.numberOfLines = 2
         $0.textColor = .gray02
         return $0
     }(UILabel())
     
-    private lazy var musicIconImage: UIImageView = {
+    lazy var musicIconImage: UIImageView = {
         $0.image = UIImage(
             systemName: "music.quarternote.3"
         )
@@ -36,14 +37,12 @@ class SongListCollectionViewCell: UICollectionViewCell {
         $0.tintColor = .white
         $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
                                      for: .horizontal)
-        $0.setContentCompressionResistancePriority(
-            UILayoutPriority(rawValue: 760),
-            for: .horizontal
-        )
+        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
+                                                   for: .horizontal)
         return $0
     }(UIImageView())
     
-    private lazy var linkButton: UIButton = {
+    lazy var linkButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "arrow.up.right",
             withConfiguration: imageConfiguation), for: .normal
@@ -58,7 +57,7 @@ class SongListCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIButton())
     
-    private lazy var deleteButton: UIButton = {
+    lazy var deleteButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "xmark.circle.fill",
             withConfiguration: imageConfiguation),for: .normal
@@ -67,9 +66,8 @@ class SongListCollectionViewCell: UICollectionViewCell {
         $0.tintColor = .gray02
         $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
                                      for: .horizontal)
-        $0.setContentCompressionResistancePriority(
-            UILayoutPriority(rawValue: 760),
-            for: .horizontal
+        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
+                                                   for: .horizontal
         )
         return $0
     }(UIButton())
@@ -111,24 +109,16 @@ class SongListCollectionViewCell: UICollectionViewCell {
     
     private func setupLayout() {
         addSubview(songStakView)
-        self.songStakView.constraint(.widthAnchor, constant: TextFieldSize.width)
+        self.songStakView.constraint(to: self)
     }
     
-//    private func setupSongListLayout() {
-//        switch songListType {
-//        case .create:
-//            songStakView.addArrangedSubview(deleteButton)
-//        case .detail:
-//            setupdetailSongListLayout(data: songs)
-//        }
-//    }
-//    
-    private func setupDeleteButtonLayout() {
+    func setupDeleteButtonLayout() {
         songStakView.addArrangedSubview(deleteButton)
     }
     
-    private func setupLinkLayout() {
+    func setupLinkButtonLayout() {
         songStakView.addArrangedSubview(linkButton)
     }
+
 }
 
