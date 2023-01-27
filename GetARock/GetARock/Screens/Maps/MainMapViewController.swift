@@ -5,6 +5,7 @@
 //  Created by Mijoo Kim on 2023/01/20.
 //
 
+import CoreLocation
 import UIKit
 
 import GoogleMaps
@@ -12,8 +13,6 @@ import GoogleMaps
 final class MainMapViewController: UIViewController {
     
     // MARK: - Property
-    
-    private var mapView: GMSMapView!
     
     private var currentLocationLabel: UILabel = {
         $0.text = "포항시 남구 효자동"
@@ -62,13 +61,25 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private var mapView: GMSMapView!
+    private var myLocationMarker = GMSMarker()
+    private lazy var camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
+                                                       longitude: currentCoordinate.longitude,
+                                                       zoom: zoomInRange)
+    
+    private var locationManager = CLLocationManager()
+    private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
+    private let zoomInRange: Float = 15
+    
     // MARK: - Life Cycle
     
     override func loadView() {
-        let camera: GMSCameraPosition = GMSCameraPosition.camera(withLatitude: -33.86,
-                                                                 longitude: 151.20,
-                                                                 zoom: 11)
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
+        
+        myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
+                                                   longitude: currentCoordinate.longitude)
+        myLocationMarker.title = "현재 위치"
+        myLocationMarker.map = mapView
         
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
         self.view = mapView
@@ -78,8 +89,14 @@ final class MainMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
+        self.setLocationManager()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        moveMap()
+    }
+
     // MARK: - Method
     
     private func setupLayout() {
@@ -106,10 +123,70 @@ final class MainMapViewController: UIViewController {
         
     }
     
+    private func setLocationManager() {
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    private func moveMap() {
+        camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
+                                          longitude: currentCoordinate.longitude,
+                                          zoom: zoomInRange)
+        mapView.camera = camera
+    }
+    
+    private func moveMyLocationMarker(to coordinate: CLLocationCoordinate2D?) {
+        guard let coordinate else { return }
+        self.currentCoordinate = coordinate
+        myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
+                                                           longitude: currentCoordinate.longitude)
+        myLocationMarker.map = mapView
+    }
+    
 }
 
 // MARK: - GMSMapViewDelegate
 
 extension MainMapViewController: GMSMapViewDelegate {
     
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension MainMapViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        default:
+            print("위치 서비스를 허용하지 않음")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let currentLocation = locations.first else { return }
+        moveMyLocationMarker(to: currentLocation.coordinate)
+        
+        CLGeocoder().reverseGeocodeLocation(
+            currentLocation,
+            completionHandler: { placemarks, _ in
+                guard let currentPlacemark = placemarks?.first else { return }
+                var address: String = ""
+                if let city = currentPlacemark.locality {
+                    address += city
+                }
+                if let street = currentPlacemark.thoroughfare {
+                    address += " \(street)"
+                }
+                self.currentLocationLabel.text = address
+            }
+        )
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
 }
