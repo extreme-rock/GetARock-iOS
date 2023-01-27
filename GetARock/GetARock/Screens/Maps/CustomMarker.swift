@@ -11,7 +11,7 @@ import GoogleMaps
 
 final class CustomMarker: GMSMarker {
 
-    enum Category {
+    enum MarkerCategory {
         case band
         case event
         
@@ -27,7 +27,7 @@ final class CustomMarker: GMSMarker {
     
     var bandName: String!
     var coordinate: CLLocationCoordinate2D!
-    var category: Category!
+    var category: MarkerCategory!
     
     var label: UILabel!
     var markerImage: UIImageView!
@@ -41,7 +41,7 @@ final class CustomMarker: GMSMarker {
     
     // MARK: - Init
     
-    init(bandName: String, coordinate: CLLocationCoordinate2D, category: Category) {
+    init(bandName: String, coordinate: CLLocationCoordinate2D, category: MarkerCategory) {
         super.init()
 
         self.category = category
