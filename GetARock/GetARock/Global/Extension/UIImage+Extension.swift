@@ -16,9 +16,9 @@ extension UIImage {
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         
         let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        
-        return renderer.image { ctx in
-            gradientLayer.render(in: ctx.cgContext)
+
+        return renderer.image { context in
+            gradientLayer.render(in: context.cgContext)
         }
     }
 }
