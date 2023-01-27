@@ -43,7 +43,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     
     private let deleteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         button.tintColor = .white
         return button
     }()

@@ -42,7 +42,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     
     private let linkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.up.right"), for: .normal)
+        button.setImage(ImageLiteral.arrowUpRightSymbol, for: .normal)
         button.tintColor = .mainPurple
         return button
     }()
@@ -97,7 +97,8 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     private func configureLeaderUI() {
         let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 18)
         let crownImage = UIImageView()
-        crownImage.image = UIImage(systemName: "crown", withConfiguration: imageConfiguation)
+        crownImage.image = ImageLiteral.crownSymbol
+        crownImage.image?.withConfiguration(imageConfiguation)
         crownImage.tintColor = .white
         self.containerView.addSubview(crownImage)
         crownImage.constraint(top: containerView.topAnchor,
