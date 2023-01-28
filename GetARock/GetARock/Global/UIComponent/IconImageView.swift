@@ -18,7 +18,7 @@ class IconImageView: UIImageView {
     
     private var iconType: IconType
     private let imageView = UIImageView()
-    private let iconSize: CGFloat = 50
+    private let iconSize: CGFloat = 40
     
     // MARK: - Init
     
