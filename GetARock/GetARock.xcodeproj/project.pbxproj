@@ -15,9 +15,11 @@
 		7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA1874297AA10800A40488 /* UIFont+Extension.swift */; };
 		943928805D82F089F179FC19 /* Pods_GetARock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */; };
 		9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */; };
-		9A29E6E8297E223A00D4A433 /* TextFieldSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* TextFieldSize.swift */; };
+		9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */; };
 		9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E9297E233900D4A433 /* BasicTextField.swift */; };
 		A769E177D6AA52251CAA0997 /* Pods_GetARockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */; };
+		A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0A2981706C00905BC9 /* BasicTextView.swift */; };
+		A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0C2981714800905BC9 /* BasicLabel.swift */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
 		B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */; };
 		B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */; };
@@ -67,8 +69,10 @@
 		7BEA1874297AA10800A40488 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		9519F0525025E6972410CA40 /* Pods-GetARock-GetARockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock-GetARockUITests.debug.xcconfig"; path = "Target Support Files/Pods-GetARock-GetARockUITests/Pods-GetARock-GetARockUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
-		9A29E6E7297E223A00D4A433 /* TextFieldSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSize.swift; sourceTree = "<group>"; };
+		9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentSize.swift; sourceTree = "<group>"; };
 		9A29E6E9297E233900D4A433 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
+		A96B8A0A2981706C00905BC9 /* BasicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextView.swift; sourceTree = "<group>"; };
+		A96B8A0C2981714800905BC9 /* BasicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabel.swift; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8468F5E29797E7D00A9E77E /* MapsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MapsInfo.plist; sourceTree = "<group>"; };
 		B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -136,7 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				4AF584592978E497008F4068 /* UIView+Constraints.swift */,
-				9A29E6E7297E223A00D4A433 /* TextFieldSize.swift */,
+				9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */,
+				A96B8A0C2981714800905BC9 /* BasicLabel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 			children = (
 				B88E1BDE2977ACB6006072B7 /* SampleView.swift */,
 				9A29E6E9297E233900D4A433 /* BasicTextField.swift */,
+				A96B8A0A2981706C00905BC9 /* BasicTextView.swift */,
 				4AC4CE46297FDFB500BB823C /* BottomButton.swift */,
 			);
 			path = UIComponent;
@@ -538,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
+				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
@@ -546,7 +553,8 @@
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
-				9A29E6E8297E223A00D4A433 /* TextFieldSize.swift in Sources */,
+				A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */,
+				9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
