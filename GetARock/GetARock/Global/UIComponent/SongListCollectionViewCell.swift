@@ -108,7 +108,7 @@ class SongListCollectionViewCell: UICollectionViewCell {
     // MARK: - Method
     
     private func setupLayout() {
-        addSubview(songStakView)
+        self.contentView.addSubview(songStakView)
         self.songStakView.constraint(to: self)
     }
     
