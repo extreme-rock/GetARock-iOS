@@ -9,7 +9,6 @@ import UIKit
 extension UITextField {
     static func makeBasicTextField(placeholder: String, characterLimit: Int? = nil) -> UITextField {
         let textField: UITextField = {
-            
             $0.attributedPlaceholder = NSAttributedString(
                 string: placeholder,
                 attributes: [.foregroundColor: UIColor.gray02, .font: UIFont.setFont(.content)]
