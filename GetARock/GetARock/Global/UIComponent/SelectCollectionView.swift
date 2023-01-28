@@ -47,6 +47,8 @@ final class SelectCollectionView: UIView {
         return collectionView
     }()
     
+    //MARK: - Init
+    
     init(widthState: WidthState, items: [String], widthSize: CGFloat) {
         self.widthState = widthState
         self.items = items
