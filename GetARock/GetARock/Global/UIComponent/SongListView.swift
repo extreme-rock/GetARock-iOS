@@ -7,14 +7,14 @@
 
 import UIKit
 
+enum SongListType {
+    case create
+    case detail
+}
+
 class SongListView: UIView {
     
     // MARK: - Property
-    
-    enum SongListType {
-        case create
-        case detail
-    }
     
     private var songListType: SongListType
     
@@ -79,18 +79,9 @@ extension SongListView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        
-        cell.songTitleLabel.text = testband[0].song?[indexPath.item].title
-        cell.artistLabel.text = testband[0].song?[indexPath.item].artist
-        
-        switch songListType {
-        case .create:
-            cell.setupDeleteButtonLayout()
-        case .detail:
-            if testband[0].song?[indexPath.item].link != nil {
-                cell.setupLinkButtonLayout()
-            }
-        }
+        cell.configure(
+            data: testband[0].song?[indexPath.item] ?? nil,
+            songListType: songListType)
         return cell
     }
 }

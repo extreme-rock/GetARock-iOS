@@ -119,6 +119,23 @@ class SongListCollectionViewCell: UICollectionViewCell {
     func setupLinkButtonLayout() {
         songStakView.addArrangedSubview(linkButton)
     }
+    
+    func configure(data: Song?, songListType: SongListType) {
+        
+        guard let songlist = data else { return }
+                
+        self.songTitleLabel.text = songlist.title
+        self.artistLabel.text = songlist.artist
+        
+        switch songListType {
+        case .create:
+            self.setupDeleteButtonLayout()
+        case .detail:
+            if songlist.link != nil {
+                self.setupLinkButtonLayout()
+            }
+        }
+    }
 
 }
 
