@@ -15,21 +15,21 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - View
     
-    let songTitleLabel: UILabel = {
+    private let songTitleLabel: UILabel = {
         $0.font = UIFont.setFont(.content)
         $0.numberOfLines = 2
         $0.textColor = .white
         return $0
     }(UILabel())
     
-    let artistLabel: UILabel = {
+    private let artistLabel: UILabel = {
         $0.font = UIFont.setFont(.content)
         $0.numberOfLines = 2
         $0.textColor = .gray02
         return $0
     }(UILabel())
     
-    lazy var musicIconImage: UIImageView = {
+    private lazy var musicIconImage: UIImageView = {
         $0.image = UIImage(
             systemName: "music.quarternote.3"
         )
@@ -42,7 +42,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIImageView())
     
-    lazy var linkButton: UIButton = {
+    private lazy var linkButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "arrow.up.right",
             withConfiguration: imageConfiguation), for: .normal
@@ -57,7 +57,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIButton())
     
-    lazy var deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "xmark.circle.fill",
             withConfiguration: imageConfiguation),for: .normal
@@ -112,11 +112,11 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         self.songStakView.constraint(to: self)
     }
     
-    func setupDeleteButtonLayout() {
+    private func setupDeleteButtonLayout() {
         songStakView.addArrangedSubview(deleteButton)
     }
     
-    func setupLinkButtonLayout() {
+    private func setupLinkButtonLayout() {
         songStakView.addArrangedSubview(linkButton)
     }
     
