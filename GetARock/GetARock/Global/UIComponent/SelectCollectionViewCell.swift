@@ -20,20 +20,18 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     // MARK: - View
     
     private let containerView: UIView = {
-        let view = UIView()
-        view.layer.borderColor = UIColor.gray02.cgColor
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 10
-        return view
-    }()
+        $0.layer.borderColor = UIColor.gray02.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        return $0
+    }(UIView())
     
     private let label: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.setFont(.content)
-        label.textColor = .white
-        label.textAlignment = .center
-        return label
-    }()
+        $0.font = UIFont.setFont(.content)
+        $0.textColor = .white
+        $0.textAlignment = .center
+        return $0
+    }(UILabel())
     
     private var cellColor: UIColor? = nil
     
