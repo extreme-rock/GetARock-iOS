@@ -35,7 +35,7 @@ final class CustomMarker: GMSMarker {
         return $0
     }(UILabel())
     
-    private var markerImage: UIImageView = {
+    private var markerImageView: UIImageView = {
         return $0
     }(UIImageView())
     
@@ -44,7 +44,7 @@ final class CustomMarker: GMSMarker {
         $0.alignment = .center
         $0.spacing = 3
         return $0
-    }(UIStackView(arrangedSubviews: [markerImage, label]))
+    }(UIStackView(arrangedSubviews: [markerImageView, label]))
     
     // MARK: - Init
     
@@ -56,7 +56,7 @@ final class CustomMarker: GMSMarker {
         super.init()
         
         label.text = bandName
-        markerImage.image = category.image
+        markerImageView.image = category.image
         
         setupLayout()
         attribute()
@@ -78,10 +78,10 @@ final class CustomMarker: GMSMarker {
     }
     
     func changeBandMarkerImageWhenSelected() {
-        markerImage.image = UIImage(named: "selectedBandMarker")
+        markerImageView.image = UIImage(named: "selectedBandMarker")
     }
     
     func changeBandMarkerImageWhenDeselected() {
-        markerImage.image = UIImage(named: "bandMarker")
+        markerImageView.image = UIImage(named: "bandMarker")
     }
 }
