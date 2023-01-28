@@ -9,7 +9,7 @@ import UIKit
 
 class LandingViewController: BaseViewController {
     
-    let test = SelectCollectionView(widthState: .flexableWidth, items: ["20대 미만","20 대", "60대 이상", "30 대", "40 대"], widthSize: 25)
+    let test = SelectCollectionView(widthState: .fixedWidth, items: ["20대 미만","20 대", "60대 이상", "30 대", "40 대"], widthSize: 100)
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black

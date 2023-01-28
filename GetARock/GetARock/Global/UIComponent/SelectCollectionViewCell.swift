@@ -84,5 +84,6 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     
     private func applySelectedState() {
         self.containerView.backgroundColor = isSelected ? .clear : self.cellColor
+        self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
 }
