@@ -84,8 +84,6 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         $0.distribution = .fill
         $0.spacing = 15
         $0.layer.cornerRadius = 10
-        $0.clipsToBounds = true
-        $0.layer.masksToBounds = true
         $0.isLayoutMarginsRelativeArrangement = true
         $0.layoutMargins = UIEdgeInsets(top: 15.0, left: 20.0, bottom: 15.0, right: 20.0)
         $0.layer.borderColor = UIColor.gray02.cgColor
