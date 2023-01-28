@@ -8,7 +8,11 @@
 import UIKit
 
 enum ImageLiteral {
-//     static var exampleIcon: UIImage { .load(named: sth) }
+    
+    // MARK: - icon
+    
+    static var bandIcon: UIImage { .load(named: "bandIcon") }
+    static var eventIcon: UIImage { .load(named: "eventIcon") }
 }
 
 extension UIImage {
