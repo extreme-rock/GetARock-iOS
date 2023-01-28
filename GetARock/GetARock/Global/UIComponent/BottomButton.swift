@@ -9,9 +9,13 @@ import UIKit
 
 final class BottomButton: UIButton {
     
+    // MARK: - Layout
+    
     override func setNeedsLayout() {
         self.applyMainGradient()
     }
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,6 +27,8 @@ final class BottomButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Method
+    
     private func attribute() {
         layer.masksToBounds = true
         layer.cornerRadius = 10
