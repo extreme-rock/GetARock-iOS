@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SongListCollectionViewCell: UICollectionViewCell {
+final class SongListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Property
     
