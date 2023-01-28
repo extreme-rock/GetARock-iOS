@@ -25,12 +25,19 @@ final class CustomMarker: GMSMarker {
         }
     }
     
-    private var bandName: String!
-    private var coordinate: CLLocationCoordinate2D!
-    var category: MarkerCategory!
+    private var bandName: String
+    private var coordinate: CLLocationCoordinate2D
+    var category: MarkerCategory
     
-    private var label: UILabel!
-    private var markerImage: UIImageView!
+    private var label: UILabel = {
+        $0.textColor = .blue03
+        $0.font = .setFont(.caption)
+        return $0
+    }(UILabel())
+    
+    private var markerImage: UIImageView = {
+        return $0
+    }(UIImageView())
     
     private lazy var stackView: UIStackView = {
         $0.axis = .vertical
@@ -42,27 +49,24 @@ final class CustomMarker: GMSMarker {
     // MARK: - Init
     
     init(bandName: String, coordinate: CLLocationCoordinate2D, category: MarkerCategory) {
-        super.init()
-        
         self.bandName = bandName
         self.coordinate = coordinate
         self.category = category
 
-        label = UILabel()
-        label.text = bandName
-        label.textColor = .blue03
-        label.font = .setFont(.caption)
+        super.init()
         
-        markerImage = UIImageView(image: self.category.image)
-
-        attribute()
+        label.text = bandName
+        markerImage.image = category.image
+        
         setupLayout()
+        attribute()
     }
     
     // MARK: - Method
     
     private func attribute() {
         self.position = coordinate
+        self.iconView = stackView
     }
     
     private func setupLayout() {
@@ -71,8 +75,6 @@ final class CustomMarker: GMSMarker {
             centerX: self.iconView?.centerXAnchor,
             centerY: self.iconView?.centerYAnchor
         )
-        
-        self.iconView = stackView
     }
     
     func changeBandMarkerImageWhenSelected() {
