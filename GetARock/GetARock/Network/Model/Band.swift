@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Band: Hashable {
+struct Band {
     let id = UUID()
     let name: String
     var song: [Song]?
@@ -23,7 +23,7 @@ struct Band: Hashable {
 
 var testband: [Band] = [
     Band(name: "블랙로즈",
-         song: [Song(title: "Don't Look Back in Anger", artist: "OASIS", link: nil),
+         song: [Song(title: "노엘갤러거는 최고다", artist: "오아시스", link: nil),
                 Song(title: "Champagne Supernova", artist: "OASIS", link: "https://youtu.be/tI-5uv4wryI"),
                 Song(title: "Little by Little", artist: "OASIS", link: "https://youtu.be/ic-Na--7_NI")]),
     Band(name: "로젤리아",
