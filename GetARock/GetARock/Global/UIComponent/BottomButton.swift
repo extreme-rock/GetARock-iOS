@@ -16,14 +16,14 @@ final class BottomButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        configureUI()
+        attribute()
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureUI() {
+    private func attribute() {
         layer.masksToBounds = true
         layer.cornerRadius = 10
         titleLabel?.font = UIFont.setFont(.headline02)
