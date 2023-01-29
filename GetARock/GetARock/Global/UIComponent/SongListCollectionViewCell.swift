@@ -13,7 +13,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     private let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 20)
     
-//    weak var delegate: SongListDeleteDelegate?
+    weak var delegate: SongListDeleteDelegate?
     
     // MARK: - View
     
@@ -73,7 +73,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         )
         
         return $0
-    }(UIButton())
+    }(UIButton(type: .custom))
     
     private lazy var songLabelStackView: UIStackView = {
         $0.axis = .vertical
@@ -115,14 +115,17 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     private func setupDeleteButtonLayout() {
         songStakView.addArrangedSubview(deleteButton)
-//        self.delegate?.DeleteSongListList()
     }
     
     private func setupLinkButtonLayout() {
         songStakView.addArrangedSubview(linkButton)
     }
+//
+//        @objc func deleteSongList(sender : UIButton) {
+//            self.delegate?.DeleteSongListList(index: Int)
+//        }
     
-    func configure(data: Song?, songListType: SongListType) {
+    func configure(data: Song?, songListType: SongListType, index: Int) {
         
         guard let songlist = data else { return }
         
@@ -132,6 +135,15 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         switch songListType {
         case .create:
             self.setupDeleteButtonLayout()
+//
+            let action = UIAction { _ in
+                print(index)
+                testband[0].song?.remove(at: index)
+                print(testband[0].song)
+//                self.delegate?.refreshSongList()
+            }
+            deleteButton.addAction(action, for: .touchUpInside)
+            
         case .detail:
             if songlist.link != nil {
                 self.setupLinkButtonLayout()
@@ -140,7 +152,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     }
 }
 
-//protocol SongListDeleteDelegate: AnyObject {
-//    func DeleteSongListList(index: Int)
-//    }
+protocol SongListDeleteDelegate: AnyObject {
+    func refreshSongList()
+}
 

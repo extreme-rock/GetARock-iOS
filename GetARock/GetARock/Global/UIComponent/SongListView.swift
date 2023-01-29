@@ -12,7 +12,7 @@ enum SongListType {
     case detail
 }
 
-class SongListView: UIView {
+class SongListView: UIView, UICollectionViewDelegate {
     
     // MARK: - Property
     
@@ -61,10 +61,10 @@ class SongListView: UIView {
         self.collectionView.constraint(to: self)
     }
     
-    @objc func deleteSongList(sender : UIButton) {
-        testband[0].song?.remove(at: sender.tag)
-        collectionView.reloadData()
-    }
+//    @objc func deleteSongList(sender : UIButton) {
+//        testband[0].song?.remove(at: sender.tag)
+//        collectionView.reloadData()
+//    }
 }
 
 // MARK: - DataSource
@@ -74,8 +74,12 @@ extension SongListView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         
-        return testband[0].song?.count ?? -1
-        
+//        return testband[0].song?.count ?? -1
+        if let count = testband[0].song?.count {
+            print("Number of Sections: \(count)")
+                   return count
+               }
+               return -1
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -86,13 +90,15 @@ extension SongListView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
+        cell.delegate = self
         cell.configure(
             data: testband[0].song?[indexPath.item] ?? nil,
-            songListType: songListType
+            songListType: songListType,
+            index: indexPath.item
         )
         
-        cell.deleteButton.tag = indexPath.item
-        cell.deleteButton.addTarget(self, action: #selector(deleteSongList(sender:)), for: .touchUpInside)
+//        cell.deleteButton.tag = indexPath.item
+//        cell.deleteButton.addTarget(self, action: #selector(deleteSongList(sender:)), for: .touchUpInside)
         
         return cell
     }
@@ -100,9 +106,9 @@ extension SongListView: UICollectionViewDataSource {
 
 // MARK: - SongListDeleteDelegate
 
-//extension SongListView: SongListDeleteDelegate {
-//    func DeleteSongListList(index: Int) {
-//        testband[0].song?.remove(at: index)
-//        collectionView.reloadData()
-//    }
-//}
+extension SongListView: SongListDeleteDelegate {
+    func refreshSongList() {
+        self.collectionView.reloadData()
+//        self.collectionView.deleteItems(at: [IndexPath.init(row: index, section: 0)])
+    }
+}
