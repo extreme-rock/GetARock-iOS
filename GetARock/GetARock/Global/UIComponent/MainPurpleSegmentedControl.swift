@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol SwitchingViewSegmentedControlDelegate: AnyObject {
+protocol MainPurpleSegmentedControlDelegate: AnyObject {
     func segmentValueChanged(to index: Int)
 }
 
-final class SwitchingViewSegmentedControl: UIView {
+final class MainPurpleSegmentedControl: UIView {
     
     // MARK: - Properties
     
-    weak var delegate: SwitchingViewSegmentedControlDelegate?
+    weak var delegate: MainPurpleSegmentedControlDelegate?
     private var buttonTitles = [String]()
     private var buttons = [UIButton]()
     private let textColor: UIColor = .white
@@ -87,7 +87,7 @@ final class SwitchingViewSegmentedControl: UIView {
             button.titleLabel?.font = .setFont(.content)
             button.addTarget(
                 self,
-                action: #selector(SwitchingViewSegmentedControl.buttonAction(_:)),
+                action: #selector(buttonAction(_:)),
                 for: .touchUpInside)
             buttons.append(button)
         }
