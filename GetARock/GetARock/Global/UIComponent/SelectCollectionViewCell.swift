@@ -23,6 +23,7 @@ final class SelectCollectionViewCell: UICollectionViewCell {
         $0.layer.borderColor = UIColor.gray02.cgColor
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
         return $0
     }(UIView())
     
@@ -38,6 +39,8 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     // MARK: - Init
     
     override func setNeedsLayout() {
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
         self.contentView.applyActiveGradation()
     }
     
