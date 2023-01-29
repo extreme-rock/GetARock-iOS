@@ -25,6 +25,7 @@ final class SwitchingViewSegmentedControl: UIView {
     
     private lazy var selectorView: UIView = {
         $0.backgroundColor = selectedColor
+        
         let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)
         $0.frame = CGRect(x: 0, y: self.frame.height, width: selectorWidth, height: 3)
         return $0
@@ -60,8 +61,8 @@ final class SwitchingViewSegmentedControl: UIView {
     // MARK: - Method
     
     private func updateView() {
-        setupLayout()
         setupButtons()
+        setupLayout()
     }
     
     private func setupLayout() {
@@ -79,23 +80,25 @@ final class SwitchingViewSegmentedControl: UIView {
     }
     
     private func setupButtons() {
-        buttons = [UIButton]()
-        buttons.removeAll()
-        subviews.forEach({$0.removeFromSuperview()})
         for buttonTitle in buttonTitles {
-            let button = UIButton(type: .system)
+            let button = UIButton()
             button.setTitle(buttonTitle, for: .normal)
             button.setTitleColor(textColor, for: .normal)
-            button.addTarget(self, action: #selector(SwitchingViewSegmentedControl.buttonAction(_:)),
-                             for: .touchUpInside)
+            button.titleLabel?.font = .setFont(.content)
+            button.addTarget(
+                self,
+                action: #selector(SwitchingViewSegmentedControl.buttonAction(_:)),
+                for: .touchUpInside)
             buttons.append(button)
         }
         buttons[0].setTitleColor(selectedColor, for: .normal)
+        buttons[0].titleLabel?.font = .setFont(.contentBold)
     }
     
     @objc func buttonAction(_ sender: UIButton) {
         for (buttonIndex, button) in buttons.enumerated() {
             button.setTitleColor(textColor, for: .normal)
+            button.titleLabel?.font = .setFont(.content)
             if button == sender {
                 delegate?.segmentValueChanged(to: buttonIndex)
                 let selectorPosition = frame.width / CGFloat(buttonTitles.count) * CGFloat(buttonIndex)
@@ -103,6 +106,7 @@ final class SwitchingViewSegmentedControl: UIView {
                     self.selectorView.frame.origin.x = selectorPosition
                 }
                 button.setTitleColor(selectedColor, for: .normal)
+                button.titleLabel?.font = .setFont(.contentBold)
             }
         }
     }
