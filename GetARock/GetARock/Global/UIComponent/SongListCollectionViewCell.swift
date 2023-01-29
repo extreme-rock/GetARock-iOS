@@ -13,6 +13,8 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     private let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 20)
     
+//    weak var delegate: SongListDeleteDelegate?
+    
     // MARK: - View
     
     private let songTitleLabel: UILabel = {
@@ -57,7 +59,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIButton())
     
-    private lazy var deleteButton: UIButton = {
+    lazy var deleteButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "xmark.circle.fill",
             withConfiguration: imageConfiguation),for: .normal
@@ -69,6 +71,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
                                                    for: .horizontal
         )
+        
         return $0
     }(UIButton())
     
@@ -112,6 +115,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     private func setupDeleteButtonLayout() {
         songStakView.addArrangedSubview(deleteButton)
+//        self.delegate?.DeleteSongListList()
     }
     
     private func setupLinkButtonLayout() {
@@ -121,7 +125,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     func configure(data: Song?, songListType: SongListType) {
         
         guard let songlist = data else { return }
-                
+        
         self.songTitleLabel.text = songlist.title
         self.artistLabel.text = songlist.artist
         
@@ -134,6 +138,9 @@ final class SongListCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-
 }
+
+//protocol SongListDeleteDelegate: AnyObject {
+//    func DeleteSongListList(index: Int)
+//    }
 
