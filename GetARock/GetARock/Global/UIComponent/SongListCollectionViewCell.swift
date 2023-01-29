@@ -104,8 +104,9 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupLayout()
+        addAction()
     }
-    
+
     // MARK: - Method
     
     private func setupLayout() {
@@ -136,23 +137,31 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         case .create:
             self.setupDeleteButtonLayout()
 //
-            let action = UIAction { _ in
-                print(index)
-                testband[0].song?.remove(at: index)
-                print(testband[0].song)
-//                self.delegate?.refreshSongList()
-            }
-            deleteButton.addAction(action, for: .touchUpInside)
-            
+//            let action = UIAction { _ in
+//                print(index, "index")
+////                print(testband[0].song)
+////                testband[0].song?.remove(at: index)
+////                print(testband[0].song)
+//                self.delegate?.refreshSongList(title: self.songTitleLabel.text!)
+//            }
+//            deleteButton.addAction(action, for: .touchUpInside)
+//
         case .detail:
             if songlist.link != nil {
                 self.setupLinkButtonLayout()
             }
         }
     }
+    
+    func addAction() {
+        let action = UIAction { _ in
+            self.delegate?.refreshSongList(title: self.songTitleLabel.text!)
+        }
+        deleteButton.addAction(action, for: .touchUpInside)
+    }
 }
 
 protocol SongListDeleteDelegate: AnyObject {
-    func refreshSongList()
+    func refreshSongList(title: String)
 }
 
