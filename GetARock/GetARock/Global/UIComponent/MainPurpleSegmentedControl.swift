@@ -27,7 +27,7 @@ final class MainPurpleSegmentedControl: UIView {
         $0.backgroundColor = selectedColor
         
         let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)
-        $0.frame = CGRect(x: 0, y: self.frame.height, width: selectorWidth, height: 3)
+        $0.frame = CGRect(x: 0, y: self.frame.height - 3, width: selectorWidth, height: 3)
         return $0
     }(UIView())
     
@@ -70,7 +70,7 @@ final class MainPurpleSegmentedControl: UIView {
             let button = UIButton()
             button.setTitle(buttonTitle, for: .normal)
             button.setTitleColor(textColor, for: .normal)
-            button.titleLabel?.font = .setFont(.content)
+            button.titleLabel?.font = .systemFont(ofSize: 13, weight: .regular)
             button.titleLabel?.textAlignment = .center
             button.titleLabel?.constraint(.heightAnchor, constant: self.bounds.height)
             button.titleLabel?.constraint(.widthAnchor, constant: self.bounds.width / 3)
@@ -88,7 +88,7 @@ final class MainPurpleSegmentedControl: UIView {
     private func setupLayout() {
         addSubview(buttonStackView)
         buttonStackView.constraint(to: self)
-
+        
         addSubview(selectorView)
         
         addSubview(staticLineView)
@@ -98,12 +98,12 @@ final class MainPurpleSegmentedControl: UIView {
                                   centerX: self.centerXAnchor)
         staticLineView.constraint(.heightAnchor, constant: 1)
     }
-
+    
     @objc
     func buttonAction(_ sender: UIButton) {
         for (buttonIndex, button) in buttons.enumerated() {
             button.setTitleColor(textColor, for: .normal)
-            button.titleLabel?.font = .setFont(.content)
+            button.titleLabel?.font = .systemFont(ofSize: 13, weight: .regular)
             if button == sender {
                 delegate?.segmentValueChanged(to: buttonIndex)
                 let selectorPosition = frame.width / CGFloat(buttonTitles.count) * CGFloat(buttonIndex)
@@ -114,5 +114,69 @@ final class MainPurpleSegmentedControl: UIView {
                 button.titleLabel?.font = .setFont(.contentBold)
             }
         }
+    }
+}
+
+
+
+
+
+final class UnderlineSegmentedControl: UISegmentedControl {
+    private lazy var underlineView: UIView = {
+        let width = self.bounds.size.width / CGFloat(self.numberOfSegments)
+        let height = 1.0
+        let xPosition = CGFloat(self.selectedSegmentIndex * Int(width))
+        let yPosition = self.bounds.size.height - 1.5
+        let frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
+        let view = UIView(frame: frame)
+        view.backgroundColor = .mainPurple
+        self.addSubview(view)
+        return view
+    }()
+
+    override init(items: [Any]?) {
+        super.init(items: items)
+        self.removeBackgroundAndDivider()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    private func removeBackgroundAndDivider() {
+        let image = UIImage()
+        self.setBackgroundImage(image, for: .normal, barMetrics: .default)
+        self.setBackgroundImage(image, for: .selected, barMetrics: .default)
+        self.setBackgroundImage(image, for: .highlighted, barMetrics: .default)
+        
+        self.setDividerImage(image, forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
+        self.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+        self.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.mainPurple,
+                .font: UIFont.setFont(.contentBold)
+            ],
+            for: .selected
+        )
+        self.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.foregroundColor: UIColor.mainPurple,
+                .font: UIFont.setFont(.contentBold)
+            ],
+            for: .highlighted
+        )
+        self.selectedSegmentIndex = 0
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let underlineFinalXPosition = (self.bounds.width / CGFloat(self.numberOfSegments)) * CGFloat(self.selectedSegmentIndex)
+        UIView.animate(
+            withDuration: 0.2,
+            animations: {
+                self.underlineView.frame.origin.x = underlineFinalXPosition
+                self.underlineView.frame.size.height = 10
+            }
+        )
     }
 }
