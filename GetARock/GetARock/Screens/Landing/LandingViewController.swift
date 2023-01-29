@@ -9,21 +9,22 @@ import UIKit
 
  class LandingViewController: UIViewController {
 
-     override func viewDidLoad() {
-         super.viewDidLoad()
+     let test : SongListView = {
+            return $0
+        }(SongListView(songListType: .create))
 
-         // Do any additional setup after loading the view.
-     }
-
-
-     /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-     }
-     */
-
- }
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            
+            self.view.backgroundColor = .dark01
+            
+            self.view.addSubview(test)
+            self.test.constraint(
+                top: view.safeAreaLayoutGuide.topAnchor,
+                leading: view.safeAreaLayoutGuide.leadingAnchor,
+                bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
+        }
+    }
+ 
