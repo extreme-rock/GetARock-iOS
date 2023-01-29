@@ -107,6 +107,13 @@ extension SongListView: UICollectionViewDataSource {
 // MARK: - SongListDeleteDelegate
 
 extension SongListView: SongListDeleteDelegate {
+    func refreshSongList(title: String) {
+        print(title)
+        let index = testband[0].song?.firstIndex { $0.title == title}
+        testband[0].song?.remove(at: index!)
+        self.collectionView.reloadData()
+    }
+    
     func refreshSongList() {
         self.collectionView.reloadData()
 //        self.collectionView.deleteItems(at: [IndexPath.init(row: index, section: 0)])
