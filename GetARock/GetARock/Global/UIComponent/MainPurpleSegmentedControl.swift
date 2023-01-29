@@ -118,7 +118,7 @@ final class MainPurpleSegmentedControl: UIView {
     }
 }
 
-final class UnderlineSegmentedControl: UISegmentedControl {
+final class TempMainPurpleSegmentedControl: UISegmentedControl {
     
     // MARK: - View
     
