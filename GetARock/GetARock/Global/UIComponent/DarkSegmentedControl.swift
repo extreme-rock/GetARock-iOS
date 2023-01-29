@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomSegmentedControl: UISegmentedControl {
+final class DarkSegmentedControl: UISegmentedControl {
     
     override func layoutSubviews() {
         super.layoutSubviews()
