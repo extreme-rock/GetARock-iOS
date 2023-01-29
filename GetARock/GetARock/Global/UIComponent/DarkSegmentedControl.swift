@@ -30,11 +30,13 @@ final class DarkSegmentedControl: UISegmentedControl {
         self.selectedSegmentTintColor = .dark04
         self.backgroundColor = .dark03
         self.selectedSegmentIndex = 0
-        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.setFont(.headline02)]
-        let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.setFont(.headline04)]
+        let selectedTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                   NSAttributedString.Key.font: UIFont.setFont(.headline02)]
+        let normalTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                    NSAttributedString.Key.font: UIFont.setFont(.headline04)]
         
-        self.setTitleTextAttributes(titleTextAttributes, for: .selected)
-        self.setTitleTextAttributes(titleTextAttributes2, for: .normal)
+        self.setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
+        self.setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
     }
     
     required init?(coder: NSCoder) {
@@ -42,7 +44,7 @@ final class DarkSegmentedControl: UISegmentedControl {
     }
     
     @objc
-    func valueChagend(_ sender: UISegmentedControl) {
-        print("\(sender.selectedSegmentIndex)")
+    func valueChagend(_ sender: UISegmentedControl) -> Int {
+        return sender.selectedSegmentIndex
     }
 }
