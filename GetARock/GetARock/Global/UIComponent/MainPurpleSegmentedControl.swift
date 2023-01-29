@@ -120,6 +120,8 @@ final class MainPurpleSegmentedControl: UIView {
 
 final class UnderlineSegmentedControl: UISegmentedControl {
     
+    // MARK: - View
+    
     private lazy var underlineView: UIView = {
         let width = self.bounds.size.width / CGFloat(self.numberOfSegments)
         let height = 3.0
@@ -137,17 +139,38 @@ final class UnderlineSegmentedControl: UISegmentedControl {
         return $0
     }(UIView())
     
+    // MARK: - Layout
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = 0
+        self.layer.masksToBounds = true
+        
+        let underlineFinalXPosition = (self.bounds.width / CGFloat(self.numberOfSegments)) * CGFloat(self.selectedSegmentIndex)
+        UIView.animate(
+            withDuration: 0.2,
+            animations: {
+                self.underlineView.frame.origin.x = underlineFinalXPosition
+                self.underlineView.frame.size.height = 10
+            }
+        )
+    }
+    
+    // MARK: - Init
+    
     override init(items: [Any]?) {
         super.init(items: items)
         self.removeBackgroundAndDivider()
         self.attributeText()
         self.setupLayout()
-        
+        self.addTarget(self, action: #selector(valueChagend(_:)), for: .valueChanged)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
+    // MARK: - Method
     
     private func setupLayout() {
         
@@ -190,18 +213,8 @@ final class UnderlineSegmentedControl: UISegmentedControl {
         self.selectedSegmentIndex = 0
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.layer.cornerRadius = 0
-        self.layer.masksToBounds = true
-        
-        let underlineFinalXPosition = (self.bounds.width / CGFloat(self.numberOfSegments)) * CGFloat(self.selectedSegmentIndex)
-        UIView.animate(
-            withDuration: 0.2,
-            animations: {
-                self.underlineView.frame.origin.x = underlineFinalXPosition
-                self.underlineView.frame.size.height = 10
-            }
-        )
+    @objc
+    func valueChagend(_ sender: UISegmentedControl) -> Int {
+        return sender.selectedSegmentIndex
     }
 }
