@@ -31,7 +31,7 @@ class SongListView: UIView {
         return $0
     }(UICollectionViewFlowLayout())
     
-    private lazy var collectionView = {
+    lazy var collectionView = {
         $0.register(
             SongListCollectionViewCell.self,
             forCellWithReuseIdentifier: "SongListCollectionViewCell"
@@ -60,6 +60,11 @@ class SongListView: UIView {
         addSubview(collectionView)
         self.collectionView.constraint(to: self)
     }
+    
+    @objc func deleteSongList(sender : UIButton) {
+        testband[0].song?.remove(at: sender.tag)
+        collectionView.reloadData()
+    }
 }
 
 // MARK: - DataSource
@@ -68,7 +73,9 @@ extension SongListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return testband[0].song?.count ?? 0
+        
+        return testband[0].song?.count ?? -1
+        
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -81,7 +88,21 @@ extension SongListView: UICollectionViewDataSource {
         }
         cell.configure(
             data: testband[0].song?[indexPath.item] ?? nil,
-            songListType: songListType)
+            songListType: songListType
+        )
+        
+        cell.deleteButton.tag = indexPath.item
+        cell.deleteButton.addTarget(self, action: #selector(deleteSongList(sender:)), for: .touchUpInside)
+        
         return cell
     }
 }
+
+// MARK: - SongListDeleteDelegate
+
+//extension SongListView: SongListDeleteDelegate {
+//    func DeleteSongListList(index: Int) {
+//        testband[0].song?.remove(at: index)
+//        collectionView.reloadData()
+//    }
+//}
