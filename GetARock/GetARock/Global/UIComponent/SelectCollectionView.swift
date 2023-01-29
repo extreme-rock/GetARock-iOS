@@ -19,7 +19,8 @@ final class SelectCollectionView: UIView {
     private let items: [String]
     private var widthState: WidthState
     private var widthSize: CGFloat
-
+    private var itemSpacing: CGFloat
+    
     // MARK: - View
     
     private lazy var collectionView: UICollectionView = {
@@ -32,7 +33,7 @@ final class SelectCollectionView: UIView {
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [item])
-        group.interItemSpacing = .fixed(5)
+        group.interItemSpacing = .fixed(itemSpacing)
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
@@ -49,10 +50,11 @@ final class SelectCollectionView: UIView {
     
     //MARK: - Init
     
-    init(widthState: WidthState, items: [String], widthSize: CGFloat) {
+    init(widthState: WidthState, items: [String], widthSize: CGFloat, itemSpacing: CGFloat) {
         self.widthState = widthState
         self.items = items
         self.widthSize = widthSize
+        self.itemSpacing = itemSpacing
         super.init(frame: .zero)
         setupLayout()
     }
