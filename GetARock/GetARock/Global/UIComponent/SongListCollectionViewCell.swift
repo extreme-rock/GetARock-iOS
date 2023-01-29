@@ -15,6 +15,8 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: SongListDeleteDelegate?
     
+    var cellIndex: Int = -1
+    
     // MARK: - View
     
     private let songTitleLabel: UILabel = {
@@ -71,7 +73,6 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
                                                    for: .horizontal
         )
-        
         return $0
     }(UIButton(type: .custom))
     
@@ -99,12 +100,13 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupLayout()
+        addDeleteAction()
     }
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupLayout()
-        addAction()
+        addDeleteAction()
     }
 
     // MARK: - Method
@@ -115,20 +117,26 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupDeleteButtonLayout() {
-        songStakView.addArrangedSubview(deleteButton)
+        self.songStakView.addArrangedSubview(deleteButton)
     }
     
     private func setupLinkButtonLayout() {
-        songStakView.addArrangedSubview(linkButton)
+        self.songStakView.addArrangedSubview(linkButton)
     }
-//
-//        @objc func deleteSongList(sender : UIButton) {
-//            self.delegate?.DeleteSongListList(index: Int)
-//        }
+    
+    
+    func addDeleteAction() {
+        let action = UIAction { _ in
+            self.delegate?.refreshSongList(index: self.cellIndex)
+        }
+        self.deleteButton.addAction(action, for: .touchUpInside)
+    }
     
     func configure(data: Song?, songListType: SongListType, index: Int) {
         
         guard let songlist = data else { return }
+        
+        self.cellIndex = index
         
         self.songTitleLabel.text = songlist.title
         self.artistLabel.text = songlist.artist
@@ -136,32 +144,14 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         switch songListType {
         case .create:
             self.setupDeleteButtonLayout()
-//
-//            let action = UIAction { _ in
-//                print(index, "index")
-////                print(testband[0].song)
-////                testband[0].song?.remove(at: index)
-////                print(testband[0].song)
-//                self.delegate?.refreshSongList(title: self.songTitleLabel.text!)
-//            }
-//            deleteButton.addAction(action, for: .touchUpInside)
-//
         case .detail:
             if songlist.link != nil {
                 self.setupLinkButtonLayout()
             }
         }
     }
-    
-    func addAction() {
-        let action = UIAction { _ in
-            self.delegate?.refreshSongList(title: self.songTitleLabel.text!)
-        }
-        deleteButton.addAction(action, for: .touchUpInside)
-    }
 }
 
 protocol SongListDeleteDelegate: AnyObject {
-    func refreshSongList(title: String)
+    func refreshSongList(index: Int)
 }
-
