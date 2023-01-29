@@ -31,7 +31,7 @@ class SongListView: UIView, UICollectionViewDelegate {
         return $0
     }(UICollectionViewFlowLayout())
     
-    lazy var collectionView = {
+    private lazy var collectionView = {
         $0.register(
             SongListCollectionViewCell.self,
             forCellWithReuseIdentifier: "SongListCollectionViewCell"

@@ -61,7 +61,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIButton())
     
-    lazy var deleteButton: UIButton = {
+    private lazy var deleteButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "xmark.circle.fill",
             withConfiguration: imageConfiguation),for: .normal
