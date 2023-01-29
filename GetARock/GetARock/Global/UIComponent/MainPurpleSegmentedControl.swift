@@ -13,7 +13,7 @@ protocol MainPurpleSegmentedControlDelegate: AnyObject {
 
 final class MainPurpleSegmentedControl: UIView {
     
-    // MARK: - Properties
+    // MARK: - Property
     
     weak var delegate: MainPurpleSegmentedControlDelegate?
     private var buttonTitles = [String]()
@@ -65,26 +65,16 @@ final class MainPurpleSegmentedControl: UIView {
         setupLayout()
     }
     
-    private func setupLayout() {
-        addSubview(buttonStackView)
-        buttonStackView.constraint(to: self)
-        
-        addSubview(selectorView)
-        
-        addSubview(staticLineView)
-        staticLineView.constraint(top: self.bottomAnchor,
-                                  leading: self.leadingAnchor,
-                                  trailing: self.trailingAnchor,
-                                  centerX: self.centerXAnchor)
-        staticLineView.constraint(.heightAnchor, constant: 1)
-    }
-    
     private func setupButtons() {
         for buttonTitle in buttonTitles {
             let button = UIButton()
             button.setTitle(buttonTitle, for: .normal)
             button.setTitleColor(textColor, for: .normal)
             button.titleLabel?.font = .setFont(.content)
+            button.titleLabel?.textAlignment = .center
+            button.titleLabel?.constraint(.heightAnchor, constant: self.bounds.height)
+            button.titleLabel?.constraint(.widthAnchor, constant: self.bounds.width / 3)
+            
             button.addTarget(
                 self,
                 action: #selector(buttonAction(_:)),
@@ -95,7 +85,22 @@ final class MainPurpleSegmentedControl: UIView {
         buttons[0].titleLabel?.font = .setFont(.contentBold)
     }
     
-    @objc func buttonAction(_ sender: UIButton) {
+    private func setupLayout() {
+        addSubview(buttonStackView)
+        buttonStackView.constraint(to: self)
+
+        addSubview(selectorView)
+        
+        addSubview(staticLineView)
+        staticLineView.constraint(top: self.bottomAnchor,
+                                  leading: self.leadingAnchor,
+                                  trailing: self.trailingAnchor,
+                                  centerX: self.centerXAnchor)
+        staticLineView.constraint(.heightAnchor, constant: 1)
+    }
+
+    @objc
+    func buttonAction(_ sender: UIButton) {
         for (buttonIndex, button) in buttons.enumerated() {
             button.setTitleColor(textColor, for: .normal)
             button.titleLabel?.font = .setFont(.content)
@@ -110,5 +115,4 @@ final class MainPurpleSegmentedControl: UIView {
             }
         }
     }
-    
 }
