@@ -70,7 +70,7 @@ final class SelectCollectionView: UIView {
         collectionView.constraint(to: self)
     }
     
-    func selectedItem() -> String {
+    func selectedItem() -> String? {
         let selectedIndex = collectionView.indexPathsForSelectedItems?.first
         return items[selectedIndex?.item ?? 0]
     }
