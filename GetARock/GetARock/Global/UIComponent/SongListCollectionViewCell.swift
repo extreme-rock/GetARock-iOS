@@ -120,16 +120,16 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     func configure(data: Song?, songListType: SongListType) {
         
-        guard let songlist = data else { return }
+        guard let song = data else { return }
                 
-        self.songTitleLabel.text = songlist.title
-        self.artistLabel.text = songlist.artist
+        self.songTitleLabel.text = song.title
+        self.artistLabel.text = song.artist
         
         switch songListType {
         case .create:
             self.setupDeleteButtonLayout()
         case .detail:
-            if songlist.link != nil {
+            if song.link != nil {
                 self.setupLinkButtonLayout()
             }
         }
