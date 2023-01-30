@@ -14,7 +14,7 @@ struct Band {
     let location: Location
 //    let introduction: String?
 //    let member: [BandMember]
-//    let song: [Song]
+    var song: [Song]?
 //    let sns: [SNS]?
 }
 
@@ -24,7 +24,11 @@ struct BandDummyData {
             name: "레드제플린",
             address: "대구광역시 남구 명덕로 102",
             additionalAddress: "레드제플린",
-            coordinate: Coordinate(latitude: 35.85672, longitude: 128.58130))),
+            coordinate: Coordinate(latitude: 35.85672, longitude: 128.58130)),
+            song: [Song(title: "노엘갤러거는 최고다", artist: "오아시스", link: nil),
+                   Song(title: "Champagne Supernova", artist: "OASIS", link: "https://youtu.be/tI-5uv4wryI"),
+                   Song(title: "Little by Little", artist: "OASIS", link: "https://youtu.be/ic-Na--7_NI")]
+        ),
         Band(name: "블랙로즈블랙로즈블랙", location: Location(
             name: "블랙로즈",
             address: "대한민국 대구광역시 중구 태평로2가 17-11",
