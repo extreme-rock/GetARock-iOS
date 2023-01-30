@@ -15,7 +15,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: SongListDeleteDelegate?
     
-    var cellIndex: Int = -1
+    private var cellIndex: Int = -1
     
     // MARK: - View
     
@@ -117,11 +117,11 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupDeleteButtonLayout() {
-        self.songStakView.addArrangedSubview(deleteButton)
+        self.songStackView.addArrangedSubview(deleteButton)
     }
     
     private func setupLinkButtonLayout() {
-        self.songStakView.addArrangedSubview(linkButton)
+        self.songStackView.addArrangedSubview(linkButton)
     }
     
     
