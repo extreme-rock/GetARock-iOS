@@ -175,14 +175,12 @@ final class MainMapViewController: UIViewController {
 // MARK: - GMSMapViewDelegate
 
 extension MainMapViewController: GMSMapViewDelegate {
-    // 마커를 누르면 호출되는 함수
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        // 이전에 선택한 마커와 같은 마커를 선택하면 별다른 동작 없이 return
+        
         if self.previousSelectedMarker == marker {
             return true
         }
         
-        // 이전에 선택된 마커가 밴드 마커인 경우 이미지를 원래대로 변경
         if self.previousSelectedMarker != nil {
             let previousSelectedMarker = self.previousSelectedMarker as! CustomMarker
             if previousSelectedMarker.category == .band {
@@ -190,8 +188,6 @@ extension MainMapViewController: GMSMapViewDelegate {
             }
         }
 
-        // 현재 선택한 마커가 band 마커인 경우 이미지를 변경
-        // 선택한 마커로 지도를 이동하고, previousSelectedMarker에 현재 선택한 마커 담아두기
         let selectedMarker = marker as! CustomMarker
         if selectedMarker.category == .band {
             selectedMarker.changeBandMarkerImageWhenSelected()
@@ -202,10 +198,7 @@ extension MainMapViewController: GMSMapViewDelegate {
         return true
     }
     
-    // 마커를 제외한 지도의 다른 위치를 누르면 호출되는 함수
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        // 이전에 선택된 마커가 밴드 마커인 경우 이미지를 원래대로 변경
-        // previousSelectedMarker 비우기
         if self.previousSelectedMarker != nil {
             let previousSelectedMarker = self.previousSelectedMarker as! CustomMarker
             if previousSelectedMarker.category == .band {
