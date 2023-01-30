@@ -25,8 +25,15 @@ final class DarkSegmentedControl: UISegmentedControl {
     
     override init(items: [Any]?) {
         super.init(items: items)
-        self.selectedSegmentIndex = 0
         self.addTarget(self, action: #selector(valueChagend(_:)), for: .valueChanged)
+        attribute()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func attribute() {
         self.selectedSegmentTintColor = .dark04
         self.backgroundColor = .dark03
         self.selectedSegmentIndex = 0
@@ -37,10 +44,6 @@ final class DarkSegmentedControl: UISegmentedControl {
         
         self.setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
         self.setTitleTextAttributes(normalTitleTextAttributes, for: .normal)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     @objc
