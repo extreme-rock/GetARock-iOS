@@ -4,15 +4,14 @@
 //
 //  Created by 장지수 on 2023/01/29.
 //
-
 import UIKit
 
+enum CheckDuplicationCase {
+    case userNickName
+    case bandName
+}
+
 final class TextLimitTextField: UIView {
-    
-    enum CheckDuplicationCase {
-        case userNickName
-        case bandName
-    }
     
     private let placeholder: String
     
