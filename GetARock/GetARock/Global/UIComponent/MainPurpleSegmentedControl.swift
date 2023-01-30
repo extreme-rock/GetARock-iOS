@@ -81,8 +81,8 @@ final class MainPurpleSegmentedControl: UIView {
                 for: .touchUpInside)
             buttons.append(button)
         }
-        buttons[0].setTitleColor(selectedColor, for: .normal)
-        buttons[0].titleLabel?.font = .setFont(.contentBold)
+        buttons.first?.setTitleColor(selectedColor, for: .normal)
+        buttons.first?.titleLabel?.font = .setFont(.contentBold)
     }
     
     private func setupLayout() {
