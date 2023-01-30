@@ -50,7 +50,10 @@ final class TextLimitTextField: UIView {
         textField.constraint(to: self)
 
         self.addSubview(checkButton)
-        checkButton.constraint(trailing: textField.trailingAnchor, centerY: textField.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        checkButton.constraint(
+            trailing: textField.trailingAnchor,
+            centerY: textField.centerYAnchor,
+            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
         checkButton.constraint(.widthAnchor, constant: 80)
         checkButton.constraint(.heightAnchor, constant: 40)
     }
