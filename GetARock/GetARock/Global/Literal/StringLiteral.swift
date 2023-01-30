@@ -10,3 +10,11 @@ import UIKit
 enum StringLiteral {
 //    static let exampleString = "안녕하세요"
 }
+
+enum InstrumentImageName: String {
+    case guitar
+    case bass
+    case drum
+    case vocal
+    case etc
+}
