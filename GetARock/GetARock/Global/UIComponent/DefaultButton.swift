@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ActiveGradationButton: UIButton {
+final class DefaultButton: UIButton {
     
     override func setNeedsLayout() {
         self.applyActiveGradation()
