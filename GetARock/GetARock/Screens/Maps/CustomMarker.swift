@@ -35,9 +35,7 @@ final class CustomMarker: GMSMarker {
         return $0
     }(UILabel())
     
-    private var markerImageView: UIImageView = {
-        return $0
-    }(UIImageView())
+    private var markerImageView: UIImageView = UIImageView()
     
     private lazy var stackView: UIStackView = {
         $0.axis = .vertical
