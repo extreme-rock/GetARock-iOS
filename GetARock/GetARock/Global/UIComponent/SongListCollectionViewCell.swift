@@ -78,7 +78,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIStackView(arrangedSubviews: [songTitleLabel,artistLabel]))
     
-    private lazy var songStakView: UIStackView = {
+    private lazy var songStackView: UIStackView = {
         $0.backgroundColor = .dark02
         $0.axis = .horizontal
         $0.distribution = .fill
@@ -106,16 +106,16 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     // MARK: - Method
     
     private func setupLayout() {
-        self.contentView.addSubview(songStakView)
-        self.songStakView.constraint(to: self)
+        self.contentView.addSubview(songStackView)
+        self.songStackView.constraint(to: contentView)
     }
     
     private func setupDeleteButtonLayout() {
-        songStakView.addArrangedSubview(deleteButton)
+        songStackView.addArrangedSubview(deleteButton)
     }
     
     private func setupLinkButtonLayout() {
-        songStakView.addArrangedSubview(linkButton)
+        songStackView.addArrangedSubview(linkButton)
     }
     
     func configure(data: Song?, songListType: SongListType) {
