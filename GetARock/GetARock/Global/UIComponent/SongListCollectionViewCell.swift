@@ -82,7 +82,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIStackView(arrangedSubviews: [songTitleLabel,artistLabel]))
     
-    private lazy var songStakView: UIStackView = {
+    private lazy var songStackView: UIStackView = {
         $0.backgroundColor = .dark02
         $0.axis = .horizontal
         $0.distribution = .fill
@@ -112,8 +112,8 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     // MARK: - Method
     
     private func setupLayout() {
-        self.contentView.addSubview(songStakView)
-        self.songStakView.constraint(to: self)
+        self.contentView.addSubview(songStackView)
+        self.songStackView.constraint(to: contentView)
     }
     
     private func setupDeleteButtonLayout() {
@@ -134,18 +134,18 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     func configure(data: Song?, songListType: SongListType, index: Int) {
         
-        guard let songlist = data else { return }
+        guard let song = data else { return }
         
         self.cellIndex = index
         
-        self.songTitleLabel.text = songlist.title
-        self.artistLabel.text = songlist.artist
+        self.songTitleLabel.text = song.title
+        self.artistLabel.text = song.artist
         
         switch songListType {
         case .create:
             self.setupDeleteButtonLayout()
         case .detail:
-            if songlist.link != nil {
+            if song.link != nil {
                 self.setupLinkButtonLayout()
             }
         }

@@ -68,7 +68,7 @@ extension SongListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return testband[0].song?.count ?? -1
+        return BandDummyData.testBands[0].song?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -81,7 +81,7 @@ extension SongListView: UICollectionViewDataSource {
         }
         cell.delegate = self
         cell.configure(
-            data: testband[0].song?[indexPath.item] ?? nil,
+            data: BandDummyData.testBands[0].song?[indexPath.item] ?? nil,
             songListType: songListType,
             index: indexPath.item
         )
