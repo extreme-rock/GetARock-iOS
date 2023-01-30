@@ -127,7 +127,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     func addDeleteAction() {
         let action = UIAction { _ in
-            self.delegate?.refreshSongList(index: self.cellIndex)
+            self.delegate?.deleteSongList(index: self.cellIndex)
         }
         self.deleteButton.addAction(action, for: .touchUpInside)
     }
@@ -153,5 +153,5 @@ final class SongListCollectionViewCell: UICollectionViewCell {
 }
 
 protocol SongListDeleteDelegate: AnyObject {
-    func refreshSongList(index: Int)
+    func deleteSongList(index: Int)
 }

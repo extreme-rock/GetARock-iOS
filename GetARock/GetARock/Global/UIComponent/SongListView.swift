@@ -92,7 +92,7 @@ extension SongListView: UICollectionViewDataSource {
 // MARK: - SongListDeleteDelegate
 
 extension SongListView: SongListDeleteDelegate {
-    func refreshSongList(index: Int) {
+    func deleteSongList(index: Int) {
         BandDummyData.testBands[0].song?.remove(at: index)
         self.collectionView.reloadData()
     }
