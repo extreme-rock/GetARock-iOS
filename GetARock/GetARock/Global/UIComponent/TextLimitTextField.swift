@@ -20,6 +20,7 @@ final class TextLimitTextField: UIView {
     private let duplicationCheckType: CheckDuplicationCase
     
     private lazy var textField: UITextField = {
+        $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
         return $0
     }(UITextField.makeBasicTextField(placeholder: placeholder, characterLimit: maxCount))
     
@@ -55,3 +56,17 @@ final class TextLimitTextField: UIView {
         checkButton.constraint(trailing: textField.trailingAnchor, centerY: textField.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
     }
 }
+
+extension TextLimitTextField {
+    @objc func textFieldTextDidChange() {
+        if let text = textField.text {
+            if text.count >= maxCount {
+                let maxCountIndex = text.index(text.startIndex, offsetBy: maxCount)
+                let fixedText = String(text[text.startIndex..<maxCountIndex])
+                textField.text = fixedText + " "
+                self.textField.text = fixedText
+            }
+        }
+    }
+}
+
