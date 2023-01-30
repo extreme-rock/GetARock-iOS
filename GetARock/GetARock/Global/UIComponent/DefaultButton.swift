@@ -12,18 +12,13 @@ final class DefaultButton: UIButton {
     override func setNeedsLayout() {
         self.applyActiveGradation()
     }
-    
-    init(borderBounds: CGRect) {
-        super.init(frame: .zero)
-        attribute(bounds: borderBounds)
+
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        attribute()
     }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(codexr:) has not been implemented")
-    }
-    
-    private func attribute(bounds: CGRect) {
-        let gradientImage = UIImage.gradientImage(bounds: bounds, colors: [.mainPurple, .blue02])
+    private func attribute() {
+        let gradientImage = UIImage.gradientImage(bounds: self.bounds, colors: [.mainPurple, .blue02])
         let color = UIColor(patternImage: gradientImage)
         layer.borderColor = color.cgColor
         layer.borderWidth = 1
