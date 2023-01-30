@@ -31,7 +31,7 @@ final class MainPurpleSegmentedControl: UIView {
         return $0
     }(UIView())
     
-    private let staticLineView: UIView = {
+    private let seperatorView: UIView = {
         $0.backgroundColor = .dark03
         return $0
     }(UIView())
@@ -91,12 +91,12 @@ final class MainPurpleSegmentedControl: UIView {
         
         addSubview(selectorView)
         
-        addSubview(staticLineView)
-        staticLineView.constraint(top: self.bottomAnchor,
+        addSubview(seperatorView)
+        seperatorView.constraint(top: self.bottomAnchor,
                                   leading: self.leadingAnchor,
                                   trailing: self.trailingAnchor,
                                   centerX: self.centerXAnchor)
-        staticLineView.constraint(.heightAnchor, constant: 1)
+        seperatorView.constraint(.heightAnchor, constant: 1)
     }
     
     @objc
