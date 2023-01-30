@@ -19,11 +19,7 @@ final class DarkSegmentedControl: UISegmentedControl {
             selecImageView.bounds = selecImageView.bounds.insetBy(dx: 5, dy: 5)
             selecImageView.layer.masksToBounds = true
             selecImageView.layer.cornerRadius = 10
-//            selecImageView.layer.removeAnimation(forKey: "SelectionBounds")
-            selecImageView.layer.removeAnimation(forKey: "SelectionScale")
-            print(selecImageView.layer.animationKeys())
-//            selecImageView.layer.removeAnimation(forKey: "SelectionPosition")
-            
+            selecImageView.layer.removeAnimation(forKey: "SelectionBounds")
         }
     }
     
