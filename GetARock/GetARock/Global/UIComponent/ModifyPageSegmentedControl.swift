@@ -1,5 +1,5 @@
 //
-//  CustomSegmentedControl.swift
+//  ModifyPageSegmentedControl.swift
 //  GetARock
 //
 //  Created by 최동권 on 2023/01/29.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DarkSegmentedControl: UISegmentedControl {
+final class ModifyPageSegmentedControl: UISegmentedControl {
     
     override func layoutSubviews() {
         super.layoutSubviews()

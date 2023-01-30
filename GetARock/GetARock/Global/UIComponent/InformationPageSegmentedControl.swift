@@ -1,5 +1,5 @@
 //
-//  MainPurpleSegmentedControl.swift
+//  InformationPageSegmentedControlDelegate.swift
 //  GetARock
 //
 //  Created by 최동권 on 2023/01/29.
@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol MainPurpleSegmentedControlDelegate: AnyObject {
+protocol InformationPageSegmentedControlDelegate: AnyObject {
     func segmentValueChanged(to index: Int)
 }
 
-final class MainPurpleSegmentedControl: UIView {
+final class InformationPageSegmentedControl: UIView {
     
     // MARK: - Property
     
-    weak var delegate: MainPurpleSegmentedControlDelegate?
+    weak var delegate: InformationPageSegmentedControlDelegate?
     private var buttonTitles = [String]()
     private var buttons = [UIButton]()
     private let textColor: UIColor = .white
