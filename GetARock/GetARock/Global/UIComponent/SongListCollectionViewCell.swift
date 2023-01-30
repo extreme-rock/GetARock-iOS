@@ -97,16 +97,14 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Init
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupLayout()
-        addDeleteAction()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupLayout()
         addDeleteAction()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 
     // MARK: - Method

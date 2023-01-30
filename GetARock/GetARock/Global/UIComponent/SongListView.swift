@@ -12,7 +12,7 @@ enum SongListType {
     case detail
 }
 
-final class SongListView: UIView, UICollectionViewDelegate {
+final class SongListView: UIView {
     
     // MARK: - Property
     
