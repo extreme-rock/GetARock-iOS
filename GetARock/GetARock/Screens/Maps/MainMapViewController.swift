@@ -14,6 +14,19 @@ final class MainMapViewController: UIViewController {
     
     // MARK: - Property
     
+    private lazy var camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
+                                                       longitude: currentCoordinate.longitude,
+                                                       zoom: zoomInRange)
+    
+    private var mapView: GMSMapView!
+    private var myLocationMarker = GMSMarker()
+    private var previousSelectedMarker: GMSMarker?
+    private var locationManager = CLLocationManager()
+    private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
+
+
+    private let zoomInRange: Float = 15
+    
     private var currentLocationLabel: UILabel = {
         $0.text = "포항시 남구 효자동"
         $0.textColor = .white
@@ -61,16 +74,6 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private var mapView: GMSMapView!
-    private var myLocationMarker = GMSMarker()
-    private lazy var camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
-                                                       longitude: currentCoordinate.longitude,
-                                                       zoom: zoomInRange)
-    
-    private var locationManager = CLLocationManager()
-    private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
-    private let zoomInRange: Float = 15
-    
     // MARK: - Life Cycle
     
     override func loadView() {
@@ -78,7 +81,7 @@ final class MainMapViewController: UIViewController {
         
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
                                                    longitude: currentCoordinate.longitude)
-        myLocationMarker.title = "현재 위치"
+        myLocationMarker.icon = UIImage(named: "myLocationMarker")
         myLocationMarker.map = mapView
         
         mapView = GMSMapView(frame: .zero, mapID: mapID, camera: camera)
@@ -88,16 +91,22 @@ final class MainMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.setupLayout()
+        self.attribute()
         self.setLocationManager()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        moveMap()
+        moveMap(to: currentCoordinate)
     }
 
     // MARK: - Method
+    
+    private func attribute() {
+        self.setMarkers()
+    }
     
     private func setupLayout() {
         self.view.addSubview(self.currentLocationLabel)
@@ -129,11 +138,28 @@ final class MainMapViewController: UIViewController {
         self.locationManager.requestWhenInUseAuthorization()
     }
     
-    private func moveMap() {
-        camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
-                                          longitude: currentCoordinate.longitude,
-                                          zoom: zoomInRange)
-        mapView.camera = camera
+    private func setMarkers() {
+        myLocationMarker.icon = UIImage(named: "myLocationMarker")
+        
+        for band in BandDummyData.testBands {
+            let marker = CustomMarker(bandName: band.name,
+                                      coordinate: band.location.coordinate.toCLLocationCoordinate2D(),
+                                      category: .band)
+            marker.map = mapView
+        }
+        for event in EventDummyData.testEvents {
+            // TODO: 이벤트 이름 -> 밴드 이름으로 변경
+            let marker = CustomMarker(bandName: event.name,
+                                      coordinate: event.location.coordinate.toCLLocationCoordinate2D(),
+                                      category: .event)
+            marker.map = mapView
+        }
+    }
+    
+    private func moveMap(to coordinate: CLLocationCoordinate2D?) {
+        guard let coordinate else { return }
+        let camera = GMSCameraUpdate.setTarget(coordinate, zoom: zoomInRange)
+        mapView.animate(with: camera)
     }
     
     private func moveMyLocationMarker(to coordinate: CLLocationCoordinate2D?) {
@@ -149,7 +175,38 @@ final class MainMapViewController: UIViewController {
 // MARK: - GMSMapViewDelegate
 
 extension MainMapViewController: GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        
+        if self.previousSelectedMarker == marker {
+            return true
+        }
+        
+        if self.previousSelectedMarker != nil {
+            let previousSelectedMarker = self.previousSelectedMarker as! CustomMarker
+            if previousSelectedMarker.category == .band {
+                previousSelectedMarker.changeBandMarkerImageWhenDeselected()
+            }
+        }
+
+        let selectedMarker = marker as! CustomMarker
+        if selectedMarker.category == .band {
+            selectedMarker.changeBandMarkerImageWhenSelected()
+        }
+        moveMap(to: selectedMarker.position)
+        self.previousSelectedMarker = selectedMarker
+        
+        return true
+    }
     
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        if self.previousSelectedMarker != nil {
+            let previousSelectedMarker = self.previousSelectedMarker as! CustomMarker
+            if previousSelectedMarker.category == .band {
+                previousSelectedMarker.changeBandMarkerImageWhenDeselected()
+            }
+            self.previousSelectedMarker = nil
+        }
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
