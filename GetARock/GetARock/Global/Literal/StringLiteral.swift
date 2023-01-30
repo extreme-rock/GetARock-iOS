@@ -14,6 +14,7 @@ enum StringLiteral {
 enum InstrumentImageName: String {
     case guitar
     case bass
+    case keyboard
     case drum
     case vocal
     case etc

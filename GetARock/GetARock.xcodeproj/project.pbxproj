@@ -8,16 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		2A35EDA1F6F1B54EC4E9AEF0 /* Pods_GetARock_GetARockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */; };
-		4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE46297FDFB500BB823C /* BottomButton.swift */; };
-		4AC4CE49297FE16600BB823C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE48297FE16600BB823C /* UIButton+Extension.swift */; };
+		4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A00132A29835CF600EA992E /* UIImage+Extension.swift */; };
 		4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */; };
 		4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */; };
 		4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */; };
+		4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */; };
+		4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2027152987627E0042EEFA /* PositionSelectViewController.swift */; };
 		4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */; };
 		4AC4CE41297FB85B00BB823C /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE40297FB85B00BB823C /* Position.swift */; };
 		4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE42297FB8AD00BB823C /* BandMember.swift */; };
-		4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A00132A29835CF600EA992E /* UIImage+Extension.swift */; };
-		4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */; };
+		4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE46297FDFB500BB823C /* BottomButton.swift */; };
+		4AC4CE49297FE16600BB823C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE48297FE16600BB823C /* UIButton+Extension.swift */; };
 		4AC4CE4B2980B41400BB823C /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4A2980B41400BB823C /* DefaultButton.swift */; };
 		4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF584592978E497008F4068 /* UIView+Constraints.swift */; };
 		7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */; };
@@ -68,16 +69,17 @@
 		159F0019C5C9AB3A427BD907 /* Pods-GetARockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.release.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.release.xcconfig"; sourceTree = "<group>"; };
 		1C72EC7590FAAB055CED6028 /* Pods-GetARockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.debug.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock_GetARockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4AC4CE46297FDFB500BB823C /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
-		4AC4CE48297FE16600BB823C /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		4A00132A29835CF600EA992E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionView.swift; sourceTree = "<group>"; };
 		4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
+		4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NegativeDefaultButton.swift; sourceTree = "<group>"; };
+		4A2027152987627E0042EEFA /* PositionSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectViewController.swift; sourceTree = "<group>"; };
 		4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AC4CE40297FB85B00BB823C /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		4AC4CE42297FB8AD00BB823C /* BandMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMember.swift; sourceTree = "<group>"; };
-		4A00132A29835CF600EA992E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NegativeDefaultButton.swift; sourceTree = "<group>"; };
+		4AC4CE46297FDFB500BB823C /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
+		4AC4CE48297FE16600BB823C /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		4AC4CE4A2980B41400BB823C /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		4AF584592978E497008F4068 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		6CC3391D5CB01B869CFE1F20 /* Pods-GetARock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.release.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 				159F0019C5C9AB3A427BD907 /* Pods-GetARockTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		4A202714298761DA0042EEFA /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				4A2027152987627E0042EEFA /* PositionSelectViewController.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		4AC4CE3E297FB81E00BB823C /* Network */ = {
@@ -267,6 +277,7 @@
 		B88E1BCF2977A8CD006072B7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				4A202714298761DA0042EEFA /* SignUp */,
 				B8468F62297A94B900A9E77E /* Maps */,
 				B88E1BE22977AE1D006072B7 /* Landing */,
 			);
@@ -601,6 +612,7 @@
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
+				4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */,
 				A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */,
 				9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
