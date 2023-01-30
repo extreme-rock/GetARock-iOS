@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class Dark02Button: UIButton {
+final class NegativeDefaultButton: UIButton {
     
     init() {
         super.init(frame: .zero)
