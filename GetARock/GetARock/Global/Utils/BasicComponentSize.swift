@@ -11,3 +11,7 @@ struct TextFieldSize {
     static let height = CGFloat(55)
 }
 
+struct TextViewSize {
+    static let width = UIScreen.main.bounds.width * 0.9
+    static let height = CGFloat(250)
+}
