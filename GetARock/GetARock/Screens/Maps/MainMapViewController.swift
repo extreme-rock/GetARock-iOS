@@ -141,13 +141,13 @@ final class MainMapViewController: UIViewController {
     private func setMarkers() {
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
         
-        for band in testBands {
+        for band in BandDummyData.testBands {
             let marker = CustomMarker(bandName: band.name,
                                       coordinate: band.location.coordinate.toCLLocationCoordinate2D(),
                                       category: .band)
             marker.map = mapView
         }
-        for event in testEvents {
+        for event in EventDummyData.testEvents {
             // TODO: 이벤트 이름 -> 밴드 이름으로 변경
             let marker = CustomMarker(bandName: event.name,
                                       coordinate: event.location.coordinate.toCLLocationCoordinate2D(),
