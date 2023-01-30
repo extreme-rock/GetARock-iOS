@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LandingViewController: BaseViewController {
+class LandingViewController: UIViewController {
 
      override func viewDidLoad() {
          super.viewDidLoad()
