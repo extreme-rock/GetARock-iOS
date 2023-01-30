@@ -74,7 +74,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
                                                    for: .horizontal
         )
         return $0
-    }(UIButton(type: .custom))
+    }(UIButton())
     
     private lazy var songLabelStackView: UIStackView = {
         $0.axis = .vertical
