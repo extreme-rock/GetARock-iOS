@@ -68,7 +68,7 @@ final class emptyView: UIView {
         case .notIntroduction:
             return self.emptyMessageLabel.text = "작성한 소개가 없습니다."
         case .notBand:
-            return self.emptyMessageLabel.text = "아직 가입한 밴드가 없습니다."
+            return self.emptyMessageLabel.text = "가입한 밴드가 없습니다."
         }
     }
 }
