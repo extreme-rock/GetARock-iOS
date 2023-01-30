@@ -183,7 +183,7 @@ final class TempMainPurpleSegmentedControl: UISegmentedControl {
     }
     
     private func removeBackgroundAndDivider() {
-        let image = UIImage()
+        let image = UIColor.clear.toImage()
         self.selectedSegmentTintColor = .clear
         self.setBackgroundImage(image, for: .normal, barMetrics: .default)
         self.setDividerImage(image, forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
