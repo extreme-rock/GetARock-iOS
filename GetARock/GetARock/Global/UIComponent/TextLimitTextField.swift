@@ -6,7 +6,7 @@
 //
 import UIKit
 
-enum CheckDuplicationCase {
+enum DuplicationCheckType {
     case userNickName
     case bandName
 }
@@ -17,7 +17,7 @@ final class TextLimitTextField: UIView {
     
     private let maxCount: Int
 
-    private let duplicationCheckType: CheckDuplicationCase
+    private let duplicationCheckType: DuplicationCheckType
     
     private lazy var textField: UITextField = {
         $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
@@ -25,14 +25,11 @@ final class TextLimitTextField: UIView {
     }(UITextField.makeBasicTextField(placeholder: placeholder, characterLimit: maxCount))
     
     private lazy var checkButton: DefaultButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 9, leading: 12, bottom: 9, trailing: 12)
-        $0.configuration = configuration
         $0.setTitle("중복 확인", for: .normal)
         return $0
-    }(DefaultButton(borderBounds: CGRect(x: 0, y: 0, width: 80, height: 40)))
+    }(DefaultButton(frame: CGRect(x: 0, y: 0, width: 80, height: 40)))
     
-    init(placeholer: String, maxCount: Int, checkCase: CheckDuplicationCase) {
+    init(placeholer: String, maxCount: Int, checkCase: DuplicationCheckType) {
         self.maxCount = maxCount
         self.placeholder = placeholer
         self.duplicationCheckType = checkCase
@@ -54,6 +51,8 @@ final class TextLimitTextField: UIView {
 
         self.addSubview(checkButton)
         checkButton.constraint(trailing: textField.trailingAnchor, centerY: textField.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        checkButton.constraint(.widthAnchor, constant: 80)
+        checkButton.constraint(.heightAnchor, constant: 40)
     }
 }
 
