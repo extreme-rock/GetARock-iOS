@@ -11,7 +11,13 @@ final class emptyView: UIView {
 
     // MARK: - Property
     
-    private var emptyText: String = ""
+    enum EmptyType {
+        case notSong
+        case notIntroduction
+        case notBand
+    }
+    
+    private var emptyType : EmptyType
     
     // MARK: - View
     
@@ -21,14 +27,14 @@ final class emptyView: UIView {
         return $0
     }(UIImageView())
     
-    private lazy var emptyTextLabel: BasicLabel = {
+    private lazy var emptyMessageLabel: BasicLabel = {
         return $0
-    }(BasicLabel(contentText: emptyText, fontStyle: .content, textColorInfo: .gray02))
+    }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .gray02))
     
     // MARK: - Init
     
-    init(emptyText: String) {
-        self.emptyText = emptyText
+    init(emptyType: EmptyType) {
+        self.emptyType = emptyType
         super.init(frame: .zero)
         setupLayout()
         attribute()
@@ -49,8 +55,20 @@ final class emptyView: UIView {
         self.addSubview(backgroundImage)
         self.backgroundImage.constraint(to: self)
         
-        self.backgroundImage.addSubview(emptyTextLabel)
-        self.emptyTextLabel.constraint(centerX: backgroundImage.centerXAnchor)
-        self.emptyTextLabel.constraint(centerY: backgroundImage.centerYAnchor)
+        self.backgroundImage.addSubview(emptyMessageLabel)
+        self.emptyMessageLabel.constraint(centerX: backgroundImage.centerXAnchor)
+        self.emptyMessageLabel.constraint(centerY: backgroundImage.centerYAnchor)
+        setEmptyMessage()
+    }
+    
+    private func setEmptyMessage() {
+        switch emptyType {
+        case .notSong:
+            return self.emptyMessageLabel.text = "합주곡이 없습니다."
+        case .notIntroduction:
+            return self.emptyMessageLabel.text = "작성한 소개가 없습니다."
+        case .notBand:
+            return self.emptyMessageLabel.text = "아직 가입한 밴드가 없습니다."
+        }
     }
 }
