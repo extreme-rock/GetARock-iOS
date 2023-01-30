@@ -54,14 +54,14 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Method
     
-    func setupLayout(width: CGFloat, widthState: WidthState) {
+    func setupLayout(width: CGFloat, widthState: WidthOption) {
         self.contentView.addSubview(containerView)
         self.containerView.constraint(to: contentView)
         
         self.containerView.addSubview(label)
         
         switch widthState {
-        case .fixedWidth:
+        case .fixed:
             self.containerView.constraint(.widthAnchor, constant: width)
             self.label.constraint(
                 top: containerView.topAnchor,
@@ -70,7 +70,7 @@ final class SelectCollectionViewCell: UICollectionViewCell {
                 padding: UIEdgeInsets(top: 15, left: 0, bottom: 13, right: 0)
             )
             
-        case .flexableWidth:
+        case .flexable:
             self.label.constraint(
                 top: containerView.topAnchor,
                 leading: containerView.leadingAnchor,
