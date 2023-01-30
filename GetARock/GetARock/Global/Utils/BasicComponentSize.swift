@@ -15,3 +15,7 @@ struct TextViewSize {
     static let width = UIScreen.main.bounds.width * 0.9
     static let height = CGFloat(250)
 }
+
+struct SFIconSize {
+    static let smallIconSize = UIImage.SymbolConfiguration(pointSize: 15)
+}
