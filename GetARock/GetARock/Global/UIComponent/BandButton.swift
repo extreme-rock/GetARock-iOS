@@ -9,6 +9,12 @@ import UIKit
 
 class BandButton: UIView {
     
+    // MARK: - Property
+    
+    private var bandName: String
+    private var membersNumber: Int
+    private var membersAge: String
+    
     // MARK: - View
     
     private let backgroundImage: UIImageView = {
@@ -20,7 +26,9 @@ class BandButton: UIView {
     private lazy var bandNameLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "임시텍스트임시텍스트임시텍스트임시텍스트", fontStyle: .headline01, textColorInfo: .white))
+    }(BasicLabel(contentText: bandName,
+                 fontStyle: .headline01,
+                 textColorInfo: .white))
     
     private let memberIconImage: UIImageView = {
         $0.image = UIImage(systemName: "person.3.fill",
@@ -30,29 +38,37 @@ class BandButton: UIView {
         return $0
     }(UIImageView())
     
-    private var memberinfoLabel: BasicLabel = {
+    private lazy var memberInfoLabel: BasicLabel = {
         return $0
-    }(BasicLabel(contentText: "임시텍스트", fontStyle: .content, textColorInfo: .white))
+    }(BasicLabel(contentText: "\(membersNumber)인 | \(membersAge)",
+                 fontStyle: .content,
+                 textColorInfo: .white))
     
     private lazy var memberstackView: UIStackView = {
         $0.axis = .horizontal
         $0.spacing = 5
         return $0
-    }(UIStackView(arrangedSubviews: [memberIconImage,memberinfoLabel]))
+    }(UIStackView(arrangedSubviews: [memberIconImage, memberInfoLabel]))
     
     private lazy var bandInfoStackView: UIStackView = {
         $0.axis = .vertical
-        $0.alignment = .leading
         $0.spacing = 8
+        $0.alignment = .leading
         $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: 0.0, left: 25.0, bottom: 0.0, right: 0.0)
         return $0
     }(UIStackView(arrangedSubviews: [bandNameLabel,memberstackView]))
     
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(bandName: String,
+         membersNumber: Int,
+         membersAge: String) {
+        self.bandName = bandName
+        self.membersNumber = membersNumber
+        self.membersAge = membersAge
+        super.init(frame: .zero)
         setupLayout()
         attribute()
     }
@@ -64,20 +80,33 @@ class BandButton: UIView {
     // MARK: - Method
     
     private func attribute() {
-        self.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
-        self.constraint(.heightAnchor, constant: 100)
+        self.constraint(.widthAnchor, constant: BandButtonSize.width)
+        self.constraint(.heightAnchor, constant: BandButtonSize.height)
     }
     
     private func setupLayout() {
+        
         self.addSubview(backgroundImage)
         self.backgroundImage.constraint(to: self)
         
         self.backgroundImage.addSubview(bandInfoStackView)
-        self.bandInfoStackView.constraint(
-            leading: self.leadingAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 150)
-        )
+        self.bandInfoStackView.constraint(.widthAnchor, constant: BandButtonSize.width/1.8)
         self.bandInfoStackView.constraint(centerY: backgroundImage.centerYAnchor)
+        addBandButtonAction()
     }
+    
+    private func addBandButtonAction() {
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(moveBandInfo(_:))
+        )
+        self.addGestureRecognizer(tapGesture)
+        self.isUserInteractionEnabled = true
+    }
+    
+    @objc
+       func moveBandInfo(_ gesture: UITapGestureRecognizer) {
+           print("버튼 눌림")
+       }
 }
+
