@@ -18,6 +18,7 @@ enum Section: Int {
 enum Item: Hashable {
     case bandMember(BandMember)
     case position(Position)
+    case plusPosition
 }
 
 
@@ -68,6 +69,7 @@ final class PositionCollectionView: UIView {
             collectionView.register(BandMemberCollectionViewCell.self, forCellWithReuseIdentifier: BandMemberCollectionViewCell.classIdentifier)
         case .position:
             collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.classIdentifier)
+            collectionView.register(PositionPlusCollectionViewCell.self, forCellWithReuseIdentifier: PositionPlusCollectionViewCell.classIdentifier)
         }
         return collectionView
     }()
@@ -107,6 +109,9 @@ extension PositionCollectionView {
             case .position(let position):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.classIdentifier, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
                 cell.configure(data: position)
+                return cell
+            case .plusPosition:
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionPlusCollectionViewCell.classIdentifier, for: indexPath) as? PositionPlusCollectionViewCell else { return UICollectionViewCell() }
                 return cell
             }
         })
