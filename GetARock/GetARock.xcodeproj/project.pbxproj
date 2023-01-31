@@ -166,8 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				4A2027152987627E0042EEFA /* PositionSelectViewController.swift */,
-				4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */,
 				4A5931892989041200C8DA31 /* PlusPositionViewController.swift */,
+				4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";

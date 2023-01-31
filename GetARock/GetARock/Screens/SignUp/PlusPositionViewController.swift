@@ -23,7 +23,45 @@ class PlusPositionViewController: UIViewController {
         return $0
     }(UILabel())
     
+    private let textField = BasicTextField(placeholder: "추가 할 포지션을 입력해 주세요.")
+    
+    private let addPositionButton: BottomButton = {
+        $0.setTitle("추가", for: .normal)
+        $0.tintColor = .white
+        return $0
+    }(BottomButton())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLayout()
+        attribute()
+    }
+    
+    private func attribute() {
+        self.view.backgroundColor = .dark03
+    }
+    
+    private func setupLayout() {
+        self.view.addSubview(titleLabel)
+        titleLabel.constraint(top: view.topAnchor,
+                              leading: view.leadingAnchor,
+                              trailing: view.trailingAnchor,
+                              padding: UIEdgeInsets(top: 59, left: 15, bottom: 0, right: 15))
+        
+        self.view.addSubview(subTitleLabel)
+        subTitleLabel.constraint(top: titleLabel.bottomAnchor,
+                                 leading: view.leadingAnchor,
+                                 trailing: view.trailingAnchor,
+                                 padding: UIEdgeInsets(top: 10, left: 15, bottom: 0, right: 15))
+        
+        self.view.addSubview(textField)
+        textField.constraint(top: subTitleLabel.bottomAnchor,
+                             centerX: view.centerXAnchor,
+                             padding: UIEdgeInsets(top: 30, left: 16, bottom: 0, right: 16))
+        
+        self.view.addSubview(addPositionButton)
+        addPositionButton.constraint(top: textField.bottomAnchor,
+                                     centerX: view.centerXAnchor,
+                                     padding: UIEdgeInsets(top: 52, left: 0, bottom: 0, right: 0))
     }
 }

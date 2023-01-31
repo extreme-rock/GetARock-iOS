@@ -28,10 +28,15 @@ final class PositionSelectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+        attribute()
         configureDelegate()
         addObservePositionPlusButtonTapped()
     }
-
+    
+    private func attribute() {
+        self.view.backgroundColor = .dark01
+    }
+    
     private func configureDelegate() {
         positionCollectionView.delegate = self
     }
@@ -61,8 +66,7 @@ final class PositionSelectViewController: UIViewController {
     
     @objc
     private func showPositionPlusModal() {
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .white
+        let viewController = PlusPositionViewController()
         present(viewController, animated: true)
     }
 }
