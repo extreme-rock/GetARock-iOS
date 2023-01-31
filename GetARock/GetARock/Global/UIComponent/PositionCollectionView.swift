@@ -87,8 +87,8 @@ final class PositionCollectionView: UIView {
         case .position:
             collectionView.register(PositionCollectionViewCell.self,
                                     forCellWithReuseIdentifier: PositionCollectionViewCell.classIdentifier)
-            collectionView.register(PositionPlusCollectionViewCell.self,
-                                    forCellWithReuseIdentifier: PositionPlusCollectionViewCell.classIdentifier)
+            collectionView.register(PlusPositionCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: PlusPositionCollectionViewCell.classIdentifier)
             
             collectionView.register(PositionCollectionReusableView.self,
                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -134,7 +134,7 @@ extension PositionCollectionView {
                 cell.configure(data: position)
                 return cell
             case .plusPosition:
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionPlusCollectionViewCell.classIdentifier, for: indexPath) as? PositionPlusCollectionViewCell else { return UICollectionViewCell() }
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlusPositionCollectionViewCell.classIdentifier, for: indexPath) as? PlusPositionCollectionViewCell else { return UICollectionViewCell() }
                 return cell
             }
         })

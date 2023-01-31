@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PositionPlusCollectionViewCell: UICollectionViewCell {
+final class PlusPositionCollectionViewCell: UICollectionViewCell {
 
     // MARK: - View
     

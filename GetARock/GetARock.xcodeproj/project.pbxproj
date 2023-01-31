@@ -14,8 +14,9 @@
 		4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */; };
 		4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */; };
 		4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2027152987627E0042EEFA /* PositionSelectViewController.swift */; };
+		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
 		4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */; };
-		4ABFB63629881959004BF232 /* PositionPlusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABFB63529881959004BF232 /* PositionPlusCollectionViewCell.swift */; };
+		4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */; };
 		4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */; };
 		4AC4CE41297FB85B00BB823C /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE40297FB85B00BB823C /* Position.swift */; };
 		4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE42297FB8AD00BB823C /* BandMember.swift */; };
@@ -77,8 +78,9 @@
 		4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NegativeDefaultButton.swift; sourceTree = "<group>"; };
 		4A2027152987627E0042EEFA /* PositionSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectViewController.swift; sourceTree = "<group>"; };
+		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
 		4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionReusableView.swift; sourceTree = "<group>"; };
-		4ABFB63529881959004BF232 /* PositionPlusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionPlusCollectionViewCell.swift; sourceTree = "<group>"; };
+		4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AC4CE40297FB85B00BB823C /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		4AC4CE42297FB8AD00BB823C /* BandMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMember.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			children = (
 				4A2027152987627E0042EEFA /* PositionSelectViewController.swift */,
 				4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */,
+				4A5931892989041200C8DA31 /* PlusPositionViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -352,7 +355,7 @@
 				4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */,
 				4AC4CE4A2980B41400BB823C /* DefaultButton.swift */,
 				4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */,
-				4ABFB63529881959004BF232 /* PositionPlusCollectionViewCell.swift */,
+				4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -618,7 +621,7 @@
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
-				4ABFB63629881959004BF232 /* PositionPlusCollectionViewCell.swift in Sources */,
+				4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
 				4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */,
 				A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */,
@@ -626,6 +629,7 @@
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
 				4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
+				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
