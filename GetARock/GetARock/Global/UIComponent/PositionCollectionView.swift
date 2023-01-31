@@ -111,11 +111,16 @@ final class PositionCollectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - Method
     
     private func setupLayout() {
         addSubview(collectionView)
         self.collectionView.constraint(to: self)
+    }
+    
+    func updateCellIndex(at indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
+        cell.cellIndex = indexPath.item
     }
 }
 

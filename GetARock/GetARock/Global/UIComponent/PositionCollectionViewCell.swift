@@ -11,6 +11,8 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Property
     
+    var cellIndex: Int? = nil
+    
     override var isSelected: Bool {
         didSet {
             self.applySelectedState()
@@ -33,7 +35,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let positionNameLabel: UILabel = {
+    let positionNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.setFont(.headline01)
         label.numberOfLines = 2
@@ -56,9 +58,17 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private var indexPath: IndexPath? = nil
+    private lazy var action = UIAction { _ in
+        NotificationCenter.default.post(name: Notification.Name("deletePositionCell"),
+                                        object: nil,
+                                        userInfo: ["index": self.cellIndex as Any])
+    }
     
     //MARK: - Init
+    
+    override func prepareForReuse() {
+        deleteButton.removeAction(self.action, for: .touchUpInside)
+    }
     
     override func setNeedsLayout() {
         self.contentView.layer.cornerRadius = 10
@@ -110,12 +120,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     }
     
     private func addDeleteButtonAction() {
-        let action = UIAction { _ in
-            NotificationCenter.default.post(name: Notification.Name("deletePositionCell"),
-                                            object: nil,
-                                            userInfo: ["indexPath": self.indexPath as Any])
-        }
-        self.deleteButton.addAction(action, for: .touchUpInside)
+        self.deleteButton.addAction(self.action, for: .touchUpInside)
     }
     
     private func applySelectedState() {
@@ -126,6 +131,6 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     func configure(data: Position, indexPath: IndexPath) {
         self.positionImageView.image = UIImage(named: data.instrumentImageName.rawValue)
         self.positionNameLabel.text = data.instrumentName
-        self.indexPath = indexPath
+        self.cellIndex = indexPath.item
     }
 }

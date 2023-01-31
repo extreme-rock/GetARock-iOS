@@ -65,10 +65,16 @@ final class PositionSelectViewController: UIViewController {
     
     @objc
     private func deletePosition(_ notification: Notification) {
-        print("하이")
-        guard let deleteIndexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
-        positions.remove(at: deleteIndexPath.item)
+        guard let deleteIndexPath = notification.userInfo?["index"] as? Int else { return }
+        positions.remove(at: deleteIndexPath)
         self.positionCollectionView.applySnapshot(with: positions)
+        self.updateCellIndex(from: deleteIndexPath, endIndex: positions.count - 1)
+    }
+    
+    private func updateCellIndex(from startIndex: Int, endIndex: Int) {
+        for index in startIndex..<endIndex {
+            positionCollectionView.updateCellIndex(at: IndexPath(item: index, section: 0))
+        }
     }
     
     private func setupLayout() {
