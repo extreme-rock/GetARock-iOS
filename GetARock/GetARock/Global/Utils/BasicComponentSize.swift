@@ -19,3 +19,8 @@ struct TextViewSize {
 struct SFIconSize {
     static let smallIconSize = UIImage.SymbolConfiguration(pointSize: 15)
 }
+
+struct BandButtonSize {
+    static let  width = UIScreen.main.bounds.width - 32
+    static let height = CGFloat(100)
+}
