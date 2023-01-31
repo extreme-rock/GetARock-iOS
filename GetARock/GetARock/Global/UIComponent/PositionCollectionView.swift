@@ -60,6 +60,17 @@ final class PositionCollectionView: UIView {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
         
+        let headerFooterSize = NSCollectionLayoutSize(
+          widthDimension: .fractionalWidth(1.0),
+          heightDimension: .estimated(20)
+        )
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+          layoutSize: headerFooterSize,
+          elementKind: UICollectionView.elementKindSectionHeader,
+          alignment: .top
+        )
+        section.boundarySupplementaryItems = [sectionHeader]
+        
         let layout = UICollectionViewCompositionalLayout(section: section)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -70,10 +81,17 @@ final class PositionCollectionView: UIView {
         collectionView.delegate = self
         switch self.entryPoint {
         case .band:
-            collectionView.register(BandMemberCollectionViewCell.self, forCellWithReuseIdentifier: BandMemberCollectionViewCell.classIdentifier)
+            collectionView.register(BandMemberCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: BandMemberCollectionViewCell.classIdentifier)
         case .position:
-            collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.classIdentifier)
-            collectionView.register(PositionPlusCollectionViewCell.self, forCellWithReuseIdentifier: PositionPlusCollectionViewCell.classIdentifier)
+            collectionView.register(PositionCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: PositionCollectionViewCell.classIdentifier)
+            collectionView.register(PositionPlusCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: PositionPlusCollectionViewCell.classIdentifier)
+            
+            collectionView.register(PositionCollectionReusableView.self,
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                    withReuseIdentifier: PositionCollectionReusableView.classIdentifier)
         }
         return collectionView
     }()
@@ -104,7 +122,7 @@ final class PositionCollectionView: UIView {
 
 extension PositionCollectionView {
     private func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Item> {
-        return UICollectionViewDiffableDataSource<Section, Item>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
+        let dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
             switch item {
             case .bandMember(let bandMember):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemberCollectionViewCell.classIdentifier, for: indexPath) as? BandMemberCollectionViewCell else { return UICollectionViewCell() }
@@ -119,6 +137,16 @@ extension PositionCollectionView {
                 return cell
             }
         })
+
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
+            let view = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: PositionCollectionReusableView.classIdentifier,
+                for: indexPath) as? PositionCollectionReusableView
+            return view
+        }
+        return dataSource
     }
     
     func applySnapshot(with items: [Item]) {
@@ -135,4 +163,6 @@ extension PositionCollectionView: UICollectionViewDelegate {
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
     }
+    
+    
 }

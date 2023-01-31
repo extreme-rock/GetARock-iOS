@@ -14,7 +14,8 @@ final class PositionSelectViewController: UIViewController {
         .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
         .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
         .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
-        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false))
+        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
+        .plusPosition
     ]
     
     private lazy var positionCollectionView = PositionCollectionView(entryPoint: .position, items: positions)
