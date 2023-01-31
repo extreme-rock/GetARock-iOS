@@ -7,7 +7,17 @@
 
 import UIKit
 
-class PlusPositionViewController: UIViewController {
+protocol PlusPositionViewControllerDelegate: AnyObject {
+    func addPosition(instrumentName: String)
+}
+
+final class PlusPositionViewController: UIViewController {
+    
+    // MARK: - Property
+    
+    weak var delegate: PlusPositionViewControllerDelegate?
+    
+    // MARK: - View
     
     private let titleLabel: UILabel = {
         $0.font = .setFont(.headline01)
@@ -31,11 +41,16 @@ class PlusPositionViewController: UIViewController {
         return $0
     }(BottomButton())
     
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
         attribute()
+        addAction()
     }
+    
+    // MARK: - Method
     
     private func attribute() {
         self.view.backgroundColor = .dark03
@@ -63,5 +78,14 @@ class PlusPositionViewController: UIViewController {
         addPositionButton.constraint(top: textField.bottomAnchor,
                                      centerX: view.centerXAnchor,
                                      padding: UIEdgeInsets(top: 52, left: 0, bottom: 0, right: 0))
+    }
+    
+    private func addAction() {
+        let action = UIAction { _ in
+            guard let instrumentName = self.textField.textField.text else { return }
+            self.delegate?.addPosition(instrumentName: instrumentName)
+            self.dismiss(animated: true)
+        }
+        addPositionButton.addAction(action, for: .touchUpInside)
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 final class PositionSelectViewController: UIViewController {
     
-    private let positions: [Item] = [
+    private var positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
         .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
         .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
@@ -67,6 +67,7 @@ final class PositionSelectViewController: UIViewController {
     @objc
     private func showPositionPlusModal() {
         let viewController = PlusPositionViewController()
+        viewController.delegate = self
         present(viewController, animated: true)
     }
 }
@@ -74,5 +75,15 @@ final class PositionSelectViewController: UIViewController {
 extension PositionSelectViewController: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
         return true
+    }
+}
+
+extension PositionSelectViewController: PlusPositionViewControllerDelegate {
+    func addPosition(instrumentName: String) {
+        let newPosition: Item = .position(Position(instrumentName: instrumentName,
+                                                   instrumentImageName: .etc,
+                                                   isETC: true))
+        positions.insert(newPosition, at: positions.count - 1)
+        self.positionCollectionView.applySnapshot(with: positions)
     }
 }
