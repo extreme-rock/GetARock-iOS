@@ -35,7 +35,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let positionNameLabel: UILabel = {
+    private let positionNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.setFont(.headline01)
         label.numberOfLines = 2
