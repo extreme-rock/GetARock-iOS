@@ -18,7 +18,12 @@ final class PositionSelectViewController: UIViewController {
         .plusPosition
     ]
     
-    private lazy var positionCollectionView = PositionCollectionView(entryPoint: .position, items: positions)
+    private lazy var positionCollectionView = PositionCollectionView(
+        entryPoint: .position,
+        items: positions,
+        isNeedHeader: true,
+        headerView: PositionSelectCollectionViewHeader()
+    )
     
     private let nextButton: BottomButton = {
         $0.setTitle("다음", for: .normal)

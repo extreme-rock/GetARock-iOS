@@ -39,6 +39,8 @@ final class PositionCollectionView: UIView {
     weak var delegate: PositionCollectionViewDelegate?
     
     private var items: [Item] = []
+    private let isNeedHeader: Bool
+    private let headerView: UIView?
     private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
     
     // MARK: - View
@@ -60,16 +62,19 @@ final class PositionCollectionView: UIView {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
         
-        let headerFooterSize = NSCollectionLayoutSize(
-          widthDimension: .fractionalWidth(1.0),
-          heightDimension: .estimated(20)
-        )
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-          layoutSize: headerFooterSize,
-          elementKind: UICollectionView.elementKindSectionHeader,
-          alignment: .top
-        )
-        section.boundarySupplementaryItems = [sectionHeader]
+        if self.isNeedHeader {
+            let headerFooterSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(20)
+            )
+            
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerFooterSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            section.boundarySupplementaryItems = [sectionHeader]
+        }
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         
@@ -99,9 +104,11 @@ final class PositionCollectionView: UIView {
     
     // MARK: - init
     
-    init(entryPoint: CellType, items: [Item]) {
+    init(entryPoint: CellType, items: [Item], isNeedHeader: Bool, headerView: UIView? = nil) {
         self.entryPoint = entryPoint
         self.items = items
+        self.isNeedHeader = isNeedHeader
+        self.headerView = headerView
         super.init(frame: .zero)
         self.setupLayout()
         self.applySnapshot(with: items)
@@ -146,14 +153,17 @@ extension PositionCollectionView {
                 return cell
             }
         })
-
-        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-            guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
-            let view = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: PositionCollectionReusableView.classIdentifier,
-                for: indexPath) as? PositionCollectionReusableView
-            return view
+        
+        if isNeedHeader {
+            dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+                guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
+                let view = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: PositionCollectionReusableView.classIdentifier,
+                    for: indexPath) as? PositionCollectionReusableView
+                view?.setupLayout(view: self.headerView ?? UIView())
+                return view
+            }
         }
         return dataSource
     }
@@ -172,4 +182,5 @@ extension PositionCollectionView: UICollectionViewDelegate {
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
     }
+
 }
