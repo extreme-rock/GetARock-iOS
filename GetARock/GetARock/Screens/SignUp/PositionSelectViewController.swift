@@ -20,6 +20,11 @@ final class PositionSelectViewController: UIViewController {
     
     private lazy var positionCollectionView = PositionCollectionView(entryPoint: .position, items: positions)
     
+    private let nextButton: BottomButton = {
+        $0.setTitle("다음", for: .normal)
+        return $0
+    }(BottomButton())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -32,11 +37,18 @@ final class PositionSelectViewController: UIViewController {
     
     private func setupLayout() {
         self.view.addSubview(positionCollectionView)
-        positionCollectionView.constraint(top: view.topAnchor,
+        self.view.addSubview(nextButton)
+        
+        positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                           leading: view.leadingAnchor,
-                                          bottom: view.bottomAnchor,
+                                          bottom: nextButton.topAnchor,
                                           trailing: view.trailingAnchor,
-                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16))
+                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        
+        
+        nextButton.constraint(bottom: view.bottomAnchor,
+                              centerX: view.centerXAnchor,
+                              padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
     }
 
 }
