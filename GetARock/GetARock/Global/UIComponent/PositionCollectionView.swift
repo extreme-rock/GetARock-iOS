@@ -131,7 +131,10 @@ extension PositionCollectionView {
                 return cell
             case .position(let position):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.classIdentifier, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
-                cell.configure(data: position)
+                if position.isETC {
+                    cell.setupDeleteButton()
+                }
+                cell.configure(data: position, indexPath: indexPath)
                 return cell
             case .plusPosition:
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlusPositionCollectionViewCell.classIdentifier, for: indexPath) as? PlusPositionCollectionViewCell else { return UICollectionViewCell() }

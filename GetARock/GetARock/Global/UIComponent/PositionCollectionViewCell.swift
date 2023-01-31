@@ -56,6 +56,8 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private var indexPath: IndexPath? = nil
+    
     //MARK: - Init
     
     override func setNeedsLayout() {
@@ -98,11 +100,22 @@ final class PositionCollectionViewCell: UICollectionViewCell {
                              padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
     }
     
-    private func setupDeleteButtonLayout() {
+    func setupDeleteButton() {
         self.containerView.addSubview(deleteButton)
         self.deleteButton.constraint(top: containerView.topAnchor,
                                 trailing: containerView.trailingAnchor,
                                 padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
+        
+        addDeleteButtonAction()
+    }
+    
+    private func addDeleteButtonAction() {
+        let action = UIAction { _ in
+            NotificationCenter.default.post(name: Notification.Name("deletePositionCell"),
+                                            object: nil,
+                                            userInfo: ["indexPath": self.indexPath as Any])
+        }
+        self.deleteButton.addAction(action, for: .touchUpInside)
     }
     
     private func applySelectedState() {
@@ -110,8 +123,9 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
     
-    func configure(data: Position) {
+    func configure(data: Position, indexPath: IndexPath) {
         self.positionImageView.image = UIImage(named: data.instrumentImageName.rawValue)
         self.positionNameLabel.text = data.instrumentName
+        self.indexPath = indexPath
     }
 }

@@ -31,6 +31,7 @@ final class PositionSelectViewController: UIViewController {
         attribute()
         configureDelegate()
         addObservePositionPlusButtonTapped()
+        addObservePositionDeleteButtonTapped()
     }
     
     private func attribute() {
@@ -48,6 +49,28 @@ final class PositionSelectViewController: UIViewController {
                                                 object: nil)
      }
     
+    @objc
+    private func showPositionPlusModal() {
+        let viewController = PlusPositionViewController()
+        viewController.delegate = self
+        present(viewController, animated: true)
+    }
+    
+    private func addObservePositionDeleteButtonTapped() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(deletePosition(_:)),
+                                               name: Notification.Name("deletePositionCell"),
+                                               object: nil)
+    }
+    
+    @objc
+    private func deletePosition(_ notification: Notification) {
+        print("하이")
+        guard let deleteIndexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
+        positions.remove(at: deleteIndexPath.item)
+        self.positionCollectionView.applySnapshot(with: positions)
+    }
+    
     private func setupLayout() {
         self.view.addSubview(positionCollectionView)
         self.view.addSubview(nextButton)
@@ -62,13 +85,6 @@ final class PositionSelectViewController: UIViewController {
         nextButton.constraint(bottom: view.bottomAnchor,
                               centerX: view.centerXAnchor,
                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
-    }
-    
-    @objc
-    private func showPositionPlusModal() {
-        let viewController = PlusPositionViewController()
-        viewController.delegate = self
-        present(viewController, animated: true)
     }
 }
 
