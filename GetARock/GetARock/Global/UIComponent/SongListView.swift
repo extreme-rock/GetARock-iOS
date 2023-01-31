@@ -12,7 +12,7 @@ enum SongListType {
     case detail
 }
 
-class SongListView: UIView {
+final class SongListView: UIView {
     
     // MARK: - Property
     
@@ -68,7 +68,7 @@ extension SongListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return BandDummyData.testBands[0].song?.count ?? 0
+        return BandDummyData.testBands.first?.song?.count ?? -1
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -79,9 +79,21 @@ extension SongListView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
+        cell.delegate = self
         cell.configure(
-            data: BandDummyData.testBands[0].song?[indexPath.item] ?? nil,
-            songListType: songListType)
+            data: BandDummyData.testBands.first?.song?[indexPath.item] ?? nil,
+            songListType: songListType,
+            index: indexPath.item
+        )
         return cell
+    }
+}
+
+// MARK: - SongListDeleteDelegate
+
+extension SongListView: SongListDeleteDelegate {
+    func deleteSongList(index: Int) {
+        BandDummyData.testBands[0].song?.remove(at: index)
+        self.collectionView.reloadData()
     }
 }
