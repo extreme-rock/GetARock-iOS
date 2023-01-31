@@ -69,7 +69,7 @@ final class TextLimitTextField: UIView {
     }
     
     private func attribute() {
-        if type = .none {
+        if type == .none {
             checkButton.isHidden = true
         }
     }
