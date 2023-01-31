@@ -7,8 +7,8 @@
 
 import UIKit
 
-class PositionPlusCollectionViewCell: UICollectionViewCell {
-    
+final class PositionPlusCollectionViewCell: UICollectionViewCell {
+
     // MARK: - View
     
     private let containerView: UIView = {
@@ -19,15 +19,16 @@ class PositionPlusCollectionViewCell: UICollectionViewCell {
         return $0
     }(UIView())
     
-    private let plusImageView: UIImageView = {
-        $0.image = UIImage(systemName: "plus")
+    private let plusPositionButton: UIButton = {
+        $0.setImage(UIImage(systemName: "plus"), for: .normal)
         $0.tintColor = .white
         return $0
-    }(UIImageView())
-    
+    }(UIButton())
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        addAction()
     }
     
     required init?(coder: NSCoder) {
@@ -40,9 +41,14 @@ class PositionPlusCollectionViewCell: UICollectionViewCell {
         self.containerView.constraint(.widthAnchor, constant: CellSize.width)
         self.containerView.constraint(.heightAnchor, constant: 138)
         
-        containerView.addSubview(plusImageView)
-        self.plusImageView.constraint(centerX: self.containerView.centerXAnchor,
-                                      centerY: self.containerView.centerYAnchor)
+        containerView.addSubview(plusPositionButton)
+        self.plusPositionButton.constraint(to: self.containerView)
     }
     
+    private func addAction() {
+        let action = UIAction { _ in
+            NotificationCenter.default.post(name: Notification.Name("showPositionPlusModal"), object: nil)
+        }
+        self.plusPositionButton.addAction(action, for: .touchUpInside)
+    }
 }

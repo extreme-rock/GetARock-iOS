@@ -29,11 +29,19 @@ final class PositionSelectViewController: UIViewController {
         super.viewDidLoad()
         setupLayout()
         configureDelegate()
+        addObservePositionPlusButtonTapped()
     }
 
     private func configureDelegate() {
         positionCollectionView.delegate = self
     }
+    
+    private func addObservePositionPlusButtonTapped() {
+         NotificationCenter.default.addObserver(self,
+                                                selector: #selector(showPositionPlusModal),
+                                                name: Notification.Name("showPositionPlusModal"),
+                                                object: nil)
+     }
     
     private func setupLayout() {
         self.view.addSubview(positionCollectionView)
@@ -50,7 +58,13 @@ final class PositionSelectViewController: UIViewController {
                               centerX: view.centerXAnchor,
                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
     }
-
+    
+    @objc
+    private func showPositionPlusModal() {
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .white
+        present(viewController, animated: true)
+    }
 }
 
 extension PositionSelectViewController: PositionCollectionViewDelegate {
