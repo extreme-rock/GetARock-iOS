@@ -12,9 +12,9 @@ final class emptyView: UIView {
     // MARK: - Property
     
     enum EmptyType {
-        case notSong
-        case notIntroduction
-        case notBand
+        case noSong
+        case noIntroduction
+        case noBand
     }
     
     private var emptyType : EmptyType
@@ -33,8 +33,8 @@ final class emptyView: UIView {
     
     // MARK: - Init
     
-    init(emptyType: EmptyType) {
-        self.emptyType = emptyType
+    init(type: EmptyType) {
+        self.emptyType = type
         super.init(frame: .zero)
         setupLayout()
         attribute()
@@ -63,11 +63,11 @@ final class emptyView: UIView {
     
     private func setEmptyMessage() {
         switch emptyType {
-        case .notSong:
+        case .noSong:
             return self.emptyMessageLabel.text = "합주곡이 없습니다."
-        case .notIntroduction:
+        case .noIntroduction:
             return self.emptyMessageLabel.text = "작성한 소개가 없습니다."
-        case .notBand:
+        case .noBand:
             return self.emptyMessageLabel.text = "가입한 밴드가 없습니다."
         }
     }
