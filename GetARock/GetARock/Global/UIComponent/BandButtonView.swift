@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BandButton: UIView {
+class BandButtonView: UIView {
     
     // MARK: - Property
     
