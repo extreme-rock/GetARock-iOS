@@ -59,7 +59,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var action = UIAction { _ in
-        NotificationCenter.default.post(name: Notification.Name("deletePositionCell"),
+        NotificationCenter.default.post(name: Notification.Name(StringLiteral.deletePositionCell),
                                         object: nil,
                                         userInfo: ["index": self.cellIndex as Any])
     }

@@ -45,7 +45,7 @@ final class PositionSelectViewController: UIViewController {
     private func addObservePositionPlusButtonTapped() {
          NotificationCenter.default.addObserver(self,
                                                 selector: #selector(showPositionPlusModal),
-                                                name: Notification.Name("showPositionPlusModal"),
+                                                name: Notification.Name(StringLiteral.showPositionPlusModal),
                                                 object: nil)
      }
     
@@ -59,7 +59,7 @@ final class PositionSelectViewController: UIViewController {
     private func addObservePositionDeleteButtonTapped() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(deletePosition(_:)),
-                                               name: Notification.Name("deletePositionCell"),
+                                               name: Notification.Name(StringLiteral.deletePositionCell),
                                                object: nil)
     }
     

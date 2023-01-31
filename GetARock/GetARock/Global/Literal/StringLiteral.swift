@@ -9,6 +9,10 @@ import UIKit
 
 enum StringLiteral {
 //    static let exampleString = "안녕하세요"
+    
+    // Notifiation.Name
+    static let deletePositionCell = "deletePositionCell"
+    static let showPositionPlusModal = "showPositionPlusModal"
 }
 
 enum InstrumentImageName: String {
