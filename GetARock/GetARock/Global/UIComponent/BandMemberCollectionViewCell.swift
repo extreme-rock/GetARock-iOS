@@ -63,7 +63,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     private func setupLayout() {
         self.contentView.addSubview(containerView)
         self.containerView.constraint(to: contentView)
-        self.containerView.constraint(.widthAnchor, constant: 172)
+        self.containerView.constraint(.widthAnchor, constant: CellSize.width)
         self.containerView.constraint(.heightAnchor, constant: 138)
         
         self.containerView.addSubview(positionImageView)

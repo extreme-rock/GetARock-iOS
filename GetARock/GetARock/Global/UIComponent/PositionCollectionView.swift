@@ -21,6 +21,10 @@ enum Item: Hashable {
     case plusPosition
 }
 
+enum CellSize {
+    static let width = (UIScreen.main.bounds.width - 42) / 2
+}
+
 
 final class PositionCollectionView: UIView {
     
@@ -40,8 +44,8 @@ final class PositionCollectionView: UIView {
     // MARK: - View
     
     private lazy var collectionView: UICollectionView = {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(174),
-                                              heightDimension: .absolute(140))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(CellSize.width),
+                                              heightDimension: .absolute(138))
         let item1 = NSCollectionLayoutItem(layoutSize: itemSize)
         let item2 = NSCollectionLayoutItem(layoutSize: itemSize)
         
