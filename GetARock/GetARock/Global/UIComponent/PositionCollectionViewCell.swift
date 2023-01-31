@@ -58,6 +58,12 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Init
     
+    override func setNeedsLayout() {
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        self.contentView.applyActiveGradation()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLayout()
@@ -100,7 +106,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     }
     
     private func applySelectedState() {
-        self.containerView.backgroundColor = isSelected ? .activeGradationPurple : .dark02
+        self.containerView.backgroundColor = isSelected ? .clear : .dark02
         self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
     
