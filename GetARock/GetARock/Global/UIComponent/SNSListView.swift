@@ -7,33 +7,19 @@
 
 import UIKit
 
-class SNSListView: UIView {
+final class SNSListView: UIStackView {
     
     // MARK: - VIew
     
-    private let youtubeButton: SNSButtonView = {
-        return $0
-    }(SNSButtonView(type: .youtube))
-    
-    private let instagramButton: SNSButtonView = {
-        return $0
-    }(SNSButtonView(type: .instagram))
-    
-    private let soundCloudButton: SNSButtonView = {
-        return $0
-    }(SNSButtonView(type: .soundCloud))
-    
-    private lazy var snsListStackView: UIStackView = {
-        $0.axis = .horizontal
-        $0.distribution = .fillEqually
-        $0.spacing = 5
-        return $0
-    }(UIStackView(arrangedSubviews: [youtubeButton, instagramButton, soundCloudButton]))
+    private let youtubeButton = SNSButtonView(type: .youtube)
+    private let instagramButton = SNSButtonView(type: .instagram)
+    private let soundCloudButton: SNSButtonView = SNSButtonView(type: .soundCloud)
     
     // MARK: - Init
     
     init() {
         super.init(frame: .zero)
+        attribute()
         setupLayout()
     }
     
@@ -43,9 +29,17 @@ class SNSListView: UIView {
     
     // MARK: - Layout
     
+    private func attribute() {
+        self.axis = .horizontal
+        self.spacing = 5
+        self.distribution = .fillEqually
+        self.constraint(.widthAnchor, constant: BasicComponentSize.width)
+    }
+    
     private func setupLayout() {
-        
-        self.addSubview(snsListStackView)
-        self.snsListStackView.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
+        self.addArrangedSubview(youtubeButton)
+        self.addArrangedSubview(instagramButton)
+        self.addArrangedSubview(soundCloudButton)
+
     }
 }
