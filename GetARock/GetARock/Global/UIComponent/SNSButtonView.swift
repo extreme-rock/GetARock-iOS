@@ -17,22 +17,24 @@ class SNSButtonView: UIButton {
         case soundCloud
     }
     
-    var snsType: SNSType
+    private var snsType: SNSType
     
     // MARK: - VIew
     
-    private var snsLebel: BasicLabel = {
+    let containerView: UIView = {
+        $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray02.cgColor
+        $0.backgroundColor = .dark02
         return $0
-    }(BasicLabel(contentText: "", fontStyle: .headline03, textColorInfo: .white))
+    }(UIView())
     
     private var snsIcon: UIImageView = {
-        $0.frame.size = CGSize(width: 100, height: 100)
-        $0.backgroundColor = .purple
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
     
-    private let linkIcon: UIImageView = {
+    var linkIcon: UIImageView = {
         $0.image = UIImage(
             systemName: "arrow.up.right",
             withConfiguration: SFIconSize.mediumIconSize
@@ -42,35 +44,18 @@ class SNSButtonView: UIButton {
         return $0
     }(UIImageView())
     
-    private let test = UIView()
-    
-    private lazy var iconStack: UIStackView = {
-        $0.axis = .horizontal
-        $0.distribution = .fillEqually
-        $0.spacing = 30
+    private var snsLebel: BasicLabel = {
         return $0
-    }(UIStackView(arrangedSubviews: [snsIcon, linkIcon]))
-    
-    private lazy var snsButtonStack: UIStackView = {
-        $0.axis = .vertical
-        $0.spacing = 10
-        $0.alignment = .leading
-        $0.layer.cornerRadius = 10
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray02.cgColor
-        $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = UIEdgeInsets(top: 15.0, left: 15.0, bottom: 15.0, right: 15.0)
-        return $0
-    }(UIStackView(arrangedSubviews: [iconStack, snsLebel]))
-    
+    }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white))
     
     // MARK: - Init
     
     init(type: SNSType) {
         self.snsType = type
         super.init(frame: .zero)
-        setupLayout()
         attribute()
+        setupLayout()
+        setSNSConfigure()
     }
     
     required init(coder: NSCoder) {
@@ -80,37 +65,88 @@ class SNSButtonView: UIButton {
     // MARK: - Layout
     
     private func attribute() {
-           self.constraint(.widthAnchor, constant: 115)
-           self.constraint(.heightAnchor, constant: 75)
-       }
-
-       private func setupLayout() {
-           self.addSubview(snsButtonStack)
-           self.snsButtonStack.constraint(to: self)
-           setSNSConfigure()
-           
-//           self.snsButtonStack.addSubview(linkIcon)
-//           self.linkIcon.constraint(top: snsButtonStack.topAnchor,
-//                                    trailing: snsButtonStack.trailingAnchor,
-//                                    padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
-//
-//           )
-       }
+        self.constraint(.heightAnchor, constant: 75)
+        
+        //왜안돼
+        self.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+//        let action = UIAction { _ in
+//            print("버튼 눌림")
+//        }
+//        self.addAction(action, for: .touchUpInside)
+    }
+    
+    private func setupLayout() {
+        self.addSubview(containerView)
+        containerView.alpha = 0.4
+        self.containerView.constraint(to: self)
+        
+        self.containerView.addSubview(snsIcon)
+        self.snsIcon.constraint(top: containerView.topAnchor,
+                                leading: containerView.leadingAnchor,
+                                padding: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0)
+        )
+        
+        self.containerView.addSubview(snsLebel)
+        self.snsLebel.constraint(leading: containerView.leadingAnchor,
+                                 bottom: containerView.bottomAnchor,
+                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 0)
+        )
+//        addSnsButtonAction()
+    }
     
     private func setSNSConfigure() {
+        
+        let snsData = BandDummyData.testBands.first?.sns
+        
         switch snsType {
         case .youtube:
             snsLebel.text = "Youtube"
             snsIcon.image = ImageLiteral.youtubeIcon
+            if snsData?.youtube != nil { ActiveSnsButton() }
         case .instagram:
             snsLebel.text = "Instagram"
             snsIcon.image = ImageLiteral.instagramIcon
+            if snsData?.instagram != nil { ActiveSnsButton() }
         case .soundCloud:
             snsLebel.text = "SoundCloud"
             snsIcon.image = ImageLiteral.soundCloudIcon
+            if snsData?.soundCloud != nil { ActiveSnsButton() }
         }
     }
+    
+    func ActiveSnsButton() {
+        self.containerView.alpha = 1.0
+        self.containerView.addSubview(linkIcon)
+        self.linkIcon.constraint(top:containerView.topAnchor,
+                                 trailing: containerView.trailingAnchor,
+                                 padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15)
+        )
+    }
+    
+    @objc
+    func buttonDidTap() {
+        print("Zedd")
+    }
+    
+//    private func addSnsButtonAction() {
+//
+//    }
+    
+//
+    private func addSnsButtonAction() {
+            let tapGesture = UITapGestureRecognizer(
+                target: self,
+                action: #selector(moveSnsLink(_:))
+            )
+            self.addGestureRecognizer(tapGesture)
+            self.isUserInteractionEnabled = true
+        }
+
+        @objc
+           func moveSnsLink(_ gesture: UITapGestureRecognizer) {
+               //TO-DO: 밴드 상세페이지로 연결 액션 필요
+               print("버튼 눌림")
+           }
+
 }
 
-
-}

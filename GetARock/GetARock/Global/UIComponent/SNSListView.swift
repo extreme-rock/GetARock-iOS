@@ -9,8 +9,6 @@ import UIKit
 
 class SNSListView: UIView {
     
-    // MARK: - Property
-    
     // MARK: - VIew
     
     private let youtubeButton: SNSButtonView = {
@@ -25,9 +23,10 @@ class SNSListView: UIView {
         return $0
     }(SNSButtonView(type: .soundCloud))
     
-    private lazy var SnsListStackView: UIStackView = {
+    private lazy var snsListStackView: UIStackView = {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
+        $0.spacing = 5
         return $0
     }(UIStackView(arrangedSubviews: [youtubeButton, instagramButton, soundCloudButton]))
     
@@ -43,10 +42,10 @@ class SNSListView: UIView {
     }
     
     // MARK: - Layout
-
-       private func setupLayout() {
-           self.addSubview(SnsListStackView)
-           self.SnsListStackView.constraint(.widthAnchor, constant:  UIScreen.main.bounds.width * 0.9)
-           self.SnsListStackView.constraint(.heightAnchor, constant: 75)
-       }
+    
+    private func setupLayout() {
+        
+        self.addSubview(snsListStackView)
+        self.snsListStackView.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
+    }
 }
