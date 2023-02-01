@@ -28,7 +28,7 @@ struct BandDummyData {
             song: [Song(title: "노엘갤러거는 최고다", artist: "오아시스", link: nil),
                    Song(title: "Champagne Supernova", artist: "OASIS", link: "https://youtu.be/tI-5uv4wryI"),
                    Song(title: "Little by Little", artist: "OASIS", link: "https://youtu.be/ic-Na--7_NI")],
-             sns: SNS(youtube: nil, instagram: nil, soundCloud: nil)
+             sns: SNS(youtube: "UCUDVBtnOQi4c7E8jebpjc9Q", instagram: nil, soundCloud: nil)
         ),
         Band(name: "블랙로즈블랙로즈블랙", location: Location(
             name: "블랙로즈",
