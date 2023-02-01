@@ -37,6 +37,8 @@ final class TextLimitTextField: UIView {
         return $0
     }(DefaultButton(frame: CGRect(x: 0, y: 0, width: 80, height: 40)))
     
+    private let checkLabel: UIStackView = TwoHstackLabel.checkLabel
+    
     // MARK: - Life Cycle
     
     init(placeholer: String, maxCount: Int, duplicationCheckType: DuplicationCheckType, textExpressionCheck: Bool) {
@@ -91,6 +93,30 @@ extension TextLimitTextField {
                 self.textField.text = fixedText
             }
         }
+    }
+    
+    @objc func didTapCheckButton() {
+        Task {
+            do {
+                let isChecked = try await DuplicationCheckRequest.checkDuplication(
+                    checkCase: type,
+                    word: textField.text ?? "")
+                showDuplicationCheckLabel(with: isChecked)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    private func showDuplicationCheckLabel(with isChecked: Bool) {
+        checkLabel.isHidden = false
+        let imageView = checkLabel.arrangedSubviews.first! as! UIImageView
+        imageView.image = isChecked ? UIImage(systemName: "checkmark.circle")! : UIImage(systemName: "x.circle")!
+        imageView.tintColor = isChecked ? .systemBlue : .systemRed
+        
+        let label = checkLabel.arrangedSubviews.last! as! UILabel
+        label.text = isChecked ? "가능합니다" : "불가능합니다"
+        label.textColor = isChecked ? .systemBlue : .systemRed
     }
 }
 

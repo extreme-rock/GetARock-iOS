@@ -9,12 +9,13 @@ import Foundation
 final class DuplicationCheckRequest {
     
     //MARK: Authorization 추가 후 header 추가해서 request 필요
-    static func checkDuplication(checkCase: CheckDuplicationCase, word: String) async throws -> Bool {
+    static func checkDuplication(checkCase: DuplicationCheckType, word: String) async throws -> Bool {
         var result = false
         var baseURL = ""
         switch checkCase {
-        case .userNickName: baseURL = "http://43.201.55.66:8080/member/validate"
+        case .userName: baseURL = "http://43.201.55.66:8080/member/validate"
         case .bandName: baseURL = "http://43.201.55.66:8080/band/validate"
+        case .none: return false
         }
         
         var queryURLComponent = URLComponents(string: baseURL)
