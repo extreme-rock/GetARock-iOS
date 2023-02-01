@@ -21,11 +21,14 @@ final class TextLimitTextField: UIView {
     private let maxCount: Int
 
     private let type: DuplicationCheckType
+
+    private let textExpressionCheck: Bool
     
     // MARK: - View
     
     private lazy var textField: UITextField = {
         $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        $0.delegate = self
         return $0
     }(UITextField.makeBasicTextField(placeholder: placeholder, characterLimit: maxCount))
     
@@ -36,10 +39,11 @@ final class TextLimitTextField: UIView {
     
     // MARK: - Life Cycle
     
-    init(placeholer: String, maxCount: Int, checkType: DuplicationCheckType) {
+    init(placeholer: String, maxCount: Int, duplicationCheckType: DuplicationCheckType, textExpressionCheck: Bool) {
         self.maxCount = maxCount
         self.placeholder = placeholer
-        self.type = checkType
+        self.type = duplicationCheckType
+        self.textExpressionCheck = textExpressionCheck
         super.init(frame: .zero)
         
         setupLayout()
@@ -75,6 +79,8 @@ final class TextLimitTextField: UIView {
     }
 }
 
+//MARK: 글자수 제한 로직
+
 extension TextLimitTextField {
     @objc func textFieldTextDidChange() {
         if let text = textField.text {
@@ -88,3 +94,18 @@ extension TextLimitTextField {
     }
 }
 
+//MARK: 특수문자 제한 로직
+
+extension TextLimitTextField: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if self.textExpressionCheck == true {
+            let utf8Char = string.cString(using: .utf8)
+            let isBackSpace = strcmp(utf8Char, "\\b")
+            if string.checkStringExpression() || isBackSpace == -92 {
+                return true
+            }
+            return false
+        }
+        return true
+    }
+}
