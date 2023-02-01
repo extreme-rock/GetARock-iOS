@@ -17,6 +17,12 @@ final class SnsButtonView: UIView {
         case soundCloud
     }
     
+    enum SnsStartURL: String {
+        case youtube = "https://www.youtube.com/channel/"
+        case instagram = "https://www.instagram.com/"
+        case soundCloud = "https://www.soundcloud.com/"
+    }
+    
     private var snsType: SnsType
     
     // MARK: - VIew
@@ -112,6 +118,7 @@ final class SnsButtonView: UIView {
     }
     
     private func addSnsButtonAction() {
+        
         let tapGesture = UITapGestureRecognizer(
             target: self,
             action: #selector(moveSnsLink(_:))
@@ -123,8 +130,40 @@ final class SnsButtonView: UIView {
     @objc
     func moveSnsLink(_ gesture: UITapGestureRecognizer) {
         //TO-DO: 링크로 연결 액션 필요
-        print("버튼 눌림")
+
+        let snsData = BandDummyData.testBands.first?.sns
+        var userSnsLink = ""
+                
+        switch snsType {
+        case .youtube:
+            
+            if let userSns = snsData?.youtube { userSnsLink = userSns }
+            guard var url = URL(string: SnsStartURL.youtube.rawValue + userSnsLink) else { return }
+            let vc = SnsWebViewController(url: url, title: "youtube")
+            let navVc = UINavigationController(rootViewController: vc)
+            UIApplication.topViewController()?.present(navVc, animated: true, completion: nil)
+            
+        case .instagram:
+            print("인스타")
+            
+        case .soundCloud:
+            print("사운드클라우드")
+            
+        }
     }
     
 }
 
+
+extension UIApplication {
+
+    static func topViewController() -> UIViewController? {
+        guard var top = shared.keyWindow?.rootViewController else {
+            return nil
+        }
+        while let next = top.presentedViewController {
+            top = next
+        }
+        return top
+    }
+}

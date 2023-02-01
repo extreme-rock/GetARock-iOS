@@ -28,6 +28,7 @@
 		7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */; };
 		7B7B04142988FC1100186986 /* SnsListStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04132988FC1100186986 /* SnsListStackView.swift */; };
 		7B7B04162988FE9900186986 /* SNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04152988FE9900186986 /* SNS.swift */; };
+		7B8B21E3298A77D8008EBEBE /* SnsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8B21E2298A77D8008EBEBE /* SnsWebViewController.swift */; };
 		7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */; };
 		7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA1874297AA10800A40488 /* UIFont+Extension.swift */; };
 		7BFE01A12982643E009608A2 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFE01A02982643E009608A2 /* Song.swift */; };
@@ -105,6 +106,7 @@
 		7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B7B04132988FC1100186986 /* SnsListStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsListStackView.swift; sourceTree = "<group>"; };
 		7B7B04152988FE9900186986 /* SNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNS.swift; sourceTree = "<group>"; };
+		7B8B21E2298A77D8008EBEBE /* SnsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsWebViewController.swift; sourceTree = "<group>"; };
 		7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Gradation.swift"; sourceTree = "<group>"; };
 		7BEA1874297AA10800A40488 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		7BFE01A02982643E009608A2 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -209,6 +211,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		7B8B21E1298A776D008EBEBE /* WebkitView */ = {
+			isa = PBXGroup;
+			children = (
+				7B8B21E2298A77D8008EBEBE /* SnsWebViewController.swift */,
+			);
+			path = WebkitView;
+			sourceTree = "<group>";
+		};
 		90B6AD933F47E441CE914747 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +307,7 @@
 		B88E1BCF2977A8CD006072B7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				7B8B21E1298A776D008EBEBE /* WebkitView */,
 				B8468F62297A94B900A9E77E /* Maps */,
 				B88E1BE22977AE1D006072B7 /* Landing */,
 			);
@@ -658,6 +669,7 @@
 				4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */,
 				4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */,
 				4AC4CE41297FB85B00BB823C /* Position.swift in Sources */,
+				7B8B21E3298A77D8008EBEBE /* SnsWebViewController.swift in Sources */,
 				B8B17C522980B93300806899 /* Location.swift in Sources */,
 				7B64C25B2983CFFE00E95911 /* SongListView.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
