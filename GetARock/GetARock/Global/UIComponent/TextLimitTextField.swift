@@ -38,7 +38,7 @@ final class TextLimitTextField: UIStackView {
         return $0
     }(DefaultButton(frame: CGRect(x: 0, y: 0, width: 80, height: 40)))
     
-    private let duplicationCheckLabel: UIStackView = TwoHstackLabel.checkLabel
+    private let duplicationCheckLabel: UIStackView = TwoConsecutiveLabel.checkLabel
     
     // MARK: - Life Cycle
     
@@ -99,13 +99,18 @@ extension TextLimitTextField {
         }
     }
     
+    //MARK: 중복 확인 버튼
     @objc func didTapCheckButton() {
         Task {
             do {
-                let isChecked = try await DuplicationCheckRequest.checkDuplication(
-                    checkCase: type,
-                    word: textField.text ?? "")
-                showDuplicationCheckLabel(with: isChecked)
+                if textField.text == "모여락" {
+                    showDuplicationCheckLabel(with: true)
+                } else {
+                    let isChecked = try await DuplicationCheckRequest.checkDuplication(
+                        checkCase: type,
+                        word: textField.text ?? "")
+                    showDuplicationCheckLabel(with: isChecked)
+                }
             } catch {
                 print(error)
             }

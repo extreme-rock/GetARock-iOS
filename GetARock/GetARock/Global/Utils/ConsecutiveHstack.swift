@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct TwoHstackLabel {
+struct TwoConsecutiveLabel {
     
     // 텍스트 필드 내 텍스트를 중복 확인 검사하는 경우 하단에 표기되는 레이블
     static var checkLabel: UIStackView = {

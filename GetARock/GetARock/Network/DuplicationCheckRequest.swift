@@ -27,7 +27,7 @@ final class DuplicationCheckRequest {
             let (_, response) = try await URLSession.shared.data(from: url)
             let httpResponse = response as! HTTPURLResponse
             
-            if (200..<300).contains(httpResponse.statusCode) { result = true }
+            if (200..<300).contains(httpResponse.statusCode) { result = false }
             print(httpResponse)
             
         } catch {
