@@ -7,7 +7,7 @@
 import UIKit
 
 enum DuplicationCheckType {
-    case userNickName
+    case userName
     case bandName
     case none
 }
