@@ -13,7 +13,7 @@ extension String {
     func checkStringExpression() -> Bool{
            do {
                let regex = try NSRegularExpression(
-                pattern: "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]$",
+                pattern: "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\s]$",
                 options: .caseInsensitive)
 
                if let _ = regex.firstMatch(
