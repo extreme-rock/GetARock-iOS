@@ -7,13 +7,13 @@
 
 import UIKit
 
-class BandButtonView: UIView {
+final class BandButtonView: UIView {
     
     // MARK: - Property
     
-    private var bandName: String
-    private var membersNumber: Int
-    private var membersAge: String
+    private let bandName: String
+    private let membersNumber: Int
+    private let membersAge: String
     
     // MARK: - View
     
