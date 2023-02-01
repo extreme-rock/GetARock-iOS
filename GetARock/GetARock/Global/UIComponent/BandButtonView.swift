@@ -31,8 +31,8 @@ class BandButtonView: UIView {
                  textColorInfo: .white))
     
     private let memberIconImage: UIImageView = {
-        $0.image = UIImage(systemName: "person.3.fill",
-                           withConfiguration: SFIconSize.smallIconSize)
+        $0.image = ImageLiteral.personThreeFillSymbol
+        $0.image?.withConfiguration(SFIconSize.smallIconSize)
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .white
         return $0
@@ -58,7 +58,6 @@ class BandButtonView: UIView {
         $0.layoutMargins = UIEdgeInsets(top: 0.0, left: 25.0, bottom: 0.0, right: 0.0)
         return $0
     }(UIStackView(arrangedSubviews: [bandNameLabel,memberstackView]))
-    
     
     // MARK: - Init
     
