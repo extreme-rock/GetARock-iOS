@@ -12,7 +12,7 @@ enum DuplicationCheckType {
     case none
 }
 
-final class TextLimitTextField: UIView {
+final class TextLimitTextField: UIStackView {
     
     // MARK: - Property
     
@@ -34,10 +34,11 @@ final class TextLimitTextField: UIView {
     
     private lazy var checkButton: DefaultButton = {
         $0.setTitle("중복 확인", for: .normal)
+        $0.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
         return $0
     }(DefaultButton(frame: CGRect(x: 0, y: 0, width: 80, height: 40)))
     
-    private let checkLabel: UIStackView = TwoHstackLabel.checkLabel
+    private let duplicationCheckLabel: UIStackView = TwoHstackLabel.checkLabel
     
     // MARK: - Life Cycle
     
@@ -59,11 +60,11 @@ final class TextLimitTextField: UIView {
     // MARK: - Method
     
     private func setupLayout() {
-        self.constraint(.widthAnchor, constant: TextFieldSize.width)
-        self.constraint(.heightAnchor, constant: TextFieldSize.height)
+        textField.constraint(.widthAnchor, constant: TextFieldSize.width)
+        textField.constraint(.heightAnchor, constant: TextFieldSize.height)
         
-        self.addSubview(textField)
-        textField.constraint(to: self)
+        self.addArrangedSubview(textField)
+        self.addArrangedSubview(duplicationCheckLabel)
 
         self.addSubview(checkButton)
         checkButton.constraint(
@@ -78,6 +79,9 @@ final class TextLimitTextField: UIView {
         if type == .none {
             checkButton.isHidden = true
         }
+        duplicationCheckLabel.isHidden = true
+        self.axis = .vertical
+        self.spacing = 5
     }
 }
 
@@ -109,12 +113,12 @@ extension TextLimitTextField {
     }
     
     private func showDuplicationCheckLabel(with isChecked: Bool) {
-        checkLabel.isHidden = false
-        let imageView = checkLabel.arrangedSubviews.first! as! UIImageView
+        duplicationCheckLabel.isHidden = false
+        let imageView = duplicationCheckLabel.arrangedSubviews.first! as! UIImageView
         imageView.image = isChecked ? UIImage(systemName: "checkmark.circle")! : UIImage(systemName: "x.circle")!
         imageView.tintColor = isChecked ? .systemBlue : .systemRed
         
-        let label = checkLabel.arrangedSubviews.last! as! UILabel
+        let label = duplicationCheckLabel.arrangedSubviews.last! as! UILabel
         label.text = isChecked ? "가능합니다" : "불가능합니다"
         label.textColor = isChecked ? .systemBlue : .systemRed
     }
