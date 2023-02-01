@@ -7,17 +7,17 @@
 
 import UIKit
 
-final class SNSButtonView: UIView {
+final class SnsButtonView: UIView {
     
     // MARK: - Property
     
-    enum SNSType{
+    enum SnsType{
         case youtube
         case instagram
         case soundCloud
     }
     
-    private var snsType: SNSType
+    private var snsType: SnsType
     
     // MARK: - VIew
     
@@ -47,12 +47,12 @@ final class SNSButtonView: UIView {
     
     // MARK: - Init
     
-    init(type: SNSType) {
+    init(type: SnsType) {
         self.snsType = type
         super.init(frame: .zero)
         attribute()
         setupLayout()
-        setSNSConfigure()
+        setSnsConfigure()
     }
     
     required init(coder: NSCoder) {
@@ -81,7 +81,7 @@ final class SNSButtonView: UIView {
                                  padding: UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 0))
     }
     
-    private func setSNSConfigure() {
+    private func setSnsConfigure() {
         
         let snsData = BandDummyData.testBands.first?.sns
         

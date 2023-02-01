@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class SNSListView: UIStackView {
+final class SnsListStackView: UIStackView {
     
     // MARK: - VIew
     
-    private let youtubeButton = SNSButtonView(type: .youtube)
-    private let instagramButton = SNSButtonView(type: .instagram)
-    private let soundCloudButton: SNSButtonView = SNSButtonView(type: .soundCloud)
+    private let youtubeButton = SnsButtonView(type: .youtube)
+    private let instagramButton = SnsButtonView(type: .instagram)
+    private let soundCloudButton: SnsButtonView = SnsButtonView(type: .soundCloud)
     
     // MARK: - Init
     
