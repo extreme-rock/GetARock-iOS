@@ -42,14 +42,12 @@ final class TextLimitTextField: UIView {
 
     private lazy var duplicationCheckLabel: UIStackView = {
         let imageView: UIImageView = {
-            $0.image = UIImage(systemName: "checkmark.circle")!
-            $0.tintColor = .systemBlue
             $0.constraint(.widthAnchor, constant: 20)
             $0.constraint(.heightAnchor, constant: 20)
             return $0
         }(UIImageView())
 
-        let label = BasicLabel(contentText: "사용 가능해요", fontStyle: .caption, textColorInfo: .systemBlue)
+        let label = BasicLabel(contentText: "중복 확인을 체크해주세요", fontStyle: .caption, textColorInfo: .systemBlue)
 
         $0.axis = .horizontal
         $0.spacing = 5
@@ -136,14 +134,18 @@ extension TextLimitTextField {
         }
     }
 
-    
     private func showDuplicationCheckLabel(with isChecked: Bool) {
         self.duplicationCheckLabel.isHidden = false
-        let imageView = duplicationCheckLabel.arrangedSubviews.first! as! UIImageView
+
+        // 중복 체크 라벨의 이미지 변경
+        guard let firstSubView = duplicationCheckLabel.arrangedSubviews.first else { return }
+        guard let imageView = firstSubView as? UIImageView else { return }
         imageView.image = isChecked ? ImageLiteral.checkMarkInCircle : ImageLiteral.xMarkInCircle
         imageView.tintColor = isChecked ? .systemBlue : .systemRed
-        
-        let label = duplicationCheckLabel.arrangedSubviews.last! as! UILabel
+
+        // 중복 체크 라벨의 텍스트 변경
+        guard let secondSubView = duplicationCheckLabel.arrangedSubviews.last else { return }
+        guard let label = secondSubView as? UILabel else { return }
         label.text = isChecked ? StringLiteral.duplicationCheckPassed : StringLiteral.duplicationCheckUnPassed
         label.textColor = isChecked ? .systemBlue : .systemRed
     }
