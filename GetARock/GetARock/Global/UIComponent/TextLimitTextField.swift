@@ -34,9 +34,7 @@ final class TextLimitTextField: UIView {
     
     private lazy var checkButton: DefaultButton = {
         $0.setTitle("중복 확인", for: .normal)
-        $0.tag = (1...10).randomElement()!
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCheckButton))
-        $0.addGestureRecognizer(tapGesture)
+        $0.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
         return $0
     }(DefaultButton(frame: CGRect(x: 0, y: 0, width: 80, height: 40)))
 
