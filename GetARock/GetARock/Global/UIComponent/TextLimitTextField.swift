@@ -69,9 +69,6 @@ final class TextLimitTextField: UIView {
         
         setupLayout()
         attribute()
-
-        print("Init 과정에서 버튼 태그 체크")
-        print(self.checkButton.tag)
     }
     
     required init(coder: NSCoder) {
@@ -123,11 +120,6 @@ extension TextLimitTextField {
     
     //MARK: 중복 확인 버튼
     @objc func didTapCheckButton() {
-        print("버튼 태그")
-        print(self.checkButton.tag)
-
-        // 1번 버튼을 클릭하면 얘가 수행되지않고
-        // 2번 버튼을 클릭하면 여기 까지 모두 수행됨 vice versa
         Task {
             do {
                 if textField.text == "모여락" {
@@ -148,11 +140,11 @@ extension TextLimitTextField {
     private func showDuplicationCheckLabel(with isChecked: Bool) {
         self.duplicationCheckLabel.isHidden = false
         let imageView = duplicationCheckLabel.arrangedSubviews.first! as! UIImageView
-        imageView.image = isChecked ? UIImage(systemName: "checkmark.circle")! : UIImage(systemName: "x.circle")!
+        imageView.image = isChecked ? ImageLiteral.checkMarkInCircle : ImageLiteral.xMarkInCircle
         imageView.tintColor = isChecked ? .systemBlue : .systemRed
         
         let label = duplicationCheckLabel.arrangedSubviews.last! as! UILabel
-        label.text = isChecked ? "사용 가능해요" : "이미 사용하고 있어요"
+        label.text = isChecked ? StringLiteral.duplicationCheckPassed : StringLiteral.duplicationCheckUnPassed
         label.textColor = isChecked ? .systemBlue : .systemRed
     }
 }
