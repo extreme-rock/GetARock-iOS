@@ -19,7 +19,7 @@ struct Band {
 }
 
 struct BandDummyData {
-    static let testBands: [Band] = [
+    static var testBands: [Band] = [
         Band(name: "레드제플린", location: Location(
             name: "레드제플린",
             address: "대구광역시 남구 명덕로 102",

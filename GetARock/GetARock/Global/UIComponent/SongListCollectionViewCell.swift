@@ -13,6 +13,10 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     private let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 20)
     
+    weak var delegate: SongListDeleteDelegate?
+    
+    private var cellIndex: Int = -1
+    
     // MARK: - View
     
     private let songTitleLabel: UILabel = {
@@ -93,16 +97,16 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Init
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupLayout()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupLayout()
+        addDeleteAction()
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     // MARK: - Method
     
     private func setupLayout() {
@@ -111,17 +115,27 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupDeleteButtonLayout() {
-        songStackView.addArrangedSubview(deleteButton)
+        self.songStackView.addArrangedSubview(deleteButton)
     }
     
     private func setupLinkButtonLayout() {
-        songStackView.addArrangedSubview(linkButton)
+        self.songStackView.addArrangedSubview(linkButton)
     }
     
-    func configure(data: Song?, songListType: SongListType) {
+    
+    func addDeleteAction() {
+        let action = UIAction { _ in
+            self.delegate?.deleteSongList(index: self.cellIndex)
+        }
+        self.deleteButton.addAction(action, for: .touchUpInside)
+    }
+    
+    func configure(data: Song?, songListType: SongListType, index: Int) {
         
         guard let song = data else { return }
-                
+        
+        self.cellIndex = index
+        
         self.songTitleLabel.text = song.title
         self.artistLabel.text = song.artist
         
@@ -134,6 +148,8 @@ final class SongListCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-
 }
 
+protocol SongListDeleteDelegate: AnyObject {
+    func deleteSongList(index: Int)
+}
