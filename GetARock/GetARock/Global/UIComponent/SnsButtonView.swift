@@ -11,10 +11,10 @@ final class SNSButtonView: UIView {
     
     // MARK: - Property
     
-    enum SNSType{
-        case youtube
-        case instagram
-        case soundCloud
+    enum SNSType: String {
+        case youtube = "Youtube"
+        case instagram = "Instagram"
+        case soundCloud = "SoundCloud"
     }
     
     private var snsType: SNSType
@@ -87,15 +87,15 @@ final class SNSButtonView: UIView {
         
         switch snsType {
         case .youtube:
-            snsLebel.text = "Youtube"
+            snsLebel.text = SNSType.youtube.rawValue
             snsIcon.image = ImageLiteral.youtubeIcon
             if snsData?.youtube != nil { activateSNSButton() }
         case .instagram:
-            snsLebel.text = "Instagram"
+            snsLebel.text = SNSType.instagram.rawValue
             snsIcon.image = ImageLiteral.instagramIcon
             if snsData?.instagram != nil { activateSNSButton() }
         case .soundCloud:
-            snsLebel.text = "SoundCloud"
+            snsLebel.text = SNSType.soundCloud.rawValue
             snsIcon.image = ImageLiteral.soundCloudIcon
             if snsData?.soundCloud != nil { activateSNSButton() }
         }
