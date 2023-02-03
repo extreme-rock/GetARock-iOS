@@ -18,6 +18,7 @@ final class SNSButtonView: UIView {
     }
     
     private var snsType: SNSType
+    private let bandIndex: Int
     
     // MARK: - VIew
     
@@ -47,7 +48,8 @@ final class SNSButtonView: UIView {
     
     // MARK: - Init
     
-    init(type: SNSType) {
+    init(type: SNSType, bandIndex: Int) {
+        self.bandIndex = bandIndex
         self.snsType = type
         super.init(frame: .zero)
         attribute()
@@ -83,7 +85,7 @@ final class SNSButtonView: UIView {
     
     private func setSNSConfigure() {
         
-        let snsData = BandDummyData.testBands.first?.sns
+        let snsData = BandDummyData.testBands[bandIndex].sns
         
         switch snsType {
         case .youtube:
