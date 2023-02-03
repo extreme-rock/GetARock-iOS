@@ -7,17 +7,17 @@
 
 import UIKit
 
-final class SnsButtonView: UIView {
+final class SNSButtonView: UIView {
     
     // MARK: - Property
     
-    enum SnsType{
+    enum SNSType{
         case youtube
         case instagram
         case soundCloud
     }
     
-    private var snsType: SnsType
+    private var snsType: SNSType
     
     // MARK: - VIew
     
@@ -47,12 +47,12 @@ final class SnsButtonView: UIView {
     
     // MARK: - Init
     
-    init(type: SnsType) {
+    init(type: SNSType) {
         self.snsType = type
         super.init(frame: .zero)
         attribute()
         setupLayout()
-        setSnsConfigure()
+        setSNSConfigure()
     }
     
     required init(coder: NSCoder) {
@@ -81,7 +81,7 @@ final class SnsButtonView: UIView {
                                  padding: UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 0))
     }
     
-    private func setSnsConfigure() {
+    private func setSNSConfigure() {
         
         let snsData = BandDummyData.testBands.first?.sns
         
@@ -89,29 +89,29 @@ final class SnsButtonView: UIView {
         case .youtube:
             snsLebel.text = "Youtube"
             snsIcon.image = ImageLiteral.youtubeIcon
-            if snsData?.youtube != nil { ActiveSnsButton() }
+            if snsData?.youtube != nil { activateSNSButton() }
         case .instagram:
             snsLebel.text = "Instagram"
             snsIcon.image = ImageLiteral.instagramIcon
-            if snsData?.instagram != nil { ActiveSnsButton() }
+            if snsData?.instagram != nil { activateSNSButton() }
         case .soundCloud:
             snsLebel.text = "SoundCloud"
             snsIcon.image = ImageLiteral.soundCloudIcon
-            if snsData?.soundCloud != nil { ActiveSnsButton() }
+            if snsData?.soundCloud != nil { activateSNSButton() }
         }
     }
     
-    private func ActiveSnsButton() {
+    private func activateSNSButton() {
         self.containerView.alpha = 1.0
         self.containerView.addSubview(linkIcon)
         self.linkIcon.constraint(top:containerView.topAnchor,
                                  trailing: containerView.trailingAnchor,
                                  padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15)
         )
-        addSnsButtonAction()
+        addSNSButtonAction()
     }
     
-    private func addSnsButtonAction() {
+    private func addSNSButtonAction() {
         let tapGesture = UITapGestureRecognizer(
             target: self,
             action: #selector(moveSnsLink(_:))
