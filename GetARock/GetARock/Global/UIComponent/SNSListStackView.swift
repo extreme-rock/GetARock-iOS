@@ -11,16 +11,16 @@ final class SNSListStackView: UIStackView {
     
     // MARK: - VIew
     
-    private let bandIndex: Int
-    private lazy var youtubeButton = SNSButtonView(type: .youtube, bandIndex: bandIndex)
-    private lazy var instagramButton = SNSButtonView(type: .instagram, bandIndex: bandIndex)
-    private lazy var soundCloudButton = SNSButtonView(type: .soundCloud, bandIndex: bandIndex)
+    private let snsData: SNS
+    private lazy var youtubeButton = SNSButtonView(type: .youtube, data: snsData)
+    private lazy var instagramButton = SNSButtonView(type: .instagram, data: snsData)
+    private lazy var soundCloudButton = SNSButtonView(type: .soundCloud, data: snsData)
 
     
     // MARK: - Init
     
-    init(bandIndex: Int) {
-        self.bandIndex = bandIndex
+    init(data: SNS) {
+        self.snsData = data
         super.init(frame: .zero)
         attribute()
         setupLayout()

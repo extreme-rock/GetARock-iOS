@@ -8,14 +8,14 @@
 import Foundation
 
 struct Band {
-//    let bandID: Int
+//    let bandID: UUID
     let name: String
 //    let age: String
     let location: Location
 //    let introduction: String?
 //    let member: [BandMember]
     var song: [Song]?
-    var sns: SNS?
+    var sns: SNS
 }
 
 struct BandDummyData {
@@ -41,6 +41,7 @@ struct BandDummyData {
             name: "모닝샐러드",
             address: "대한민국 대구광역시 중구 남산동 2185-110",
             additionalAddress: nil,
-            coordinate: Coordinate(latitude: 35.85785, longitude: 128.58661))),
+            coordinate: Coordinate(latitude: 35.85785, longitude: 128.58661)),
+        sns: SNS(youtube: nil, instagram: nil, soundCloud: nil)),
     ]
 }

@@ -18,7 +18,7 @@ final class SNSButtonView: UIView {
     }
     
     private var snsType: SNSType
-    private let bandIndex: Int
+    private let snsData: SNS
     
     // MARK: - VIew
     
@@ -48,8 +48,8 @@ final class SNSButtonView: UIView {
     
     // MARK: - Init
     
-    init(type: SNSType, bandIndex: Int) {
-        self.bandIndex = bandIndex
+    init(type: SNSType, data: SNS) {
+        self.snsData = data
         self.snsType = type
         super.init(frame: .zero)
         attribute()
@@ -85,21 +85,22 @@ final class SNSButtonView: UIView {
     
     private func setSNSConfigure() {
         
-        let snsData = BandDummyData.testBands[bandIndex].sns
+        let data = snsData
+//        let snsData = BandDummyData.testBands[bandIndex].sns
         
         switch snsType {
         case .youtube:
             snsLebel.text = SNSType.youtube.rawValue
             snsIcon.image = ImageLiteral.youtubeIcon
-            if snsData?.youtube != nil { activateSNSButton() }
+            if data.youtube != nil { activateSNSButton() }
         case .instagram:
             snsLebel.text = SNSType.instagram.rawValue
             snsIcon.image = ImageLiteral.instagramIcon
-            if snsData?.instagram != nil { activateSNSButton() }
+            if data.instagram != nil { activateSNSButton() }
         case .soundCloud:
             snsLebel.text = SNSType.soundCloud.rawValue
             snsIcon.image = ImageLiteral.soundCloudIcon
-            if snsData?.soundCloud != nil { activateSNSButton() }
+            if data.soundCloud != nil { activateSNSButton() }
         }
     }
     
