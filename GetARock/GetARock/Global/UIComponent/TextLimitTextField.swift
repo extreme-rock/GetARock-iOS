@@ -52,7 +52,7 @@ final class TextLimitTextField: UIView {
         $0.addArrangedSubview(imageView)
         $0.addArrangedSubview(label)
         return $0
-    }(UIStackView(frame: .zero))
+    }(UIStackView())
     
     // MARK: - Life Cycle
     
