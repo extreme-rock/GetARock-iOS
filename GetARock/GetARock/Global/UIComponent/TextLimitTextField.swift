@@ -89,7 +89,7 @@ final class TextLimitTextField: UIView {
         checkButton.constraint(.heightAnchor, constant: 40)
 
         self.addSubview(duplicationCheckLabel)
-        duplicationCheckLabel.constraint(top: textField.bottomAnchor, leading: textField.leadingAnchor, padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 2))
+        duplicationCheckLabel.constraint(top: textField.bottomAnchor, leading: textField.leadingAnchor, padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0))
     }
     
     private func attribute() {
