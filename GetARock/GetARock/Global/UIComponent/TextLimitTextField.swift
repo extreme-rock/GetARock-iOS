@@ -138,7 +138,7 @@ extension TextLimitTextField {
         // 중복 체크 라벨의 이미지 변경
         guard let firstSubView = duplicationCheckLabel.arrangedSubviews.first else { return }
         guard let imageView = firstSubView as? UIImageView else { return }
-        imageView.image = isChecked ? ImageLiteral.checkMarkInCircle : ImageLiteral.xMarkInCircle
+        imageView.image = isChecked ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.xmarkCircleSymbol
         imageView.tintColor = isChecked ? .systemBlue : .systemRed
 
         // 중복 체크 라벨의 텍스트 변경
