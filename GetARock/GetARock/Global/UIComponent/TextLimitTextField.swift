@@ -36,7 +36,7 @@ final class TextLimitTextField: UIView {
         $0.setTitle("중복 확인", for: .normal)
         $0.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
         return $0
-    }(DefaultButton(frame: CGRect(x: 0, y: 0, width: 80, height: 40)))
+    }(DefaultButton())
 
     private lazy var duplicationCheckLabel: UIStackView = {
         let imageView: UIImageView = {
