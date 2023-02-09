@@ -14,6 +14,7 @@ enum FontType {
     case headline01
     case headline02
     case headline03
+    case headline04
     case content
     case contentBold
     case caption
@@ -40,7 +41,9 @@ extension UIFont {
             return systemFont(ofSize: 16, weight: .bold)
         case .headline03:
             return systemFont(ofSize: 16, weight: .light)
-        
+        case .headline04:
+            return systemFont(ofSize: 16, weight: .regular)
+            
         // MARK: - content
         
         case .content:
