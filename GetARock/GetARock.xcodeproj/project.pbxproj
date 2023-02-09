@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2A35EDA1F6F1B54EC4E9AEF0 /* Pods_GetARock_GetARockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */; };
+		4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20271029863D800042EEFA /* ModifyPageSegmentedControl.swift */; };
+		4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20271229865BEB0042EEFA /* InformationPageSegmentedControl.swift */; };
 		4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A00132A29835CF600EA992E /* UIImage+Extension.swift */; };
 		4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */; };
 		4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */; };
@@ -83,6 +85,8 @@
 		159F0019C5C9AB3A427BD907 /* Pods-GetARockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.release.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.release.xcconfig"; sourceTree = "<group>"; };
 		1C72EC7590FAAB055CED6028 /* Pods-GetARockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.debug.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock_GetARockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A20271029863D800042EEFA /* ModifyPageSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPageSegmentedControl.swift; sourceTree = "<group>"; };
+		4A20271229865BEB0042EEFA /* InformationPageSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationPageSegmentedControl.swift; sourceTree = "<group>"; };
 		4A00132A29835CF600EA992E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionView.swift; sourceTree = "<group>"; };
 		4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -367,6 +371,8 @@
 				4AC4CE4C2980BAE800BB823C /* SelectCollectionView.swift */,
 				4AC4CE4E2980BD3700BB823C /* SelectCollectionViewCell.swift */,
 				4AC4CE46297FDFB500BB823C /* BottomButton.swift */,
+				4A20271029863D800042EEFA /* ModifyPageSegmentedControl.swift */,
+				4A20271229865BEB0042EEFA /* InformationPageSegmentedControl.swift */,
 				4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */,
 				4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */,
 				4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */,
@@ -655,6 +661,7 @@
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
+				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
 				4AC4CE4B2980B41400BB823C /* DefaultButton.swift in Sources */,
@@ -677,6 +684,7 @@
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
 				4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
+				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */,
