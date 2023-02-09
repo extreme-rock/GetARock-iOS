@@ -132,20 +132,18 @@ extension TextLimitTextField {
         }
     }
 
-    private func showDuplicationCheckLabel(with isChecked: Bool) {
+    private func showDuplicationCheckLabel(with isDuplicated: Bool) {
         self.duplicationCheckLabel.isHidden = false
 
         // 중복 체크 라벨의 이미지 변경
-        guard let firstSubView = duplicationCheckLabel.arrangedSubviews.first else { return }
-        guard let imageView = firstSubView as? UIImageView else { return }
-        imageView.image = isChecked ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.xmarkCircleSymbol
-        imageView.tintColor = isChecked ? .systemBlue : .systemRed
+        guard let imageView = duplicationCheckLabel.arrangedSubviews.first as? UIImageView else { return }
+        imageView.image = isDuplicated ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.xmarkCircleSymbol
+        imageView.tintColor = isDuplicated ? .blue02 : .warningRed
 
         // 중복 체크 라벨의 텍스트 변경
-        guard let secondSubView = duplicationCheckLabel.arrangedSubviews.last else { return }
-        guard let label = secondSubView as? UILabel else { return }
-        label.text = isChecked ? StringLiteral.duplicationCheckPassed : StringLiteral.duplicationCheckUnPassed
-        label.textColor = isChecked ? .systemBlue : .systemRed
+        guard let label = duplicationCheckLabel.arrangedSubviews.last as? UILabel else { return }
+        label.text = isDuplicated ? StringLiteral.duplicationCheckPassed : StringLiteral.duplicationCheckUnPassed
+        label.textColor = isDuplicated ? .blue02 : .warningRed
     }
 }
 
