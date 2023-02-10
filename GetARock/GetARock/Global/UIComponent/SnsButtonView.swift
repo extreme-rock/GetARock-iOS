@@ -11,14 +11,22 @@ final class SNSButtonView: UIView {
     
     // MARK: - Property
     
+    private var snsType: SNSType
+    private let snsURL: String?
+    
     enum SNSType: String {
         case youtube = "Youtube"
         case instagram = "Instagram"
         case soundCloud = "SoundCloud"
+        
+        var snsIconImage: UIImage {
+            switch self {
+            case .youtube: return ImageLiteral.youtubeIcon
+            case .instagram: return ImageLiteral.instagramIcon
+            case .soundCloud: return ImageLiteral.soundCloudIcon
+            }
+        }
     }
-    
-    private var snsType: SNSType
-    private let snsData: SNS
     
     // MARK: - VIew
     
@@ -48,8 +56,8 @@ final class SNSButtonView: UIView {
     
     // MARK: - Init
     
-    init(type: SNSType, data: SNS) {
-        self.snsData = data
+    init(type: SNSType, data: String?) {
+        self.snsURL = data
         self.snsType = type
         super.init(frame: .zero)
         attribute()
@@ -84,24 +92,9 @@ final class SNSButtonView: UIView {
     }
     
     private func setSNSConfigure() {
-        
-        let data = snsData
-//        let snsData = BandDummyData.testBands[bandIndex].sns
-        
-        switch snsType {
-        case .youtube:
-            snsLebel.text = SNSType.youtube.rawValue
-            snsIcon.image = ImageLiteral.youtubeIcon
-            if data.youtube != nil { activateSNSButton() }
-        case .instagram:
-            snsLebel.text = SNSType.instagram.rawValue
-            snsIcon.image = ImageLiteral.instagramIcon
-            if data.instagram != nil { activateSNSButton() }
-        case .soundCloud:
-            snsLebel.text = SNSType.soundCloud.rawValue
-            snsIcon.image = ImageLiteral.soundCloudIcon
-            if data.soundCloud != nil { activateSNSButton() }
-        }
+        snsLebel.text = snsType.rawValue
+        snsIcon.image = snsType.snsIconImage
+        if self.snsURL != nil { activateSNSButton() }
     }
     
     private func activateSNSButton() {
@@ -126,7 +119,7 @@ final class SNSButtonView: UIView {
     @objc
     func moveSnsLink(_ gesture: UITapGestureRecognizer) {
         //TO-DO: 링크로 연결 액션 필요
-        print("버튼 눌림")
+        print(self.snsURL)
     }
     
 }
