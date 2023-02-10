@@ -33,6 +33,7 @@ final class PlusPositionViewController: UIViewController {
         return $0
     }(UILabel())
     
+    // TODO: - 글자수 제한 TextFiled로 변경하기
     private let textField = BasicTextField(placeholder: "추가 할 포지션을 입력해 주세요.")
     
     private let addPositionButton: BottomButton = {
