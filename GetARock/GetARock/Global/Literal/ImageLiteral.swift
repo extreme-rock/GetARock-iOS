@@ -16,6 +16,7 @@ enum ImageLiteral {
     static var crownSymbol: UIImage { .load(systemName: "crown") }
     static var plusSymbol: UIImage { .load(systemName: "plus") }
     static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
+    static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     
     // MARK: - icon
     
