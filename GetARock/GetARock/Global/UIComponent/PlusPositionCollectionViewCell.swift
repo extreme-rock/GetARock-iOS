@@ -20,7 +20,7 @@ final class PlusPositionCollectionViewCell: UICollectionViewCell {
     }(UIView())
     
     private let plusPositionButton: UIButton = {
-        $0.setImage(UIImage(systemName: "plus"), for: .normal)
+        $0.setImage(ImageLiteral.plusSymbol, for: .normal)
         $0.tintColor = .white
         return $0
     }(UIButton())

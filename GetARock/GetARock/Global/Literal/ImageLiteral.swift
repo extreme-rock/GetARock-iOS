@@ -14,6 +14,8 @@ enum ImageLiteral {
     static var xmarkSymbol: UIImage { .load(systemName: "xmark") }
     static var arrowUpRightSymbol: UIImage { .load(systemName: "arrow.up.right") }
     static var crownSymbol: UIImage { .load(systemName: "crown") }
+    static var plusSymbol: UIImage { .load(systemName: "plus") }
+    
 }
 
 extension UIImage {
