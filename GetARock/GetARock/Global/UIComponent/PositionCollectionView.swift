@@ -35,7 +35,7 @@ final class PositionCollectionView: UIView {
         case position
     }
     
-    private var entryPoint: CellType
+    private var cellType: CellType
     weak var delegate: PositionCollectionViewDelegate?
     
     private var items: [Item] = []
@@ -85,7 +85,7 @@ final class PositionCollectionView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.allowsMultipleSelection = true
         collectionView.delegate = self
-        switch self.entryPoint {
+        switch self.cellType {
         case .band:
             collectionView.register(BandMemberCollectionViewCell.self,
                                     forCellWithReuseIdentifier: BandMemberCollectionViewCell.classIdentifier)
@@ -104,8 +104,8 @@ final class PositionCollectionView: UIView {
     
     // MARK: - init
     
-    init(entryPoint: CellType, items: [Item], isNeedHeader: Bool, headerView: UIView? = nil) {
-        self.entryPoint = entryPoint
+    init(cellType: CellType, items: [Item], isNeedHeader: Bool, headerView: UIView? = nil) {
+        self.cellType = cellType
         self.items = items
         self.isNeedHeader = isNeedHeader
         self.headerView = headerView

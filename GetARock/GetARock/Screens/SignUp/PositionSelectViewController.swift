@@ -19,7 +19,7 @@ final class PositionSelectViewController: UIViewController {
     ]
     
     private lazy var positionCollectionView = PositionCollectionView(
-        entryPoint: .position,
+        cellType: .position,
         items: positions,
         isNeedHeader: true,
         headerView: PositionSelectCollectionViewHeader()
