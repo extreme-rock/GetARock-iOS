@@ -60,9 +60,8 @@ final class SNSButtonView: UIView {
         self.snsURL = data
         self.snsType = type
         super.init(frame: .zero)
-        attribute()
         setupLayout()
-        setSNSConfigure()
+        attribute()
     }
     
     required init(coder: NSCoder) {
@@ -72,10 +71,13 @@ final class SNSButtonView: UIView {
     // MARK: - Layout
     
     private func attribute() {
-        self.constraint(.heightAnchor, constant: 75)
+        snsLebel.text = snsType.rawValue
+        snsIcon.image = snsType.snsIconImage
+        if self.snsURL != nil { activateSNSButton() }
     }
     
     private func setupLayout() {
+        self.constraint(.heightAnchor, constant: 75)
         self.addSubview(containerView)
         containerView.alpha = 0.4
         self.containerView.constraint(to: self)
@@ -89,12 +91,6 @@ final class SNSButtonView: UIView {
         self.snsLebel.constraint(leading: containerView.leadingAnchor,
                                  bottom: containerView.bottomAnchor,
                                  padding: UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 0))
-    }
-    
-    private func setSNSConfigure() {
-        snsLebel.text = snsType.rawValue
-        snsIcon.image = snsType.snsIconImage
-        if self.snsURL != nil { activateSNSButton() }
     }
     
     private func activateSNSButton() {
