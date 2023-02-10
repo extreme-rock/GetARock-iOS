@@ -12,7 +12,6 @@ final class PositionSelectCollectionViewHeader: UIView {
         $0.font = .setFont(.subTitle)
         $0.text = "1/3"
         $0.textColor = .gray02
-        $0.numberOfLines = 0
         return $0
     }(UILabel())
     
@@ -20,7 +19,7 @@ final class PositionSelectCollectionViewHeader: UIView {
         $0.font = .setFont(.largeTitle01)
         $0.text = "할 수 있는 포지션을\n모두 알려주세요"
         $0.textColor = .white
-        $0.numberOfLines = 0
+        $0.numberOfLines = 2
         return $0
     }(UILabel())
     
@@ -28,7 +27,7 @@ final class PositionSelectCollectionViewHeader: UIView {
         $0.font = .setFont(.subTitle)
         $0.text = "처음 선택한 악기가\n나의 Main 포지션이 됩니다."
         $0.textColor = .gray02
-        $0.numberOfLines = 0
+        $0.numberOfLines = 2
         return $0
     }(UILabel())
     
