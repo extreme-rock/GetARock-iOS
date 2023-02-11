@@ -31,7 +31,10 @@
 		4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF584592978E497008F4068 /* UIView+Constraints.swift */; };
 		7B236A8529854196006AE385 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B236A8429854196006AE385 /* IconImageView.swift */; };
 		7B64C25B2983CFFE00E95911 /* SongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B64C25A2983CFFE00E95911 /* SongListView.swift */; };
+		7B7598AD29893A1E00FA6B78 /* SNSButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7598AC29893A1E00FA6B78 /* SNSButtonView.swift */; };
 		7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */; };
+		7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04132988FC1100186986 /* SNSListStackView.swift */; };
+		7B7B04162988FE9900186986 /* SNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04152988FE9900186986 /* SNS.swift */; };
 		7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755D2987DF54008F4B9F /* BandButtonView.swift */; };
 		7BC275602987EA10008F4B9F /* emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755F2987EA10008F4B9F /* emptyView.swift */; };
 		7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */; };
@@ -116,7 +119,11 @@
 		77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B236A8429854196006AE385 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
 		7B64C25A2983CFFE00E95911 /* SongListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListView.swift; sourceTree = "<group>"; };
+		7B7598AC29893A1E00FA6B78 /* SNSButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSButtonView.swift; sourceTree = "<group>"; };
 		7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B7B04132988FC1100186986 /* SNSListStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSListStackView.swift; sourceTree = "<group>"; };
+		7B7B04152988FE9900186986 /* SNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNS.swift; sourceTree = "<group>"; };
+
 		7BC2755D2987DF54008F4B9F /* BandButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandButtonView.swift; sourceTree = "<group>"; };
 		7BC2755F2987EA10008F4B9F /* emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emptyView.swift; sourceTree = "<group>"; };
 
@@ -403,6 +410,8 @@
 				7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */,
 				7B64C25A2983CFFE00E95911 /* SongListView.swift */,
 				7B236A8429854196006AE385 /* IconImageView.swift */,
+				7B7B04132988FC1100186986 /* SNSListStackView.swift */,
+				7B7598AC29893A1E00FA6B78 /* SNSButtonView.swift */,
 				7BC2755D2987DF54008F4B9F /* BandButtonView.swift */,
 				9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */,
 				7BC2755F2987EA10008F4B9F /* emptyView.swift */,
@@ -430,8 +439,9 @@
 		B8B17C4D2980B44D00806899 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7BFE01A02982643E009608A2 /* Song.swift */,
 				B8B17C4E2980B67C00806899 /* Band.swift */,
+				7BFE01A02982643E009608A2 /* Song.swift */,
+				7B7B04152988FE9900186986 /* SNS.swift */,
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
@@ -677,6 +687,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
@@ -700,6 +711,7 @@
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
 				B8B17C5D29823AC900806899 /* Event.swift in Sources */,
+				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
 				4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
 				4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */,
@@ -720,6 +732,7 @@
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
 				B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
+				7B7598AD29893A1E00FA6B78 /* SNSButtonView.swift in Sources */,
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
 				4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */,
 				7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */,
