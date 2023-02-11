@@ -10,7 +10,7 @@ final class BasicTextField: UIView {
 
     private let placeholder: String
 
-    private lazy var textField: UITextField = UITextField.makeBasicTextField(placeholder: placeholder)
+    lazy var textField: UITextField = UITextField.makeBasicTextField(placeholder: placeholder)
 
     init(placeholder: String) {
         self.placeholder = placeholder

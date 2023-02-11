@@ -18,6 +18,11 @@ enum Section: Int {
 enum Item: Hashable {
     case bandMember(BandMember)
     case position(Position)
+    case plusPosition
+}
+
+enum CellSize {
+    static let width = (UIScreen.main.bounds.width - 42) / 2
 }
 
 
@@ -30,17 +35,19 @@ final class PositionCollectionView: UIView {
         case position
     }
     
-    private var entryPoint: CellType
+    private var cellType: CellType
     weak var delegate: PositionCollectionViewDelegate?
     
     private var items: [Item] = []
+    private let isNeedHeader: Bool
+    private let headerView: UIView?
     private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
     
     // MARK: - View
     
     private lazy var collectionView: UICollectionView = {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(174),
-                                              heightDimension: .absolute(140))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(CellSize.width),
+                                              heightDimension: .absolute(138))
         let item1 = NSCollectionLayoutItem(layoutSize: itemSize)
         let item2 = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -55,28 +62,53 @@ final class PositionCollectionView: UIView {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
         
+        if self.isNeedHeader {
+            let headerFooterSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(20)
+            )
+            
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerFooterSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            section.boundarySupplementaryItems = [sectionHeader]
+        }
+        
         let layout = UICollectionViewCompositionalLayout(section: section)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.collectionViewLayout = layout
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.allowsMultipleSelection = true
         collectionView.delegate = self
-        switch self.entryPoint {
+        switch self.cellType {
         case .band:
-            collectionView.register(BandMemberCollectionViewCell.self, forCellWithReuseIdentifier: BandMemberCollectionViewCell.classIdentifier)
+            collectionView.register(BandMemberCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: BandMemberCollectionViewCell.classIdentifier)
         case .position:
-            collectionView.register(PositionCollectionViewCell.self, forCellWithReuseIdentifier: PositionCollectionViewCell.classIdentifier)
+            collectionView.register(PositionCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: PositionCollectionViewCell.classIdentifier)
+            collectionView.register(PlusPositionCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: PlusPositionCollectionViewCell.classIdentifier)
+            
+            collectionView.register(PositionCollectionReusableView.self,
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                    withReuseIdentifier: PositionCollectionReusableView.classIdentifier)
         }
         return collectionView
     }()
     
     // MARK: - init
     
-    init(entryPoint: CellType, items: [Item]) {
-        self.entryPoint = entryPoint
+    init(cellType: CellType, items: [Item], isNeedHeader: Bool, headerView: UIView? = nil) {
+        self.cellType = cellType
         self.items = items
+        self.isNeedHeader = isNeedHeader
+        self.headerView = headerView
         super.init(frame: .zero)
         self.setupLayout()
         self.applySnapshot(with: items)
@@ -86,11 +118,16 @@ final class PositionCollectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - func
+    // MARK: - Method
     
     private func setupLayout() {
         addSubview(collectionView)
         self.collectionView.constraint(to: self)
+    }
+    
+    func updateCellIndex(at indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
+        cell.cellIndex = indexPath.item
     }
 }
 
@@ -98,7 +135,7 @@ final class PositionCollectionView: UIView {
 
 extension PositionCollectionView {
     private func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Item> {
-        return UICollectionViewDiffableDataSource<Section, Item>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
+        let dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
             switch item {
             case .bandMember(let bandMember):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemberCollectionViewCell.classIdentifier, for: indexPath) as? BandMemberCollectionViewCell else { return UICollectionViewCell() }
@@ -106,10 +143,29 @@ extension PositionCollectionView {
                 return cell
             case .position(let position):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.classIdentifier, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
-                cell.configure(data: position)
+                if position.isETC {
+                    cell.setupDeleteButton()
+                }
+                cell.configure(data: position, indexPath: indexPath)
+                return cell
+            case .plusPosition:
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlusPositionCollectionViewCell.classIdentifier, for: indexPath) as? PlusPositionCollectionViewCell else { return UICollectionViewCell() }
                 return cell
             }
         })
+        
+        if isNeedHeader {
+            dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+                guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
+                let view = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: PositionCollectionReusableView.classIdentifier,
+                    for: indexPath) as? PositionCollectionReusableView
+                view?.setupLayout(view: self.headerView ?? UIView())
+                return view
+            }
+        }
+        return dataSource
     }
     
     func applySnapshot(with items: [Item]) {
@@ -126,4 +182,5 @@ extension PositionCollectionView: UICollectionViewDelegate {
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
     }
+
 }

@@ -11,6 +11,8 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Property
     
+    var cellIndex: Int? = nil
+    
     override var isSelected: Bool {
         didSet {
             self.applySelectedState()
@@ -56,7 +58,23 @@ final class PositionCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var action = UIAction { _ in
+        NotificationCenter.default.post(name: Notification.Name(StringLiteral.deletePositionCell),
+                                        object: nil,
+                                        userInfo: ["index": self.cellIndex as Any])
+    }
+    
     //MARK: - Init
+    
+    override func prepareForReuse() {
+        deleteButton.removeAction(self.action, for: .touchUpInside)
+    }
+    
+    override func setNeedsLayout() {
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        self.contentView.applyActiveGradation()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,7 +90,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     private func setupLayout() {
         self.contentView.addSubview(containerView)
         self.containerView.constraint(to: contentView)
-        self.containerView.constraint(.widthAnchor, constant: 172)
+        self.containerView.constraint(.widthAnchor, constant: CellSize.width)
         self.containerView.constraint(.heightAnchor, constant: 138)
         
         self.containerView.addSubview(positionImageView)
@@ -92,20 +110,27 @@ final class PositionCollectionViewCell: UICollectionViewCell {
                              padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
     }
     
-    private func setupDeleteButtonLayout() {
+    func setupDeleteButton() {
         self.containerView.addSubview(deleteButton)
         self.deleteButton.constraint(top: containerView.topAnchor,
                                 trailing: containerView.trailingAnchor,
                                 padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
+        
+        addDeleteButtonAction()
+    }
+    
+    private func addDeleteButtonAction() {
+        self.deleteButton.addAction(self.action, for: .touchUpInside)
     }
     
     private func applySelectedState() {
-        self.containerView.backgroundColor = isSelected ? .activeGradationPurple : .dark02
+        self.containerView.backgroundColor = isSelected ? .clear : .dark02
         self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
     
-    func configure(data: Position) {
+    func configure(data: Position, indexPath: IndexPath) {
         self.positionImageView.image = UIImage(named: data.instrumentImageName.rawValue)
         self.positionNameLabel.text = data.instrumentName
+        self.cellIndex = indexPath.item
     }
 }
