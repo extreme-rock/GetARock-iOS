@@ -121,10 +121,10 @@ extension TextLimitTextField {
                 if textField.text == "모여락" {
                     showDuplicationCheckLabel(with: true)
                 } else {
-                    let isChecked = try await DuplicationCheckRequest.checkDuplication(
+                    let isDuplicated = try await DuplicationCheckRequest.checkDuplication(
                         checkCase: type,
                         word: textField.text ?? "")
-                    showDuplicationCheckLabel(with: isChecked)
+                    showDuplicationCheckLabel(with: isDuplicated)
                 }
             } catch {
                 print(error)
