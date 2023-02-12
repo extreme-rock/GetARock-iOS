@@ -11,8 +11,6 @@ final class SetAuthorizationViewController: UIViewController {
     
     //MARK: - View
     
-    private let contentView = UIView()
-    
     private let requestAuthorizationLabel: UILabel = {
         $0.font = UIFont.setFont(.headline01)
         $0.numberOfLines = 2
@@ -163,28 +161,17 @@ final class SetAuthorizationViewController: UIViewController {
     }
     
     private func setupLayout() {
-        self.view.addSubview(contentView)
-        self.contentView.constraint(leading: view.leadingAnchor,
-                                    trailing: view.trailingAnchor)
         
-        NSLayoutConstraint(item: view as Any,
-                           attribute: .centerY,
-                           relatedBy: .equal,
-                           toItem: contentView,
-                           attribute: .centerY,
-                           multiplier: 1.0,
-                           constant: 0).isActive = true
-        
-        self.contentView.addSubview(requestAuthorizationLabel)
-        requestAuthorizationLabel.constraint(top: contentView.topAnchor,
-                                             leading: contentView.leadingAnchor,
-                                             trailing: contentView.trailingAnchor,
+        self.view.addSubview(requestAuthorizationLabel)
+        requestAuthorizationLabel.constraint(top: view.topAnchor,
+                                             leading: view.leadingAnchor,
+                                             trailing: view.trailingAnchor,
                                              padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))
         
-        self.contentView.addSubview(authorizationContainerView)
+        self.view.addSubview(authorizationContainerView)
         authorizationContainerView.constraint(top: requestAuthorizationLabel.bottomAnchor,
-                                              leading: contentView.leadingAnchor,
-                                              trailing: contentView.trailingAnchor,
+                                              leading: view.leadingAnchor,
+                                              trailing: view.trailingAnchor,
                                               padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
         authorizationContainerView.constraint(.heightAnchor, constant: 172)
         
@@ -195,17 +182,15 @@ final class SetAuthorizationViewController: UIViewController {
                                           trailing: authorizationContainerView.trailingAnchor,
                                           padding: UIEdgeInsets(top: 30, left: 25, bottom: 30, right: 25))
         
-        self.contentView.addSubview(authorizationCautionLabel)
+        self.view.addSubview(authorizationCautionLabel)
         authorizationCautionLabel.constraint(top: authorizationContainerView.bottomAnchor,
-                                             leading: contentView.leadingAnchor,
-                                             trailing: contentView.trailingAnchor,
+                                             leading: view.leadingAnchor,
+                                             trailing: view.trailingAnchor,
                                              padding: UIEdgeInsets(top: 25, left: 27, bottom: 0, right: 27))
         
-        self.contentView.addSubview(approveButton)
-        approveButton.constraint(top: authorizationCautionLabel.bottomAnchor,
-                                 leading: contentView.leadingAnchor,
-                                 bottom: contentView.bottomAnchor,
-                                 trailing: contentView.trailingAnchor,
+        self.view.addSubview(approveButton)
+        approveButton.constraint(bottom: view.bottomAnchor,
+                                 centerX: view.centerXAnchor,
                                  padding: UIEdgeInsets(top: 42, left: 16, bottom: 40, right: 16))
     }
 }
