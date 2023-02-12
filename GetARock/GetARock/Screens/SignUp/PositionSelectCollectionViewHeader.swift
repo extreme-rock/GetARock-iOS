@@ -8,6 +8,7 @@
 import UIKit
 
 final class PositionSelectCollectionViewHeader: UIView {
+    
     private let pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.subTitle)
         $0.text = "1/3"
