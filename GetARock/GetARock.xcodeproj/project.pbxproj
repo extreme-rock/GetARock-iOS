@@ -49,6 +49,7 @@
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
 		9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */; };
 		9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */; };
+		9AFE014729990FE0004B0BCF /* BandInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */; };
 		A769E177D6AA52251CAA0997 /* Pods_GetARockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */; };
 		A951F6532989EF6C00902CED /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A951F6522989EF6C00902CED /* String+Extension.swift */; };
 		A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0A2981706C00905BC9 /* BasicTextView.swift */; };
@@ -141,6 +142,7 @@
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
 		9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectViewController.swift; sourceTree = "<group>"; };
 		9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectHeaderView.swift; sourceTree = "<group>"; };
+		9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationDTO.swift; sourceTree = "<group>"; };
 		A951F6522989EF6C00902CED /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A96B8A0A2981706C00905BC9 /* BasicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextView.swift; sourceTree = "<group>"; };
 		A96B8A0C2981714800905BC9 /* BasicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabel.swift; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
+				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
+				9AFE014729990FE0004B0BCF /* BandInformationDTO.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
 				9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */,
 				4AC4CE4B2980B41400BB823C /* DefaultButton.swift in Sources */,
