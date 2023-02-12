@@ -17,7 +17,9 @@ final class LeaderPositionSelectHeaderView: UIView {
         return $0
     }(BasicLabel(contentText: "00님의\n밴드에서포지션을\n알려주세요.", fontStyle: .largeTitle01, textColorInfo: .white))
     
-    private let subTitleLabel = BasicLabel(contentText: "최대 2개까지 선택 가능합니다.", fontStyle: .subTitle, textColorInfo: .gray02)
+    private let subTitleLabel: BasicLabel = BasicLabel(contentText: "최대 2개까지 선택 가능합니다.",
+                                                       fontStyle: .subTitle,
+                                                       textColorInfo: .gray02)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

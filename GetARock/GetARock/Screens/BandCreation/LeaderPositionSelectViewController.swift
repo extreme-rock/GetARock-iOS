@@ -18,7 +18,7 @@ final class LeaderPositionSelectViewController: UIViewController {
         .plusPosition
     ]
     
-    private lazy var positionCollectionView = PositionCollectionView(
+    private lazy var positionCollectionView: PositionCollectionView = PositionCollectionView(
         cellType: .position,
         items: positions,
         isNeedHeader: true,
