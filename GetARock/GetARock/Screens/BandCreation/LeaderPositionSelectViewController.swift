@@ -101,6 +101,7 @@ final class LeaderPositionSelectViewController: UIViewController {
 
 extension LeaderPositionSelectViewController: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
+        if selectedItemsCount > 1 { return false }
         return true
     }
 }
