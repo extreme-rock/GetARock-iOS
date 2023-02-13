@@ -11,7 +11,7 @@ struct BandInformationDTO: Codable {
     let name: String
     let address: Address
     let songList: [SongList]? // 정보 입력시 선택사항
-    let memberList: [MemberList]
+    var memberList: [MemberList]
     let introduction: String? // 정보 입력시 선택사항
     let snsList: [SnsList]? // 정보 입력시 선택사항
 }
@@ -29,12 +29,7 @@ struct MemberList: Codable {
 }
 
 struct InstrumentList: Codable {
-    let name: Name
-}
-
-enum Name: String, Codable {
-    case base = "base"
-    case guitar = "guitar"
+    let name: String
 }
 
 enum SnsType: String, Codable {
