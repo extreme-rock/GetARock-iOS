@@ -13,9 +13,9 @@ final class LeaderPositionSelectHeaderView: UIView {
     
     //TODO: 추후 유저 데이터를 이용해 이름을 유저에 맞게 업데이트해야함
     private let titleLabel: BasicLabel = {
-        $0.numberOfLines = 3
+        $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "00님의\n밴드에서포지션을\n알려주세요.", fontStyle: .largeTitle01, textColorInfo: .white))
+    }(BasicLabel(contentText: "루키님은 밴드에서\n어떤 포지션인가요?", fontStyle: .largeTitle01, textColorInfo: .white))
     
     private let subTitleLabel: BasicLabel = BasicLabel(contentText: "최대 2개까지 선택 가능합니다.",
                                                        fontStyle: .subTitle,
