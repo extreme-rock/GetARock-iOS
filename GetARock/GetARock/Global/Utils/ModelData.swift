@@ -7,10 +7,10 @@
 
 struct ModelData {
     static var bandCreationData: BandInformationDTO = BandInformationDTO(
-        name: "",
-        address: Address(city: "",
-                         street: "",
-                         detail: "",
+        name: "user",
+        address: Address(city: "default",
+                         street: "default",
+                         detail: "default",
                          longitude: 0.0,
                          latitude: 0.0),
 

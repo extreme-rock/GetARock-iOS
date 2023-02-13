@@ -39,17 +39,18 @@ final class LeaderPositionSelectViewController: UIViewController {
         let action = UIAction { _ in
 
             var selectedInstruments: [InstrumentList] = []
-            //MARK: 선택된 Cell은 데이터모델에 추가
-            for index in 0..<self.positions.count {
-
+            //MARK: collectionView에서 선택된 Cell만 데이터에 추가
+            for index in 0..<self.positions.count - 1 {
+                
                 guard let cell =  self.positionCollectionView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PositionCollectionViewCell else { return }
 
-                if !cell.isSelected {
+                if cell.isSelected {
                     selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
                 }
             }
 
-            let bandLeader: MemberList = MemberList(memberId: 0, name: "루키", memberState: .admin, instrumentList: selectedInstruments)
+            //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
+            let bandLeader: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
 
             self.memberList.append(bandLeader)
             // append로 처리할 수 있으나 대체하는 것이 좋다고 생각
@@ -60,6 +61,8 @@ final class LeaderPositionSelectViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
+    
+    //MARK: LifeCycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
