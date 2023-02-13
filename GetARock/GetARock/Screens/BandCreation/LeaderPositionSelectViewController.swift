@@ -37,26 +37,7 @@ final class LeaderPositionSelectViewController: UIViewController {
     private lazy var nextButton: BottomButton = {
         $0.setTitle("다음", for: .normal)
         let action = UIAction { _ in
-
-            var selectedInstruments: [InstrumentList] = []
-            //MARK: collectionView에서 선택된 Cell만 데이터에 추가
-            for index in 0..<self.positions.count - 1 {
-                
-                guard let cell =  self.positionCollectionView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PositionCollectionViewCell else { return }
-
-                if cell.isSelected {
-                    selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
-                }
-            }
-
-            //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
-            let bandLeader: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
-
-            self.memberList.append(bandLeader)
-            // append로 처리할 수 있으나 대체하는 것이 좋다고 생각
-            // 왜냐면 다시 이전으로 네비게이션되었을 때 수정하면 데이터 자체가 통쨰로 바꿔야되니까
-            self.bandCreationData.memberList = self.memberList
-            print(self.bandCreationData)
+            self.addSelectedPositionData()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -130,6 +111,30 @@ final class LeaderPositionSelectViewController: UIViewController {
         nextButton.constraint(bottom: view.bottomAnchor,
                               centerX: view.centerXAnchor,
                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
+    }
+}
+
+extension LeaderPositionSelectViewController {
+    //MARK: collectionView에서 선택된 Cell만 데이터에 추가
+    private func addSelectedPositionData() {
+        var selectedInstruments: [InstrumentList] = []
+        for index in 0..<self.positions.count - 1 {
+            
+            guard let cell =  self.positionCollectionView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PositionCollectionViewCell else { return }
+
+            if cell.isSelected {
+                selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
+            }
+        }
+
+        //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
+        let bandLeader: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
+
+        self.memberList.append(bandLeader)
+        // append로 처리할 수 있으나 대체하는 것이 좋다고 생각
+        // 왜냐면 다시 이전으로 네비게이션되었을 때 수정하면 데이터 자체가 통쨰로 바꿔야되니까
+        self.bandCreationData.memberList = self.memberList
+        print(self.bandCreationData)
     }
 }
 
