@@ -8,6 +8,27 @@
 import UIKit
 
 final class LeaderPositionSelectViewController: UIViewController {
+
+    let bandInfo = BandInformationDTO(
+        name: "",
+        address: Address(city: "",
+                         street: "",
+                         detail: "",
+                         longitude: 0.0,
+                         latitude: 0.0),
+
+        songList: nil,
+
+        memberList: [MemberList(memberId: 1,
+                                name: "",
+                                memberState: .inviting,
+                                instrumentList:
+                                    [InstrumentList(name: .base)]
+                               )],
+        introduction: nil,
+
+        snsList: nil
+    )
     
     private var positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),

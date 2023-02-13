@@ -10,10 +10,10 @@ import Foundation
 struct BandInformationDTO: Codable {
     let name: String
     let address: Address
-    let songList: [SongList]
+    let songList: [SongList]? // 정보 입력시 선택사항
     let memberList: [MemberList]
-    let introduction: String
-    let snsList: [SnsList]
+    let introduction: String? // 정보 입력시 선택사항
+    let snsList: [SnsList]? // 정보 입력시 선택사항
 }
 
 struct Address: Codable {
@@ -32,7 +32,6 @@ struct InstrumentList: Codable {
     let name: Name
 }
 
-//MARK: Name
 enum Name: String, Codable {
     case base = "base"
     case guitar = "guitar"
@@ -45,18 +44,17 @@ enum SnsType: String, Codable {
 }
 
 enum MemberState: String, Codable {
+    case admin = "ADMIN"
     case inviting = "INVITING"
     case approved = "APPROVE"
     case denied = "DENY"
 }
 
-// MARK: - SnsList
 struct SnsList: Codable {
     let type: SnsType
-    let link: String?
+    let link: String
 }
 
-// MARK: - SongList
 struct SongList: Codable {
     let name, artist: String
     let link: String?
