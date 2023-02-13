@@ -37,6 +37,7 @@ final class PositionSelectViewController: UIViewController {
         configureDelegate()
         addObservePositionPlusButtonTapped()
         addObservePositionDeleteButtonTapped()
+        addObserveDeselectAllPositionButtonTapped()
     }
     
     private func attribute() {
@@ -45,6 +46,19 @@ final class PositionSelectViewController: UIViewController {
     
     private func configureDelegate() {
         positionCollectionView.delegate = self
+    }
+    
+    private func addObserveDeselectAllPositionButtonTapped() {
+         NotificationCenter.default.addObserver(self,
+                                                selector: #selector(deselectAllPosition),
+                                                name: Notification.Name(StringLiteral.deselectAllPosition),
+                                                object: nil)
+     }
+    
+    
+    @objc
+    private func deselectAllPosition() {
+        self.positionCollectionView.deselectAllItem()
     }
     
     private func addObservePositionPlusButtonTapped() {

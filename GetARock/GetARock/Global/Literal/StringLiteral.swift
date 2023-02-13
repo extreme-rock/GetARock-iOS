@@ -15,6 +15,7 @@ enum StringLiteral {
     // Notifiation.Name
     static let deletePositionCell = "deletePositionCell"
     static let showPositionPlusModal = "showPositionPlusModal"
+    static let deselectAllPosition = "deselectAllPosition"
 }
 
 enum InstrumentImageName: String {

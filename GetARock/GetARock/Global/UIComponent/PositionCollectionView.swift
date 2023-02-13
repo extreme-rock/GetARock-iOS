@@ -129,6 +129,13 @@ final class PositionCollectionView: UIView {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
         cell.cellIndex = indexPath.item
     }
+    
+    func deselectAllItem() {
+        let selectedIndexPath = self.collectionView.indexPathsForSelectedItems
+        selectedIndexPath?.forEach {
+            self.collectionView.deselectItem(at: $0, animated: true)
+        }
+    }
 }
 
 // MARK: - diffable
