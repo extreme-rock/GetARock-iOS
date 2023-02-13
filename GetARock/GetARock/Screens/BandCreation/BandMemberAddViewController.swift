@@ -7,12 +7,16 @@
 
 import UIKit
 
-class BandMemberAddViewController: UIViewController {
+final class BandMemberAddViewController: UIViewController {
 
      override func viewDidLoad() {
          super.viewDidLoad()
+         setupLayout()
          attribute()
      }
+    
+    private func setupLayout() {
+    }
     
     private func attribute() {
         self.view.backgroundColor = .white
