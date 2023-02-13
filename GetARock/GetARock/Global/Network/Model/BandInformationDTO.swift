@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - BandCreate
 struct BandInformationDTO: Codable {
     let name: String
     let address: Address
@@ -17,37 +16,43 @@ struct BandInformationDTO: Codable {
     let snsList: [SnsList]
 }
 
-// MARK: - Address
 struct Address: Codable {
     let city, street, detail: String
     let longitude, latitude: Double
 }
 
-// MARK: - MemberList
 struct MemberList: Codable {
-    let memberID: Int?
-    let name, memberState: String
+    let memberId: Int?
+    let name: String
+    let memberState: MemberState
     let instrumentList: [InstrumentList]
-
-    enum CodingKeys: String, CodingKey {
-        case memberID = "memberId"
-        case name, memberState, instrumentList
-    }
 }
 
-// MARK: - InstrumentList
 struct InstrumentList: Codable {
     let name: Name
 }
 
+//MARK: Name
 enum Name: String, Codable {
     case base = "base"
     case guitar = "guitar"
 }
 
+enum SnsType: String, Codable {
+    case youtube = "YOUTUBE"
+    case instagram = "INSTAGRAM"
+    case soundcloud = "SOUNDCLOUD"
+}
+
+enum MemberState: String, Codable {
+    case inviting = "INVITING"
+    case approved = "APPROVE"
+    case denied = "DENY"
+}
+
 // MARK: - SnsList
 struct SnsList: Codable {
-    let type: String
+    let type: SnsType
     let link: String?
 }
 
