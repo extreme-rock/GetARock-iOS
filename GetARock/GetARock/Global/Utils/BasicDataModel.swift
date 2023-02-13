@@ -5,7 +5,7 @@
 //  Created by Jisu Jang on 2023/02/13.
 //
 
-struct ModelData {
+struct BasicDataModel {
     static var bandCreationData: BandInformationDTO = BandInformationDTO(
         name: "user",
         address: Address(city: "default",

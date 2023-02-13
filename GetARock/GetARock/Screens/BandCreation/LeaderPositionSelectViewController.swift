@@ -14,7 +14,7 @@ final class LeaderPositionSelectViewController: UIViewController {
     // 최종적으로 보내야하는 데이터 양식입니다. 이 데이터를 계속 전달하기보다는
     // 전역변수로 하나의 인스턴스로 만들어서 공유한다
     // 왜냐면 각각의 뷰컨에서 네비게이션 될 때마다 바뀐 데이터를 전달하는게 번거롭다
-    private var bandCreationData = ModelData.bandCreationData
+    private var bandCreationData = BasicDataModel.bandCreationData
     
     private var memberList: [MemberList] = []
     
