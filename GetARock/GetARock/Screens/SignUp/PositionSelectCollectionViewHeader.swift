@@ -36,8 +36,9 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     private lazy var deselectAllPositionButton: UIButton = {
         $0.setTitle("전체 선택 해제", for: .normal)
+        $0.setTitleColor(.gray02, for: .normal)
         $0.titleLabel?.font = .setFont(.content)
-        $0.tintColor = .gray02
+        $0.isHidden = true
         let action = UIAction { _ in
             self.postDeselectAllPosition()
         }
@@ -50,6 +51,7 @@ final class PositionSelectCollectionViewHeader: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        addObserveHideDeselectAllPositionButton()
     }
     
     required init?(coder: NSCoder) {
@@ -57,6 +59,19 @@ final class PositionSelectCollectionViewHeader: UIView {
     }
     
     //MARK: - Method
+    
+    private func addObserveHideDeselectAllPositionButton() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(hideDeselectButton),
+            name: Notification.Name(StringLiteral.hideDeselectAllPositionButton),
+            object: nil)
+    }
+    
+    @objc
+    private func hideDeselectButton() {
+        self.deselectAllPositionButton.isHidden.toggle()
+    }
     
     private func setupLayout() {
         self.addSubview(pageIndicatorLabel)

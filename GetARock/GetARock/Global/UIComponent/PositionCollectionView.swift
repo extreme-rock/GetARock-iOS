@@ -135,6 +135,13 @@ final class PositionCollectionView: UIView {
         selectedIndexPath?.forEach {
             self.collectionView.deselectItem(at: $0, animated: true)
         }
+        postDeselectAllPositionButtonHiddenToggle()
+    }
+    
+    private func postDeselectAllPositionButtonHiddenToggle() {
+        NotificationCenter.default.post(
+            name: Notification.Name(StringLiteral.hideDeselectAllPositionButton),
+            object: nil)
     }
 }
 
@@ -189,5 +196,18 @@ extension PositionCollectionView: UICollectionViewDelegate {
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
+        if selectedCellCount == 1 {
+            postDeselectAllPositionButtonHiddenToggle()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
+        if selectedCellCount == 0 {
+            postDeselectAllPositionButtonHiddenToggle()
+        }
+    }
 }
