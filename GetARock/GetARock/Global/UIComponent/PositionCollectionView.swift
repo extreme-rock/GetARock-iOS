@@ -45,7 +45,7 @@ final class PositionCollectionView: UIView {
     
     // MARK: - View
     
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(CellSize.width),
                                               heightDimension: .absolute(138))
         let item1 = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -182,5 +182,4 @@ extension PositionCollectionView: UICollectionViewDelegate {
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
     }
-
 }

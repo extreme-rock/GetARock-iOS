@@ -9,26 +9,14 @@ import UIKit
 
 final class LeaderPositionSelectViewController: UIViewController {
 
-    let bandInfo = BandInformationDTO(
-        name: "",
-        address: Address(city: "",
-                         street: "",
-                         detail: "",
-                         longitude: 0.0,
-                         latitude: 0.0),
+    //MARK: Properties
 
-        songList: nil,
+    // 최종적으로 보내야하는 데이터 양식입니다. 이 데이터를 계속 전달하기보다는
+    // 전역변수로 하나의 인스턴스로 만들어서 공유한다
+    // 왜냐면 각각의 뷰컨에서 네비게이션 될 때마다 바뀐 데이터를 전달하는게 번거롭다
+    private var bandCreationData = ModelData.bandCreationData
 
-        memberList: [MemberList(memberId: 1,
-                                name: "",
-                                memberState: .inviting,
-                                instrumentList:
-                                    [InstrumentList(name: .base)]
-                               )],
-        introduction: nil,
-
-        snsList: nil
-    )
+    private var memberList: [MemberList] = []
     
     private var positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
@@ -46,8 +34,30 @@ final class LeaderPositionSelectViewController: UIViewController {
         headerView: LeaderPositionSelectHeaderView()
     )
     
-    private let nextButton: BottomButton = {
+    private lazy var nextButton: BottomButton = {
         $0.setTitle("다음", for: .normal)
+        let action = UIAction { _ in
+
+            var selectedInstruments: [InstrumentList] = []
+            //MARK: 선택된 Cell은 데이터모델에 추가
+            for index in 0..<self.positions.count {
+
+                guard let cell =  self.positionCollectionView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PositionCollectionViewCell else { return }
+
+                if !cell.isSelected {
+                    selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
+                }
+            }
+
+            let bandLeader: MemberList = MemberList(memberId: 0, name: "루키", memberState: .admin, instrumentList: selectedInstruments)
+
+            self.memberList.append(bandLeader)
+            // append로 처리할 수 있으나 대체하는 것이 좋다고 생각
+            // 왜냐면 다시 이전으로 네비게이션되었을 때 수정하면 데이터 자체가 통쨰로 바꿔야되니까
+            self.bandCreationData.memberList = self.memberList
+            print(self.bandCreationData)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -120,6 +130,7 @@ final class LeaderPositionSelectViewController: UIViewController {
     }
 }
 
+//MARK: 포지션 최대 선택 개수 제한
 extension LeaderPositionSelectViewController: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
         if selectedItemsCount > 1 { return false }
@@ -127,6 +138,7 @@ extension LeaderPositionSelectViewController: PositionCollectionViewDelegate {
     }
 }
 
+//MARK: 포지션 추가
 extension LeaderPositionSelectViewController: PlusPositionViewControllerDelegate {
     func addPosition(instrumentName: String) {
         let newPosition: Item = .position(Position(instrumentName: instrumentName,
