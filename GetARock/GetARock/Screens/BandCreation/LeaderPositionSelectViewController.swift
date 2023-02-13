@@ -10,10 +10,6 @@ import UIKit
 final class LeaderPositionSelectViewController: UIViewController {
     
     //MARK: Properties
-    
-    // 최종적으로 보내야하는 데이터 양식입니다. 이 데이터를 계속 전달하기보다는
-    // 전역변수로 하나의 인스턴스로 만들어서 공유한다
-    // 왜냐면 각각의 뷰컨에서 네비게이션 될 때마다 바뀐 데이터를 전달하는게 번거롭다
     private var bandCreationData = BasicDataModel.bandCreationData
     
     private var memberList: [MemberList] = []
@@ -136,8 +132,6 @@ extension LeaderPositionSelectViewController {
         let bandLeader: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
         
         self.memberList.append(bandLeader)
-        // append로 처리할 수 있으나 대체하는 것이 좋다고 생각
-        // 왜냐면 다시 이전으로 네비게이션되었을 때 수정하면 데이터 자체가 통쨰로 바꿔야되니까
         self.bandCreationData.memberList = self.memberList
         //MARK: Merge 전 삭제 필요
         print(self.bandCreationData)
