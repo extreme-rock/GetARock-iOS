@@ -34,7 +34,10 @@ final class LinkToMakeBandViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private let makeBandImageView = UIImageView(image: UIImage(named: "makeMyBandBanner"))
+    private let makeBandButton: UIButton = {
+        $0.setImage(UIImage(named: "makeMyBandBanner"), for: .normal)
+        return $0
+    }(UIButton())
     
     private let makeBandTitleLabel: UILabel = {
         $0.font = .setFont(.subTitle2)
@@ -50,6 +53,15 @@ final class LinkToMakeBandViewController: UIViewController {
         $0.numberOfLines = 2
         return $0
     }(UILabel())
+    
+    private let passMakingBandButton: UIButton = {
+        $0.setBackgroundColor(.dark02, for: .normal)
+        $0.layer.borderColor = UIColor.gray02.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        return $0
+    }(UIButton())
     
     private let passMakingBandContainerView: UIView = {
         $0.backgroundColor = .dark02
@@ -82,6 +94,7 @@ final class LinkToMakeBandViewController: UIViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
+        addActionToButtons()
     }
     
     //MARK: - Method
@@ -109,38 +122,51 @@ final class LinkToMakeBandViewController: UIViewController {
                                  trailing: self.view.trailingAnchor,
                                  padding: UIEdgeInsets(top: 10, left: 16, bottom: 49, right: 16))
         
-        self.view.addSubview(makeBandImageView)
-        makeBandImageView.constraint(top: subTitleLabel.bottomAnchor,
+        self.view.addSubview(makeBandButton)
+        makeBandButton.constraint(top: subTitleLabel.bottomAnchor,
                                      leading: self.view.leadingAnchor,
                                      trailing: self.view.trailingAnchor,
                                      padding: UIEdgeInsets(top: 43, left: 16, bottom: 0, right: 16))
-        makeBandImageView.constraint(.heightAnchor, constant: 160)
+        makeBandButton.constraint(.heightAnchor, constant: 160)
         
-        self.makeBandImageView.addSubview(makeBandTitleLabel)
-        makeBandTitleLabel.constraint(top: makeBandImageView.topAnchor,
-                                      leading: makeBandImageView.leadingAnchor,
+        self.makeBandButton.addSubview(makeBandTitleLabel)
+        makeBandTitleLabel.constraint(top: makeBandButton.topAnchor,
+                                      leading: makeBandButton.leadingAnchor,
                                       padding: UIEdgeInsets(top: 42, left: 37, bottom: 0, right: 0))
         
-        self.makeBandImageView.addSubview(makeBandContentLabel)
+        self.makeBandButton.addSubview(makeBandContentLabel)
         makeBandContentLabel.constraint(top: makeBandTitleLabel.bottomAnchor,
-                                        leading: makeBandImageView.leadingAnchor,
+                                        leading: makeBandButton.leadingAnchor,
                                         padding: UIEdgeInsets(top: 14, left: 37, bottom: 0, right: 0))
         
-        self.view.addSubview(passMakingBandContainerView)
-        passMakingBandContainerView.constraint(top: makeBandImageView.bottomAnchor,
+        self.view.addSubview(passMakingBandButton)
+        passMakingBandButton.constraint(top: makeBandButton.bottomAnchor,
                                                leading: view.leadingAnchor,
                                                trailing: view.trailingAnchor,
                                                padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
-        passMakingBandContainerView.constraint(.heightAnchor, constant: 160)
+        passMakingBandButton.constraint(.heightAnchor, constant: 160)
         
-        self.passMakingBandContainerView.addSubview(passMakingBandTitleLabel)
-        passMakingBandTitleLabel.constraint(top: passMakingBandContainerView.topAnchor,
-                                            leading: passMakingBandContainerView.leadingAnchor,
+        self.passMakingBandButton.addSubview(passMakingBandTitleLabel)
+        passMakingBandTitleLabel.constraint(top: passMakingBandButton.topAnchor,
+                                            leading: passMakingBandButton.leadingAnchor,
                                             padding: UIEdgeInsets(top: 42, left: 37, bottom: 0, right: 0))
         
-        self.passMakingBandContainerView.addSubview(passMakingBandContentLabel)
+        self.passMakingBandButton.addSubview(passMakingBandContentLabel)
         passMakingBandContentLabel.constraint(top: passMakingBandTitleLabel.bottomAnchor,
-                                            leading: passMakingBandContainerView.leadingAnchor,
+                                            leading: passMakingBandButton.leadingAnchor,
                                             padding: UIEdgeInsets(top: 14, left: 37, bottom: 0, right: 0))
+    }
+    
+    private func addActionToButtons() {
+        // TODO: 각 상황에 따라 VC 연결하기
+        let makeBandAction = UIAction { _ in
+            print("make")
+        }
+        
+        let passMakeBandAction = UIAction { _ in
+            print("pass")
+        }
+        self.makeBandButton.addAction(makeBandAction, for: .touchUpInside)
+        self.passMakingBandButton.addAction(passMakeBandAction, for: .touchUpInside)
     }
 }
