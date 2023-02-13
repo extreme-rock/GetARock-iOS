@@ -8,14 +8,14 @@
 import UIKit
 
 final class LeaderPositionSelectViewController: UIViewController {
-
+    
     //MARK: Properties
-
+    
     // 최종적으로 보내야하는 데이터 양식입니다. 이 데이터를 계속 전달하기보다는
     // 전역변수로 하나의 인스턴스로 만들어서 공유한다
     // 왜냐면 각각의 뷰컨에서 네비게이션 될 때마다 바뀐 데이터를 전달하는게 번거롭다
     private var bandCreationData = ModelData.bandCreationData
-
+    
     private var memberList: [MemberList] = []
     
     private var positions: [Item] = [
@@ -38,6 +38,7 @@ final class LeaderPositionSelectViewController: UIViewController {
         $0.setTitle("다음", for: .normal)
         let action = UIAction { _ in
             self.addSelectedPositionData()
+            self.navigateToNext()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -54,6 +55,10 @@ final class LeaderPositionSelectViewController: UIViewController {
         addObservePositionDeleteButtonTapped()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     private func attribute() {
         self.view.backgroundColor = .dark01
     }
@@ -63,11 +68,11 @@ final class LeaderPositionSelectViewController: UIViewController {
     }
     
     private func addObservePositionPlusButtonTapped() {
-         NotificationCenter.default.addObserver(self,
-                                                selector: #selector(showPositionPlusModal),
-                                                name: Notification.Name(StringLiteral.showPositionPlusModal),
-                                                object: nil)
-     }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(showPositionPlusModal),
+                                               name: Notification.Name(StringLiteral.showPositionPlusModal),
+                                               object: nil)
+    }
     
     @objc
     private func showPositionPlusModal() {
@@ -121,20 +126,26 @@ extension LeaderPositionSelectViewController {
         for index in 0..<self.positions.count - 1 {
             
             guard let cell =  self.positionCollectionView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PositionCollectionViewCell else { return }
-
+            
             if cell.isSelected {
                 selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
             }
         }
-
+        
         //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
         let bandLeader: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
-
+        
         self.memberList.append(bandLeader)
         // append로 처리할 수 있으나 대체하는 것이 좋다고 생각
         // 왜냐면 다시 이전으로 네비게이션되었을 때 수정하면 데이터 자체가 통쨰로 바꿔야되니까
         self.bandCreationData.memberList = self.memberList
+        //MARK: Merge 전 삭제 필요
         print(self.bandCreationData)
+    }
+    
+    private func navigateToNext() {
+        self.navigationController?.pushViewController(BandMemberAddViewController(), animated: true)
+        self.navigationController?.navigationBar.isHidden = false
     }
 }
 
