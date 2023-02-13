@@ -50,7 +50,6 @@ final class ModifyMyPageViewController: UIViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
-        // Do any additional setup after loading the view.
     }
     
     //MARK: - Method
