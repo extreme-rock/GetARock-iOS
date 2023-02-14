@@ -8,6 +8,12 @@
 import UIKit
 
 final class SNSBoxView: UIView {
+    
+    enum SNSType: String {
+        case youTube = "youtube.com/channel/"
+        case instagram = "instagram.com/"
+        case soundCloud = "soundcloud.com/"
+    }
 
     private let type: SNSType
 
@@ -15,11 +21,12 @@ final class SNSBoxView: UIView {
 
     private lazy var basicLabel = BasicLabel(contentText: type.rawValue, fontStyle: .content, textColorInfo: .white)
 
-    private lazy var textField: UITextField = {
+    lazy var textField: UITextField = {
         $0.attributedPlaceholder = NSAttributedString(
             string: textFieldPlaceholder,
-            attributes: [.foregroundColor: UIColor.gray02, .font: UIFont.setFont(.content)]
-        )
+            attributes: [
+                .foregroundColor: UIColor.gray02,
+                .font: UIFont.setFont(.headline04)])
         $0.backgroundColor = .dark02
         $0.textColor = .white
         $0.font = UIFont.setFont(.content)
@@ -27,7 +34,11 @@ final class SNSBoxView: UIView {
     }(UITextField(frame: .zero))
 
     private lazy var basicLeftView: UIImageView = {
-        $0.image = UIImage(named: String(describing: type))
+        switch type {
+        case .instagram: $0.image = ImageLiteral.instagramIcon
+        case .soundCloud: $0.image = ImageLiteral.soundCloudIcon
+        case .youTube: $0.image = ImageLiteral.youtubeIcon
+        }
         $0.contentMode = .scaleAspectFill
         return $0
     }(UIImageView())
@@ -52,8 +63,13 @@ final class SNSBoxView: UIView {
     
     private func setupLayout() {
         addSubview(basicLeftView)
-        basicLeftView.constraint(.widthAnchor, constant: 15)
-        basicLeftView.constraint(.heightAnchor, constant: 15)
+        if type == .soundCloud {
+            basicLeftView.constraint(.widthAnchor, constant: 15)
+            basicLeftView.constraint(.heightAnchor, constant: 15)
+        } else {
+            basicLeftView.constraint(.widthAnchor, constant: 15)
+            basicLeftView.constraint(.heightAnchor, constant: 15)
+        }
         basicLeftView.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         )
 
@@ -76,10 +92,3 @@ final class SNSBoxView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-enum SNSType: String {
-    case youTube = "youtube.com/channel/"
-    case instagram = "instagram.com/"
-    case soundCloud = "soundcloud.com/"
-}
-

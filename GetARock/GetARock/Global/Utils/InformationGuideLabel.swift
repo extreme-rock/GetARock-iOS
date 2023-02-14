@@ -25,7 +25,6 @@ final class InformationGuideLabel: UIStackView {
 
     private lazy var secondLabel = BasicLabel(contentText: type.rawValue, fontStyle: .content, textColorInfo: .gray02)
 
-    // MARK: - Init
     init(guideText: String, type: InputType) {
         self.guideText = guideText
         self.type = type
