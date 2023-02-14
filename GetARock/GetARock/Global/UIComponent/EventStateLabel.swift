@@ -127,9 +127,9 @@ final class EventStateLabel: UILabel {
         case .category:
             setDefaultUI()
             if labelData == "BAND_RECRUITING" {
-                self.text = "합공밴드모집"
+                self.text = "합공 밴드 모집"
             } else if labelData == "EVENT_PR" {
-                self.text = "공연홍보"
+                self.text = "공연 홍보"
             } else {
                 self.text = "기타"
                 
