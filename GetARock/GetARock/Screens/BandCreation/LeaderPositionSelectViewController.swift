@@ -129,9 +129,9 @@ extension LeaderPositionSelectViewController {
         }
         
         //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
-        let bandLeader: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
+        let firstMember: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
         
-        self.memberList.append(bandLeader)
+        self.memberList.append(firstMember)
         self.bandCreationData.memberList = self.memberList
         //MARK: Merge 전 삭제 필요
         print(self.bandCreationData)
