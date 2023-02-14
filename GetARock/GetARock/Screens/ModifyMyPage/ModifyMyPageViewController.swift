@@ -42,8 +42,6 @@ final class ModifyMyPageViewController: UIViewController {
        return $0
     }(UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal))
     
-   
-    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
