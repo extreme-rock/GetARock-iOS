@@ -56,7 +56,7 @@ final class BandInfomrationSetViewController: BaseViewController {
     //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
     private lazy var practicePlace = {
         let boxView = BasicBoxView(text: "합주실 위치")
-        boxView.basicRightView.isHidden = false
+        boxView.showRightView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchViewController))
         boxView.addGestureRecognizer(tapGesture)
         return boxView

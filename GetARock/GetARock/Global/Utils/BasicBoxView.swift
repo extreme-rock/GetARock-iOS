@@ -9,17 +9,15 @@ import UIKit
 
 final class BasicBoxView: UIView {
 
-    var text: String = ""
+    private var text: String = ""
 
-    lazy var basicLabel = BasicLabel(contentText: text, fontStyle: .contentBold, textColorInfo: .white)
+    private lazy var basicLabel = BasicLabel(contentText: text, fontStyle: .contentBold, textColorInfo: .white)
 
-    var basicRightView: UIImageView = {
-        let imageView = UIImageView()
-        //MARK: 이미지 리터럴로 이전해야함
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
+    private let basicRightView: UIImageView = {
+        $0.image = ImageLiteral.chevronRightSymbol
+        $0.contentMode = .scaleAspectFill
+        return $0
+    }(UIImageView())
 
     init(text: String? = nil) {
         if let text = text { self.text = text }
@@ -31,6 +29,8 @@ final class BasicBoxView: UIView {
         self.layer.cornerRadius = 10
         self.backgroundColor = .dark02
         self.layer.borderColor = UIColor.white.cgColor
+        
+        basicRightView.isHidden = true
     }
     
     private func setupLayout() {
@@ -39,7 +39,6 @@ final class BasicBoxView: UIView {
         
         addSubview(basicLabel)
         basicLabel.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
-        basicRightView.isHidden = true
         
         addSubview(basicRightView)
         basicRightView.constraint(.widthAnchor, constant: 15)
@@ -49,5 +48,9 @@ final class BasicBoxView: UIView {
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func showRightView() {
+        basicRightView.isHidden = false
     }
 }
