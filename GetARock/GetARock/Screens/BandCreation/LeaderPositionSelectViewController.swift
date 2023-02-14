@@ -9,11 +9,15 @@ import UIKit
 
 final class LeaderPositionSelectViewController: UIViewController {
     
-    //MARK: Properties
+    //MARK: - Property
+    
     private var bandCreationData = BasicDataModel.bandCreationData
     
     private var memberList: [MemberList] = []
     
+    //MARK: - View
+    
+    //TODO: 추후 유저 데이터에서 유저가 가능하다고 응답한 악기들로 대체되어야함.
     private var positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
         .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
@@ -39,7 +43,7 @@ final class LeaderPositionSelectViewController: UIViewController {
         return $0
     }(BottomButton())
     
-    //MARK: LifeCycles
+    //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +55,8 @@ final class LeaderPositionSelectViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
     }
+    
+    //MARK: - Method
     
     private func attribute() {
         self.view.backgroundColor = .dark01
@@ -88,10 +94,17 @@ extension LeaderPositionSelectViewController {
         let selectedInstruments: [InstrumentList] = self.positionCollectionView.getSelectedInstruments()
         //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
         let firstMember: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
-        self.memberList.append(firstMember)
+        if self.memberList.isEmpty {
+            self.memberList.append(firstMember)
+        } else {
+            self.memberList.removeAll(keepingCapacity: true)
+            self.memberList.append(firstMember)
+        }
         self.bandCreationData.memberList = self.memberList
         //MARK: Merge 전 삭제 필요
         print(self.bandCreationData)
+        print("======================")
+        print(self.memberList.count)
     }
     
     private func navigateToNext() {
@@ -105,18 +118,5 @@ extension LeaderPositionSelectViewController: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
         if selectedItemsCount > 1 { return false }
         return true
-    }
-}
-
-extension PositionCollectionView {
-    func getSelectedInstruments() -> [InstrumentList] {
-        var selectedInstruments: [InstrumentList] = []
-        let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
-        
-        for indexPath in selectedIndexPaths {
-            guard let cell =  self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return [] }
-            selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
-        }
-        return selectedInstruments
     }
 }
