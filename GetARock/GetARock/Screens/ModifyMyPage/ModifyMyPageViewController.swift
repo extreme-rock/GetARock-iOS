@@ -11,8 +11,16 @@ final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Property
     
-    private let pageViewControllers: [UIViewController] = [ModifyPositionViewController(),
-                                                           ModifyUserProfileViewController()]
+    private let pageViewControllers: [UIViewController] = [
+        ModifyPositionViewController(positions: [
+            .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
+            .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
+            .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
+            .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
+            .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
+            .plusPosition
+        ]),
+        ModifyUserProfileViewController()]
     private var currentPageNumber: Int = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPageNumber ? .forward : .reverse
@@ -39,13 +47,12 @@ final class ModifyMyPageViewController: UIViewController {
                                   direction: .forward,
                                   animated: true)
         }
-       return $0
+        return $0
     }(UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal))
-    
-   
     
     //MARK: - Life Cycle
     
+    // init 시에 유저에 대한 정보가 들어와야함
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()

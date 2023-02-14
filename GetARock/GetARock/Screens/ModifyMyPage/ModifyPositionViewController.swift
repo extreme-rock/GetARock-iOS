@@ -36,6 +36,16 @@ final class ModifyPositionViewController: UIViewController {
     
     //MARK: - Life Cycle
     
+    init(positions: [Item]) {
+        // 기본 악기 구성 + 새로 추가해서 선택한 친구를 positions를 넘겨줘야한다.
+        self.positions = positions
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -105,7 +115,8 @@ final class ModifyPositionViewController: UIViewController {
                               centerX: view.centerXAnchor,
                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
     }
-
+    
+    //TODO: 원래선택됐던 친구를 선택해주는 func 추가
 }
 
 extension ModifyPositionViewController: PositionCollectionViewDelegate {
