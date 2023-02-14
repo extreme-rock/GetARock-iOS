@@ -56,6 +56,7 @@ final class BandInformationSetViewController: BaseViewController {
     //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
     private lazy var practicePlace = {
         let boxView = BasicBoxView(text: "합주실 위치")
+        //MARK: Show RightView 색상 수정 필요
         boxView.showRightView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchViewController))
         boxView.addGestureRecognizer(tapGesture)
@@ -74,6 +75,7 @@ final class BandInformationSetViewController: BaseViewController {
 
     private var practiceSongSubLabel = BasicLabel(contentText: "* 최대 3개까지 등록 가능합니다.", fontStyle: .content, textColorInfo: .white)
 
+    //MARK: Default Button 형식으로 바꾸기 필요
     //TODO: 추후에 합주곡 삽입 action 추가 필요
     private lazy var addPracticeSongButton = {
         var configuration = UIButton.Configuration.filled()

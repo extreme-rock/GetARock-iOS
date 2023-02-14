@@ -22,6 +22,8 @@ final class BasicBoxView: UIView {
     init(text: String? = nil) {
         if let text = text { self.text = text }
         super.init(frame: .zero)
+        attribute()
+        setupLayout()
     }
     
     private func attribute() {
