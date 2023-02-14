@@ -127,7 +127,6 @@
 		7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B7B04132988FC1100186986 /* SNSListStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSListStackView.swift; sourceTree = "<group>"; };
 		7B7B04152988FE9900186986 /* SNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNS.swift; sourceTree = "<group>"; };
-
 		7BC2755D2987DF54008F4B9F /* BandButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandButtonView.swift; sourceTree = "<group>"; };
 		7BC2755F2987EA10008F4B9F /* emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emptyView.swift; sourceTree = "<group>"; };
 		7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Gradation.swift"; sourceTree = "<group>"; };
@@ -912,7 +911,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = JP5BCXZWJP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetARock/Global/Supports/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -947,7 +946,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = JP5BCXZWJP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetARock/Global/Supports/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
