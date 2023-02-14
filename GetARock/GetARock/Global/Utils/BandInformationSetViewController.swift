@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BandInfomrationSetViewController: BaseViewController {
+final class BandInformationSetViewController: BaseViewController {
 
     // MARK: - Property
 
@@ -95,7 +95,8 @@ final class BandInfomrationSetViewController: BaseViewController {
         $0.distribution = .equalSpacing
         $0.spacing = 20
         return $0
-    }(UIStackView(arrangedSubviews: [addPracticeSongButton, BasicLabel(contentText: "Test", fontStyle: .headline01, textColorInfo: .white)]))
+        // ScrollView라서 여기는 StackView로 구현함
+    }(UIStackView(arrangedSubviews: [addPracticeSongButton]))
 
     private lazy var practiceSongStack: UIStackView = {
         $0.axis = .vertical
@@ -160,7 +161,7 @@ final class BandInfomrationSetViewController: BaseViewController {
 
         mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
 
-        contentView.constraint(top: mainScrollView.topAnchor, leading: mainScrollView.leadingAnchor, bottom: mainScrollView.bottomAnchor, trailing: mainScrollView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 25, bottom: 10, right: 25))
+        contentView.constraint(top: mainScrollView.topAnchor, leading: mainScrollView.leadingAnchor, bottom: mainScrollView.bottomAnchor, trailing: mainScrollView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16))
         contentView.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 50)
 
     }
@@ -168,7 +169,7 @@ final class BandInfomrationSetViewController: BaseViewController {
 
     // MARK: Extension
 
-extension BandInfomrationSetViewController {
+extension BandInformationSetViewController {
     
     @objc func presentLocationSearchViewController() {
     }
@@ -179,7 +180,7 @@ extension BandInfomrationSetViewController {
 
     //MARK: ScrollView 가로 스크롤 막기
 
-extension BandInfomrationSetViewController: UIScrollViewDelegate {
+extension BandInformationSetViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
            if scrollView.contentOffset.x != 0 {
                scrollView.contentOffset.x = 0

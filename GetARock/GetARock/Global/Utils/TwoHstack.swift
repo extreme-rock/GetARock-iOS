@@ -29,7 +29,8 @@ final class InformationGuideLabel: UIStackView {
     init(guideText: String, type: InputType) {
         self.guideText = guideText
         self.type = type
-        super.init()
+        super.init(frame: .zero)
+        attribute()
     }
 
     private func attribute() {
@@ -38,11 +39,7 @@ final class InformationGuideLabel: UIStackView {
         self.addArrangedSubview(firstLabel)
         self.addArrangedSubview(secondLabel)
     }
-
-    private func setupLayout() {
-
-    }
-
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
