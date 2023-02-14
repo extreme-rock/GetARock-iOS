@@ -9,7 +9,7 @@ import UIKit
 
 final class LeaderPositionSelectHeaderView: UIView {
     
-    private let pageIndicatorLabel = BasicLabel(contentText: "1/3", fontStyle: .subTitle, textColorInfo: .gray02)
+    private let pageIndicatorLabel = BasicLabel(contentText: "1/3", fontStyle: .headline03, textColorInfo: .gray02)
     
     //TODO: 추후 유저 데이터를 이용해 이름을 유저에 맞게 업데이트해야함
     private let titleLabel: BasicLabel = {
