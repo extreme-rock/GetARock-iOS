@@ -240,10 +240,17 @@ extension SetAuthorizationViewController: CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .notDetermined, .restricted:
             return
-        case .authorizedAlways, .authorizedWhenInUse, .denied:
+        case .authorizedAlways, .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+            self.requestNotificationAutorization()
+        case .denied:
             self.requestNotificationAutorization()
         @unknown default:
             return
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
 }
