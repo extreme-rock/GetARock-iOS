@@ -10,22 +10,22 @@ import UIKit
 // MARK: - DeleteDdayLableDelegate
 
 protocol DeleteDdayLabelDelegate: AnyObject {
-        func DeleteDdayLabel()
-    }
+    func DeleteDdayLabel()
+}
 
 // MARK: - EventStateLabel class
 
 final class EventStateLabel: UILabel {
-
+    
     // MARK: - Property
     
-    weak var delegate: DeleteDdayLabelDelegate?
+    enum EventLabelType {
+        case dday
+        case state
+        case category
+    }
     
-   enum EventLabelType {
-         case dday
-         case state
-         case category
-     }
+    weak var delegate: DeleteDdayLabelDelegate?
     
     private var labelData: String
     
@@ -44,7 +44,7 @@ final class EventStateLabel: UILabel {
         attribute()
         CalculateDday()
     }
-
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -52,14 +52,14 @@ final class EventStateLabel: UILabel {
     // MARK: - override Method
     
     override func drawText(in rect: CGRect) {
-         super.drawText(in: rect.inset(by: padding))
-     }
+        super.drawText(in: rect.inset(by: padding))
+    }
     
     override var intrinsicContentSize: CGSize {
         var contentSize = super.intrinsicContentSize
         contentSize.height += padding.top + padding.bottom
         contentSize.width += padding.left + padding.right
-
+        
         return contentSize
     }
     
@@ -87,8 +87,8 @@ final class EventStateLabel: UILabel {
         self.textColor = .white
         self.textAlignment = .center
     }
-
-    func CalculateDday() {
+    
+    private  func CalculateDday() {
         guard let eventDay = labelData.toDate() else { return }
         let interval = eventDay.timeIntervalSince(Date())
         days = Int(interval / 86400)
@@ -105,7 +105,7 @@ final class EventStateLabel: UILabel {
             } else {
                 self.delegate?.DeleteDdayLabel()
             }
-                
+            
         case .state:
             if labelData == "READY" {
                 setDefaultUI()
@@ -128,30 +128,12 @@ final class EventStateLabel: UILabel {
             setDefaultUI()
             if labelData == "BAND_RECRUITING" {
                 self.text = "합공밴드모집"
-                
             } else if labelData == "EVENT_PR" {
                 self.text = "공연홍보"
-                
             } else {
                 self.text = "기타"
                 
             }
-        }
-    }
-    
-
-}
-
-
-extension String {
-    func toDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        if let date = dateFormatter.date(from: self) {
-            return date
-        } else {
-            return nil
         }
     }
 }
