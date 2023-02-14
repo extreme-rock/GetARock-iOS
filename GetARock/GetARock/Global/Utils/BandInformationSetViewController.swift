@@ -8,6 +8,8 @@
 import UIKit
 
 final class BandInformationSetViewController: BaseViewController {
+    
+    private var keyBoardHeight: CGFloat = 0
 
     // MARK: - View
     
@@ -156,6 +158,13 @@ final class BandInformationSetViewController: BaseViewController {
                                      youtubeTextField,
                                      instagramTextField,
                                      soundCloudTextField]))
+    
+    private lazy var mainScrollView: UIScrollView = {
+        $0.showsVerticalScrollIndicator = true
+        $0.backgroundColor = .dark01
+        $0.delegate = self
+        return $0
+    }(UIScrollView())
 
     private lazy var contentView: UIStackView = {
         $0.axis = .vertical
@@ -170,22 +179,43 @@ final class BandInformationSetViewController: BaseViewController {
                                      practiceSongVstack,
                                      textViewVstack,
                                      snsInformationVstack]))
-
-    private lazy var mainScrollView: UIScrollView = {
-        $0.showsVerticalScrollIndicator = true
-        $0.backgroundColor = .dark01
-        $0.delegate = self
-        return $0
-    }(UIScrollView())
+    
+    private let keyBoardHeightPaddingView: UIView = UIView(frame: .zero)
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+        setDelegate()
+        setKeyboardDismiss()
+        setNotification()
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+    }
+    
     // MARK: - Method
+    
+    private func setKeyboardDismiss() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
+             recognizer.numberOfTapsRequired = 1
+             recognizer.numberOfTouchesRequired = 1
+             mainScrollView.addGestureRecognizer(recognizer)
+    }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(getKeyboardHeight(notification: )),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+    }
 
     private func setupLayout() {
         
@@ -201,7 +231,13 @@ final class BandInformationSetViewController: BaseViewController {
                                leading: mainScrollView.leadingAnchor,
                                bottom: mainScrollView.bottomAnchor,
                                trailing: mainScrollView.trailingAnchor,
-                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 15, right: 16))
+                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 25, right: 16))
+    }
+    
+    private func setDelegate() {
+        youtubeTextField.textField.delegate = self
+        instagramTextField.textField.delegate = self
+        soundCloudTextField.textField.delegate = self
     }
 }
 
@@ -217,7 +253,31 @@ extension BandInformationSetViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        self.view.subviews.forEach { $0.endEditing(true)}
+        self.mainScrollView.endEditing(true)
+    }
+    
+    @objc func didTouchScreen() {
+           self.view.endEditing(true)
+       }
+    
+    @objc func getKeyboardHeight(notification: Notification) {
+        keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
+    }
+}
+
+extension BandInformationSetViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.0001) {
+            if self.view.frame.origin.y == 0.0 {
+                self.view.frame.origin.y -= self.keyBoardHeight
+            }
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.0001) { [weak self] in
+            self?.view.frame.origin.y += self?.keyBoardHeight ?? 0
+        }
     }
 }
 
