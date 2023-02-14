@@ -19,8 +19,7 @@ final class LeaderPositionSelectViewController: UIViewController {
         .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
         .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
         .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
-        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
-        .plusPosition
+        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false))
     ]
     
     private lazy var positionCollectionView: PositionCollectionView = PositionCollectionView(
@@ -47,8 +46,6 @@ final class LeaderPositionSelectViewController: UIViewController {
         setupLayout()
         attribute()
         configureDelegate()
-        addObservePositionPlusButtonTapped()
-        addObservePositionDeleteButtonTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,35 +58,6 @@ final class LeaderPositionSelectViewController: UIViewController {
     
     private func configureDelegate() {
         positionCollectionView.delegate = self
-    }
-    
-    private func addObservePositionPlusButtonTapped() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(showPositionPlusModal),
-                                               name: Notification.Name(StringLiteral.showPositionPlusModal),
-                                               object: nil)
-    }
-    
-    @objc
-    private func showPositionPlusModal() {
-        let viewController = PlusPositionViewController()
-        viewController.delegate = self
-        present(viewController, animated: true)
-    }
-    
-    private func addObservePositionDeleteButtonTapped() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deletePosition(_:)),
-                                               name: Notification.Name(StringLiteral.deletePositionCell),
-                                               object: nil)
-    }
-    
-    @objc
-    private func deletePosition(_ notification: Notification) {
-        guard let deleteIndexPath = notification.userInfo?["index"] as? Int else { return }
-        positions.remove(at: deleteIndexPath)
-        self.positionCollectionView.applySnapshot(with: positions)
-        self.updateDataSourceIndex(from: deleteIndexPath, endIndex: positions.count - 1)
     }
     
     private func updateDataSourceIndex(from startIndex: Int, endIndex: Int) {
@@ -116,21 +84,10 @@ final class LeaderPositionSelectViewController: UIViewController {
 }
 
 extension LeaderPositionSelectViewController {
-    //MARK: collectionView에서 선택된 Cell만 데이터에 추가
     private func addSelectedPositionData() {
-        var selectedInstruments: [InstrumentList] = []
-        for index in 0..<self.positions.count - 1 {
-            
-            guard let cell =  self.positionCollectionView.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? PositionCollectionViewCell else { return }
-            
-            if cell.isSelected {
-                selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
-            }
-        }
-        
+        let selectedInstruments: [InstrumentList] = self.positionCollectionView.getSelectedInstruments()
         //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
         let firstMember: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
-        
         self.memberList.append(firstMember)
         self.bandCreationData.memberList = self.memberList
         //MARK: Merge 전 삭제 필요
@@ -151,14 +108,15 @@ extension LeaderPositionSelectViewController: PositionCollectionViewDelegate {
     }
 }
 
-//MARK: 포지션 추가
-extension LeaderPositionSelectViewController: PlusPositionViewControllerDelegate {
-    func addPosition(instrumentName: String) {
-        let newPosition: Item = .position(Position(instrumentName: instrumentName,
-                                                   instrumentImageName: .etc,
-                                                   isETC: true))
-        positions.insert(newPosition, at: positions.count - 1)
-        self.positionCollectionView.applySnapshot(with: positions)
+extension PositionCollectionView {
+    func getSelectedInstruments() -> [InstrumentList] {
+        var selectedInstruments: [InstrumentList] = []
+        let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
+        
+        for indexPath in selectedIndexPaths {
+            guard let cell =  self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return [] }
+            selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
+        }
+        return selectedInstruments
     }
 }
-

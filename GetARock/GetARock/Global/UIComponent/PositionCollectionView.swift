@@ -45,7 +45,7 @@ final class PositionCollectionView: UIView {
     
     // MARK: - View
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(CellSize.width),
                                               heightDimension: .absolute(138))
         let item1 = NSCollectionLayoutItem(layoutSize: itemSize)
