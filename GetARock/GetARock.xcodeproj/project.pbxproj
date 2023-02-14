@@ -47,6 +47,7 @@
 		9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */; };
 		9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE2298A9CD900953E4B /* NetworkError.swift */; };
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
+		9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */; };
 		A769E177D6AA52251CAA0997 /* Pods_GetARockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */; };
 		A951F6532989EF6C00902CED /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A951F6522989EF6C00902CED /* String+Extension.swift */; };
 		A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0A2981706C00905BC9 /* BasicTextView.swift */; };
@@ -139,6 +140,7 @@
 		9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimitTextField.swift; sourceTree = "<group>"; };
 		9A78BFE2298A9CD900953E4B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
+		9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicBoxView.swift; sourceTree = "<group>"; };
 		A951F6522989EF6C00902CED /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A96B8A0A2981706C00905BC9 /* BasicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextView.swift; sourceTree = "<group>"; };
 		A96B8A0C2981714800905BC9 /* BasicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabel.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				A96B8A0C2981714800905BC9 /* BasicLabel.swift */,
 				A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */,
 				A9D7253F299B2D4400404E22 /* TwoHstack.swift */,
+				9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */,
 				7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */,
+				9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */,
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
 				B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
