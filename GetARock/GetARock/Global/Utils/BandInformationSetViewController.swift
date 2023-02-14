@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BandInfomrationSetViewController: UIViewController {
+final class BandInfomrationSetViewController: BaseViewController {
 
     // MARK: - Property
 
@@ -27,20 +27,10 @@ final class BandInfomrationSetViewController: UIViewController {
 
     private let bandIntroductionLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
 
-    //MARK: Textfield 변경에 따라 수정 예정
-    private lazy var bandNamingTextFieldView: UIView = {
-        let textField = TextLimitTextField(placeholer: "밴드 이름을 입력해주세요", maxCount: 10, checkCase: .bandName)
-        return textField
-    }()
+    private lazy var bandNamingTextFieldView: TextLimitTextField = TextLimitTextField(placeholer: "밴드 이름을 입력해주세요", maxCount: 10, duplicationCheckType: .bandName, textExpressionCheck: true)
 
-    //MARK: Textfield 변경에 따라 삭제 예정
-    private lazy var checkLabel: UIStackView = TwoHstackLabel.checkLabel
-
-    private let bandIntroTextView = {
-        let textView = BasicTextView(placeholder: "우리 밴드를 더 잘 보여줄 수 있는 소개를 간단하게\n적어주세요(ex. 좋아하는 밴드, 밴드 경력 등)")
-        return textView
-    }()
-
+    private let bandIntroTextView: BasicTextView = BasicTextView(placeholder: "우리 밴드를 더 잘 보여줄 수 있는 소개를 간단하게\n적어주세요(ex. 좋아하는 밴드, 밴드 경력 등)", maxCount: 300)
+    
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
@@ -51,7 +41,7 @@ final class BandInfomrationSetViewController: UIViewController {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [bandNameLabel, bandNamingTextFieldView, checkLabel]))
+    }(UIStackView(arrangedSubviews: [bandNameLabel, bandNamingTextFieldView]))
 
     private lazy var textViewVstack: UIStackView = {
         $0.axis = .vertical
@@ -59,10 +49,11 @@ final class BandInfomrationSetViewController: UIViewController {
         return $0
     }(UIStackView(arrangedSubviews: [bandIntroductionLabel, bandIntroTextView]))
 
-    private var practiceLabel = TwoHstackLabel.informationLabel(guideText: "합주실 위치", inputType: .optional)
+    private var practiceLabel = InformationGuideLabel(guideText: "합주실 위치", type: .optional)
 
     private var practiceSubLabel = BasicLabel(contentText: "* 지도에서 우리밴드가 보여질 위치입니다.", fontStyle: .content, textColorInfo: .white)
 
+    //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
     private lazy var practicePlace = {
         let boxView = BasicBoxView(text: "합주실 위치")
         boxView.basicRightView.isHidden = false
@@ -79,11 +70,11 @@ final class BandInfomrationSetViewController: UIViewController {
         return $0
     }(UIStackView(arrangedSubviews: [practiceLabel, practiceSubLabel, practicePlace, detailPracticePlace]))
 
-    private var practiceSongLabel = TwoHstackLabel.informationLabel(guideText: "합주곡", inputType: .optional)
+    private var practiceSongLabel = InformationGuideLabel(guideText: "합주곡", type: .optional)
 
     private var practiceSongSubLabel = BasicLabel(contentText: "* 최대 3개까지 등록 가능합니다.", fontStyle: .content, textColorInfo: .white)
 
-    //MARK: develop에 있는 기본 버튼으로 변경해야함
+    //TODO: 추후에 합주곡 삽입 action 추가 필요
     private lazy var addPracticeSongButton = {
         var configuration = UIButton.Configuration.filled()
         var container = AttributeContainer()
@@ -112,7 +103,7 @@ final class BandInfomrationSetViewController: UIViewController {
         return $0
     }(UIStackView(arrangedSubviews: [practiceSongLabel, practiceSongSubLabel, practiceSongList]))
 
-    private let snsTitleLabel = TwoHstackLabel.informationLabel(guideText: "SNS", inputType: .optional)
+    private let snsTitleLabel = InformationGuideLabel(guideText: "SNS", type: .optional)
 
     private let snsSubTitleLabel = BasicLabel(contentText: "* 밴드의 SNS 계정을 입력해주세요 ", fontStyle: .content, textColorInfo: .gray02)
 
@@ -155,25 +146,15 @@ final class BandInfomrationSetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addSubviews()
-        render()
-        setConfiguration()
-        attribute()
-    }
-
-    // MARK: Base ViewCon 상속에 따라 삭제예정
-    private func attribute() {
-        self.view.backgroundColor = .dark01
+        setupLayout()
     }
 
     // MARK: - Method
 
-    private func addSubviews() {
-        view.addSubviews(mainScrollView)
+    private func setupLayout() {
+        
+        view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
-    }
-
-    private func render() {
 
         titleVstack.constraint(leading: view.safeAreaLayoutGuide.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
 
@@ -183,41 +164,16 @@ final class BandInfomrationSetViewController: UIViewController {
         contentView.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 50)
 
     }
-
-    //MARK: 나중에 삭제 가능
-    private func setConfiguration() {
-        view.backgroundColor = .systemGray
-        checkLabel.isHidden = true
-    }
 }
 
     // MARK: Extension
 
 extension BandInfomrationSetViewController {
-
-    //MARK: 나중에 삭제 가능
-    private func showDuplicationCheckLabel(with isChecked: Bool) {
-        checkLabel.isHidden = false
-        let imageView = checkLabel.arrangedSubviews.first! as! UIImageView
-        imageView.image = isChecked ? UIImage(systemName: "checkmark.circle")! : UIImage(systemName: "x.circle")!
-        imageView.tintColor = isChecked ? .systemBlue : .systemRed
-        let label = checkLabel.arrangedSubviews.last! as! UILabel
-        label.text = isChecked ? "가능합니다" : "불가능합니다"
-        label.textColor = isChecked ? .systemBlue : .systemRed
+    
+    @objc func presentLocationSearchViewController() {
     }
-
-    @objc func presentLocationSearchView() {
-        let mapSearchView = MapSearchViewController()
-        mapSearchView.completion = { mapItem in
-            print("completion Handler 작동")
-            self.practicePlace.basicLabel.text = mapItem.name ?? ""
-            self.practicePlace.basicRightView.isHidden = true
-        }
-        present(mapSearchView, animated: true)
-    }
-
+    
     @objc func didTapAddPracticeSong() {
-        present(AddPracticeSongViewController(), animated: true)
     }
 }
 
