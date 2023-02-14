@@ -47,6 +47,7 @@
 		9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */; };
 		9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE2298A9CD900953E4B /* NetworkError.swift */; };
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
+		9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA5859299B71DD00C6C2BC /* MemberState.swift */; };
 		9AEA7E7B299A5B44006A730A /* BandMemberAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA7E7A299A5B44006A730A /* BandMemberAddViewController.swift */; };
 		9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */; };
 		9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */; };
@@ -142,6 +143,7 @@
 		9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimitTextField.swift; sourceTree = "<group>"; };
 		9A78BFE2298A9CD900953E4B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
+		9ACA5859299B71DD00C6C2BC /* MemberState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberState.swift; sourceTree = "<group>"; };
 		9AEA7E7A299A5B44006A730A /* BandMemberAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddViewController.swift; sourceTree = "<group>"; };
 		9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectViewController.swift; sourceTree = "<group>"; };
 		9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectHeaderView.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
 				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
+				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -725,6 +728,7 @@
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
+				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				9AFE014729990FE0004B0BCF /* BandInformationDTO.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,

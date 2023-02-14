@@ -32,19 +32,6 @@ struct InstrumentList: Codable {
     let name: String
 }
 
-enum SnsType: String, Codable {
-    case youtube = "YOUTUBE"
-    case instagram = "INSTAGRAM"
-    case soundcloud = "SOUNDCLOUD"
-}
-
-enum MemberState: String, Codable {
-    case admin = "ADMIN"
-    case inviting = "INVITING"
-    case approved = "APPROVE"
-    case denied = "DENY"
-}
-
 struct SnsList: Codable {
     let type: SnsType
     let link: String
