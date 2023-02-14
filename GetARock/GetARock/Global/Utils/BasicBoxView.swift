@@ -11,10 +11,11 @@ final class BasicBoxView: UIView {
 
     private var text: String = ""
 
-    private lazy var basicLabel = BasicLabel(contentText: text, fontStyle: .contentBold, textColorInfo: .white)
+    private lazy var basicLabel = BasicLabel(contentText: text, fontStyle: .content, textColorInfo: .gray02)
 
     private let basicRightView: UIImageView = {
         $0.image = ImageLiteral.chevronRightSymbol
+        $0.tintColor = .white
         $0.contentMode = .scaleAspectFill
         return $0
     }(UIImageView())

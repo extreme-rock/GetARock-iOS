@@ -12,6 +12,13 @@ final class BandInformationSetViewController: BaseViewController {
     // MARK: - Property
 
     // MARK: - View
+    
+    private let pageIndicatorLabel: UILabel = {
+        $0.font = .setFont(.headline03)
+        $0.text = "3/3"
+        $0.textColor = .gray02
+        return $0
+    }(UILabel())
 
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
@@ -21,27 +28,38 @@ final class BandInformationSetViewController: BaseViewController {
     private let subTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "작성해주신 정보는 내 프로필로 만들어지고\n프로필은 다른 사용자들이 볼 수 있어요", fontStyle: .headline03, textColorInfo: .white))
-
-    private let bandNameLabel = InformationGuideLabel(guideText: "밴드 이름", type: .optional)
-
-    private let bandIntroductionLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
-
-    private lazy var bandNamingTextFieldView: TextLimitTextField = TextLimitTextField(placeholer: "밴드 이름을 입력해주세요", maxCount: 10, duplicationCheckType: .bandName, textExpressionCheck: true)
-
-    private let bandIntroTextView: BasicTextView = BasicTextView(placeholder: "우리 밴드를 더 잘 보여줄 수 있는 소개를 간단하게\n적어주세요(ex. 좋아하는 밴드, 밴드 경력 등)", maxCount: 300)
+    }(BasicLabel(contentText: "작성해주신 정보는 내 프로필로 만들어지고\n프로필은 다른 사용자들이 볼 수 있어요", fontStyle: .headline03, textColorInfo: .gray02))
     
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [titleLabel, subTitleLabel]))
+    }(UIStackView(arrangedSubviews: [pageIndicatorLabel,titleLabel, subTitleLabel]))
+
+    private let bandNameLabel = InformationGuideLabel(guideText: "밴드 이름", type: .optional)
+
+    private let bandIntroductionLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
+    
+    private var bandNamingGuideLabel = BasicLabel(
+        contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",
+        fontStyle: .content,
+        textColorInfo: .gray02)
+
+    private lazy var bandNamingTextFieldView: TextLimitTextField = TextLimitTextField(
+        placeholer: "밴드 이름을 입력해주세요",
+        maxCount: 20,
+        duplicationCheckType: .bandName,
+        textExpressionCheck: true)
+
+    private let bandIntroTextView: BasicTextView = BasicTextView(
+        placeholder: "우리 밴드를 더 잘 보여줄 수 있는 소개를 간단하게\n적어주세요(ex. 좋아하는 밴드, 밴드 경력 등)",
+        maxCount: 300)
 
     private lazy var textFieldVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [bandNameLabel, bandNamingTextFieldView]))
+    }(UIStackView(arrangedSubviews: [bandNameLabel, bandNamingGuideLabel, bandNamingTextFieldView]))
 
     private lazy var textViewVstack: UIStackView = {
         $0.axis = .vertical
@@ -49,19 +67,20 @@ final class BandInformationSetViewController: BaseViewController {
         return $0
     }(UIStackView(arrangedSubviews: [bandIntroductionLabel, bandIntroTextView]))
 
-    private var practiceLabel = InformationGuideLabel(guideText: "합주실 위치", type: .optional)
+    private var practiceLabel = InformationGuideLabel(guideText: "합주실 위치", type: .required)
 
-    private var practiceSubLabel = BasicLabel(contentText: "* 지도에서 우리밴드가 보여질 위치입니다.", fontStyle: .content, textColorInfo: .white)
+    private var practiceSubLabel = BasicLabel(
+        contentText: "* 지도에서 우리밴드가 보여질 위치입니다.",
+        fontStyle: .content,
+        textColorInfo: .gray02)
 
     //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
     private lazy var practicePlace = {
-        let boxView = BasicBoxView(text: "합주실 위치")
-        //MARK: Show RightView 색상 수정 필요
-        boxView.showRightView()
+        $0.showRightView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchViewController))
-        boxView.addGestureRecognizer(tapGesture)
-        return boxView
-    }()
+        $0.addGestureRecognizer(tapGesture)
+        return $0
+    }(BasicBoxView(text: "주소 검색"))
 
     private let detailPracticePlace = BasicTextField(placeholder: "상세 주소를 입력해주세요 (선택)")
 
@@ -73,22 +92,22 @@ final class BandInformationSetViewController: BaseViewController {
 
     private var practiceSongLabel = InformationGuideLabel(guideText: "합주곡", type: .optional)
 
-    private var practiceSongSubLabel = BasicLabel(contentText: "* 최대 3개까지 등록 가능합니다.", fontStyle: .content, textColorInfo: .white)
+    private var practiceSongSubLabel = BasicLabel(
+        contentText: "* 최대 3개까지 등록 가능합니다.",
+        fontStyle: .content,
+        textColorInfo: .gray02)
 
-    //MARK: Default Button 형식으로 바꾸기 필요
     //TODO: 추후에 합주곡 삽입 action 추가 필요
-    private lazy var addPracticeSongButton = {
-        var configuration = UIButton.Configuration.filled()
-        var container = AttributeContainer()
-        container.font = UIFont.setFont(.contentBold)
-        configuration.baseBackgroundColor = .systemPurple
-        configuration.attributedTitle = AttributedString("합주곡 추가", attributes: container)
+    private lazy var addPracticeSongButton: DefaultButton = {
+        var configuration = UIButton.Configuration.plain()
+        //TODO: 이전 PR 머지 이후 이미지 리터럴로 변경하기
         configuration.image = UIImage(systemName: "plus")
+        configuration.title = "합주곡 추가"
+        configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 10
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 13, leading: 0, bottom: 13, trailing: 0)
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
-
+        let button = DefaultButton(configuration: configuration)
+        button.tintColor = .white
+        button.constraint(.heightAnchor, constant: 55)
         return button
     }()
 
@@ -108,9 +127,22 @@ final class BandInformationSetViewController: BaseViewController {
 
     private let snsTitleLabel = InformationGuideLabel(guideText: "SNS", type: .optional)
 
-    private let snsSubTitleLabel = BasicLabel(contentText: "* 밴드의 SNS 계정을 입력해주세요 ", fontStyle: .content, textColorInfo: .gray02)
+    private let snsSubTitleLabel = BasicLabel(
+        contentText: "* 밴드의 SNS 계정을 입력해주세요 ",
+        fontStyle: .content,
+        textColorInfo: .gray02)
 
-    private let snsSecondSubTitleLabel = BasicLabel(contentText: "* 본인계정이 아닌 계정 등록 시 책임은 본인에게 있습니다?", fontStyle: .content, textColorInfo: .gray02)
+    private let snsSecondSubTitleLabel = BasicLabel(
+        contentText: "* 본인계정이 아닌 계정 등록 시 책임은 본인에게 있습니다?",
+        fontStyle: .content,
+        textColorInfo: .gray02)
+    
+    private lazy var snsGuideStack: UIStackView = {
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.spacing = 5
+        return $0
+    }(UIStackView(arrangedSubviews: [snsTitleLabel, snsSubTitleLabel, snsSecondSubTitleLabel]))
 
     private let youtubeTextField = SNSBoxView(type: .youTube, placeholder: "채널명")
 
@@ -122,7 +154,10 @@ final class BandInformationSetViewController: BaseViewController {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [snsTitleLabel, snsSubTitleLabel, snsSecondSubTitleLabel, youtubeTextField, instagramTextField, soundCloundTextField]))
+    }(UIStackView(arrangedSubviews: [snsGuideStack,
+                                     youtubeTextField,
+                                     instagramTextField,
+                                     soundCloundTextField]))
 
     private lazy var contentView: UIStackView = {
         $0.axis = .vertical
@@ -159,17 +194,25 @@ final class BandInformationSetViewController: BaseViewController {
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
 
-        titleVstack.constraint(leading: view.safeAreaLayoutGuide.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
+        titleVstack.constraint(leading: view.safeAreaLayoutGuide.leadingAnchor,
+                               padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
 
-        mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                  leading: view.safeAreaLayoutGuide.leadingAnchor,
+                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)
 
-        contentView.constraint(top: mainScrollView.topAnchor, leading: mainScrollView.leadingAnchor, bottom: mainScrollView.bottomAnchor, trailing: mainScrollView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16))
+        contentView.constraint(top: mainScrollView.topAnchor,
+                               leading: mainScrollView.leadingAnchor,
+                               bottom: mainScrollView.bottomAnchor,
+                               trailing: mainScrollView.trailingAnchor,
+                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16))
+        
         contentView.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 50)
-
     }
 }
 
-    // MARK: Extension
+    // MARK: - Extension
 
 extension BandInformationSetViewController {
     
