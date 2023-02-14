@@ -57,7 +57,7 @@ final class BandInfomrationSetViewController: BaseViewController {
     private lazy var practicePlace = {
         let boxView = BasicBoxView(text: "합주실 위치")
         boxView.basicRightView.isHidden = false
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchView))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchViewController))
         boxView.addGestureRecognizer(tapGesture)
         return boxView
     }()
