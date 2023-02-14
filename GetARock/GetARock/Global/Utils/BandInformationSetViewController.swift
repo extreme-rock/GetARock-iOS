@@ -47,7 +47,7 @@ final class BandInformationSetViewController: BaseViewController {
 
     private lazy var bandNamingTextFieldView: TextLimitTextField = TextLimitTextField(
         placeholer: "밴드 이름을 입력해주세요",
-        maxCount: 20,
+        maxCount: 15,
         duplicationCheckType: .bandName,
         textExpressionCheck: true)
 
@@ -193,10 +193,7 @@ final class BandInformationSetViewController: BaseViewController {
         
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
-
-        titleVstack.constraint(leading: view.safeAreaLayoutGuide.leadingAnchor,
-                               padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
-
+        
         mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
                                   bottom: view.safeAreaLayoutGuide.bottomAnchor,
@@ -206,9 +203,7 @@ final class BandInformationSetViewController: BaseViewController {
                                leading: mainScrollView.leadingAnchor,
                                bottom: mainScrollView.bottomAnchor,
                                trailing: mainScrollView.trailingAnchor,
-                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16))
-        
-        contentView.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 50)
+                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 15, right: 16))
     }
 }
 
