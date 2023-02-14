@@ -24,11 +24,6 @@ class LandingViewController: UIViewController {
     func addAction() {
         let action = UIAction { _ in
             let vc = SetAuthorizationViewController()
-            vc.modalPresentationStyle = .pageSheet
-//            if let sheet = vc.sheetPresentationController {
-//                sheet.detents = [.medium()]
-//                sheet.prefersGrabberVisible = true
-//            }
             self.present(vc, animated: true)
         }
         button.addAction(action, for: .touchUpInside)

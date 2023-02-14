@@ -149,8 +149,10 @@ final class SetAuthorizationViewController: UIViewController {
         UNUserNotificationCenter.current()
             .requestAuthorization(options: [.alert, .sound, .badge]) { isGranted, error in
                 if isGranted {
+                    //TODO: 동의 시 뷰 연결
                     print(isGranted)
                 } else {
+                    //TODO: 비동의 시 뷰 연결
                     print(isGranted)
                 }
             }
