@@ -61,11 +61,10 @@ final class BandTopInfoView: UIView {
     
     private func attribute() {
         self.backgroundColor = .dark01
-        self.constraint(.widthAnchor, constant: UIScreen.main.bounds.width)
     }
 
     private func setupLayout() {
-        self.constraint(to: self)
+        self.constraint(.widthAnchor, constant: UIScreen.main.bounds.width)
         
         self.addSubview(infoStackView)
         infoStackView.constraint(top: self.topAnchor,
