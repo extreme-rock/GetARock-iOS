@@ -158,6 +158,12 @@ final class BandInformationSetViewController: BaseViewController {
                                      youtubeTextField,
                                      instagramTextField,
                                      soundCloudTextField]))
+
+    private let informationFillCompleteButton: BottomButton = {
+        //TODO: 밴드 정보 POST action 추가 필요
+        $0.setTitle("추가", for: .normal)
+        return $0
+    }(BottomButton())
     
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
@@ -178,7 +184,8 @@ final class BandInformationSetViewController: BaseViewController {
                                      practicePlaceVstack,
                                      practiceSongVstack,
                                      textViewVstack,
-                                     snsInformationVstack]))
+                                     snsInformationVstack,
+                                    informationFillCompleteButton]))
     
     private let keyBoardHeightPaddingView: UIView = UIView(frame: .zero)
 
@@ -259,6 +266,11 @@ extension BandInformationSetViewController {
     
     @objc func getKeyboardHeight(notification: Notification) {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
+    }
+
+    //TODO: 밴드 정보를 서버에 POST 하는 코드 추가 예정
+    private func postBandInformation() {
+
     }
 }
 
