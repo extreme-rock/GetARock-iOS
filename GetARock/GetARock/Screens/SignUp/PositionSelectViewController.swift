@@ -35,8 +35,7 @@ final class PositionSelectViewController: UIViewController {
         setupLayout()
         attribute()
         configureDelegate()
-        addObservePositionPlusButtonTapped()
-        addObservePositionDeleteButtonTapped()
+        addAllObserver()
     }
     
     private func attribute() {
@@ -47,12 +46,32 @@ final class PositionSelectViewController: UIViewController {
         positionCollectionView.delegate = self
     }
     
+    private func addAllObserver() {
+        addObservePositionPlusButtonTapped()
+        addObservePositionDeleteButtonTapped()
+        addObserveDeselectAllPositionButtonTapped()
+    }
+    
+    private func addObserveDeselectAllPositionButtonTapped() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deselectAllPosition),
+            name: Notification.Name(StringLiteral.deselectAllPosition),
+            object: nil)
+    }
+    
+    @objc
+    private func deselectAllPosition() {
+        self.positionCollectionView.deselectAllItem()
+    }
+    
     private func addObservePositionPlusButtonTapped() {
-         NotificationCenter.default.addObserver(self,
-                                                selector: #selector(showPositionPlusModal),
-                                                name: Notification.Name(StringLiteral.showPositionPlusModal),
-                                                object: nil)
-     }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showPositionPlusModal),
+            name: Notification.Name(StringLiteral.showPositionPlusModal),
+            object: nil)
+    }
     
     @objc
     private func showPositionPlusModal() {
@@ -62,10 +81,11 @@ final class PositionSelectViewController: UIViewController {
     }
     
     private func addObservePositionDeleteButtonTapped() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deletePosition(_:)),
-                                               name: Notification.Name(StringLiteral.deletePositionCell),
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deletePosition(_:)),
+            name: Notification.Name(StringLiteral.deletePositionCell),
+            object: nil)
     }
     
     @objc
