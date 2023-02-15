@@ -13,6 +13,7 @@ final class SetAuthorizationViewController: UIViewController {
     //MARK: - Property
     
     private let locationManager = CLLocationManager()
+    private var preventlocationAuthorizationDeniedIndicator = 0
     
     //MARK: - View
     
@@ -237,17 +238,21 @@ final class SetAuthorizationViewController: UIViewController {
 
 extension SetAuthorizationViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
-        case .notDetermined, .restricted:
-            return
-        case .authorizedAlways, .authorizedWhenInUse:
-            manager.startUpdatingLocation()
-            self.requestNotificationAutorization()
-        case .denied:
-            self.requestNotificationAutorization()
-        @unknown default:
-            return
+        if preventlocationAuthorizationDeniedIndicator == 1 {
+            switch manager.authorizationStatus {
+            case .notDetermined, .restricted:
+                return
+            case .authorizedAlways, .authorizedWhenInUse:
+                manager.startUpdatingLocation()
+                self.requestNotificationAutorization()
+            case .denied:
+                self.requestNotificationAutorization()
+            @unknown default:
+                return
+            }
         }
+        
+        self.preventlocationAuthorizationDeniedIndicator = 1
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
