@@ -161,9 +161,9 @@ final class DetailContentView: UIView {
     }
 }
 
-// MARK: - extension BandDetailViewController
+// MARK: - UIPageViewControllerDataSource
 
-extension DetailContentView: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+extension DetailContentView: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -182,6 +182,13 @@ extension DetailContentView: UIPageViewControllerDataSource, UIPageViewControlle
         else { return nil }
         return self.detailContentViewControllers[index + 1]
     }
+    
+  
+}
+
+// MARK: - UIPageViewControllerDelegate
+
+extension DetailContentView: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController,didFinishAnimating finished: Bool,
                             previousViewControllers: [UIViewController],transitionCompleted completed: Bool) {
