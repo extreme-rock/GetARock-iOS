@@ -1,0 +1,72 @@
+//
+//  CommentTableViewCell.swift
+//  GetARock
+//
+//  Created by Yu ahyeon on 2023/02/15.
+//
+
+import UIKit
+
+class CommentTableViewCell: UITableViewCell {
+    
+    // MARK: - View
+    
+    let bandNameLabel = BasicLabel(contentText: "밴드이름",
+                                   fontStyle: .headline01,
+                                   textColorInfo: .white)
+    
+    private let moreButton: UIButton = {
+        $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        $0.tintColor = .white
+        return $0
+    }(UIButton())
+    
+    let commentTextLabel: BasicLabel = {
+        $0.numberOfLines = 0
+        return $0
+    }(BasicLabel(contentText: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
+                 fontStyle: .content,
+                 textColorInfo: .white))
+    
+    let commentDateLabel = BasicLabel(contentText: "2022.11.19 13:20",
+                                      fontStyle: .caption,
+                                      textColorInfo: .gray02)
+    
+    private lazy var commentInfoStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.distribution = .equalSpacing
+        return $0
+    }(UIStackView(arrangedSubviews: [bandNameLabel, moreButton]))
+    
+    private lazy var commentStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [commentInfoStackView, commentTextLabel, commentDateLabel]))
+    
+    
+    // MARK: - Init
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupLayout()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Method
+    
+    private func setupLayout() {
+        self.contentView.addSubview(commentStackView)
+        commentStackView.constraint(top: contentView.topAnchor,
+                                    leading: contentView.leadingAnchor,
+                                    bottom: contentView.bottomAnchor,
+                                    trailing: contentView.trailingAnchor,
+                                    padding: UIEdgeInsets(top: 30, left: 15, bottom: 30, right: 15))
+    }
+    
+    private func setupMoreButton() {
+    }
+}
