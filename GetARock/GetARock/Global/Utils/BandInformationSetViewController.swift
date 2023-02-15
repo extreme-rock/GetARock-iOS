@@ -39,13 +39,13 @@ final class BandInformationSetViewController: BaseViewController {
     private let bandNamingGuideTitleLabel = InformationGuideLabel(guideText: "밴드 이름", type: .optional)
     
     private let bandNamingGuideSubLabel = BasicLabel(
-        contentText: "* 공백없이 15자 이하, 기호는 _만 입력 가능합니다.",
+        contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",
         fontStyle: .content,
         textColorInfo: .gray02)
 
     private lazy var bandNamingTextField: TextLimitTextField = TextLimitTextField(
         placeholer: "밴드 이름을 입력해주세요",
-        maxCount: 15,
+        maxCount: 20,
         duplicationCheckType: .bandName,
         textExpressionCheck: true)
     
@@ -244,16 +244,13 @@ final class BandInformationSetViewController: BaseViewController {
 // MARK: - Extension
 
 extension BandInformationSetViewController {
-    
+
+    // TODO: - 추후 합주실 위치 검색 VC로 넘어가는 코드 추가
     @objc func presentLocationSearchViewController() {
     }
-    
+
+    // TODO: - 추후 합주곡 등록 VC로 넘어가는 코드 추가
     @objc func didTapAddPracticeSong() {
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        self.mainScrollView.endEditing(true)
     }
     
     @objc func didTouchScreen() {
