@@ -26,13 +26,17 @@ final class ModifyPositionViewController: UIViewController {
         cellType: .position,
         items: positions,
         isNeedHeader: true,
-        headerView: PositionSelectCollectionViewHeader()
+        headerView: PositionSelectCollectionViewHeader(viewType: .withoutPageIndicator)
     )
     
-    //MARK: - Life Cycle
+    private let nextButton: BottomButton = {
+        $0.setTitle("다음", for: .normal)
+        return $0
+    }(BottomButton())
+    
+    //MARK: - Init
     
     init(positions: [Item]) {
-        // 기본 악기 구성 + 새로 추가해서 선택한 친구를 positions를 넘겨줘야한다.
         self.positions = positions
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,13 +45,14 @@ final class ModifyPositionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
         attribute()
         configureDelegate()
-        addObservePositionPlusButtonTapped()
-        addObservePositionDeleteButtonTapped()
+        addAllObserver()
     }
     
     //MARK: - Method
@@ -60,12 +65,32 @@ final class ModifyPositionViewController: UIViewController {
         positionCollectionView.delegate = self
     }
     
+    private func addAllObserver() {
+        addObservePositionPlusButtonTapped()
+        addObservePositionDeleteButtonTapped()
+        addObserveDeselectAllPositionButtonTapped()
+    }
+    
+    private func addObserveDeselectAllPositionButtonTapped() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deselectAllPosition),
+            name: Notification.Name(StringLiteral.deselectAllPosition),
+            object: nil)
+    }
+    
+    @objc
+    private func deselectAllPosition() {
+        self.positionCollectionView.deselectAllItem()
+    }
+    
     private func addObservePositionPlusButtonTapped() {
-         NotificationCenter.default.addObserver(self,
-                                                selector: #selector(showPositionPlusModal),
-                                                name: Notification.Name(StringLiteral.showPositionPlusModal),
-                                                object: nil)
-     }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showPositionPlusModal),
+            name: Notification.Name(StringLiteral.showPositionPlusModal),
+            object: nil)
+    }
     
     @objc
     private func showPositionPlusModal() {
@@ -75,10 +100,11 @@ final class ModifyPositionViewController: UIViewController {
     }
     
     private func addObservePositionDeleteButtonTapped() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deletePosition(_:)),
-                                               name: Notification.Name(StringLiteral.deletePositionCell),
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deletePosition(_:)),
+            name: Notification.Name(StringLiteral.deletePositionCell),
+            object: nil)
     }
     
     @objc
@@ -97,15 +123,21 @@ final class ModifyPositionViewController: UIViewController {
     
     private func setupLayout() {
         self.view.addSubview(positionCollectionView)
+        self.view.addSubview(nextButton)
         
         positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                           leading: view.leadingAnchor,
-                                          bottom: view.bottomAnchor,
+                                          bottom: nextButton.topAnchor,
                                           trailing: view.trailingAnchor,
                                           padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        
+        
+        nextButton.constraint(bottom: view.bottomAnchor,
+                              centerX: view.centerXAnchor,
+                              padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
     }
     
-    //TODO: 원래선택됐던 친구를 선택해주는 func 추가
+    //TODO: 원래 선택된 친구들 세팅해주는 함수
 }
 
 extension ModifyPositionViewController: PositionCollectionViewDelegate {
