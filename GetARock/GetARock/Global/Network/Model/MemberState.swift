@@ -10,4 +10,5 @@ enum MemberState: String, Codable {
     case inviting = "INVITING"
     case approved = "APPROVE"
     case denied = "DENY"
+    case annonymous = "ANNONYMOUS"
 }
