@@ -56,6 +56,8 @@ final class SettingViewController: BaseViewController {
 
 }
 
+// MARK: - Table Cell Method
+
 extension SettingViewController {
     private func configureModels() {
         options.append(Option(title: "알림 설정", handler: { [weak self] in
