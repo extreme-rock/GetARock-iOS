@@ -39,7 +39,7 @@ final class SNSBoxView: UIView {
         case .soundCloud: $0.image = ImageLiteral.soundCloudIcon
         case .youTube: $0.image = ImageLiteral.youtubeIcon
         }
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
 
@@ -64,14 +64,16 @@ final class SNSBoxView: UIView {
     private func setupLayout() {
         addSubview(basicLeftView)
         if type == .soundCloud {
-            basicLeftView.constraint(.widthAnchor, constant: 15)
-            basicLeftView.constraint(.heightAnchor, constant: 15)
+            basicLeftView.constraint(.widthAnchor, constant: 23)
+            basicLeftView.constraint(.heightAnchor, constant: 25)
+
+            basicLeftView.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 17, bottom: 0, right: 0))
         } else {
-            basicLeftView.constraint(.widthAnchor, constant: 15)
-            basicLeftView.constraint(.heightAnchor, constant: 15)
+            basicLeftView.constraint(.widthAnchor, constant: 20)
+            basicLeftView.constraint(.heightAnchor, constant: 20)
+
+            basicLeftView.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
         }
-        basicLeftView.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        )
 
         addSubview(basicLabel)
         basicLabel.constraint(
@@ -81,11 +83,19 @@ final class SNSBoxView: UIView {
         )
 
         addSubview(textField)
-        textField.constraint(
-            leading: basicLabel.trailingAnchor,
-            centerY: basicLabel.centerYAnchor,
-            padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-            )
+        if type == .soundCloud {
+            textField.constraint(
+                leading: basicLabel.trailingAnchor,
+                centerY: basicLabel.centerYAnchor,
+                padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
+                )
+        } else {
+            textField.constraint(
+                leading: basicLabel.trailingAnchor,
+                centerY: basicLabel.centerYAnchor,
+                padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
+                )
+        }
     }
 
     required init(coder: NSCoder) {
