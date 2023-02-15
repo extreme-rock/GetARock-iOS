@@ -9,6 +9,8 @@ import UIKit
 
 final class BandInformationSetViewController: BaseViewController {
     
+    // MARK: - Properties
+    
     private var keyBoardHeight: CGFloat = 280
 
     // MARK: - View
@@ -90,9 +92,9 @@ final class BandInformationSetViewController: BaseViewController {
         return $0
     }(UIStackView(arrangedSubviews: [bandIntroGuideTitleLabel, bandIntroTextView]))
 
-    private var practiceSongTitleLabel = InformationGuideLabel(guideText: "합주곡", type: .optional)
+    private let practiceSongTitleLabel = InformationGuideLabel(guideText: "합주곡", type: .optional)
 
-    private var practiceSongSubTitleLabel = BasicLabel(
+    private let practiceSongSubTitleLabel = BasicLabel(
         contentText: "* 최대 3개까지 등록 가능합니다.",
         fontStyle: .content,
         textColorInfo: .gray02)
@@ -168,16 +170,14 @@ final class BandInformationSetViewController: BaseViewController {
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
-        $0.delegate = self
         return $0
     }(UIScrollView())
 
     private lazy var contentView: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
-        $0.spacing = 40
+        $0.spacing = 60
         $0.backgroundColor = .dark01
-        $0.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         return $0
     }(UIStackView(arrangedSubviews: [titleVstack,
                                      textFieldVstack,
@@ -283,14 +283,3 @@ extension BandInformationSetViewController: UITextFieldDelegate {
         self.view.frame.origin.y += self.keyBoardHeight
     }
 }
-
-//MARK: ScrollView 가로 스크롤 막기
-
-extension BandInformationSetViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.x != 0 {
-            scrollView.contentOffset.x = 0
-        }
-    }
-}
-
