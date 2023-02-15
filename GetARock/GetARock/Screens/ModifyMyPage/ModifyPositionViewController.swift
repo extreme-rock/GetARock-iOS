@@ -29,11 +29,6 @@ final class ModifyPositionViewController: UIViewController {
         headerView: PositionSelectCollectionViewHeader()
     )
     
-    private let nextButton: BottomButton = {
-        $0.setTitle("다음", for: .normal)
-        return $0
-    }(BottomButton())
-    
     //MARK: - Life Cycle
     
     init(positions: [Item]) {
@@ -102,18 +97,12 @@ final class ModifyPositionViewController: UIViewController {
     
     private func setupLayout() {
         self.view.addSubview(positionCollectionView)
-        self.view.addSubview(nextButton)
         
         positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                           leading: view.leadingAnchor,
-                                          bottom: nextButton.topAnchor,
+                                          bottom: view.bottomAnchor,
                                           trailing: view.trailingAnchor,
                                           padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-        
-        
-        nextButton.constraint(bottom: view.bottomAnchor,
-                              centerX: view.centerXAnchor,
-                              padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
     }
     
     //TODO: 원래선택됐던 친구를 선택해주는 func 추가

@@ -21,6 +21,7 @@ final class ModifyMyPageViewController: UIViewController {
             .plusPosition
         ]),
         ModifyUserProfileViewController()]
+    
     private var currentPageNumber: Int = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPageNumber ? .forward : .reverse
@@ -50,6 +51,32 @@ final class ModifyMyPageViewController: UIViewController {
         return $0
     }(UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal))
     
+    private lazy var dismissButton: UIButton = {
+        $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
+        $0.tintColor = .white
+        let action = UIAction { _ in
+            self.dismissButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
+       return $0
+    }(UIButton())
+    
+    private lazy var completeButton: UIButton = {
+        $0.setTitle("완료", for: .normal)
+        $0.setTitleColor(.blue01, for: .normal)
+        $0.titleLabel?.font = .setFont(.headline04)
+        let action = UIAction { _ in
+            self.completeButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
+       return $0
+    }(UIButton())
+    
+    private let viewControllerTitleLabel = BasicLabel(
+        contentText: "프로필 수정",
+        fontStyle: .headline02,
+        textColorInfo: .white)
+    
     //MARK: - Life Cycle
     
     // init 시에 유저에 대한 정보가 들어와야함
@@ -65,9 +92,41 @@ final class ModifyMyPageViewController: UIViewController {
         self.view.backgroundColor = .dark01
     }
     
+    private func dismissButtonTapped() {
+        dismiss(animated: true)
+    }
+    
+    private func completeButtonTapped() {
+        //TODO: 개인정보 UPDATE 함수
+    }
+    
     private func setupLayout() {
+        self.view.addSubview(dismissButton)
+        dismissButton.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                 leading: view.leadingAnchor,
+                                 padding: UIEdgeInsets(top: 19, left: 19, bottom: 0, right: 0))
+        dismissButton.constraint(
+            .heightAnchor,
+            constant: dismissButton.imageView?.intrinsicContentSize.height ?? 15.5)
+        
+        self.view.addSubview(viewControllerTitleLabel)
+        viewControllerTitleLabel.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                            centerX: view.centerXAnchor,
+                                            padding: UIEdgeInsets(top: 19, left: 0, bottom: 0, right: 0))
+        
+        self.view.addSubview(completeButton)
+        completeButton.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                  trailing: view.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 19, left: 0, bottom: 0, right: 19))
+        completeButton.constraint(
+            .heightAnchor,
+            constant: completeButton.titleLabel?.intrinsicContentSize.height ?? 0
+        )
+
+       
+        
         self.view.addSubview(segmentedController)
-        segmentedController.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+        segmentedController.constraint(top: viewControllerTitleLabel.bottomAnchor,
                                        leading: view.leadingAnchor,
                                        trailing: view.trailingAnchor,
                                        padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
