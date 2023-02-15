@@ -257,18 +257,18 @@
 		7B6D3352299A2F3D001FD630 /* BandDetail */ = {
 			isa = PBXGroup;
 			children = (
+				7B6D3355299A4F13001FD630 /* Component */,
 				7B6D3353299A2F76001FD630 /* BandDetailViewController.swift */,
-				7B6D3355299A4F13001FD630 /* VIew */,
 			);
 			path = BandDetail;
 			sourceTree = "<group>";
 		};
-		7B6D3355299A4F13001FD630 /* VIew */ = {
+		7B6D3355299A4F13001FD630 /* Component */ = {
 			isa = PBXGroup;
 			children = (
 				7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */,
 			);
-			path = VIew;
+			path = Component;
 			sourceTree = "<group>";
 		};
 		90B6AD933F47E441CE914747 /* Frameworks */ = {
