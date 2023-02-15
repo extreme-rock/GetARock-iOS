@@ -9,7 +9,7 @@ import UIKit
 
 final class BandInformationSetViewController: BaseViewController {
     
-    private var keyBoardHeight: CGFloat = 0
+    private var keyBoardHeight: CGFloat = 280
 
     // MARK: - View
     
@@ -204,9 +204,9 @@ final class BandInformationSetViewController: BaseViewController {
     
     private func setKeyboardDismiss() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
-             recognizer.numberOfTapsRequired = 1
-             recognizer.numberOfTouchesRequired = 1
-             mainScrollView.addGestureRecognizer(recognizer)
+        recognizer.numberOfTapsRequired = 1
+        recognizer.numberOfTouchesRequired = 1
+        mainScrollView.addGestureRecognizer(recognizer)
     }
     
     private func setNotification() {
@@ -241,7 +241,7 @@ final class BandInformationSetViewController: BaseViewController {
     }
 }
 
-    // MARK: - Extension
+// MARK: - Extension
 
 extension BandInformationSetViewController {
     
@@ -257,8 +257,8 @@ extension BandInformationSetViewController {
     }
     
     @objc func didTouchScreen() {
-           self.view.endEditing(true)
-       }
+        self.view.endEditing(true)
+    }
     
     @objc func getKeyboardHeight(notification: Notification) {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
@@ -267,27 +267,21 @@ extension BandInformationSetViewController {
 
 extension BandInformationSetViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.0001) {
-            if self.view.frame.origin.y == 0.0 {
-                self.view.frame.origin.y -= self.keyBoardHeight
-            }
-        }
+        self.view.frame.origin.y -= self.keyBoardHeight
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.0001) { [weak self] in
-            self?.view.frame.origin.y += self?.keyBoardHeight ?? 0
-        }
+        self.view.frame.origin.y += self.keyBoardHeight
     }
 }
 
-    //MARK: ScrollView 가로 스크롤 막기
+//MARK: ScrollView 가로 스크롤 막기
 
 extension BandInformationSetViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-           if scrollView.contentOffset.x != 0 {
-               scrollView.contentOffset.x = 0
-           }
-       }
+        if scrollView.contentOffset.x != 0 {
+            scrollView.contentOffset.x = 0
+        }
+    }
 }
 
