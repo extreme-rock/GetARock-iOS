@@ -17,6 +17,7 @@ struct Event {
 //    let endDate: Date
 //    let introdunction: String?
 //    let band: Band
+    var commentList: [CommentList]?
 }
 
 struct EventDummyData {
