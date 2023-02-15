@@ -17,7 +17,7 @@ final class DetailContentView: UIView {
         case myPage
     }
     
-    private lazy var SegmentTitle: [String] = {
+    private lazy var segmentTitle: [String] = {
         switch detailtopInfoType {
         case .band:
             return ["밴드상세", "타임라인", "방명록"]
@@ -30,7 +30,7 @@ final class DetailContentView: UIView {
     
     private var detailtopInfoType : DetailTopInfoType
     
-    var currentPage: Int = 0 {
+    private var currentPage: Int = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers(
@@ -50,7 +50,7 @@ final class DetailContentView: UIView {
         $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
         $0.selectedSegmentIndex = 0
         return $0
-    }(InformationPageSegmentedControl(items: SegmentTitle))
+    }(InformationPageSegmentedControl(items: segmentTitle))
     
     private lazy var pageViewController: UIPageViewController = {
         $0.delegate = self
