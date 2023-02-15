@@ -42,7 +42,7 @@ final class EventStateLabel: UILabel {
         self.labelData = data
         super.init(frame: .zero)
         attribute()
-        CalculateDday()
+        calculateDday()
     }
     
     required init(coder: NSCoder) {
@@ -88,7 +88,7 @@ final class EventStateLabel: UILabel {
         self.textAlignment = .center
     }
     
-    private  func CalculateDday() {
+    private func calculateDday() {
         guard let eventDay = labelData.toDate() else { return }
         let interval = eventDay.timeIntervalSince(Date())
         days = Int(interval / 86400)
@@ -98,7 +98,7 @@ final class EventStateLabel: UILabel {
         
         switch eventLabelType {
         case .dday:
-            CalculateDday()
+            calculateDday()
             if days >= 0 {
                 setDefaultUI()
                 self.text = "D-\(days)"
