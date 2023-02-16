@@ -75,7 +75,6 @@ final class ModifyMyPageViewController: UIViewController {
     
     @objc
     private func segmentedControlValueChanged(_ sender: ModifyPageSegmentedControl) {
-        print(self.segmentedController.selectedSegmentIndex)
         currentPageNumber = self.segmentedController.selectedSegmentIndex
     }
 }
