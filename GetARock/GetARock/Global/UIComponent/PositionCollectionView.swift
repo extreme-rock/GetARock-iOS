@@ -232,18 +232,11 @@ extension PositionCollectionView: UICollectionViewDelegate {
     
     private func markMainLabel(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
-        DispatchQueue.main.async {
             cell.setupMainLabelLayout()
-        }
     }
     
     private func removeMainLabel(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
-        DispatchQueue.main.async {
             cell.removeMainLabel()
-        }
     }
 }
-
-// 선택된 indexPath list를 선택된 순으로 정렬하고
-// 앞에 친구가 제거되면 그 다음으로 선택된 친구가
