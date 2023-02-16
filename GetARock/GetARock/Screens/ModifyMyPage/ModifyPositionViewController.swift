@@ -81,7 +81,6 @@ final class ModifyPositionViewController: UIViewController {
     
     @objc
     private func deselectAllPosition() {
-        print("deselectAllPosition")
         self.positionCollectionView.deselectAllItem()
     }
     
