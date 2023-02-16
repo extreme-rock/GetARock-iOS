@@ -15,9 +15,10 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
     private let backgroundContentView: UIView = {
         let view = UIView()
         view.layer.masksToBounds = true
-        view.backgroundColor = .purple
+        view.backgroundColor = .activeGradationPurple
         return view
     }()
+    
     private let itemLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .subheadline)
@@ -47,6 +48,10 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
         setupLayout()
     }
 
+    override func setNeedsLayout() {
+        self.backgroundContentView.applyActiveGradation()
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -58,7 +63,8 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
     // MARK: - Methods
 
     private func attribute() {
-        backgroundContentView.layer.cornerRadius = 10
+        self.backgroundContentView.layer.cornerRadius = 10
+        self.contentView.layer.borderColor = UIColor.white.cgColor
     }
 
     private func setupLayout() {

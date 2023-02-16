@@ -92,10 +92,11 @@ final class UserSearchViewController: BaseViewController {
                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16))
 
         view.addSubview(selectedUserListScrollView)
-        selectedUserListScrollView.constraint(.heightAnchor, constant: 60)
+        selectedUserListScrollView.constraint(.heightAnchor, constant: 80)
         selectedUserListScrollView.constraint(
+            leading: view.safeAreaLayoutGuide.leadingAnchor,
             bottom: doneButton.topAnchor,
-            centerX: view.centerXAnchor,
+            trailing: view.safeAreaLayoutGuide.trailingAnchor,
             padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
 
         view.addSubview(searchResultTable)
