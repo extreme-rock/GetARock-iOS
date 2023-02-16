@@ -25,6 +25,8 @@ final class BandTopInfoView: UIView {
     
     private let customPinIconImage: UIImageView = {
         $0.image = ImageLiteral.customPinIcon
+        $0.constraint(.widthAnchor, constant: 12)
+        $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
     
