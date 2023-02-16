@@ -66,8 +66,6 @@ final class BandTopInfoView: UIView {
     }
 
     private func setupLayout() {
-        self.constraint(.widthAnchor, constant: UIScreen.main.bounds.width)
-        
         self.addSubview(infoStackView)
         infoStackView.constraint(top: self.topAnchor,
                                  leading: self.leadingAnchor,
@@ -81,6 +79,5 @@ final class BandTopInfoView: UIView {
                             trailing: self.trailingAnchor,
                             padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
         self.divider.constraint(.heightAnchor, constant: DividerSize.height)
-       
     }
 }
