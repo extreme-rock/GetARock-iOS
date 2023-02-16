@@ -27,6 +27,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         return label
     }()
 
+    //TODO: 리더, 멤버, 미가입 회원에 따라서 이미지가 변화해야함
     private lazy var leftView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "music.note.list")

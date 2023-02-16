@@ -324,8 +324,8 @@
 		A9ABD8F8299E38B90036D9E7 /* UnRegisteredMemberAdd */ = {
 			isa = PBXGroup;
 			children = (
-				A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */,
 				A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */,
+				A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */,
 			);
 			path = UnRegisteredMemberAdd;
 			sourceTree = "<group>";

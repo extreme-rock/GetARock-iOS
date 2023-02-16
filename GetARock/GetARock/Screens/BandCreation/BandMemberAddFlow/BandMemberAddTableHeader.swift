@@ -28,11 +28,13 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
         return label
     }()
 
+    //TODO: BandInforSet VC에서 여기 configuration 적용 버튼 만들어야함
     let inviteMemberButton: DefaultButton = {
         $0.setTitle("멤버 초대", for: .normal)
         return $0
     }(DefaultButton())
 
+    //TODO: BandInforSet VC에서 여기 configuration 적용 버튼 만들어야함
     let inviteUnRegisteredMemberButton: DefaultButton = {
         $0.setTitle("미가입 회원 추가", for: .normal)
         return $0

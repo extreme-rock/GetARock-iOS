@@ -9,7 +9,7 @@ import UIKit
 
 final class UnRegisteredMemberCardView: UIStackView, Identifiable {
 
-    let id: String = ""
+    let id: String = "defualt"
 
     lazy var cancelButton = {
         let button = UIButton()
