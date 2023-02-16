@@ -25,12 +25,12 @@ final class BandInformationSetViewController: BaseViewController {
     private let contentViewTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "밴드에 대해\n간단히 알려주세요", fontStyle: .largeTitle01, textColorInfo: .white))
+    }(BasicLabel(contentText: "밴드에 대해\n간단히 알려주세요.", fontStyle: .largeTitle01, textColorInfo: .white))
 
     private let contentViewSubTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "작성해주신 정보는 내 프로필로 만들어지고\n프로필은 다른 사용자들이 볼 수 있어요", fontStyle: .headline03, textColorInfo: .gray02))
+    }(BasicLabel(contentText: "작성 정보는 프로필로 만들어집니다.\n밴드를 잘 어필할 수 있도록 작성해보세요! 😎", fontStyle: .headline03, textColorInfo: .gray02))
     
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
@@ -46,7 +46,7 @@ final class BandInformationSetViewController: BaseViewController {
         textColorInfo: .gray02)
 
     private lazy var bandNamingTextField: TextLimitTextField = TextLimitTextField(
-        placeholer: "밴드 이름을 입력해주세요",
+        placeholer: "밴드 이름을 입력해주세요.",
         maxCount: 20,
         duplicationCheckType: .bandName,
         textExpressionCheck: true)
@@ -72,7 +72,7 @@ final class BandInformationSetViewController: BaseViewController {
         return $0
     }(BasicBoxView(text: "주소 검색"))
 
-    private let detailPracticePlaceTextField = BasicTextField(placeholder: "상세 주소를 입력해주세요 (선택)")
+    private let detailPracticePlaceTextField = BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)")
 
     private lazy var practicePlaceVstack: UIStackView = {
         $0.axis = .vertical
@@ -83,7 +83,7 @@ final class BandInformationSetViewController: BaseViewController {
     private let bandIntroGuideTitleLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
 
     private let bandIntroTextView: BasicTextView = BasicTextView(
-        placeholder: "우리 밴드를 더 잘 보여줄 수 있는 소개를 간단하게\n적어주세요(ex. 좋아하는 밴드, 밴드 경력 등)",
+        placeholder: "우리 밴드를 더 잘 보여줄 수 있는 소개를 간단하게\n적어주세요.(ex. 좋아하는 밴드, 밴드 경력 등)",
         maxCount: 300)
 
     private lazy var textViewVstack: UIStackView = {
@@ -130,12 +130,12 @@ final class BandInformationSetViewController: BaseViewController {
     private let snsTitleLabel = InformationGuideLabel(guideText: "SNS", type: .optional)
 
     private let snsFirstSubTitleLabel = BasicLabel(
-        contentText: "* 밴드의 SNS 계정을 입력해주세요 ",
+        contentText: "* 밴드의 SNS 계정을 입력해주세요.",
         fontStyle: .content,
         textColorInfo: .gray02)
 
     private let snsSecondSubTitleLabel = BasicLabel(
-        contentText: "* 본인계정이 아닌 계정 등록 시 책임은 본인에게 있습니다?",
+        contentText: "* 본인계정이 아닌 계정 등록 시 책임은 본인에게 있습니다.",
         fontStyle: .content,
         textColorInfo: .gray02)
     
