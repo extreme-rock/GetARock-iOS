@@ -57,6 +57,7 @@
 		A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0A2981706C00905BC9 /* BasicTextView.swift */; };
 		A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0C2981714800905BC9 /* BasicLabel.swift */; };
 		A96F3684299E2D9000376620 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3683299E2D9000376620 /* UserSearchViewController.swift */; };
+		A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */; };
 		A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDD38D299A3114003F5392 /* BasicDataModel.swift */; };
 		B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B6962982A85F00A1A9E2 /* CustomMarker.swift */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
@@ -153,6 +154,7 @@
 		A96B8A0A2981706C00905BC9 /* BasicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextView.swift; sourceTree = "<group>"; };
 		A96B8A0C2981714800905BC9 /* BasicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabel.swift; sourceTree = "<group>"; };
 		A96F3683299E2D9000376620 /* UserSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
+		A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddTableViewCell.swift; sourceTree = "<group>"; };
 		A9EDD38D299A3114003F5392 /* BasicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDataModel.swift; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B808B6962982A85F00A1A9E2 /* CustomMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarker.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 			children = (
 				9AEA7E7A299A5B44006A730A /* BandMemberAddViewController.swift */,
 				A96F3683299E2D9000376620 /* UserSearchViewController.swift */,
+				A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */,
 			);
 			path = BandMemberAddFlow;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				A951F6532989EF6C00902CED /* String+Extension.swift in Sources */,
 				7BC275602987EA10008F4B9F /* emptyView.swift in Sources */,
 				9AEA7E7B299A5B44006A730A /* BandMemberAddViewController.swift in Sources */,
+				A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
 				4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */,
