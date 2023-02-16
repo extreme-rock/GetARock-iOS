@@ -38,6 +38,10 @@ final class PositionSelectViewController: UIViewController {
         addAllObserver()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     private func attribute() {
         self.view.backgroundColor = .dark01
     }
