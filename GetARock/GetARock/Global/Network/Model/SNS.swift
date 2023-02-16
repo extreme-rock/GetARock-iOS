@@ -12,3 +12,9 @@ struct SNS {
     let instagram: String?
     let soundCloud: String?
 }
+
+enum SnsType: String, Codable {
+    case youtube = "YOUTUBE"
+    case instagram = "INSTAGRAM"
+    case soundcloud = "SOUNDCLOUD"
+}
