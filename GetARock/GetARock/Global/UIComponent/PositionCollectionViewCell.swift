@@ -102,11 +102,15 @@ final class PositionCollectionViewCell: UICollectionViewCell {
                                      padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
     }
     
-    private func setupMainLabelLayout() {
+    func setupMainLabelLayout() {
         self.containerView.addSubview(mainLabel)
         self.mainLabel.constraint(leading: containerView.leadingAnchor,
                              bottom: containerView.bottomAnchor,
-                             padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 15))
+                             padding: UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 0))
+    }
+    
+    func removeMainLabel() {
+        self.mainLabel.removeFromSuperview()
     }
     
     func setupDeleteButton() {

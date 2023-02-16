@@ -42,6 +42,7 @@ final class PositionCollectionView: UIView {
     private let isNeedHeader: Bool
     private let headerView: UIView?
     private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
+    private var selectedCellIndexPaths: [IndexPath] = []
     
     // MARK: - View
     
@@ -135,7 +136,12 @@ final class PositionCollectionView: UIView {
         selectedIndexPath?.forEach {
             self.collectionView.deselectItem(at: $0, animated: true)
         }
-        postDeselectAllPositionButtonHiddenToggle()
+        self.postDeselectAllPositionButtonHiddenToggle()
+        //main라벨 삭제
+        if let mainPositionIndex = selectedCellIndexPaths.first {
+            self.removeMainLabel(indexPath: mainPositionIndex)
+            self.selectedCellIndexPaths = []
+        }
     }
     
     private func postDeselectAllPositionButtonHiddenToggle() {
@@ -198,16 +204,46 @@ extension PositionCollectionView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedCellIndexPaths.append(indexPath)
         let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
         if selectedCellCount == 1 {
             postDeselectAllPositionButtonHiddenToggle()
+            markMainLabel(indexPath: indexPath)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let index = self.selectedCellIndexPaths.firstIndex(of: indexPath) ?? 0
+        self.selectedCellIndexPaths.remove(at: index)
+        
+        if index == 0 {
+            removeMainLabel(indexPath: indexPath)
+            if let firstIndex = selectedCellIndexPaths.first {
+                markMainLabel(indexPath: firstIndex)
+            }
+        }
+        
         let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
         if selectedCellCount == 0 {
             postDeselectAllPositionButtonHiddenToggle()
+            removeMainLabel(indexPath: indexPath)
+        }
+    }
+    
+    private func markMainLabel(indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
+        DispatchQueue.main.async {
+            cell.setupMainLabelLayout()
+        }
+    }
+    
+    private func removeMainLabel(indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
+        DispatchQueue.main.async {
+            cell.removeMainLabel()
         }
     }
 }
+
+// 선택된 indexPath list를 선택된 순으로 정렬하고
+// 앞에 친구가 제거되면 그 다음으로 선택된 친구가
