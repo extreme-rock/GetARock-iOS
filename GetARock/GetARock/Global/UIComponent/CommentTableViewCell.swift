@@ -7,11 +7,15 @@
 
 import UIKit
 
-class CommentTableViewCell: UITableViewCell {
+// MARK: - UITableViewCell
+
+final class CommentTableViewCell: UITableViewCell {
+    
+    private var cellIndex: Int = 0
     
     // MARK: - View
     
-    let bandNameLabel = BasicLabel(contentText: "밴드이름",
+    private let bandNameLabel = BasicLabel(contentText: "밴드이름",
                                    fontStyle: .headline01,
                                    textColorInfo: .white)
     
@@ -21,7 +25,7 @@ class CommentTableViewCell: UITableViewCell {
         return $0
     }(UIButton())
     
-    let commentTextLabel: BasicLabel = {
+    private let commentTextLabel: BasicLabel = {
         $0.numberOfLines = 0
         return $0
     }(BasicLabel(contentText: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
@@ -64,9 +68,47 @@ class CommentTableViewCell: UITableViewCell {
                                     leading: contentView.leadingAnchor,
                                     bottom: contentView.bottomAnchor,
                                     trailing: contentView.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 30, left: 15, bottom: 30, right: 15))
+                                    padding: UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15))
     }
     
-    private func setupMoreButton() {
+    func configure(data: CommentList?, index: Int) {
+        
+        guard let comment = data else { return }
+        self.cellIndex = index
+        
+        self.bandNameLabel.text = comment.memberName
+        self.commentTextLabel.text = comment.comment
+        self.commentDateLabel.text = comment.createdDate
+        
+        }
     }
+
+// MARK: - UITableViewHeaderFooterView
+
+class emptyTableViewHeader: UITableViewHeaderFooterView {
+    
+     //MARK: - view
+    
+     private let emptyCommentLabel = BasicLabel(contentText: "댓글이 없습니다.",
+                                    fontStyle: .content,
+                                     textColorInfo: .gray02)
+     // MARK: - init
+
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        setupLayout()
+    }
+ 
+     required init?(coder aDecoder: NSCoder) {
+         fatalError("init(coder:) has not been implemented")
+     }
+ 
+     // MARK: - Method
+ 
+    private func setupLayout() {
+         self.contentView.addSubview(emptyCommentLabel)
+         emptyCommentLabel.constraint(top: contentView.topAnchor,
+                                 padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+         emptyCommentLabel.constraint(centerX: contentView.centerXAnchor)
+     }
 }

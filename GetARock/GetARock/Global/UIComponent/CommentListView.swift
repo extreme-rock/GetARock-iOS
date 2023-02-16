@@ -7,20 +7,16 @@
 
 import UIKit
 
-final class CommentListView: UIView {
+// MARK: - class CommentListView
 
-    // MARK: - Property
+final class CommentListView: UIView {
     
-    enum CommentType {
-        case bandComment
-        case eventComment
-    }
-    
-    private var commentType: CommentType
+    private var commentData: [CommentList]?
+    private var totalComentNumber: Int = 0
     
     // MARK: - View
     
-    private let totalComentNumber = BasicLabel(contentText: "",
+    private let totalComentNumberLabel = BasicLabel(contentText: "총 0개",
                                                fontStyle: .headline02,
                                                textColorInfo: .white)
     
@@ -31,20 +27,21 @@ final class CommentListView: UIView {
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = UITableView.automaticDimension
         return $0
-    }(UITableView())
+    }(UITableView(frame: .zero, style: .grouped))
 
     private lazy var commentStackView: UIStackView = {
         $0.spacing = 20
         $0.axis = .vertical
-        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        $0.isLayoutMarginsRelativeArrangement = true
         return $0
-    }(UIStackView(arrangedSubviews: [totalComentNumber, tableView]))
+    }(UIStackView(arrangedSubviews: [totalComentNumberLabel, tableView]))
 
     
     // MARK: - Life Cycle
     
-    init(type: CommentType) {
-        self.commentType = type
+    init(data: [CommentList]?) {
+        self.commentData = data
         super.init(frame: .zero)
         attribute()
         setupLayout()
@@ -74,15 +71,14 @@ final class CommentListView: UIView {
             CommentTableViewCell.self,
             forCellReuseIdentifier: CommentTableViewCell.classIdentifier
         )
+        tableView.register(emptyTableViewHeader.self,
+             forHeaderFooterViewReuseIdentifier: emptyTableViewHeader.classIdentifier)
     }
     
     func setupTotalListNumberLabel() {
-        switch commentType {
-        case .bandComment:
-            totalComentNumber.text = "총 개"
-        case .eventComment:
-            totalComentNumber.text = "총 개"
-        }
+        guard let count = commentData?.count else { return }
+        self.totalComentNumber = count
+        totalComentNumberLabel.text = "총 \(totalComentNumber) 개"
     }
 }
 
@@ -92,6 +88,21 @@ extension CommentListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor.clear
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: emptyTableViewHeader.classIdentifier
+        ) as? emptyTableViewHeader
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if totalComentNumber <= 0 {
+            return 30.0
+        } else {
+            return 0.0
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -100,31 +111,19 @@ extension CommentListView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         tableView.indexPath(for: UITableViewCell())
-        
-        switch commentType {
-        case .bandComment :
-            return 3
-        case .eventComment:
-            return 3
-        }
+        return commentData?.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: CommentTableViewCell.classIdentifier,
-            for: indexPath
-        ) as? CommentTableViewCell
-        else {
-            return UITableViewCell()
-        }
-        cell.selectionStyle = .none
-
-        switch commentType {
-        case .bandComment:
-            print("good")
-        case .eventComment :
-            print("good")
-        }
-        return cell
+        
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: CommentTableViewCell.classIdentifier,
+                for: indexPath ) as? CommentTableViewCell
+            else { return UITableViewCell()}
+            
+            cell.configure(data: commentData?[indexPath.row],
+                           index: indexPath.row)
+            return cell
     }
 }
+
