@@ -35,6 +35,32 @@ final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - View
     
+    private lazy var dismissButton: UIButton = {
+        $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
+        $0.tintColor = .white
+        let action = UIAction { [weak self] _ in
+            self?.dismissButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
+       return $0
+    }(UIButton())
+    
+    private lazy var completeButton: UIButton = {
+        $0.setTitle("완료", for: .normal)
+        $0.setTitleColor(.blue01, for: .normal)
+        $0.titleLabel?.font = .setFont(.headline04)
+        let action = UIAction { [weak self] _ in
+            self?.completeButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
+       return $0
+    }(UIButton())
+    
+    private let viewControllerTitleLabel = BasicLabel(
+        contentText: "프로필 수정",
+        fontStyle: .headline02,
+        textColorInfo: .white
+    )
     private lazy var segmentedController: ModifyPageSegmentedControl = {
         $0.addTarget(self,
                      action: #selector(segmentedControlValueChanged(_:)),
@@ -50,32 +76,6 @@ final class ModifyMyPageViewController: UIViewController {
         }
         return $0
     }(UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal))
-    
-    private lazy var dismissButton: UIButton = {
-        $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
-        $0.tintColor = .white
-        let action = UIAction { _ in
-            self.dismissButtonTapped()
-        }
-        $0.addAction(action, for: .touchUpInside)
-       return $0
-    }(UIButton())
-    
-    private lazy var completeButton: UIButton = {
-        $0.setTitle("완료", for: .normal)
-        $0.setTitleColor(.blue01, for: .normal)
-        $0.titleLabel?.font = .setFont(.headline04)
-        let action = UIAction { _ in
-            self.completeButtonTapped()
-        }
-        $0.addAction(action, for: .touchUpInside)
-       return $0
-    }(UIButton())
-    
-    private let viewControllerTitleLabel = BasicLabel(
-        contentText: "프로필 수정",
-        fontStyle: .headline02,
-        textColorInfo: .white)
     
     //MARK: - Life Cycle
     
@@ -93,7 +93,7 @@ final class ModifyMyPageViewController: UIViewController {
     }
     
     private func dismissButtonTapped() {
-        dismiss(animated: true)
+        self.dismiss(animated: true)
     }
     
     private func completeButtonTapped() {
@@ -123,15 +123,13 @@ final class ModifyMyPageViewController: UIViewController {
             constant: completeButton.titleLabel?.intrinsicContentSize.height ?? 0
         )
 
-       
-        
         self.view.addSubview(segmentedController)
         segmentedController.constraint(top: viewControllerTitleLabel.bottomAnchor,
                                        leading: view.leadingAnchor,
                                        trailing: view.trailingAnchor,
                                        padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
         segmentedController.constraint(.heightAnchor, constant: 50)
-        
+
         self.view.addSubview(pageViewController.view)
         pageViewController.view.constraint(top: segmentedController.bottomAnchor,
                                            leading: view.leadingAnchor,
@@ -143,7 +141,6 @@ final class ModifyMyPageViewController: UIViewController {
     
     @objc
     private func segmentedControlValueChanged(_ sender: ModifyPageSegmentedControl) {
-        print(self.segmentedController.selectedSegmentIndex)
         currentPageNumber = self.segmentedController.selectedSegmentIndex
     }
 }

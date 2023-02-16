@@ -18,7 +18,7 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     //MARK: - View
     
-    private let pageIndicatorLabel: UILabel = {
+    private lazy var pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.subTitle)
         $0.text = "1/3"
         $0.textColor = .gray02
@@ -46,8 +46,8 @@ final class PositionSelectCollectionViewHeader: UIView {
         $0.setTitleColor(.gray02, for: .normal)
         $0.titleLabel?.font = .setFont(.content)
         $0.isHidden = true
-        let action = UIAction { _ in
-            self.postDeselectAllPosition()
+        let action = UIAction { [weak self] _ in
+            self?.postDeselectAllPosition()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -65,12 +65,6 @@ final class PositionSelectCollectionViewHeader: UIView {
             self.setupLayoutWithoutPageIndicator()
         }
     }
-    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setupLayout()
-//
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

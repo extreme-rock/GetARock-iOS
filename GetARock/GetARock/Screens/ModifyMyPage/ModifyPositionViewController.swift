@@ -40,6 +40,11 @@ final class ModifyPositionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(PositionSelectCollectionViewHeader.self)
+    }
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -49,7 +54,7 @@ final class ModifyPositionViewController: UIViewController {
         configureDelegate()
         addAllObserver()
     }
-    
+
     //MARK: - Method
     
     private func attribute() {
@@ -76,6 +81,7 @@ final class ModifyPositionViewController: UIViewController {
     
     @objc
     private func deselectAllPosition() {
+        print("deselectAllPosition")
         self.positionCollectionView.deselectAllItem()
     }
     
