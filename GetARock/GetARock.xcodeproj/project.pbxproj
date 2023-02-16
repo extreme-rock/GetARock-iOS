@@ -43,6 +43,7 @@
 		7BEB09D8299CF12E0076A82F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB09D7299CF12E0076A82F /* CommentTableViewCell.swift */; };
 		7BEB09DA299CFEC20076A82F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB09D9299CFEC20076A82F /* Comment.swift */; };
 		7BFE01A12982643E009608A2 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFE01A02982643E009608A2 /* Song.swift */; };
+		7BFE0DDF299E1B4E002D6574 /* writeCommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFE0DDE299E1B4E002D6574 /* writeCommentTextView.swift */; };
 		943928805D82F089F179FC19 /* Pods_GetARock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */; };
 		9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */; };
 		9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */; };
@@ -136,6 +137,7 @@
 		7BEB09D7299CF12E0076A82F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		7BEB09D9299CFEC20076A82F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		7BFE01A02982643E009608A2 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		7BFE0DDE299E1B4E002D6574 /* writeCommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = writeCommentTextView.swift; sourceTree = "<group>"; };
 		9519F0525025E6972410CA40 /* Pods-GetARock-GetARockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock-GetARockUITests.debug.xcconfig"; path = "Target Support Files/Pods-GetARock-GetARockUITests/Pods-GetARock-GetARockUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentSize.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */,
 				7BEB09D5299CEEA70076A82F /* CommentListView.swift */,
 				7BEB09D7299CF12E0076A82F /* CommentTableViewCell.swift */,
+				7BFE0DDE299E1B4E002D6574 /* writeCommentTextView.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -719,6 +722,7 @@
 				4AC4CE41297FB85B00BB823C /* Position.swift in Sources */,
 				7BEB09DA299CFEC20076A82F /* Comment.swift in Sources */,
 				B8B17C522980B93300806899 /* Location.swift in Sources */,
+				7BFE0DDF299E1B4E002D6574 /* writeCommentTextView.swift in Sources */,
 				7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */,
 				7B64C25B2983CFFE00E95911 /* SongListView.swift in Sources */,
 				4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */,

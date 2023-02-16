@@ -15,9 +15,11 @@ final class CommentTableViewCell: UITableViewCell {
     
     // MARK: - View
     
-    private let bandNameLabel = BasicLabel(contentText: "밴드이름",
-                                   fontStyle: .headline01,
-                                   textColorInfo: .white)
+    private let bandNameLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .headline01,
+        textColorInfo: .white
+    )
     
     private let moreButton: UIButton = {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
@@ -28,13 +30,17 @@ final class CommentTableViewCell: UITableViewCell {
     private let commentTextLabel: BasicLabel = {
         $0.numberOfLines = 0
         return $0
-    }(BasicLabel(contentText: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
-                 fontStyle: .content,
-                 textColorInfo: .white))
+    }(BasicLabel(
+        contentText: "",
+        fontStyle: .content,
+        textColorInfo: .white)
+    )
     
-    let commentDateLabel = BasicLabel(contentText: "2022.11.19 13:20",
-                                      fontStyle: .caption,
-                                      textColorInfo: .gray02)
+    let commentDateLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .caption,
+        textColorInfo: .gray02
+    )
     
     private lazy var commentInfoStackView: UIStackView = {
         $0.axis = .horizontal
@@ -47,7 +53,6 @@ final class CommentTableViewCell: UITableViewCell {
         $0.spacing = 10
         return $0
     }(UIStackView(arrangedSubviews: [commentInfoStackView, commentTextLabel, commentDateLabel]))
-    
     
     // MARK: - Init
     
@@ -64,11 +69,13 @@ final class CommentTableViewCell: UITableViewCell {
     
     private func setupLayout() {
         self.contentView.addSubview(commentStackView)
-        commentStackView.constraint(top: contentView.topAnchor,
-                                    leading: contentView.leadingAnchor,
-                                    bottom: contentView.bottomAnchor,
-                                    trailing: contentView.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15))
+        commentStackView.constraint(
+            top: contentView.topAnchor,
+            leading: contentView.leadingAnchor,
+            bottom: contentView.bottomAnchor,
+            trailing: contentView.trailingAnchor,
+            padding: UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15)
+        )
     }
     
     func configure(data: CommentList?, index: Int) {
@@ -80,35 +87,40 @@ final class CommentTableViewCell: UITableViewCell {
         self.commentTextLabel.text = comment.comment
         self.commentDateLabel.text = comment.createdDate
         
-        }
     }
+}
 
 // MARK: - UITableViewHeaderFooterView
 
 class emptyTableViewHeader: UITableViewHeaderFooterView {
     
-     //MARK: - view
+    //MARK: - view
     
-     private let emptyCommentLabel = BasicLabel(contentText: "댓글이 없습니다.",
-                                    fontStyle: .content,
-                                     textColorInfo: .gray02)
-     // MARK: - init
-
+    private let emptyCommentLabel = BasicLabel(
+        contentText: "댓글이 없습니다.",
+        fontStyle: .content,
+        textColorInfo: .gray02
+    )
+    
+    // MARK: - init
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupLayout()
     }
- 
-     required init?(coder aDecoder: NSCoder) {
-         fatalError("init(coder:) has not been implemented")
-     }
- 
-     // MARK: - Method
- 
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Method
+    
     private func setupLayout() {
-         self.contentView.addSubview(emptyCommentLabel)
-         emptyCommentLabel.constraint(top: contentView.topAnchor,
-                                 padding: UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0))
-         emptyCommentLabel.constraint(centerX: contentView.centerXAnchor)
-     }
+        self.contentView.addSubview(emptyCommentLabel)
+        emptyCommentLabel.constraint(
+            top: contentView.topAnchor,
+            padding: UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0)
+        )
+        emptyCommentLabel.constraint(centerX: contentView.centerXAnchor)
+    }
 }

@@ -16,11 +16,13 @@ final class CommentListView: UIView {
     
     // MARK: - View
     
-    private let totalComentNumberLabel = BasicLabel(contentText: "총 0개",
-                                               fontStyle: .headline02,
-                                               textColorInfo: .white)
+    private let totalComentNumberLabel = BasicLabel(
+        contentText: "총 0개",
+        fontStyle: .headline02,
+        textColorInfo: .white
+    )
     
-    let tableView = {
+    private let tableView = {
         $0.backgroundColor = .dark01
         $0.showsVerticalScrollIndicator = false
         $0.separatorColor = .clear
@@ -28,7 +30,10 @@ final class CommentListView: UIView {
         $0.estimatedRowHeight = UITableView.automaticDimension
         return $0
     }(UITableView(frame: .zero, style: .grouped))
-
+    
+    private let commentTextView = writeCommentTextView()
+    
+    
     private lazy var commentStackView: UIStackView = {
         $0.spacing = 20
         $0.axis = .vertical
@@ -36,7 +41,7 @@ final class CommentListView: UIView {
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView(arrangedSubviews: [totalComentNumberLabel, tableView]))
-
+    
     
     // MARK: - Life Cycle
     
@@ -50,6 +55,10 @@ final class CommentListView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+//
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+           self.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
+       }
     
     // MARK: - Method
     
@@ -60,10 +69,23 @@ final class CommentListView: UIView {
     }
     
     private func setupLayout() {
-        self.addSubview(commentStackView)
-        commentStackView.constraint(to:self)
+        //        self.addSubview(commentStackView)
+        //        commentStackView.constraint(to:self)
+        //        commentStackView.constraint(top: self.topAnchor,
+        //                                   leading: self.leadingAnchor,
+        //                                   bottom: self.bottomAnchor,
+        //                                   trailing: self.trailingAnchor,
+        //                                   padding: UIEdgeInsets(top: 0, left: 0, bottom: -60, right: 0))
+        self.addSubview(commentTextView)
+        commentTextView.constraint(
+            top: self.topAnchor,
+            leading: self.leadingAnchor,
+//            bottom: self.bottomAnchor,
+            trailing: self.trailingAnchor,
+            padding: UIEdgeInsets(top: 0, left: 0, bottom:0, right: 0))
+        
     }
-
+    
     private func setTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -72,7 +94,7 @@ final class CommentListView: UIView {
             forCellReuseIdentifier: CommentTableViewCell.classIdentifier
         )
         tableView.register(emptyTableViewHeader.self,
-             forHeaderFooterViewReuseIdentifier: emptyTableViewHeader.classIdentifier)
+                           forHeaderFooterViewReuseIdentifier: emptyTableViewHeader.classIdentifier)
     }
     
     func setupTotalListNumberLabel() {
@@ -116,14 +138,14 @@ extension CommentListView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: CommentTableViewCell.classIdentifier,
-                for: indexPath ) as? CommentTableViewCell
-            else { return UITableViewCell()}
-            
-            cell.configure(data: commentData?[indexPath.row],
-                           index: indexPath.row)
-            return cell
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CommentTableViewCell.classIdentifier,
+            for: indexPath ) as? CommentTableViewCell
+        else { return UITableViewCell()}
+        
+        cell.configure(data: commentData?[indexPath.row],
+                       index: indexPath.row)
+        return cell
     }
 }
 
