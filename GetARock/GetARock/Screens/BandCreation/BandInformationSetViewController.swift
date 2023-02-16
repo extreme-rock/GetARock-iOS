@@ -25,7 +25,7 @@ final class BandInformationSetViewController: BaseViewController {
     private let contentViewTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "밴드에 대해\n간단히 알려주세요.", fontStyle: .largeTitle01, textColorInfo: .white))
+    }(BasicLabel(contentText: "밴드에 대해\n간단히 알려주세요", fontStyle: .largeTitle01, textColorInfo: .white))
 
     private let contentViewSubTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
