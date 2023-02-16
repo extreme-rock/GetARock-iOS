@@ -95,7 +95,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
     }
 
-    func configure(data: MemberList) {
+    func configure(data: MemberList2) {
         self.titleLabel.text = data.name
         //TODO: List로 받을 수 있게 수정해야함
         self.subTitleLabel.text = data.instrumentList.first!.name

@@ -31,7 +31,10 @@ final class BandMemberAddViewController: UIViewController {
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, MemberList2> = self.makeDataSource()
 
     //TODO: Default 버튼 사용해서 바꿔야함
-    private let nextButton = BasicButton(text: "다음", widthPadding: 300, heightPadding: 35)
+    private let nextButton: DefaultButton = {
+        $0.setTitle("다음", for: .normal)
+        return $0
+    }(DefaultButton())
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
