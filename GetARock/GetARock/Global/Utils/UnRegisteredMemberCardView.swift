@@ -27,7 +27,8 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
         return button
     }()
 
-    private let bandMemberName = TwoHstackLabel.informationLabel(guideText: "닉네임", inputType: .required)
+    //TODO: develop Pull후에 Information Guide Label로 업데이트 필요
+    private let bandMemberName = BasicLabel(contentText: "닉네임", fontStyle: .contentBold, textColorInfo: .white)
 
     let bandMemberNameTextField = BasicTextField(placeholder: "닉네임을 입력해주세요")
 
@@ -38,7 +39,7 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
         return stackView
     }()
 
-    private let positionLabel = TwoHstackLabel.informationLabel(guideText: "포지션", inputType: .required)
+    private let positionLabel = BasicLabel(contentText: "포지션", fontStyle: .contentBold, textColorInfo: .white)
 
     private var positionSelect: SelectCollectionView = {
         $0.constraint(.heightAnchor, constant: 110)
@@ -52,7 +53,7 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
         return stackView
     }()
 
-    private let otherPosition = TwoHstackLabel.informationLabel(guideText: "그 외 포지션", inputType: .optional)
+    private let otherPosition = BasicLabel(contentText: "그 외 포지션", fontStyle: .contentBold, textColorInfo: .white)
 
     private let positionDescription = BasicLabel(contentText: "* 그 외 포지션은 공백 포함 10자 이하로 입력가능합니다.", fontStyle: .content, textColorInfo: .gray02)
 
