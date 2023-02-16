@@ -98,7 +98,7 @@ extension CommentListView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if totalComentNumber <= 0 {
-            return 30.0
+            return 50.0
         } else {
             return 0.0
         }
