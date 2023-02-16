@@ -38,7 +38,6 @@ final class PlusPositionCollectionViewCell: UICollectionViewCell {
     private func setupLayout() {
         self.contentView.addSubview(containerView)
         self.containerView.constraint(to: self.contentView)
-        self.containerView.constraint(.widthAnchor, constant: CellSize.width)
         self.containerView.constraint(.heightAnchor, constant: 138)
         
         containerView.addSubview(plusPositionButton)
