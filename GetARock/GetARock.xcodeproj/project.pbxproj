@@ -64,6 +64,7 @@
 		A96F368E299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */; };
 		A96F3690299E301700376620 /* MemberDataDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368F299E301700376620 /* MemberDataDTO.swift */; };
 		A96F3692299E320A00376620 /* UnRegisteredMemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */; };
+		A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */; };
 		A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDD38D299A3114003F5392 /* BasicDataModel.swift */; };
 		B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B6962982A85F00A1A9E2 /* CustomMarker.swift */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
@@ -167,6 +168,7 @@
 		A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedAddUnRegisteredMemberViewController.swift; sourceTree = "<group>"; };
 		A96F368F299E301700376620 /* MemberDataDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDataDTO.swift; sourceTree = "<group>"; };
 		A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnRegisteredMemberCardView.swift; sourceTree = "<group>"; };
+		A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		A9EDD38D299A3114003F5392 /* BasicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDataModel.swift; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B808B6962982A85F00A1A9E2 /* CustomMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarker.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				A96B8A0C2981714800905BC9 /* BasicLabel.swift */,
 				A9EDD38D299A3114003F5392 /* BasicDataModel.swift */,
 				A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */,
+				A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
 				A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
+				A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */,
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
