@@ -89,7 +89,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     }
 
-    func configure(data: MemberList) {
+    func configure(data: MemberList2) {
         self.titleLabel.text = data.name
         //TODO: 리스트 형태로 받을 수 있도록 바꿔야하
         self.subTitleLabel.text = data.instrumentList.first!.name

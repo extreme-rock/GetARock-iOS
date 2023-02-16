@@ -9,11 +9,11 @@ import UIKit
 
 final class AddUnRegisteredMemberViewController: UIViewController {
 
-    private var addedMembers: [MemberList] = []
+    private var addedMembers: [MemberList2] = []
 
-    var completion: (_ registeredMember: [MemberList]) -> Void = { addedMembers in }
+    var completion: (_ registeredMember: [MemberList2]) -> Void = { addedMembers in }
 
-    private lazy var firstData: MemberList = MemberList(memberId: 0, name: firstPracticeSongCard.bandMemberNameTextField.textField.text ?? "", memberState: "NONE", instrumentList: [InstrumentList(instrumentId: 0, isMain: true, name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")])
+    private lazy var firstData: MemberList2 = MemberList2(memberId: 0, name: firstPracticeSongCard.bandMemberNameTextField.textField.text ?? "", memberState: "NONE", instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")])
 
     private lazy var firstPracticeSongCard: UnRegisteredMemberCardView = {
         let card = UnRegisteredMemberCardView()
@@ -70,7 +70,7 @@ final class AddUnRegisteredMemberViewController: UIViewController {
     private lazy var addCompletionAction = UIAction { _ in
         for subview in self.contentView.arrangedSubviews {
             let card = subview as! UnRegisteredMemberCardView
-            let data = MemberList(memberId: 0, name: card.bandMemberNameTextField.textField.text ?? "", memberState: "NONE", instrumentList: [InstrumentList(instrumentId: 0, isMain: true, name: card.otherPositionTextField.textField.text ?? "")])
+            let data = MemberList2(memberId: 0, name: card.bandMemberNameTextField.textField.text ?? "", memberState: "NONE", instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: card.otherPositionTextField.textField.text ?? "")])
             self.addedMembers.append(data)
         }
         self.dismiss(animated: true){

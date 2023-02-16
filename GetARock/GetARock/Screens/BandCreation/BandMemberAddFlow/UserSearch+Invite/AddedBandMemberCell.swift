@@ -79,7 +79,7 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
     }
 
-    func configure(data: MemberList) {
+    func configure(data: MemberList2) {
         itemLabel.text = data.name
         self.id = data.id
     }

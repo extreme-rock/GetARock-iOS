@@ -20,9 +20,9 @@ final class UserSearchViewController: BaseViewController {
 
     private var tempWidth: CGFloat = 0
 
-    var completion: (_ selectedUsers: [MemberList]) -> Void = { selectedUsers in }
+    var completion: (_ selectedUsers: [MemberList2]) -> Void = { selectedUsers in }
 
-    var selectedUsers: [MemberList] = []
+    var selectedUsers: [MemberList2] = []
 
     private lazy var searchBar: SearchTextField = {
         let searchBar = SearchTextField(placeholder: "닉네임으로 검색")
@@ -45,7 +45,8 @@ final class UserSearchViewController: BaseViewController {
     }(UITableView())
 
     private lazy var doneButton = {
-        let button = BasicButton(text: "완료", widthPadding: 200, heightPadding: 50)
+        let button: DefaultButton = DefaultButton()
+        button.setTitle("완료", for: .normal)
         let action = UIAction { _ in
             self.dismiss(animated: true){
                 self.completion(self.selectedUsers)
@@ -69,7 +70,7 @@ final class UserSearchViewController: BaseViewController {
     }()
 
     //MARK: Bottom CollectionView
-    private lazy var bottomScrollViewDataSource: UICollectionViewDiffableDataSource<BottomScrollSection, MemberList> = self.makeDataSource()
+    private lazy var bottomScrollViewDataSource: UICollectionViewDiffableDataSource<BottomScrollSection, MemberList2> = self.makeDataSource()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,10 +135,10 @@ extension UserSearchViewController: UITableViewDelegate {
         // 선택된 tableView의 데이터만 따로 추출
         // 선택된 셀에 접근할 수 있으나 데이터는 따로 만들어야함
         // CellInformation만들 때 임의의 id를 만들기 때문에, 만들고나서 선택한 cell의 id를 주입해줘야함
-        var data = MemberList(memberId: 0,
+        var data = MemberList2(memberId: 0,
                               name: selectedCell.titleLabel.text ?? "",
                               memberState: "NONE",
-                              instrumentList: [InstrumentList(
+                              instrumentList: [InstrumentList2(
                                 instrumentId: 0,
                                 isMain: true,
                                 name: selectedCell.subTitleLabel.text ?? "")])
@@ -185,15 +186,15 @@ extension UserSearchViewController: UIScrollViewDelegate {
 //MARK: SelectedUserScollView DiffableData Source
 extension UserSearchViewController {
 
-    func updateSnapShot(with items: [MemberList]) {
-        var snapShot = NSDiffableDataSourceSnapshot<BottomScrollSection, MemberList>()
+    func updateSnapShot(with items: [MemberList2]) {
+        var snapShot = NSDiffableDataSourceSnapshot<BottomScrollSection, MemberList2>()
         snapShot.appendSections([.main])
         snapShot.appendItems(items, toSection: .main)
         self.bottomScrollViewDataSource.apply(snapShot, animatingDifferences: true)
     }
 
-    func makeDataSource() -> UICollectionViewDiffableDataSource<BottomScrollSection, MemberList> {
-        return UICollectionViewDiffableDataSource<BottomScrollSection, MemberList>(collectionView: self.selectedUserListScrollView, cellProvider: { collectionView, indexPath, person in
+    func makeDataSource() -> UICollectionViewDiffableDataSource<BottomScrollSection, MemberList2> {
+        return UICollectionViewDiffableDataSource<BottomScrollSection, MemberList2>(collectionView: self.selectedUserListScrollView, cellProvider: { collectionView, indexPath, person in
 
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddedBandMemberCell.classIdentifier, for: indexPath) as? AddedBandMemberCell else { return UICollectionViewCell() }
 

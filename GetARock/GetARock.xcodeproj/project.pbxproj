@@ -275,8 +275,6 @@
 				9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */,
 				A96B8A0C2981714800905BC9 /* BasicLabel.swift */,
 				A9EDD38D299A3114003F5392 /* BasicDataModel.swift */,
-				A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */,
-				A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -305,14 +303,31 @@
 			isa = PBXGroup;
 			children = (
 				9AEA7E7A299A5B44006A730A /* BandMemberAddViewController.swift */,
-				A96F3683299E2D9000376620 /* UserSearchViewController.swift */,
-				A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */,
-				A96F3687299E2EE100376620 /* UserSearchTableViewCell.swift */,
 				A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */,
-				A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */,
-				A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */,
+				A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */,
+				A9ABD8F7299E384D0036D9E7 /* UserSearch+Invite */,
+				A9ABD8F8299E38B90036D9E7 /* UnRegisteredMemberAdd */,
 			);
 			path = BandMemberAddFlow;
+			sourceTree = "<group>";
+		};
+		A9ABD8F7299E384D0036D9E7 /* UserSearch+Invite */ = {
+			isa = PBXGroup;
+			children = (
+				A96F3683299E2D9000376620 /* UserSearchViewController.swift */,
+				A96F3687299E2EE100376620 /* UserSearchTableViewCell.swift */,
+				A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */,
+			);
+			path = "UserSearch+Invite";
+			sourceTree = "<group>";
+		};
+		A9ABD8F8299E38B90036D9E7 /* UnRegisteredMemberAdd */ = {
+			isa = PBXGroup;
+			children = (
+				A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */,
+				A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */,
+			);
+			path = UnRegisteredMemberAdd;
 			sourceTree = "<group>";
 		};
 		B8468F62297A94B900A9E77E /* Maps */ = {
@@ -457,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				B88E1BDE2977ACB6006072B7 /* SampleView.swift */,
+				A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */,
 				9A29E6E9297E233900D4A433 /* BasicTextField.swift */,
 				A96B8A0A2981706C00905BC9 /* BasicTextView.swift */,
 				4AC4CE4C2980BAE800BB823C /* SelectCollectionView.swift */,
