@@ -64,7 +64,7 @@ final class PositionSelectCollectionViewHeader: UIView {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(hideDeselectButton),
-            name: Notification.Name(StringLiteral.hideDeselectAllPositionButton),
+            name: Notification.Name.hideDeselectAllPositionButton,
             object: nil)
     }
     
@@ -101,7 +101,7 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     private func postDeselectAllPosition() {
         NotificationCenter.default.post(
-            name: Notification.Name(StringLiteral.deselectAllPosition),
+            name: Notification.Name.deselectAllPosition,
             object: nil)
     }
 }

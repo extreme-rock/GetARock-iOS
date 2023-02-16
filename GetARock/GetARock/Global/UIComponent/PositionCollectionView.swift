@@ -140,7 +140,7 @@ final class PositionCollectionView: UIView {
     
     private func postDeselectAllPositionButtonHiddenToggle() {
         NotificationCenter.default.post(
-            name: Notification.Name(StringLiteral.hideDeselectAllPositionButton),
+            name: Notification.Name.hideDeselectAllPositionButton,
             object: nil)
     }
 }
