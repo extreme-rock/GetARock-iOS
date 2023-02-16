@@ -58,6 +58,10 @@
 		A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0C2981714800905BC9 /* BasicLabel.swift */; };
 		A96F3684299E2D9000376620 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3683299E2D9000376620 /* UserSearchViewController.swift */; };
 		A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */; };
+		A96F3688299E2EE100376620 /* UserSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3687299E2EE100376620 /* UserSearchTableViewCell.swift */; };
+		A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */; };
+		A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */; };
+		A96F368E299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */; };
 		A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDD38D299A3114003F5392 /* BasicDataModel.swift */; };
 		B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B6962982A85F00A1A9E2 /* CustomMarker.swift */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
@@ -155,6 +159,10 @@
 		A96B8A0C2981714800905BC9 /* BasicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabel.swift; sourceTree = "<group>"; };
 		A96F3683299E2D9000376620 /* UserSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
 		A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddTableViewCell.swift; sourceTree = "<group>"; };
+		A96F3687299E2EE100376620 /* UserSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchTableViewCell.swift; sourceTree = "<group>"; };
+		A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddTableHeader.swift; sourceTree = "<group>"; };
+		A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedBandMemberCell.swift; sourceTree = "<group>"; };
+		A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedAddUnRegisteredMemberViewController.swift; sourceTree = "<group>"; };
 		A9EDD38D299A3114003F5392 /* BasicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDataModel.swift; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B808B6962982A85F00A1A9E2 /* CustomMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarker.swift; sourceTree = "<group>"; };
@@ -291,6 +299,10 @@
 				9AEA7E7A299A5B44006A730A /* BandMemberAddViewController.swift */,
 				A96F3683299E2D9000376620 /* UserSearchViewController.swift */,
 				A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */,
+				A96F3687299E2EE100376620 /* UserSearchTableViewCell.swift */,
+				A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */,
+				A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */,
+				A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */,
 			);
 			path = BandMemberAddFlow;
 			sourceTree = "<group>";
@@ -733,6 +745,7 @@
 			files = (
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
+				A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
@@ -748,6 +761,7 @@
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
 				9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */,
 				A96F3684299E2D9000376620 /* UserSearchViewController.swift in Sources */,
+				A96F3688299E2EE100376620 /* UserSearchTableViewCell.swift in Sources */,
 				4AC4CE4B2980B41400BB823C /* DefaultButton.swift in Sources */,
 				4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */,
 				A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */,
@@ -762,6 +776,7 @@
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
 				B8B17C5D29823AC900806899 /* Event.swift in Sources */,
+				A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */,
 				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
 				4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
@@ -780,6 +795,7 @@
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
+				A96F368E299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */,
 				7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */,
