@@ -40,32 +40,28 @@ final class AddUnRegisteredMemberViewController: UIViewController {
     }(UIScrollView())
 
     //TODO: 추후에 defualt 버튼으로 수정해야함
-    private lazy var addPracticeSongButton: UIButton = {
-        var configuration = UIButton.Configuration.filled()
-        var container = AttributeContainer()
-        container.font = UIFont.setFont(.contentBold)
-        configuration.baseBackgroundColor = .systemPurple
-        configuration.attributedTitle = AttributedString("멤버 추가", attributes: container)
-        configuration.image = UIImage(systemName: "plus")
-        configuration.imagePadding = 10
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 13, leading: 0, bottom: 13, trailing: 0)
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
 
+    private lazy var addPracticeSongButton: DefaultButton = {
+        var configuration = UIButton.Configuration.plain()
+        //TODO: 이전 PR 머지 이후 이미지 리터럴로 변경하기
+        configuration.image = UIImage(systemName: "plus")
+        configuration.title = "멤버 추가"
+        configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
+        configuration.imagePadding = 10
+        let button = DefaultButton(configuration: configuration)
+        button.tintColor = .white
+        button.constraint(.heightAnchor, constant: 55)
+        button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
         return button
     }()
 
     //TODO: 추후에 defualt 버튼으로 수정해야함
-    private lazy var addCompletionButton = {
-        var configuration = UIButton.Configuration.filled()
-        var container = AttributeContainer()
-        container.font = UIFont.setFont(.contentBold)
-        configuration.baseBackgroundColor = .systemBlue
-        configuration.attributedTitle = AttributedString("추가 완료", attributes: container)
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0)
-        let button = UIButton(configuration: configuration, primaryAction: addCompletionAction)
-        return button
-    }()
+    private lazy var addCompletionButton: BottomButton = {
+        //TODO: 밴드 정보 POST action 추가 필요
+        $0.setTitle("추가 완료", for: .normal)
+        $0.addAction(addCompletionAction, for: .touchUpInside)
+        return $0
+    }(BottomButton())
 
     private lazy var addCompletionAction = UIAction { _ in
         for subview in self.contentView.arrangedSubviews {
@@ -101,7 +97,7 @@ final class AddUnRegisteredMemberViewController: UIViewController {
         contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor, leading: mainScrollView.contentLayoutGuide.leadingAnchor, bottom: mainScrollView.contentLayoutGuide.bottomAnchor, trailing: mainScrollView.contentLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 10, bottom: 160, right: 20))
 
         mainScrollView.addSubview(addPracticeSongButton)
-        addPracticeSongButton.constraint(top: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20))
+        addPracticeSongButton.constraint(top: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
 
         mainScrollView.addSubview(addCompletionButton)
         addCompletionButton.constraint(top: addPracticeSongButton.bottomAnchor,leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 40, left: 20, bottom: 10, right: 20))

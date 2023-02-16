@@ -44,17 +44,17 @@ final class UserSearchViewController: BaseViewController {
         return $0
     }(UITableView())
 
-    private lazy var doneButton = {
-        let button: DefaultButton = DefaultButton()
-        button.setTitle("완료", for: .normal)
+    private lazy var doneButton: BottomButton = {
+        //TODO: 밴드 정보 POST action 추가 필요
+        $0.setTitle("완료", for: .normal)
         let action = UIAction { _ in
             self.dismiss(animated: true){
                 self.completion(self.selectedUsers)
             }
         }
-        button.addAction(action, for: .touchUpInside)
-        return button
-    }()
+        $0.addAction(action, for: .touchUpInside)
+        return $0
+    }(BottomButton())
 
     private lazy var selectedUserListScrollView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -86,16 +86,17 @@ final class UserSearchViewController: BaseViewController {
                              padding: UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 25))
 
         view.addSubview(doneButton)
-        doneButton.constraint(bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                              centerX: view.centerXAnchor,
-                              padding: UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0))
+        doneButton.constraint(leading: view.leadingAnchor,
+                              bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                              trailing: view.trailingAnchor,
+                              padding: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16))
 
         view.addSubview(selectedUserListScrollView)
         selectedUserListScrollView.constraint(.heightAnchor, constant: 60)
-        selectedUserListScrollView.constraint(leading: view.safeAreaLayoutGuide.leadingAnchor,
-                                              bottom: doneButton.topAnchor,
-                                              trailing: view.safeAreaLayoutGuide.trailingAnchor,
-                                              padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+        selectedUserListScrollView.constraint(
+            bottom: doneButton.topAnchor,
+            centerX: view.centerXAnchor,
+            padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
 
         view.addSubview(searchResultTable)
         searchResultTable.constraint(top: searchBar.bottomAnchor,

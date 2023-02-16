@@ -31,10 +31,11 @@ final class BandMemberAddViewController: UIViewController {
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, MemberList2> = self.makeDataSource()
 
     //TODO: Develop Pull 후 비슷한 옵션 추가
-    private let nextButton: DefaultButton = {
-        $0.setTitle("다음", for: .normal)
+    private let nextButton: BottomButton = {
+        //TODO: 밴드 정보 POST action 추가 필요
+        $0.setTitle("추가", for: .normal)
         return $0
-    }(DefaultButton())
+    }(BottomButton())
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -51,8 +52,10 @@ final class BandMemberAddViewController: UIViewController {
         tableView.constraint(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 100, right: 16))
 
         view.addSubview(nextButton)
-        nextButton.constraint(leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 20))
-        nextButton.constraint(.heightAnchor, constant: 50)
+        nextButton.constraint(
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            centerX: view.centerXAnchor,
+            padding: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
     }
 
     private func attribute() {
