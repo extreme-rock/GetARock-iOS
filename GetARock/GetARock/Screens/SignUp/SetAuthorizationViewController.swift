@@ -155,7 +155,49 @@ final class SetAuthorizationViewController: UIViewController {
     private func setLocationManager() {
         self.locationManager.delegate = self
     }
+   
+    private func attribute() {
+        self.view.backgroundColor = .dark03
+    }
     
+    private func setupLayout() {
+        
+        self.view.addSubview(requestAuthorizationLabel)
+        requestAuthorizationLabel.constraint(top: view.topAnchor,
+                                             leading: view.leadingAnchor,
+                                             trailing: view.trailingAnchor,
+                                             padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))
+        
+        self.view.addSubview(authorizationContainerView)
+        authorizationContainerView.constraint(top: requestAuthorizationLabel.bottomAnchor,
+                                              leading: view.leadingAnchor,
+                                              trailing: view.trailingAnchor,
+                                              padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
+        authorizationContainerView.constraint(.heightAnchor, constant: 172)
+        
+        self.authorizationContainerView.addSubview(authorizationStackView)
+        authorizationStackView.constraint(top: authorizationContainerView.topAnchor,
+                                          leading: authorizationContainerView.leadingAnchor,
+                                          bottom: authorizationContainerView.bottomAnchor,
+                                          trailing: authorizationContainerView.trailingAnchor,
+                                          padding: UIEdgeInsets(top: 30, left: 25, bottom: 30, right: 25))
+        
+        self.view.addSubview(authorizationCautionLabel)
+        authorizationCautionLabel.constraint(top: authorizationContainerView.bottomAnchor,
+                                             leading: view.leadingAnchor,
+                                             trailing: view.trailingAnchor,
+                                             padding: UIEdgeInsets(top: 25, left: 27, bottom: 0, right: 27))
+        
+        self.view.addSubview(approveButton)
+        approveButton.constraint(bottom: view.bottomAnchor,
+                                 centerX: view.centerXAnchor,
+                                 padding: UIEdgeInsets(top: 42, left: 16, bottom: 40, right: 16))
+    }
+}
+
+//MARK: - 권한 관련 Method
+
+extension SetAuthorizationViewController {
     private func requestLocationAuthorization() {
         switch locationManager.authorizationStatus {
         case .notDetermined:
@@ -195,44 +237,6 @@ final class SetAuthorizationViewController: UIViewController {
                     print(isGranted)
                 }
             }
-    }
-    
-    private func attribute() {
-        self.view.backgroundColor = .dark03
-    }
-    
-    private func setupLayout() {
-        
-        self.view.addSubview(requestAuthorizationLabel)
-        requestAuthorizationLabel.constraint(top: view.topAnchor,
-                                             leading: view.leadingAnchor,
-                                             trailing: view.trailingAnchor,
-                                             padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))
-        
-        self.view.addSubview(authorizationContainerView)
-        authorizationContainerView.constraint(top: requestAuthorizationLabel.bottomAnchor,
-                                              leading: view.leadingAnchor,
-                                              trailing: view.trailingAnchor,
-                                              padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
-        authorizationContainerView.constraint(.heightAnchor, constant: 172)
-        
-        self.authorizationContainerView.addSubview(authorizationStackView)
-        authorizationStackView.constraint(top: authorizationContainerView.topAnchor,
-                                          leading: authorizationContainerView.leadingAnchor,
-                                          bottom: authorizationContainerView.bottomAnchor,
-                                          trailing: authorizationContainerView.trailingAnchor,
-                                          padding: UIEdgeInsets(top: 30, left: 25, bottom: 30, right: 25))
-        
-        self.view.addSubview(authorizationCautionLabel)
-        authorizationCautionLabel.constraint(top: authorizationContainerView.bottomAnchor,
-                                             leading: view.leadingAnchor,
-                                             trailing: view.trailingAnchor,
-                                             padding: UIEdgeInsets(top: 25, left: 27, bottom: 0, right: 27))
-        
-        self.view.addSubview(approveButton)
-        approveButton.constraint(bottom: view.bottomAnchor,
-                                 centerX: view.centerXAnchor,
-                                 padding: UIEdgeInsets(top: 42, left: 16, bottom: 40, right: 16))
     }
 }
 
