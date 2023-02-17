@@ -42,7 +42,6 @@ final class EventStateLabel: UILabel {
         self.labelData = data
         super.init(frame: .zero)
         attribute()
-        calculateDday()
     }
     
     required init(coder: NSCoder) {
@@ -89,9 +88,15 @@ final class EventStateLabel: UILabel {
     }
     
     private func calculateDday() {
+        
+        let calendar = Calendar.current
+        let currentDay = Date()
         guard let eventDay = labelData.toDate() else { return }
-        let interval = eventDay.timeIntervalSince(Date())
-        days = Int(interval / 86400)
+        
+        guard let dDay = calendar.dateComponents([.day],
+                                                 from: currentDay,
+                                                 to:  eventDay).day else { return }
+        days = dDay
     }
     
     private func setEventStateLabel() {
