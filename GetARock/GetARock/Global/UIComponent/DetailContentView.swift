@@ -18,7 +18,7 @@ final class DetailContentView: UIView {
     }
     
     private lazy var segmentTitle: [String] = {
-        switch detailtopInfoType {
+        switch detailTopInfoType {
         case .band:
             return ["밴드상세", "타임라인", "방명록"]
         case .event:
@@ -28,7 +28,7 @@ final class DetailContentView: UIView {
         }
     }()
     
-    private var detailtopInfoType : DetailTopInfoType
+    private var detailTopInfoType : DetailTopInfoType
     
     private var currentPage: Int = 0 {
         didSet {
@@ -56,12 +56,14 @@ final class DetailContentView: UIView {
         $0.delegate = self
         $0.dataSource = self
         return $0
-    }(UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil))
+    }(UIPageViewController(transitionStyle: .scroll,
+                           navigationOrientation: .horizontal,
+                           options: nil))
     
     // MARK: - Init
     
     init(type: DetailTopInfoType) {
-        self.detailtopInfoType = type
+        self.detailTopInfoType = type
         super.init(frame: .zero)
         setupLayout()
         attribute()
@@ -81,24 +83,28 @@ final class DetailContentView: UIView {
     private func setupLayout() {
         self.addSubview(self.segmentedControl)
         self.segmentedControl.constraint(.heightAnchor, constant: 60)
-        self.segmentedControl.constraint(top: self.topAnchor,
-                                         leading: self.leadingAnchor,
-                                         trailing: self.trailingAnchor,
-                                         padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        self.segmentedControl.constraint(
+            top: self.topAnchor,
+            leading: self.leadingAnchor,
+            trailing: self.trailingAnchor,
+            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        )
         
         self.addSubview(self.pageViewController.view)
-        self.pageViewController.view.constraint(top:segmentedControl.bottomAnchor,
-                                                leading: self.leadingAnchor,
-                                                bottom: self.bottomAnchor,
-                                                trailing: self.trailingAnchor,
-                                                padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0))
+        self.pageViewController.view.constraint(
+            top:segmentedControl.bottomAnchor,
+            leading: self.leadingAnchor,
+            bottom: self.bottomAnchor,
+            trailing: self.trailingAnchor,
+            padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        )
     }
     
     private func setDetailViewController() {
-        switch detailtopInfoType {
+        switch detailTopInfoType {
         case .band:
             
-            //임시 View들입니다..! 추후 삭제예정
+            // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
                 $0.view.backgroundColor = .red
                 return $0
@@ -118,7 +124,7 @@ final class DetailContentView: UIView {
             
         case .event:
             
-            //임시 View들입니다..! 추후 삭제예정
+            // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
                 $0.view.backgroundColor = .green
                 return $0
@@ -133,7 +139,7 @@ final class DetailContentView: UIView {
             
         case .myPage:
             
-            //임시 View들입니다..! 추후 삭제예정
+            // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
                 $0.view.backgroundColor = .purple
                 return $0
@@ -151,8 +157,9 @@ final class DetailContentView: UIView {
             
             detailContentViewControllers = [vc1, vc2, vc3]
         }
-        pageViewController.setViewControllers([self.detailContentViewControllers[0]],
-                                              direction: .forward, animated: true)
+        pageViewController.setViewControllers(
+            [self.detailContentViewControllers[0]], direction: .forward, animated: true
+        )
     }
     
     @objc
@@ -165,8 +172,8 @@ final class DetailContentView: UIView {
 
 extension DetailContentView: UIPageViewControllerDataSource {
     
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore
+                            viewController: UIViewController) -> UIViewController? {
         
         guard let index = self.detailContentViewControllers.firstIndex(of: viewController),
               index - 1 >= 0
@@ -174,24 +181,24 @@ extension DetailContentView: UIPageViewControllerDataSource {
         return self.detailContentViewControllers[index - 1]
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter
+                            viewController: UIViewController) -> UIViewController? {
         
         guard let index = self.detailContentViewControllers.firstIndex(of: viewController),
               index + 1 < self.detailContentViewControllers.count
         else { return nil }
         return self.detailContentViewControllers[index + 1]
     }
-    
-  
 }
 
 // MARK: - UIPageViewControllerDelegate
 
 extension DetailContentView: UIPageViewControllerDelegate {
     
-    func pageViewController(_ pageViewController: UIPageViewController,didFinishAnimating finished: Bool,
-                            previousViewControllers: [UIViewController],transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
         
         guard let viewController = pageViewController.viewControllers?[0],
               let index = self.detailContentViewControllers.firstIndex(of: viewController)
