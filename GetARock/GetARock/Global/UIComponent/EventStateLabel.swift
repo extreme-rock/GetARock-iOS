@@ -89,11 +89,8 @@ final class EventStateLabel: UILabel {
     
     private func calculateDday() {
         
-        //① 현재 날짜에서 시간을 제거하기 위해 문자열로 만듦
         let currentDate = Date().toString()
-        //② 문자열이된 현재 날짜에서 시간을 제거히고(년월일 00시 00분) 다시 Date로 만듦
         guard let today = currentDate.extractDay() else { return }
-        //③ 이벤트 날짜에서 시간을 제거하고(년월일 00시 00분) Date로 만듦
         guard let eventDay = labelData.extractDay() else { return }
         
         let calendar = Calendar.current
@@ -102,11 +99,6 @@ final class EventStateLabel: UILabel {
                                                  to:  eventDay).day else { return }
         
         days = betweenDays
-        
-        print("이벤트 일자: \(eventDay)")
-        print("현재 일자: \(today)")
-        print("D-day: \(betweenDays)")
-        
     }
     
     private func setEventStateLabel() {
