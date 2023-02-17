@@ -63,20 +63,18 @@ final class SetAuthorizationViewController: UIViewController {
         $0.alignment = .leading
         $0.distribution = .fill
         
-        let titleLabel: UILabel = {
-            $0.text = "위치(선택)"
-            $0.font = .setFont(.contentBold)
-            $0.textColor = .white
-            return $0
-        }(UILabel())
+        let titleLabel = BasicLabel(
+            contentText: "위치(선택)",
+            fontStyle: .contentBold,
+            textColorInfo: .white
+        )
         
-        let contentLabel: UILabel = {
-            $0.text = "현 위치 기반 주변 밴드, 모여락 정보 제공"
-            $0.font = .setFont(.content)
-            $0.textColor = .white
-            return $0
-        }(UILabel())
-        
+        let contentLabel = BasicLabel(
+            contentText: "현 위치 기반 주변 밴드, 모여락 정보 제공",
+            fontStyle: .content,
+            textColorInfo: .white
+        )
+
         $0.addArrangedSubview(titleLabel)
         $0.addArrangedSubview(contentLabel)
         return $0
