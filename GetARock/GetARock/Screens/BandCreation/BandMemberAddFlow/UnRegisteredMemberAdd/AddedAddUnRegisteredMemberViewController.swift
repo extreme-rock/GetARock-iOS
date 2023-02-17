@@ -7,7 +7,8 @@
 
 import UIKit
 
-final class AddUnRegisteredMemberViewController: UIViewController {
+//TODO: API 업데이트 되면 TableCell에 선택한 여러 악기가 표기 되게 만들기 
+final class AddUnRegisteredMemberViewController: BaseViewController {
 
     private var addedMembers: [MemberList2] = []
 
@@ -78,6 +79,7 @@ final class AddUnRegisteredMemberViewController: UIViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
+        setKeyboardDismiss()
     }
 
     override func viewDidLayoutSubviews() {
@@ -110,6 +112,13 @@ final class AddUnRegisteredMemberViewController: UIViewController {
             contentView.arrangedSubviews.map { $0 as! UnRegisteredMemberCardView }.forEach { $0.cancelButton.isHidden = false }
         }
     }
+
+    private func setKeyboardDismiss() {
+           let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
+           recognizer.numberOfTapsRequired = 1
+           recognizer.numberOfTouchesRequired = 1
+           mainScrollView.addGestureRecognizer(recognizer)
+       }
 }
 
 // ScrollView 가로 스크롤 막기
@@ -130,6 +139,10 @@ extension AddUnRegisteredMemberViewController {
             newCard,
             at: contentView.arrangedSubviews.endIndex)
         applySnapshotForDeleteButton()
+    }
+
+    @objc func didTouchScreen() {
+        self.view.endEditing(true)
     }
 }
 
