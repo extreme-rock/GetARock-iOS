@@ -12,7 +12,7 @@ final class EventStateLabelStackView: UIStackView {
     // MARK: - VIew
     
     private let eventData: Event
-    private lazy var ddayLabel = EventStateLabel(type: .dday,
+    private lazy var dDayLabel = EventStateLabel(type: .dDay,
                                                  data: eventData.startTime)
     private lazy var stateLabel = EventStateLabel(type: .state,
                                                   data: eventData.state.rawValue)
@@ -40,7 +40,7 @@ final class EventStateLabelStackView: UIStackView {
     }
     
     private func setupLayout() {
-        self.addArrangedSubview(ddayLabel)
+        self.addArrangedSubview(dDayLabel)
         self.addArrangedSubview(stateLabel)
         self.addArrangedSubview(categoryLabel)
     }
@@ -50,6 +50,6 @@ final class EventStateLabelStackView: UIStackView {
 
 extension EventStateLabelStackView: DeleteDdayLabelDelegate {
     func DeleteDdayLabel() {
-        self.removeArrangedSubview(ddayLabel)
+        self.removeArrangedSubview(dDayLabel)
     }
 }

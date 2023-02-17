@@ -20,7 +20,7 @@ final class EventStateLabel: UILabel {
     // MARK: - Property
     
     enum EventLabelType {
-        case dday
+        case dDay
         case state
         case category
     }
@@ -97,7 +97,7 @@ final class EventStateLabel: UILabel {
     private func setEventStateLabel() {
         
         switch eventLabelType {
-        case .dday:
+        case .dDay:
             calculateDday()
             if days >= 0 {
                 setDefaultUI()
