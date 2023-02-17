@@ -29,17 +29,15 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
     //TODO: 리더, 멤버, 미가입 회원에 따라서 이미지가 변화해야함
     private lazy var leftView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "music.note.list")
-        imageView.contentMode = .scaleToFill
-        return imageView
-    }()
+        $0.contentMode = .scaleAspectFit
+        return $0
+    }(UIImageView())
 
     lazy var deleteButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "xmark.circle.fill",
             withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),
-            for: .normal)
+                    for: .normal)
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .gray02
         $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
@@ -98,9 +96,15 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
     func configure(data: MemberList2) {
         self.titleLabel.text = data.name
-        //TODO: List로 받을 수 있게 수정해야함
+        //TODO: List로 받을 수 있게 수정해야leftView함
         self.subTitleLabel.text = data.instrumentList.first!.name
         self.id = data.id
+        switch data.memberState {
+            case "ADMIN": leftView.image = ImageLiteral.leaderIcon
+            case "NONE": leftView.image = ImageLiteral.memberIcon
+            case "ANONYMOUS": leftView.image = ImageLiteral.unRegisteredMemberIcon
+            default: return
+        }
     }
 }
 

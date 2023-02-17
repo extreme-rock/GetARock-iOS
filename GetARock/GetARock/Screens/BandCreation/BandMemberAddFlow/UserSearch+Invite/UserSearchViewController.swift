@@ -145,7 +145,7 @@ extension UserSearchViewController: UITableViewDelegate {
                               instrumentList: [InstrumentList2(
                                 instrumentId: 0,
                                 isMain: true,
-                                name: selectedCell.userInstrumentLabel.text ?? "")])
+                                name: selectedCell.userInstrumentLabel.text ?? "")], gender: "MEN", age: "TWENTIES")
         // 선택될 때 Cell의 아이디 그대로 데이터에 넣기
         data.id = selectedCell.id
 

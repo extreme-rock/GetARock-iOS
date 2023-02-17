@@ -108,7 +108,8 @@ extension LeaderPositionSelectViewController {
     }
     
     private func navigateToNext() {
-        self.navigationController?.pushViewController(BandMemberAddViewController(), animated: true)
+        let nextVC = BandMemberAddViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
         self.navigationController?.navigationBar.isHidden = false
     }
 }

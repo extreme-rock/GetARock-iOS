@@ -137,10 +137,8 @@ extension BandMemberAddViewController: UITableViewDelegate {
     }
 }
 
-//MARK: Identifier에 따른 정수형 index 추출 extension
-//extension Array where Element == CellInformation {
-//    func cellIndex(with id: CellInformation.ID) -> Self.Index {
-//        guard let index = firstIndex(where: { $0.id == id }) else { return 0 }
-//        return index
-//    }
-//}
+extension BandMemberAddViewController {
+    func passInstrumentData(with data: MemberList) {
+//        self.addedMembers.append(data)
+    }
+}

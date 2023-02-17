@@ -11,12 +11,25 @@ struct MemberDataDTO: Codable {
     let memberList: [MemberList2]
 }
 
+//struct MemberList: Codable {
+//    let memberId: Int?
+//    let name: String
+//    let memberState: MemberState
+//    let instrumentList: [InstrumentList]
+//}
+
 struct MemberList2: Hashable, Identifiable, Codable {
     var id: String = UUID().uuidString
     let memberId: Int
     let name, memberState: String
-    let instrumentList: [InstrumentList2]
+    var instrumentList: [InstrumentList2]
+    let gender: String
+    let age: String
 }
+
+//struct InstrumentList: Codable {
+//    let name: String
+//}
 
 struct InstrumentList2: Hashable, Codable {
     let instrumentId: Int
@@ -30,28 +43,40 @@ extension MemberDataDTO {
         MemberDataDTO(memberList: [
             MemberList2(memberId: 0,
                        name: "루키",
-                       memberState: "NONE",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "drum"), InstrumentList2(instrumentId: 0, isMain: false, name: "guitar")]),
+                       memberState: "ADMIN",
+                        instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "drum"), InstrumentList2(instrumentId: 0, isMain: false, name: "guitar")],
+                       gender: "MEN",
+                       age: "TWENITES"),
             MemberList2(memberId: 0,
                        name: "구엘",
                        memberState: "NONE",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass")]),
+                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass")],
+                        gender: "MEN",
+                        age: "TWENITES"),
             MemberList2(memberId: 0,
                        name: "노엘",
                        memberState: "NONE",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "vocal")]),
+                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "vocal")],
+                        gender: "WOMEN",
+                        age: "TWENITES"),
             MemberList2(memberId: 0,
                        name: "알로라",
                        memberState: "MEMBER",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass"), InstrumentList2(instrumentId: 0, isMain: false, name: "drum")]),
+                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass"), InstrumentList2(instrumentId: 0, isMain: false, name: "drum")],
+                        gender: "WOMEN",
+                        age: "TWENITES"),
             MemberList2(memberId: 0,
                        name: "데이크",
                        memberState: "MEMBER",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass")]),
+                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass")],
+                        gender: "MEN",
+                        age: "TWENITES"),
             MemberList2(memberId: 0,
                        name: "쏘시지불나방전기뱀장어",
                        memberState: "NONE",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "vocal")]),])
+                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "vocal")],
+                        gender: "MEN",
+                        age: "TWENITES"),])
 
 }
 #endif
