@@ -21,6 +21,7 @@
 		4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
 		4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */; };
+		4A8355E3299F78AD00D82AF3 /* UserInfoInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */; };
 		4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */; };
 		4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */; };
 		4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */; };
@@ -117,6 +118,7 @@
 		4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyUserProfileViewController.swift; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
 		4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectCollectionViewHeader.swift; sourceTree = "<group>"; };
+		4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoInputViewController.swift; sourceTree = "<group>"; };
 		4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionReusableView.swift; sourceTree = "<group>"; };
 		4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AC4CE3C297F7EED00BB823C /* BandMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				4A5931892989041200C8DA31 /* PlusPositionViewController.swift */,
 				4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */,
 				4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */,
+				4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -798,6 +801,7 @@
 				4A268C63299A18660068F200 /* ModifyMyPageViewController.swift in Sources */,
 				4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */,
 				B8B17C542980B99900806899 /* Coordinate.swift in Sources */,
+				4A8355E3299F78AD00D82AF3 /* UserInfoInputViewController.swift in Sources */,
 				4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
