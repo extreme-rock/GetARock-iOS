@@ -18,28 +18,21 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
           }
       }
 
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.setFont(.headline01)
-        label.textColor = .white
+    let userNameLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
 
-        return label
-    }()
+    let userGenderLabel: BasicLabel = BasicLabel(contentText: "남", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
-    let subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.setFont(.content)
-        label.textColor = .white.withAlphaComponent(0.5)
+    let horizontalSeperator: BasicLabel = BasicLabel(contentText: "|", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
-        return label
-    }()
+    let userAgeLabel: BasicLabel = BasicLabel(contentText: "20대", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
-    lazy var leftView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "music.note.list")
-        imageView.contentMode = .scaleToFill
-        return imageView
-    }()
+    lazy var userDetailInfoHstack: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 2
+        return $0
+    }(UIStackView(arrangedSubviews: [userGenderLabel, horizontalSeperator, userAgeLabel]))
+
+    let userInstrumentLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
     lazy var selectButton: UIImageView = {
         let imageView = UIImageView()
@@ -58,8 +51,8 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
     }
 
     override func prepareForReuse() {
-        self.titleLabel.text = nil
-        self.subTitleLabel.text = nil
+        self.userNameLabel.text = nil
+        self.userInstrumentLabel.text = nil
     }
 
     private func attribute() {
@@ -69,17 +62,14 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
     private func setupLayout() {
         backgroundColor = .clear
 
-        contentView.addSubview(leftView)
-        leftView.constraint(.widthAnchor, constant: 35)
-        leftView.constraint(.heightAnchor, constant: 35)
-        leftView.constraint(leading: contentView.leadingAnchor, centerY: contentView.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        )
+        contentView.addSubview(userNameLabel)
+        userNameLabel.constraint(top: contentView.safeAreaLayoutGuide.topAnchor, leading: contentView.safeAreaLayoutGuide.leadingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 0))
 
-        contentView.addSubview(titleLabel)
-        titleLabel.constraint(top: leftView.topAnchor, leading: leftView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0))
+        contentView.addSubview(userDetailInfoHstack)
+        userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor, bottom: userNameLabel.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
 
-        contentView.addSubview(subTitleLabel)
-        subTitleLabel.constraint(top: titleLabel.bottomAnchor, leading: titleLabel.leadingAnchor, padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
+        contentView.addSubview(userInstrumentLabel)
+        userInstrumentLabel.constraint(top: userNameLabel.bottomAnchor, leading: userNameLabel.leadingAnchor, padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
 
         contentView.addSubview(selectButton)
         selectButton.constraint(.widthAnchor, constant: 25)
@@ -90,9 +80,9 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
     }
 
     func configure(data: MemberList2) {
-        self.titleLabel.text = data.name
+        self.userNameLabel.text = data.name
         //TODO: 리스트 형태로 받을 수 있도록 바꿔야하
-        self.subTitleLabel.text = data.instrumentList.first!.name
+        self.userInstrumentLabel.text = data.instrumentList.first!.name
         self.id = data.id
     }
 

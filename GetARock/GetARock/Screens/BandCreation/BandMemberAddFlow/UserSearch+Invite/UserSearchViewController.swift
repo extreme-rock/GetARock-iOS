@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+//TODO: API 업데이트 되면 TableCell에 선택한 여러 악기가 표기 되게 만들기 
 enum BottomScrollSection: Int {
     case main
 }
@@ -138,12 +140,12 @@ extension UserSearchViewController: UITableViewDelegate {
         // 선택된 셀에 접근할 수 있으나 데이터는 따로 만들어야함
         // CellInformation만들 때 임의의 id를 만들기 때문에, 만들고나서 선택한 cell의 id를 주입해줘야함
         var data = MemberList2(memberId: 0,
-                              name: selectedCell.titleLabel.text ?? "",
+                               name: selectedCell.userNameLabel.text ?? "",
                               memberState: "NONE",
                               instrumentList: [InstrumentList2(
                                 instrumentId: 0,
                                 isMain: true,
-                                name: selectedCell.subTitleLabel.text ?? "")])
+                                name: selectedCell.userInstrumentLabel.text ?? "")])
         // 선택될 때 Cell의 아이디 그대로 데이터에 넣기
         data.id = selectedCell.id
 
