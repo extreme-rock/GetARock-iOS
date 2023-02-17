@@ -152,6 +152,7 @@ final class SetAuthorizationViewController: UIViewController {
     
     private func setLocationManager() {
         self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
    
     private func attribute() {
@@ -199,7 +200,6 @@ extension SetAuthorizationViewController {
     private func requestLocationAuthorization() {
         switch locationManager.authorizationStatus {
         case .notDetermined:
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
         case .denied:
             self.showRequestLocationServiceAlert()
