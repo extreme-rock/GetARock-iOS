@@ -26,6 +26,9 @@ enum ImageLiteral {
     static var youtubeIcon: UIImage { .load(named: "youtubeIcon") }
     static var instagramIcon: UIImage { .load(named: "instagramIcon") }
     static var soundCloudIcon: UIImage { .load(named: "soundCloudIcon") }
+    static var leaderIcon: UIImage { .load(named: "leaderIcon")}
+    static var memberIcon: UIImage { .load(named: "memberIcon")}
+    static var unRegisteredMemberIcon: UIImage { .load(named: "unRegisteredMemberIcon")}
 }
 
 extension UIImage {
