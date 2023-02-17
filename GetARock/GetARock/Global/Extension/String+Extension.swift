@@ -40,4 +40,21 @@ extension String {
             return nil
         }
     }
+    
+    // MARK: String으로 된 날짜(년월일 시분초)에서 년월일만 추출해 Date 타입으로 변환
+    func extractDay() -> Date? {
+        let startIndex = self.index(self.startIndex, offsetBy: 7)
+        let endIndex = self.index(self.startIndex, offsetBy: 10)
+        let range = ...endIndex
+        let eventDate = self[range]
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        if let date = dateFormatter.date(from: String(eventDate)) {
+            return date
+        } else {
+            return nil
+        }
+    }
 }
