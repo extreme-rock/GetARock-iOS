@@ -193,22 +193,11 @@ final class UserInfoInputViewController: BaseViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
-    func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
     private func attribute() {
         self.view.backgroundColor = .dark01
     }
     
     private func setupLayout() {
-        
         //MARK: - scrollView
         
         view.addSubview(scrollView)
