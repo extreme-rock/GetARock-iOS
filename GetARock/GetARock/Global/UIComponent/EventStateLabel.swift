@@ -96,12 +96,8 @@ final class EventStateLabel: UILabel {
         let currentDay = calendar.dateComponents([.day], from: Date())
         
         guard let betweenDays = calendar.dateComponents([.day],
-                                                        from: eventDay,
-                                                        to: currentDay).day else { return }
-        
-        print(currentDay)
-        print(eventDay)
-        print(betweenDays)
+                                                        from: currentDay,
+                                                        to: eventDay).day else { return }
         
         days = betweenDays
     }
@@ -111,10 +107,9 @@ final class EventStateLabel: UILabel {
         switch eventLabelType {
         case .dDay:
             calculateDday()
-            self.text = "\(days)"
             if days >= 0 {
                 setDefaultUI()
-                self.text = "\(days)"
+                self.text = "D-\(days)"
             } else {
                 self.delegate?.DeleteDdayLabel()
             }
