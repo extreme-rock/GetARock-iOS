@@ -32,26 +32,10 @@ extension String {
     // MARK: String -> Date로 변환
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "KST")
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         if let date = dateFormatter.date(from: self) {
-            return date
-        } else {
-            return nil
-        }
-    }
-    
-    // MARK: String으로 된 날짜(년월일 시분초)에서 년월일만 추출해 Date 타입으로 변환
-    func extractDay() -> Date? {
-        let startIndex = self.index(self.startIndex, offsetBy: 7)
-        let endIndex = self.index(self.startIndex, offsetBy: 10)
-        let range = ...endIndex
-        let eventDate = self[range]
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        if let date = dateFormatter.date(from: String(eventDate)) {
             return date
         } else {
             return nil
