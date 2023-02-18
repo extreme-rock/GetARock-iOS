@@ -190,6 +190,17 @@ final class UserInfoInputViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
+        self.hideKeyboardWhenTappedAround()
+    }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     private func attribute() {
