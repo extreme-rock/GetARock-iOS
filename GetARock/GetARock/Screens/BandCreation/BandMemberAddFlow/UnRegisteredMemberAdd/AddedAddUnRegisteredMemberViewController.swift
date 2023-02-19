@@ -67,16 +67,24 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     private lazy var addCompletionAction = UIAction { _ in
         for subview in self.contentView.arrangedSubviews {
             let card = subview as! UnRegisteredMemberCardView
+            let mainPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
+                instrumentId: 0,
+                isMain: true,
+                name: card.positionSelect.selectedItem() ?? "")
+            
+            let otherPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
+                instrumentId: 0,
+                isMain: true,
+                name: card.otherPositionTextField.textField.text ?? "")
+            
             let data = SearchedUserInfo(
                 memberId: 0,
                 name: card.bandMemberNameTextField.textField.text ?? "",
                 memberState: .annonymous,
-                instrumentList: [SearchedUserInstrumentList(
-                    instrumentId: 0,
-                    isMain: true,
-                    name: card.otherPositionTextField.textField.text ?? "")],
-                gender: "MEN",
-                age: "TWENTIES")
+                instrumentList: [mainPosition, otherPosition],
+                //MARK: 미가입멤버 회원이라서 성별과 나이 정보가 없음
+                gender: "Unknown",
+                age: "Unknown")
             self.addedMembers.append(data)
         }
         self.dismiss(animated: true){

@@ -41,7 +41,7 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
 
     private let positionLabel = BasicLabel(contentText: "포지션", fontStyle: .contentBold, textColorInfo: .white)
 
-    private var positionSelect: SelectCollectionView = {
+    let positionSelect: SelectCollectionView = {
         $0.constraint(.heightAnchor, constant: 110)
         return $0
     }(SelectCollectionView(widthState: .fixed, items: ["보컬", "기타", "베이스", "드럼", "키보드"], widthSize: 100, itemSpacing: 7))

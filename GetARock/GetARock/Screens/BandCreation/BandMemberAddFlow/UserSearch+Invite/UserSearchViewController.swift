@@ -172,9 +172,18 @@ extension UserSearchViewController: UITableViewDelegate {
 
 extension UserSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //MARK: 동적 셀 크기 배정 코드 추후 추가 필요
-        let cellSize = CGSize(width: 100, height: 50)
-        return cellSize
+        //MARK: 동적 셀 크기 배정 코드
+         let leadingTrailingInset: CGFloat = 60
+         let cellHeight: CGFloat = 50
+         
+        let nameText = selectedUsers[indexPath.row].name
+         let size: CGSize = .init(width: collectionView.frame.width, height: cellHeight)
+         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .regular)]
+         
+         let estimatedFrame = nameText.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+         let cellWidth: CGFloat = estimatedFrame.width + leadingTrailingInset
+         
+         return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 

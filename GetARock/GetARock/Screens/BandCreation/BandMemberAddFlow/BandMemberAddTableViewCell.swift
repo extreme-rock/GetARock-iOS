@@ -116,15 +116,19 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         //TODO: List로 받을 수 있게 수정해야leftView함
         self.instrumentListLabel.text = data.instrumentList.first!.name
         self.id = data.id
+        
         switch data.memberState {
         case .admin: leftView.image = ImageLiteral.leaderIcon
         case .none: leftView.image = ImageLiteral.memberIcon
         case .annonymous: leftView.image = ImageLiteral.unRegisteredMemberIcon
         default: return
         }
+        
         self.userNameLabel.text = data.name
         self.userAgeLabel.text = data.age
         self.userGenderLabel.text = data.gender
+        
+        if data.memberState == .annonymous { userDetailInfoHstack.isHidden = true }
         self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ",")
     }
 }
