@@ -11,7 +11,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
     var id: String = "default"
 
-    private let titleLabel: UILabel = {
+    private let userNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.setFont(.headline01)
         label.textColor = .white
@@ -19,13 +19,25 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         return label
     }()
 
-    private let subTitleLabel: UILabel = {
+    private let instrumentListLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.setFont(.content)
         label.textColor = .white.withAlphaComponent(0.5)
 
         return label
     }()
+
+    private let userGenderLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+
+    private let horizontalSeperator: BasicLabel = BasicLabel(contentText: "|", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+
+    private let userAgeLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+
+    private lazy var userDetailInfoHstack: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 2
+        return $0
+    }(UIStackView(arrangedSubviews: [userGenderLabel, horizontalSeperator, userAgeLabel]))
 
     //TODO: 리더, 멤버, 미가입 회원에 따라서 이미지가 변화해야함
     private lazy var leftView: UIImageView = {
@@ -59,8 +71,8 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
     }
 
     override func prepareForReuse() {
-        self.titleLabel.text = nil
-        self.subTitleLabel.text = nil
+        self.userNameLabel.text = nil
+        self.instrumentListLabel.text = nil
     }
 
     private func attribute() {
@@ -76,14 +88,14 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
                             centerY: contentView.centerYAnchor,
                             padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
 
-        contentView.addSubview(titleLabel)
-        titleLabel.constraint(top: leftView.topAnchor,
+        contentView.addSubview(userNameLabel)
+        userNameLabel.constraint(top: leftView.topAnchor,
                               leading: leftView.trailingAnchor,
                               padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0))
 
-        contentView.addSubview(subTitleLabel)
-        subTitleLabel.constraint(top: titleLabel.bottomAnchor,
-                                 leading: titleLabel.leadingAnchor,
+        contentView.addSubview(instrumentListLabel)
+        instrumentListLabel.constraint(top: userNameLabel.bottomAnchor,
+                                 leading: userNameLabel.leadingAnchor,
                                  padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
 
         contentView.addSubview(deleteButton)
@@ -92,12 +104,17 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         deleteButton.constraint(trailing: contentView.trailingAnchor,
                                 centerY: contentView.centerYAnchor,
                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
+
+        contentView.addSubview(userDetailInfoHstack)
+        userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor, bottom: userNameLabel.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
+
+        
     }
 
     func configure(data: SearchedUserInfo) {
-        self.titleLabel.text = data.name
+        self.userNameLabel.text = data.name
         //TODO: List로 받을 수 있게 수정해야leftView함
-        self.subTitleLabel.text = data.instrumentList.first!.name
+        self.instrumentListLabel.text = data.instrumentList.first!.name
         self.id = data.id
         switch data.memberState {
         case .admin: leftView.image = ImageLiteral.leaderIcon
@@ -105,6 +122,10 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         case .annonymous: leftView.image = ImageLiteral.unRegisteredMemberIcon
         default: return
         }
+        self.userNameLabel.text = data.name
+        self.userAgeLabel.text = data.age
+        self.userGenderLabel.text = data.gender
+        self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ",")
     }
 }
 

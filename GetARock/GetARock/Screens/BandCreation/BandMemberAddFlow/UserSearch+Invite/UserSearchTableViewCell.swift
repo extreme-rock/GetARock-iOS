@@ -20,13 +20,13 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     let userNameLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
 
-    let userGenderLabel: BasicLabel = BasicLabel(contentText: "남", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let userGenderLabel: BasicLabel = BasicLabel(contentText: "남", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
-    let horizontalSeperator: BasicLabel = BasicLabel(contentText: "|", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let horizontalSeperator: BasicLabel = BasicLabel(contentText: "|", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
-    let userAgeLabel: BasicLabel = BasicLabel(contentText: "20대", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let userAgeLabel: BasicLabel = BasicLabel(contentText: "20대", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
-    lazy var userDetailInfoHstack: UIStackView = {
+    private lazy var userDetailInfoHstack: UIStackView = {
         $0.axis = .horizontal
         $0.spacing = 2
         return $0
@@ -34,7 +34,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     let userInstrumentLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
-    lazy var selectButton: UIImageView = {
+    private lazy var selectButton: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         return imageView

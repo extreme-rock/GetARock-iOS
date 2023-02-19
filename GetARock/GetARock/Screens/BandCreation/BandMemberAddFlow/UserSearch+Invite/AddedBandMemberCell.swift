@@ -19,7 +19,7 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
         return view
     }()
     
-    private let itemLabel: UILabel = {
+    private let addedMemberLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.textColor = .white
@@ -70,8 +70,8 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
     private func setupLayout() {
         contentView.addSubview(backgroundContentView)
         backgroundContentView.constraint(to: self)
-        backgroundContentView.addSubview(itemLabel)
-        itemLabel.constraint(
+        backgroundContentView.addSubview(addedMemberLabel)
+        addedMemberLabel.constraint(
             leading: self.leadingAnchor,
             trailing: self.trailingAnchor,
             centerY: self.centerYAnchor,
@@ -86,7 +86,7 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
     }
 
     func configure(data: SearchedUserInfo) {
-        itemLabel.text = data.name
+        addedMemberLabel.text = data.name
         self.id = data.id
     }
 }
