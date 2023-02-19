@@ -22,9 +22,9 @@ final class UserSearchViewController: BaseViewController {
 
     private var tempWidth: CGFloat = 0
 
-    var completion: (_ selectedUsers: [MemberList2]) -> Void = { selectedUsers in }
+    var completion: (_ selectedUsers: [SearchedUserInfo]) -> Void = { selectedUsers in }
 
-    var selectedUsers: [MemberList2] = []
+    var selectedUsers: [SearchedUserInfo] = []
 
     private lazy var searchBar: SearchTextField = {
         let searchBar = SearchTextField(placeholder: "닉네임으로 검색")
@@ -72,7 +72,7 @@ final class UserSearchViewController: BaseViewController {
     }()
 
     //MARK: Bottom CollectionView
-    private lazy var bottomScrollViewDataSource: UICollectionViewDiffableDataSource<BottomScrollSection, MemberList2> = self.makeDataSource()
+    private lazy var bottomScrollViewDataSource: UICollectionViewDiffableDataSource<BottomScrollSection, SearchedUserInfo> = self.makeDataSource()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,14 +115,14 @@ final class UserSearchViewController: BaseViewController {
 extension UserSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        MemberDataDTO.testData.memberList.count
+        SearchedUserListDTO.testData.memberList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: UserSearchTableViewCell.classIdentifier,
             for: indexPath) as? UserSearchTableViewCell else { return UITableViewCell()}
-        cell.configure(data: MemberDataDTO.testData.memberList[indexPath.row])
+        cell.configure(data: SearchedUserListDTO.testData.memberList[indexPath.row])
         cell.selectionStyle = .none
         return cell
     }
@@ -139,7 +139,7 @@ extension UserSearchViewController: UITableViewDelegate {
         // 선택된 tableView의 데이터만 따로 추출
         // 선택된 셀에 접근할 수 있으나 데이터는 따로 만들어야함
         // CellInformation만들 때 임의의 id를 만들기 때문에, 만들고나서 선택한 cell의 id를 주입해줘야함
-        var data = MemberList2(memberId: 0,
+        var data = SearchedUserInfo(memberId: 0,
                                name: selectedCell.userNameLabel.text ?? "",
                               memberState: "NONE",
                               instrumentList: [InstrumentList2(
@@ -190,15 +190,15 @@ extension UserSearchViewController: UIScrollViewDelegate {
 //MARK: SelectedUserScollView DiffableData Source
 extension UserSearchViewController {
 
-    func updateSnapShot(with items: [MemberList2]) {
-        var snapShot = NSDiffableDataSourceSnapshot<BottomScrollSection, MemberList2>()
+    func updateSnapShot(with items: [SearchedUserInfo]) {
+        var snapShot = NSDiffableDataSourceSnapshot<BottomScrollSection, SearchedUserInfo>()
         snapShot.appendSections([.main])
         snapShot.appendItems(items, toSection: .main)
         self.bottomScrollViewDataSource.apply(snapShot, animatingDifferences: true)
     }
 
-    func makeDataSource() -> UICollectionViewDiffableDataSource<BottomScrollSection, MemberList2> {
-        return UICollectionViewDiffableDataSource<BottomScrollSection, MemberList2>(collectionView: self.selectedUserListScrollView, cellProvider: { collectionView, indexPath, person in
+    func makeDataSource() -> UICollectionViewDiffableDataSource<BottomScrollSection, SearchedUserInfo> {
+        return UICollectionViewDiffableDataSource<BottomScrollSection, SearchedUserInfo>(collectionView: self.selectedUserListScrollView, cellProvider: { collectionView, indexPath, person in
 
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddedBandMemberCell.classIdentifier, for: indexPath) as? AddedBandMemberCell else { return UICollectionViewCell() }
 
@@ -209,7 +209,7 @@ extension UserSearchViewController {
                 self.updateSnapShot(with: self.selectedUsers)
 
                 //TODO: Deselect 로직 수정 필요. 애초에 선택된 애들만 없앨 수 있게
-                for index in 0..<MemberDataDTO.testData.memberList.count {
+                for index in 0..<SearchedUserListDTO.testData.memberList.count {
                     let searchResultTablecell = self.searchResultTable.cellForRow(at: IndexPath(row: index, section: 0)) as! UserSearchTableViewCell
                     if searchResultTablecell.id == cell.id {
                         searchResultTablecell.isChecked = false

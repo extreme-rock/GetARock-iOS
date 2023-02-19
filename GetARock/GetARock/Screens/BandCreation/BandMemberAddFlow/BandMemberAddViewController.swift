@@ -14,7 +14,7 @@ enum BandMemberAddTableViewSection: String {
 
 final class BandMemberAddViewController: UIViewController {
 
-    private var addedMembers: [MemberList2] = []
+    private var addedMembers: [SearchedUserInfo] = []
 
     //MARK: - View
     private lazy var tableView: UITableView = {
@@ -28,7 +28,7 @@ final class BandMemberAddViewController: UIViewController {
         return $0
     }(UITableView(frame: .zero, style: .grouped))
 
-    private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, MemberList2> = self.makeDataSource()
+    private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
     //TODO: Develop Pull 후 비슷한 옵션 추가
     private let nextButton: BottomButton = {
@@ -66,15 +66,15 @@ final class BandMemberAddViewController: UIViewController {
 //MARK: DiffableDataSource 관련 메소드
 extension BandMemberAddViewController {
 
-    func updateSnapShot(with items: [MemberList2]) {
-        var snapShot = NSDiffableDataSourceSnapshot<BandMemberAddTableViewSection, MemberList2>()
+    func updateSnapShot(with items: [SearchedUserInfo]) {
+        var snapShot = NSDiffableDataSourceSnapshot<BandMemberAddTableViewSection, SearchedUserInfo>()
         snapShot.appendSections([.main])
         snapShot.appendItems(items, toSection: .main)
         self.dataSource.apply(snapShot, animatingDifferences: true)
     }
 
-    func makeDataSource() -> UITableViewDiffableDataSource<BandMemberAddTableViewSection, MemberList2> {
-        return UITableViewDiffableDataSource<BandMemberAddTableViewSection, MemberList2>(tableView: self.tableView) { tableView, indexPath, cellData in
+    func makeDataSource() -> UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> {
+        return UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo>(tableView: self.tableView) { tableView, indexPath, cellData in
 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberAddTableViewCell.classIdentifier, for: indexPath) as? BandMemberAddTableViewCell else { return UITableViewCell() }
             print("Person print")

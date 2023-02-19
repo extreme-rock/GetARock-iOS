@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BandInformationDTO: Codable {
+struct BandCreationDTO: Codable {
     let name: String
     let address: Address
     let songList: [SongList]? // 정보 입력시 선택사항

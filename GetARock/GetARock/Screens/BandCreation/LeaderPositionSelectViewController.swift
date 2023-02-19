@@ -101,10 +101,6 @@ extension LeaderPositionSelectViewController {
             self.memberList.append(firstMember)
         }
         self.bandCreationData.memberList = self.memberList
-        //MARK: Merge 전 삭제 필요
-        print(self.bandCreationData)
-        print("======================")
-        print(self.memberList.count)
     }
     
     private func navigateToNext() {

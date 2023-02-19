@@ -51,7 +51,7 @@
 		9AEA7E7B299A5B44006A730A /* BandMemberAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA7E7A299A5B44006A730A /* BandMemberAddViewController.swift */; };
 		9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */; };
 		9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */; };
-		9AFE014729990FE0004B0BCF /* BandInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */; };
+		9AFE014729990FE0004B0BCF /* BandCreationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */; };
 		A769E177D6AA52251CAA0997 /* Pods_GetARockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */; };
 		A951F6532989EF6C00902CED /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A951F6522989EF6C00902CED /* String+Extension.swift */; };
 		A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0A2981706C00905BC9 /* BasicTextView.swift */; };
@@ -62,7 +62,7 @@
 		A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */; };
 		A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */; };
 		A96F368E299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */; };
-		A96F3690299E301700376620 /* MemberDataDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368F299E301700376620 /* MemberDataDTO.swift */; };
+		A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368F299E301700376620 /* SearchedUserListDTO.swift */; };
 		A96F3692299E320A00376620 /* UnRegisteredMemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */; };
 		A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */; };
 		A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDD38D299A3114003F5392 /* BasicDataModel.swift */; };
@@ -156,7 +156,7 @@
 		9AEA7E7A299A5B44006A730A /* BandMemberAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddViewController.swift; sourceTree = "<group>"; };
 		9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectViewController.swift; sourceTree = "<group>"; };
 		9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectHeaderView.swift; sourceTree = "<group>"; };
-		9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationDTO.swift; sourceTree = "<group>"; };
+		9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationDTO.swift; sourceTree = "<group>"; };
 		A951F6522989EF6C00902CED /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A96B8A0A2981706C00905BC9 /* BasicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextView.swift; sourceTree = "<group>"; };
 		A96B8A0C2981714800905BC9 /* BasicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabel.swift; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddTableHeader.swift; sourceTree = "<group>"; };
 		A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedBandMemberCell.swift; sourceTree = "<group>"; };
 		A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedAddUnRegisteredMemberViewController.swift; sourceTree = "<group>"; };
-		A96F368F299E301700376620 /* MemberDataDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDataDTO.swift; sourceTree = "<group>"; };
+		A96F368F299E301700376620 /* SearchedUserListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUserListDTO.swift; sourceTree = "<group>"; };
 		A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnRegisteredMemberCardView.swift; sourceTree = "<group>"; };
 		A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		A9EDD38D299A3114003F5392 /* BasicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDataModel.swift; sourceTree = "<group>"; };
@@ -523,9 +523,9 @@
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
-				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
+				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
-				A96F368F299E301700376620 /* MemberDataDTO.swift */,
+				A96F368F299E301700376620 /* SearchedUserListDTO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -784,7 +784,7 @@
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
-				9AFE014729990FE0004B0BCF /* BandInformationDTO.swift in Sources */,
+				9AFE014729990FE0004B0BCF /* BandCreationDTO.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
 				9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */,
 				A96F3684299E2D9000376620 /* UserSearchViewController.swift in Sources */,
@@ -817,7 +817,7 @@
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
 				4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */,
-				A96F3690299E301700376620 /* MemberDataDTO.swift in Sources */,
+				A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
 				9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */,
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
