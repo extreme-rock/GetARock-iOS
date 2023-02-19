@@ -36,7 +36,6 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
-        $0.delegate = self
         return $0
     }(UIScrollView())
 
@@ -88,7 +87,6 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
-        setKeyboardDismiss()
     }
 
     override func viewDidLayoutSubviews() {
@@ -121,22 +119,6 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
             contentView.arrangedSubviews.map { $0 as! UnRegisteredMemberCardView }.forEach { $0.cancelButton.isHidden = false }
         }
     }
-
-    private func setKeyboardDismiss() {
-           let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
-           recognizer.numberOfTapsRequired = 1
-           recognizer.numberOfTouchesRequired = 1
-           mainScrollView.addGestureRecognizer(recognizer)
-       }
-}
-
-// ScrollView 가로 스크롤 막기
-extension AddUnRegisteredMemberViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.x != 0 {
-            scrollView.contentOffset.x = 0
-        }
-    }
 }
 
 extension AddUnRegisteredMemberViewController {
@@ -148,10 +130,6 @@ extension AddUnRegisteredMemberViewController {
             newCard,
             at: contentView.arrangedSubviews.endIndex)
         applySnapshotForDeleteButton()
-    }
-
-    @objc func didTouchScreen() {
-        self.view.endEditing(true)
     }
 }
 
