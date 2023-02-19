@@ -12,6 +12,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
+        customizeBackButton()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -20,5 +21,19 @@ class BaseViewController: UIViewController {
     
     private func attribute() {
         self.view.backgroundColor = .dark01
+    }
+    
+    private func customizeBackButton() {
+        let backButton = UIButton(type: .system)
+        backButton.setImage(ImageLiteral.chevronLeftSymbol, for: .normal)
+        backButton.tintColor = .white
+        backButton.addTarget(self, action: #selector(dudBackButtonTapped), for: .touchUpInside)
+        let backButtonItem = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = backButtonItem
+    }
+    
+    @objc
+    func dudBackButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
