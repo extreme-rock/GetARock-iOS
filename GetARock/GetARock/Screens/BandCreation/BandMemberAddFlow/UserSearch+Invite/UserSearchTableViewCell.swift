@@ -13,7 +13,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     var isChecked: Bool = false {
           didSet {
-              selectButton.image = UIImage(systemName: isChecked ? "checkmark.circle" : "circle")
+              selectButton.image = isChecked ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.circkeSymbol
               selectButton.tintColor = isChecked ? .systemPurple : .gray02
           }
       }
@@ -54,6 +54,12 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
         self.userNameLabel.text = nil
         self.userInstrumentLabel.text = nil
     }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        //MARK: 셀이 select, deselect 될 때 마다 수행되는 함수
+         super.setSelected(selected, animated: animated)
+         isChecked.toggle()
+     }
 
     private func attribute() {
         self.backgroundColor = .dark01
@@ -85,11 +91,5 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
         self.userInstrumentLabel.text = data.instrumentList.first!.name
         self.id = data.id
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        //MARK: 셀이 select, deselect 될 때 마다 수행되는 함수
-         super.setSelected(selected, animated: animated)
-         isChecked.toggle()
-     }
 }
 

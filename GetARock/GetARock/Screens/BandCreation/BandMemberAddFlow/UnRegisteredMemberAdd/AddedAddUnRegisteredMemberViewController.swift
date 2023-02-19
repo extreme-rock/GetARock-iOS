@@ -14,7 +14,13 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
 
     var completion: (_ registeredMember: [SearchedUserInfo]) -> Void = { addedMembers in }
 
-    private lazy var firstData: SearchedUserInfo = SearchedUserInfo(memberId: 0, name: firstPracticeSongCard.bandMemberNameTextField.textField.text ?? "", memberState: .annonymous, instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
+    private lazy var firstData: SearchedUserInfo = SearchedUserInfo(
+        memberId: 0,
+        name: firstPracticeSongCard.nickNameTextField.textField.text ?? "",
+        memberState: .annonymous,
+        instrumentList: [SearchedUserInstrumentList(instrumentId: 0,
+                                                    isMain: true,
+                                                    name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
 
     private lazy var firstPracticeSongCard: UnRegisteredMemberCardView = {
         let card = UnRegisteredMemberCardView()
@@ -70,7 +76,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
             let mainPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
                 instrumentId: 0,
                 isMain: true,
-                name: card.positionSelect.selectedItem() ?? "")
+                name: card.positionSelectCollectionView.selectedItem() ?? "")
             
             let otherPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
                 instrumentId: 0,
@@ -79,7 +85,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
             
             let data = SearchedUserInfo(
                 memberId: 0,
-                name: card.bandMemberNameTextField.textField.text ?? "",
+                name: card.nickNameTextField.textField.text ?? "",
                 memberState: .annonymous,
                 instrumentList: [mainPosition, otherPosition],
                 //MARK: 미가입멤버 회원이라서 성별과 나이 정보가 없음

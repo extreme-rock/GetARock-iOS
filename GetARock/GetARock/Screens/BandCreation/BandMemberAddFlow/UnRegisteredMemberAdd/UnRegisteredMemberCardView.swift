@@ -7,6 +7,7 @@
 
 import UIKit
 
+//TODO: develop Pull 이후로 수정 사항 있음
 final class UnRegisteredMemberCardView: UIStackView, Identifiable {
 
     let id: String = "defualt"
@@ -22,49 +23,47 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
             })
         }
         button.addAction(removeAction, for: .touchUpInside)
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         button.tintColor = .white
         return button
     }()
 
     //TODO: develop Pull후에 Information Guide Label로 업데이트 필요
-    private let bandMemberName = BasicLabel(contentText: "닉네임", fontStyle: .contentBold, textColorInfo: .white)
+    private let nickNameGuideLabel = BasicLabel(contentText: "닉네임", fontStyle: .headline01, textColorInfo: .white)
 
-    let bandMemberNameTextField = BasicTextField(placeholder: "닉네임을 입력해주세요")
+    let nickNameTextField = TextLimitTextField(placeholer: "닉네임을 입력해주세요", maxCount: 10, duplicationCheckType: .none, textExpressionCheck: true)
 
-    private lazy var bandMemberNameVstack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [bandMemberName, bandMemberNameTextField])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        return stackView
-    }()
+    private lazy var nickNameVstack: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [nickNameGuideLabel, nickNameTextField]))
 
-    private let positionLabel = BasicLabel(contentText: "포지션", fontStyle: .contentBold, textColorInfo: .white)
+    //TODO: develop Pull후에 Information Guide Label로 업데이트 필요
+    private let mainPositionGuideLabel = BasicLabel(contentText: "포지션", fontStyle: .headline01, textColorInfo: .white)
 
-    let positionSelect: SelectCollectionView = {
+    let positionSelectCollectionView: SelectCollectionView = {
         $0.constraint(.heightAnchor, constant: 110)
         return $0
     }(SelectCollectionView(widthState: .fixed, items: ["보컬", "기타", "베이스", "드럼", "키보드"], widthSize: 100, itemSpacing: 7))
 
     private lazy var positionSelectVstack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [positionLabel, positionSelect])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        return stackView
-    }()
+        $0.axis = .vertical
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [mainPositionGuideLabel, positionSelectCollectionView]))
 
-    private let otherPosition = BasicLabel(contentText: "그 외 포지션", fontStyle: .contentBold, textColorInfo: .white)
+    private let otherPositionGuideLabel = BasicLabel(contentText: "그 외 포지션", fontStyle: .headline01, textColorInfo: .white)
 
-    private let positionDescription = BasicLabel(contentText: "* 그 외 포지션은 공백 포함 10자 이하로 입력가능합니다.", fontStyle: .content, textColorInfo: .gray02)
+    private let othrePositionSubGuideLabel = BasicLabel(contentText: "* 그 외 포지션은 공백 포함 10자 이하로 입력가능합니다.", fontStyle: .content, textColorInfo: .gray02)
 
-    let otherPositionTextField = BasicTextField(placeholder: "그 외 포지션을 입력해주세요.")
+    let otherPositionTextField = TextLimitTextField(placeholer: "그 외 포지션을 입력해주세요.", maxCount: 10, duplicationCheckType: .none, textExpressionCheck: true)
 
     private lazy var otherPositionVstack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [otherPosition, positionDescription, otherPositionTextField])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        return stackView
-    }()
+        $0.axis = .vertical
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [otherPositionGuideLabel, othrePositionSubGuideLabel, otherPositionTextField]))
 
     init() {
         super.init(frame: .zero)
@@ -73,12 +72,12 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
     }
 
     private func setupLayout() {
-        self.addArrangedSubview(bandMemberNameVstack)
+        self.addArrangedSubview(nickNameVstack)
         self.addArrangedSubview(positionSelectVstack)
         self.addArrangedSubview(otherPositionVstack)
         self.axis = .vertical
         self.spacing = 40
-        self.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
+        self.layoutMargins = UIEdgeInsets(top: 30, left: 16, bottom: 30, right: 16)
         self.isLayoutMarginsRelativeArrangement = true
 
         self.addSubview(cancelButton)
@@ -97,6 +96,7 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    //MARK: 화면 터치시 키보드 숨김 기능
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.endEditing(true)
     }

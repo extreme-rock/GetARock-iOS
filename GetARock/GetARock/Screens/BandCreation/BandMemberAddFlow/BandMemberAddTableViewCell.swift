@@ -11,22 +11,10 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
     var id: String = "default"
 
-    private let userNameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.setFont(.headline01)
-        label.textColor = .white
+    private let userNameLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
 
-        return label
-    }()
-
-    private let instrumentListLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.setFont(.content)
-        label.textColor = .white.withAlphaComponent(0.5)
-
-        return label
-    }()
-
+    private let instrumentListLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    
     private let userGenderLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
 
     private let horizontalSeperator: BasicLabel = BasicLabel(contentText: "|", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
@@ -106,7 +94,9 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
 
         contentView.addSubview(userDetailInfoHstack)
-        userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor, bottom: userNameLabel.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
+        userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor,
+                                        bottom: userNameLabel.bottomAnchor,
+                                        padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
 
         
     }
@@ -114,7 +104,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
     func configure(data: SearchedUserInfo) {
         self.userNameLabel.text = data.name
         //TODO: List로 받을 수 있게 수정해야leftView함
-        self.instrumentListLabel.text = data.instrumentList.first!.name
+        self.instrumentListLabel.text = data.instrumentList.first?.name ?? ""
         self.id = data.id
         
         switch data.memberState {
