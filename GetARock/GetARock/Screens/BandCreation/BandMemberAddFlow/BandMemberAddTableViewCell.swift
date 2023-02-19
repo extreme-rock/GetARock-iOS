@@ -100,10 +100,10 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         self.subTitleLabel.text = data.instrumentList.first!.name
         self.id = data.id
         switch data.memberState {
-            case "ADMIN": leftView.image = ImageLiteral.leaderIcon
-            case "NONE": leftView.image = ImageLiteral.memberIcon
-            case "ANONYMOUS": leftView.image = ImageLiteral.unRegisteredMemberIcon
-            default: return
+        case .admin: leftView.image = ImageLiteral.leaderIcon
+        case .none: leftView.image = ImageLiteral.memberIcon
+        case .annonymous: leftView.image = ImageLiteral.unRegisteredMemberIcon
+        default: return
         }
     }
 }

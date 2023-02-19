@@ -141,8 +141,8 @@ extension UserSearchViewController: UITableViewDelegate {
         // CellInformation만들 때 임의의 id를 만들기 때문에, 만들고나서 선택한 cell의 id를 주입해줘야함
         var data = SearchedUserInfo(memberId: 0,
                                name: selectedCell.userNameLabel.text ?? "",
-                              memberState: "NONE",
-                              instrumentList: [InstrumentList2(
+                                    memberState: .none,
+                              instrumentList: [SearchedUserInstrumentList(
                                 instrumentId: 0,
                                 isMain: true,
                                 name: selectedCell.userInstrumentLabel.text ?? "")], gender: "MEN", age: "TWENTIES")

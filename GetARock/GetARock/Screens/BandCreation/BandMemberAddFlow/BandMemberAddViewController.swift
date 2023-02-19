@@ -31,9 +31,12 @@ final class BandMemberAddViewController: UIViewController {
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
     //TODO: Develop Pull 후 비슷한 옵션 추가
-    private let nextButton: BottomButton = {
-        //TODO: 밴드 정보 POST action 추가 필요
+    private lazy var nextButton: BottomButton = {
+        let action = UIAction { _ in
+            self.confirmBandMemberList()
+        }
         $0.setTitle("추가", for: .normal)
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
 
@@ -138,7 +141,18 @@ extension BandMemberAddViewController: UITableViewDelegate {
 }
 
 extension BandMemberAddViewController {
-    func passInstrumentData(with data: MemberList) {
-//        self.addedMembers.append(data)
+    func confirmBandMemberList() {
+        var confirmedMembers: [MemberList] = []
+        self.addedMembers.forEach {
+            var instrumentInfo: [InstrumentList] = []
+            $0.instrumentList.map { $0.name }.forEach {
+                instrumentInfo.append(InstrumentList(name: $0))
+            }
+
+            let individualMember: MemberList = MemberList(memberId: $0.memberId, name: $0.name, memberState: $0.memberState, instrumentList: instrumentInfo)
+
+            confirmedMembers.append(individualMember)
+        }
+        BasicDataModel.bandCreationData.memberList = confirmedMembers
     }
 }

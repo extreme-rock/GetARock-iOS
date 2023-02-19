@@ -14,7 +14,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
 
     var completion: (_ registeredMember: [SearchedUserInfo]) -> Void = { addedMembers in }
 
-    private lazy var firstData: SearchedUserInfo = SearchedUserInfo(memberId: 0, name: firstPracticeSongCard.bandMemberNameTextField.textField.text ?? "", memberState: "ANONYMOUS", instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
+    private lazy var firstData: SearchedUserInfo = SearchedUserInfo(memberId: 0, name: firstPracticeSongCard.bandMemberNameTextField.textField.text ?? "", memberState: .annonymous, instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
 
     private lazy var firstPracticeSongCard: UnRegisteredMemberCardView = {
         let card = UnRegisteredMemberCardView()
@@ -67,7 +67,16 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     private lazy var addCompletionAction = UIAction { _ in
         for subview in self.contentView.arrangedSubviews {
             let card = subview as! UnRegisteredMemberCardView
-            let data = SearchedUserInfo(memberId: 0, name: card.bandMemberNameTextField.textField.text ?? "", memberState: "ANONYMOUS", instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: card.otherPositionTextField.textField.text ?? "")], gender: "MEN", age: "TWENTIES")
+            let data = SearchedUserInfo(
+                memberId: 0,
+                name: card.bandMemberNameTextField.textField.text ?? "",
+                memberState: .annonymous,
+                instrumentList: [SearchedUserInstrumentList(
+                    instrumentId: 0,
+                    isMain: true,
+                    name: card.otherPositionTextField.textField.text ?? "")],
+                gender: "MEN",
+                age: "TWENTIES")
             self.addedMembers.append(data)
         }
         self.dismiss(animated: true){

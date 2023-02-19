@@ -10,18 +10,19 @@ import Foundation
 struct SearchedUserListDTO: Codable {
     let memberList: [SearchedUserInfo]
 }
-//MARK: 이름 기반 유저 검색시 받게되는 MemberList와 밴드 생성시 사용하는 MemberList의 내부 프로퍼티가 다르기 때문에 다른 이름을 사용 
+//MARK: 이름 기반 유저 검색시 받게되는 MemberList와 밴드 생성시 사용하는 MemberList의 내부 프로퍼티가 다르기 때문에 다른 이름을 사용
 
 struct SearchedUserInfo: Hashable, Identifiable, Codable {
     var id: String = UUID().uuidString
     let memberId: Int
-    let name, memberState: String
-    var instrumentList: [InstrumentList2]
+    let name: String
+    let memberState: MemberState
+    var instrumentList: [SearchedUserInstrumentList]
     let gender: String
     let age: String
 }
 
-struct InstrumentList2: Hashable, Codable {
+struct SearchedUserInstrumentList: Hashable, Codable {
     let instrumentId: Int
     let isMain: Bool
     let name: String
@@ -33,38 +34,38 @@ extension SearchedUserListDTO {
         SearchedUserListDTO(memberList: [
             SearchedUserInfo(memberId: 0,
                        name: "루키",
-                       memberState: "ADMIN",
-                        instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "drum"), InstrumentList2(instrumentId: 0, isMain: false, name: "guitar")],
+                             memberState: .admin,
+                        instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: "drum"), SearchedUserInstrumentList(instrumentId: 0, isMain: false, name: "guitar")],
                        gender: "MEN",
                        age: "TWENITES"),
             SearchedUserInfo(memberId: 0,
                        name: "구엘",
-                       memberState: "NONE",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass")],
+                             memberState: .none,
+                       instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: "bass")],
                         gender: "MEN",
                         age: "TWENITES"),
             SearchedUserInfo(memberId: 0,
                        name: "노엘",
-                       memberState: "NONE",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "vocal")],
+                             memberState: .none,
+                       instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: "vocal")],
                         gender: "WOMEN",
                         age: "TWENITES"),
             SearchedUserInfo(memberId: 0,
                        name: "알로라",
-                       memberState: "MEMBER",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass"), InstrumentList2(instrumentId: 0, isMain: false, name: "drum")],
+                             memberState: .none,
+                       instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: "bass"), SearchedUserInstrumentList(instrumentId: 0, isMain: false, name: "drum")],
                         gender: "WOMEN",
                         age: "TWENITES"),
             SearchedUserInfo(memberId: 0,
                        name: "데이크",
-                       memberState: "MEMBER",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "bass")],
+                             memberState: .none,
+                       instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: "bass")],
                         gender: "MEN",
                         age: "TWENITES"),
             SearchedUserInfo(memberId: 0,
                        name: "쏘시지불나방전기뱀장어",
-                       memberState: "NONE",
-                       instrumentList: [InstrumentList2(instrumentId: 0, isMain: true, name: "vocal")],
+                             memberState: .none,
+                       instrumentList: [SearchedUserInstrumentList(instrumentId: 0, isMain: true, name: "vocal")],
                         gender: "MEN",
                         age: "TWENITES"),])
 
