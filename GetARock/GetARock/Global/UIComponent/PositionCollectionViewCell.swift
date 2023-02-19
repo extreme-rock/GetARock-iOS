@@ -59,7 +59,7 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var action = UIAction { _ in
-        NotificationCenter.default.post(name: Notification.Name(StringLiteral.deletePositionCell),
+        NotificationCenter.default.post(name: Notification.Name.deletePositionCell,
                                         object: nil,
                                         userInfo: ["index": self.cellIndex as Any])
     }
@@ -90,7 +90,6 @@ final class PositionCollectionViewCell: UICollectionViewCell {
     private func setupLayout() {
         self.contentView.addSubview(containerView)
         self.containerView.constraint(to: contentView)
-        self.containerView.constraint(.widthAnchor, constant: CellSize.width)
         self.containerView.constraint(.heightAnchor, constant: 138)
         
         self.containerView.addSubview(positionImageView)
