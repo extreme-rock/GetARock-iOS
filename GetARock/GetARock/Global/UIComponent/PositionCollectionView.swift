@@ -211,3 +211,15 @@ extension PositionCollectionView: UICollectionViewDelegate {
         }
     }
 }
+//MARK: 선택된 포지션 데이터 추출
+extension PositionCollectionView {
+    func getSelectedInstruments() -> [InstrumentList] {
+        var selectedInstruments: [InstrumentList] = []
+        let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
+        for indexPath in selectedIndexPaths {
+            guard let cell =  self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return [] }
+            selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
+        }
+        return selectedInstruments
+    }
+}

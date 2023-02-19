@@ -22,10 +22,8 @@ extension UITextField {
             $0.backgroundColor = .dark02
             $0.textColor = .white
             
-            $0.leftView = TextFieldPaddingView()
+            $0.leftView = TextFieldLeftPaddingView()
             $0.leftViewMode = .always
-            
-            $0.rightViewMode = .never
 
             return $0
         }(UITextField(frame: .zero))
@@ -47,7 +45,7 @@ extension UITextField {
     }
 }
 
-final class TextFieldPaddingView: UIView {
+final class TextFieldLeftPaddingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
@@ -55,6 +53,19 @@ final class TextFieldPaddingView: UIView {
         constraint(.heightAnchor, constant: 20)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+final class TextFieldRightPaddingView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+
+        constraint(.widthAnchor, constant: 100)
+        constraint(.heightAnchor, constant: 20)
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
