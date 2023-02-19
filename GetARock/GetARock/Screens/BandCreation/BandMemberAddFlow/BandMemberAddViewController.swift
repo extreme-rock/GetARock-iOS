@@ -14,7 +14,7 @@ enum BandMemberAddTableViewSection: String {
 
 final class BandMemberAddViewController: UIViewController {
 
-    private var addedMembers: [SearchedUserInfo] = []
+    var addedMembers: [SearchedUserInfo] = []
 
     //MARK: - View
     private lazy var tableView: UITableView = {
@@ -45,6 +45,7 @@ final class BandMemberAddViewController: UIViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
+        configureAdminCell()
         updateSnapShot(with: addedMembers)
     }
 
@@ -64,6 +65,15 @@ final class BandMemberAddViewController: UIViewController {
     private func attribute() {
         view.backgroundColor = .dark01
     }
+
+    private func configureAdminCell() {
+        guard let admin: MemberList = BasicDataModel.bandCreationData.memberList.first else { return }
+        //MARK: 성별과 나이 정보는 추후 개인 유저 정보를 바탕으로 업데이트 해야함
+        let transformedInstruments: [SearchedUserInstrumentList] = admin.instrumentList.map { SearchedUserInstrumentList(instrumentId: 0, isMain: false, name: $0.name)
+        }
+        let initialData: SearchedUserInfo = SearchedUserInfo(memberId: admin.memberId ?? -1, name: admin.name, memberState: admin.memberState, instrumentList: transformedInstruments, gender: "MEN", age: "20대")
+        addedMembers.append(initialData)
+    }
 }
 
 //MARK: DiffableDataSource 관련 메소드
@@ -82,6 +92,7 @@ extension BandMemberAddViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberAddTableViewCell.classIdentifier, for: indexPath) as? BandMemberAddTableViewCell else { return UITableViewCell() }
             print("Person print")
             print(cellData)
+
             cell.configure(data: cellData)
 
             let deleteAction = UIAction { _ in
@@ -91,6 +102,10 @@ extension BandMemberAddViewController {
 
             cell.deleteButton.addAction(deleteAction, for: .touchUpInside)
             cell.selectionStyle = .none
+
+            if cellData.memberState == .admin {
+                cell.deleteButton.isHidden = true
+            }
             print(self.addedMembers)
 
             return cell
@@ -144,12 +159,10 @@ extension BandMemberAddViewController {
     func confirmBandMemberList() {
         var confirmedMembers: [MemberList] = []
         self.addedMembers.forEach {
-            var instrumentInfo: [InstrumentList] = []
-            $0.instrumentList.map { $0.name }.forEach {
-                instrumentInfo.append(InstrumentList(name: $0))
-            }
 
-            let individualMember: MemberList = MemberList(memberId: $0.memberId, name: $0.name, memberState: $0.memberState, instrumentList: instrumentInfo)
+            let instrumentList: [InstrumentList] = $0.instrumentList.map { InstrumentList(name: $0.name) }
+
+            let individualMember: MemberList = MemberList(memberId: $0.memberId, name: $0.name, memberState: $0.memberState, instrumentList: instrumentList)
 
             confirmedMembers.append(individualMember)
         }
