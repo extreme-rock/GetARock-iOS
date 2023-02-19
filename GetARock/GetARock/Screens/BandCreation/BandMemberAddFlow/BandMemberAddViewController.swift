@@ -90,8 +90,6 @@ extension BandMemberAddViewController {
         return UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo>(tableView: self.tableView) { tableView, indexPath, cellData in
 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberAddTableViewCell.classIdentifier, for: indexPath) as? BandMemberAddTableViewCell else { return UITableViewCell() }
-            print("Person print")
-            print(cellData)
 
             cell.configure(data: cellData)
 
@@ -106,7 +104,6 @@ extension BandMemberAddViewController {
             if cellData.memberState == .admin {
                 cell.deleteButton.isHidden = true
             }
-            print(self.addedMembers)
 
             return cell
         }

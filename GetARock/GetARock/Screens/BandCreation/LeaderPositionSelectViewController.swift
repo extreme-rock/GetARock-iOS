@@ -104,7 +104,6 @@ extension LeaderPositionSelectViewController {
     }
     
     private func navigateToNext() {
-        guard let admin = self.memberList.first else { return }
         let nextVC = BandMemberAddViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
         self.navigationController?.navigationBar.isHidden = false

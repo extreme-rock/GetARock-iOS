@@ -18,6 +18,7 @@ struct SearchedUserInfo: Hashable, Identifiable, Codable {
     let name: String
     let memberState: MemberState
     var instrumentList: [SearchedUserInstrumentList]
+    //TODO: gender 및 age 정보 enum 만들기 
     let gender: String
     let age: String
 }
