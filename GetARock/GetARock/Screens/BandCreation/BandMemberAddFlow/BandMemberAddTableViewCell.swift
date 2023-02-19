@@ -58,11 +58,6 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func prepareForReuse() {
-        self.userNameLabel.text = nil
-        self.instrumentListLabel.text = nil
-    }
-
     private func attribute() {
         self.backgroundColor = .dark01
     }

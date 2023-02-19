@@ -13,7 +13,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     var isChecked: Bool = false {
           didSet {
-              selectButton.image = isChecked ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.circkeSymbol
+              selectButton.image = isChecked ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.circleSymbol
               selectButton.tintColor = isChecked ? .systemPurple : .gray02
           }
       }
@@ -51,8 +51,8 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
     }
 
     override func prepareForReuse() {
-        self.userNameLabel.text = nil
-        self.userInstrumentLabel.text = nil
+        self.isChecked = false
+        self.selectButton.image = ImageLiteral.circleSymbol
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

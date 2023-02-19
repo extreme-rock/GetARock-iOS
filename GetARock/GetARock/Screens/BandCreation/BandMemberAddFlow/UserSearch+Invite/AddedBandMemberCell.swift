@@ -56,10 +56,6 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK:  Cell Resue Prepare
-    override func prepareForReuse() {
-    }
-
     // MARK: - Methods
 
     private func attribute() {
