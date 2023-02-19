@@ -13,6 +13,7 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         attribute()
         customizeBackButton()
+        fixNavigationBarColorWhenScrollDown()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -30,6 +31,15 @@ class BaseViewController: UIViewController {
         backButton.addTarget(self, action: #selector(dudBackButtonTapped), for: .touchUpInside)
         let backButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backButtonItem
+    }
+    
+    private func fixNavigationBarColorWhenScrollDown() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .clear
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = navigationBar.standardAppearance
     }
     
     @objc
