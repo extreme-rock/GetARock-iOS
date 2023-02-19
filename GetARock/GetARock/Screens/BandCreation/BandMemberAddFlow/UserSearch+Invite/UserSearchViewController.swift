@@ -181,12 +181,6 @@ extension UserSearchViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension UserSearchViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.searchBar.textField.becomeFirstResponder()
-    }
-}
-
 //MARK: SelectedUserScollView DiffableData Source
 extension UserSearchViewController {
 

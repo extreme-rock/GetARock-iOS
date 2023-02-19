@@ -12,10 +12,10 @@ final class SearchTextField: UIView {
     private let placeholder: String
 
     lazy var textField: UITextField = {
-        let textField = UITextField.makeBasicTextField(placeholder: placeholder)
-        textField.layer.borderWidth = 0
-        return textField
-    }()
+        $0.delegate = self
+        $0.layer.borderWidth = 0
+        return $0
+    }(UITextField.makeBasicTextField(placeholder: placeholder))
 
     //TODO: ImageLiteral로 등록 필요
     private let searchImage: UIImageView = {
@@ -55,18 +55,12 @@ final class SearchTextField: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-//
-//class MagnifyGlassImageView: UIImageView {
-//    override init(frame: CGRect) {
-//        super.init(frame: .zero)
-//
-//        self.image = UIImage(systemName: "magnifyingglass")
-//        self.tintColor = .white
-//        self.contentMode = .scaleAspectFill
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
+
+extension SearchTextField: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+}
 
