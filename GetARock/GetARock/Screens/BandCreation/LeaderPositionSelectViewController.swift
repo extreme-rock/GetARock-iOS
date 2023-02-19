@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LeaderPositionSelectViewController: UIViewController {
+final class LeaderPositionSelectViewController: BaseViewController {
     
     //MARK: - Property
     

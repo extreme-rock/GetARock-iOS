@@ -46,7 +46,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         var configuration = UIButton.Configuration.plain()
         //TODO: 이전 PR 머지 이후 이미지 리터럴로 변경하기
         configuration.image = UIImage(systemName: "plus")
-        configuration.title = "멤버 추가"
+        configuration.title = "미가입 멤버 추가"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 10
         let button = DefaultButton(configuration: configuration)
@@ -112,13 +112,13 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         mainScrollView.constraint(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
 
         mainScrollView.addSubview(contentView)
-        contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor, leading: mainScrollView.contentLayoutGuide.leadingAnchor, bottom: mainScrollView.contentLayoutGuide.bottomAnchor, trailing: mainScrollView.contentLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 10, bottom: 160, right: 20))
+        contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor, bottom: mainScrollView.contentLayoutGuide.bottomAnchor, centerX: view.centerXAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 160, right: 16))
 
         mainScrollView.addSubview(addPracticeSongButton)
-        addPracticeSongButton.constraint(top: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
+        addPracticeSongButton.constraint(top: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
 
         mainScrollView.addSubview(addCompletionButton)
-        addCompletionButton.constraint(top: addPracticeSongButton.bottomAnchor,leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 40, left: 20, bottom: 10, right: 20))
+        addCompletionButton.constraint(top: addPracticeSongButton.bottomAnchor,leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 40, left: 16, bottom: 10, right: 16))
     }
 
     private func applySnapshotForDeleteButton() {
@@ -133,6 +133,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
 extension AddUnRegisteredMemberViewController {
     @objc func didTapAddPracticeSong() {
         let newCard = UnRegisteredMemberCardView()
+        if contentView.arrangedSubviews.count == 3 { addPracticeSongButton.backgroundColor = .gray02 }
         guard contentView.arrangedSubviews.count < 3 else { return }
         // UI에 카드뷰 추가 (stackView에 넣는 방식임)
         contentView.insertArrangedSubview(

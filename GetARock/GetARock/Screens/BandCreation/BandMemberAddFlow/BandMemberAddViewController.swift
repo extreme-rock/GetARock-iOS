@@ -12,7 +12,7 @@ enum BandMemberAddTableViewSection: String {
     case main
 }
 
-final class BandMemberAddViewController: UIViewController {
+final class BandMemberAddViewController: BaseViewController {
 
     var addedMembers: [SearchedUserInfo] = []
 
@@ -45,8 +45,6 @@ final class BandMemberAddViewController: UIViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
-        configureAdminCell()
-        updateSnapShot(with: addedMembers)
     }
 
     //MARK: - Method
@@ -64,6 +62,7 @@ final class BandMemberAddViewController: UIViewController {
 
     private func attribute() {
         view.backgroundColor = .dark01
+        configureAdminCell()
     }
 
     private func configureAdminCell() {
@@ -73,6 +72,7 @@ final class BandMemberAddViewController: UIViewController {
         }
         let initialData: SearchedUserInfo = SearchedUserInfo(memberId: admin.memberId ?? -1, name: admin.name, memberState: admin.memberState, instrumentList: transformedInstruments, gender: "MEN", age: "20대")
         addedMembers.append(initialData)
+        updateSnapShot(with: addedMembers)
     }
 }
 
