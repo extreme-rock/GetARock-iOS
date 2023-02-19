@@ -40,7 +40,7 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
         return $0
     }(DefaultButton())
 
-    private let sectionTitle = BasicLabel(contentText: "밴드 멤버 3인", fontStyle: .content, textColorInfo: .white)
+    let sectionTitle = BasicLabel(contentText: "밴드 멤버 1인", fontStyle: .content, textColorInfo: .white)
 
     private lazy var buttonHstack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [inviteMemberButton, inviteUnRegisteredMemberButton])

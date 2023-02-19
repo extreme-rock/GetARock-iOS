@@ -14,7 +14,12 @@ enum BandMemberAddTableViewSection: String {
 
 final class BandMemberAddViewController: BaseViewController {
 
-    var addedMembers: [SearchedUserInfo] = []
+    var addedMembers: [SearchedUserInfo] = [] {
+        didSet {
+            guard let headerView = self.tableView.headerView(forSection: 0) as? BandMemberAddTableViewHeader else { return }
+            headerView.sectionTitle.text = "밴드 멤버 \(addedMembers.count)인"
+        }
+    }
 
     //MARK: - View
     private lazy var tableView: UITableView = {
