@@ -19,7 +19,7 @@ final class SNSBoxView: UIView {
 
     private let textFieldPlaceholder: String
 
-    private lazy var basicLabel = BasicLabel(contentText: type.rawValue, fontStyle: .content, textColorInfo: .white)
+    private lazy var basicLabel: BasicLabel = BasicLabel(contentText: type.rawValue, fontStyle: .content, textColorInfo: .white)
 
     lazy var textField: UITextField = {
         $0.attributedPlaceholder = NSAttributedString(
