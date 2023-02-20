@@ -11,14 +11,14 @@ class writeCommentTextView: UIView {
     
     // MARK: - Property
     
-    private let maxHeight: CGFloat = 200
-    
-    private  let style = NSMutableParagraphStyle()
+    private let maxHeight: CGFloat = 116
+    private let textStyle = NSMutableParagraphStyle()
+    private var textViewHeightConstraint: NSLayoutConstraint?
     
     // MARK: - View
     
     private lazy var commentTextView: UITextView = {
-        style.lineSpacing = CGFloat(10)
+        textStyle.lineSpacing = CGFloat(10)
         $0.font = UIFont.setFont(.content)
         $0.backgroundColor = .dark02
         $0.textColor = .white
@@ -31,6 +31,10 @@ class writeCommentTextView: UIView {
         $0.setTitle("등록", for: .normal)
         return $0
     }(DefaultButton())
+    
+    private let contentView: UIView = {
+        return $0
+    }(UIView())
     
     private let placeholderLabel: UILabel = BasicLabel(
         contentText: "댓글을 입력하세요",
@@ -57,25 +61,36 @@ class writeCommentTextView: UIView {
     }
     
     private func setupLayout() {
-        
-        self.addSubview(commentTextView)
-        commentTextView.constraint(
+        self.addSubview(contentView)
+        contentView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
             trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 80)
+            padding: UIEdgeInsets(top: 15, left: 16, bottom: 10, right: 16)
         )
         
-        self.addSubview(addCommentButton)
+        self.contentView.addSubview(commentTextView)
+        commentTextView.constraint(
+            top: self.contentView.topAnchor,
+            leading: self.contentView.leadingAnchor,
+            bottom: self.contentView.bottomAnchor,
+            trailing: self.contentView.trailingAnchor,
+            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 80)
+        )
+        textViewHeightConstraint = commentTextView.heightAnchor.constraint(equalToConstant: 35)
+        textViewHeightConstraint?.isActive = true
+        
+        self.contentView.addSubview(addCommentButton)
         addCommentButton.constraint(
             leading: commentTextView.trailingAnchor,
-            bottom: self.bottomAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 16)
+            bottom: self.contentView.bottomAnchor,
+            trailing: self.contentView.trailingAnchor,
+            padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         )
         addCommentButton.constraint(.heightAnchor, constant: 40)
         addCommentButton.isHidden = true
+        
         setplaceholderLabelLayout()
     }
     
@@ -88,17 +103,29 @@ class writeCommentTextView: UIView {
         )
     }
     
-    private func setCommentButton() {
+    private func adjustTextViewHeight() {
+        let fixedWidth = commentTextView.frame.size.width
+        let newSize = commentTextView.sizeThatFits(
+            CGSize(width: fixedWidth,
+                   height: CGFloat.greatestFiniteMagnitude)
+        )
+        
+        if newSize.height >= 116 {
+            commentTextView.isScrollEnabled = true
+        }
+        else {
+            commentTextView.isScrollEnabled = false
+            textViewHeightConstraint?.constant = newSize.height
+        }
     }
 }
+
+// MARK: - UITextViewDelegate
 
 extension writeCommentTextView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        if commentTextView.contentSize.height >= 116.0 {
-            commentTextView.constraint(.heightAnchor, constant: 116)
-            commentTextView.isScrollEnabled = true
-        }
+        self.adjustTextViewHeight()
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
