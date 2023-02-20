@@ -34,6 +34,7 @@ final class CommentListView: UIView {
     private lazy var commentStackView: UIStackView = {
         $0.spacing = 20
         $0.axis = .vertical
+        $0.distribution = .fill
         $0.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
@@ -55,8 +56,8 @@ final class CommentListView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-           self.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
-       }
+        self.endEditing(true)
+    }
     
     // MARK: - Method
     
@@ -67,12 +68,14 @@ final class CommentListView: UIView {
     }
     
     private func setupLayout() {
-                self.addSubview(commentStackView)
-//                commentStackView.constraint(to:self)
-                commentStackView.constraint(top: self.topAnchor,
-                                           leading: self.leadingAnchor,
-                                           trailing: self.trailingAnchor,
-                                           padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        self.addSubview(commentStackView)
+        commentStackView.constraint(
+            top: self.topAnchor,
+            leading: self.leadingAnchor,
+            trailing: self.trailingAnchor,
+            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        )
+        
         self.addSubview(commentwriteTextView)
         commentwriteTextView.constraint(
             top: commentStackView.bottomAnchor,
@@ -89,8 +92,10 @@ final class CommentListView: UIView {
             CommentTableViewCell.self,
             forCellReuseIdentifier: CommentTableViewCell.classIdentifier
         )
-        tableView.register(emptyTableViewHeader.self,
-                           forHeaderFooterViewReuseIdentifier: emptyTableViewHeader.classIdentifier)
+        tableView.register(
+            emptyTableViewHeader.self,
+            forHeaderFooterViewReuseIdentifier: emptyTableViewHeader.classIdentifier
+        )
     }
     
     func setupTotalListNumberLabel() {
@@ -103,18 +108,22 @@ final class CommentListView: UIView {
 // MARK: - UITableViewDelegate
 
 extension CommentListView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor.clear
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView,
+                   viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(
             withIdentifier: emptyTableViewHeader.classIdentifier
         ) as? emptyTableViewHeader
         return view
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView,
+                   heightForHeaderInSection section: Int) -> CGFloat {
         if totalComentNumber <= 0 {
             return 50.0
         } else {
@@ -126,13 +135,15 @@ extension CommentListView: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 
 extension CommentListView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+    
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
         tableView.indexPath(for: UITableViewCell())
         return commentData?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CommentTableViewCell.classIdentifier,
@@ -146,4 +157,3 @@ extension CommentListView: UITableViewDataSource {
         return cell
     }
 }
-

@@ -14,6 +14,8 @@ class writeCommentTextView: UIView {
     private let maxHeight: CGFloat = 116
     private let textStyle = NSMutableParagraphStyle()
     private var textViewHeightConstraint: NSLayoutConstraint?
+    private var keyBoardHeightPaddingConstraint: NSLayoutConstraint?
+    private var keyboardHeight: CGFloat = 30
     
     // MARK: - View
     
@@ -42,12 +44,17 @@ class writeCommentTextView: UIView {
         textColorInfo: .gray02
     )
     
+    private let keyBoardHeightPaddingView: UIView = {
+        return $0
+    }(UIView())
+    
     // MARK: - Init
     
     init() {
         super.init(frame: .zero)
         attribute()
         setupLayout()
+        setKeyboardObserver()
     }
     
     required init(coder: NSCoder) {
@@ -62,15 +69,24 @@ class writeCommentTextView: UIView {
     }
     
     private func setupLayout() {
+        
         self.addSubview(contentView)
-
         contentView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
+            trailing: self.trailingAnchor,
+            padding: UIEdgeInsets(top: 15, left: 16, bottom: 0, right: 16)
+        )
+        
+        self.addSubview(keyBoardHeightPaddingView)
+        keyBoardHeightPaddingView.constraint(
+            top:  contentView.bottomAnchor,
+            leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
             trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 15, left: 16, bottom: 50, right: 16)
+            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         )
+        setKeyBoardHeightPaddingConstraint()
         
         self.contentView.addSubview(commentTextView)
         commentTextView.constraint(
@@ -80,8 +96,7 @@ class writeCommentTextView: UIView {
             trailing: self.contentView.trailingAnchor,
             padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 80)
         )
-        textViewHeightConstraint = commentTextView.heightAnchor.constraint(equalToConstant: 35)
-        textViewHeightConstraint?.isActive = true
+        setTextViewHeight()
         
         self.contentView.addSubview(addCommentButton)
         addCommentButton.constraint(
@@ -94,6 +109,27 @@ class writeCommentTextView: UIView {
         addCommentButton.isHidden = true
         
         setplaceholderLabelLayout()
+    }
+    
+    private func setTextViewHeight() {
+        textViewHeightConstraint = commentTextView.heightAnchor.constraint(
+            equalToConstant: 35
+        )
+        textViewHeightConstraint?.isActive = true
+    }
+    
+    private func setTextViewHeightConstraint() {
+        textViewHeightConstraint = commentTextView.heightAnchor.constraint(
+            equalToConstant: 35
+        )
+        textViewHeightConstraint?.isActive = true
+    }
+    
+    private func setKeyBoardHeightPaddingConstraint() {
+        keyBoardHeightPaddingConstraint = keyBoardHeightPaddingView.heightAnchor.constraint(
+            equalToConstant: 40
+        )
+        keyBoardHeightPaddingConstraint?.isActive = true
     }
     
     private func setplaceholderLabelLayout() {
@@ -111,13 +147,12 @@ class writeCommentTextView: UIView {
             CGSize(width: fixedWidth,
                    height: CGFloat.greatestFiniteMagnitude)
         )
-        
         if newSize.height >= 116 {
             commentTextView.isScrollEnabled = true
         }
         else {
             commentTextView.isScrollEnabled = false
-            textViewHeightConstraint?.constant = newSize.height
+            textViewHeightConstraint?.constant = newSize.height + 2
         }
     }
 }
@@ -140,5 +175,40 @@ extension writeCommentTextView: UITextViewDelegate {
             addCommentButton.isHidden = true
             placeholderLabel.isHidden = false
         }
+    }
+}
+
+// MARK: - Keyboard NotificationCenter
+
+extension writeCommentTextView {
+    
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object:nil
+        )
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[
+            UIResponder.keyboardFrameEndUserInfoKey
+        ] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+            self.keyBoardHeightPaddingConstraint?.constant = self.keyboardHeight + 10
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.keyBoardHeightPaddingConstraint?.constant = 40
     }
 }
