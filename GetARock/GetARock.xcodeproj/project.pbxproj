@@ -57,6 +57,7 @@
 		B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */; };
 		B863B481299B7D7E0016CC48 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B863B480299B7D7E0016CC48 /* SettingViewController.swift */; };
 		B88ABF3729A3C1FA004C1793 /* SettingViewVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABF3629A3C1FA004C1793 /* SettingViewVersionCell.swift */; };
+		B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABF3829A3D4FF004C1793 /* SettingViewDefaultCell.swift */; };
 		B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88E1B9E2977A70E006072B7 /* AppDelegate.swift */; };
 		B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88E1BA02977A70E006072B7 /* SceneDelegate.swift */; };
 		B88E1BA82977A70F006072B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B88E1BA72977A70F006072B7 /* Assets.xcassets */; };
@@ -149,6 +150,7 @@
 		B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		B863B480299B7D7E0016CC48 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B88ABF3629A3C1FA004C1793 /* SettingViewVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewVersionCell.swift; sourceTree = "<group>"; };
+		B88ABF3829A3D4FF004C1793 /* SettingViewDefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewDefaultCell.swift; sourceTree = "<group>"; };
 		B88E1B9B2977A70E006072B7 /* GetARock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetARock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B88E1B9E2977A70E006072B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B88E1BA02977A70E006072B7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			children = (
 				B863B480299B7D7E0016CC48 /* SettingViewController.swift */,
 				B88ABF3629A3C1FA004C1793 /* SettingViewVersionCell.swift */,
+				B88ABF3829A3D4FF004C1793 /* SettingViewDefaultCell.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -709,6 +712,7 @@
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
+				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
