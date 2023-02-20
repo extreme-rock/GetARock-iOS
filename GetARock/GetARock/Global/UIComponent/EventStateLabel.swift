@@ -69,14 +69,14 @@ final class EventStateLabel: UILabel {
         setEventStateLabel()
     }
     
-    private func setDefaultUI() {
+    private func setActiveUI() {
         self.backgroundColor = .mainPurple.withAlphaComponent(0.3)
         self.layer.borderColor = UIColor.mainPurple.cgColor
         self.textColor = .lightPurple
         self.textAlignment = .center
     }
     
-    private func setDisableUI() {
+    private func setDisabledUI() {
         self.backgroundColor = .dark02
         self.layer.borderColor = UIColor.gray02.cgColor
         self.textColor = .white
@@ -104,7 +104,7 @@ final class EventStateLabel: UILabel {
         case .dDay:
             calculateDday()
             if days >= 0 {
-                setDefaultUI()
+                setActiveUI()
                 self.text = "D-\(days)"
             } else {
                 self.delegate?.deleteDdayLabel()
@@ -112,24 +112,24 @@ final class EventStateLabel: UILabel {
             
         case .state:
             if labelData == "READY" {
-                setDefaultUI()
+                setActiveUI()
                 self.text = "모집중"
                 
             } else if labelData == "OPEN" {
-                setDefaultUI()
+                setActiveUI()
                 self.text = "진행중"
                 
             } else if labelData == "CLOSE" {
-                setDisableUI()
+                setDisabledUI()
                 self.text = "완료"
                 
             } else {
-                setDisableUI()
+                setDisabledUI()
                 self.text = "취소"
             }
             
         case .category:
-            setDefaultUI()
+            setActiveUI()
             if labelData == "BAND_RECRUITING" {
                 self.text = "합공 밴드 모집"
             } else if labelData == "EVENT_PR" {
