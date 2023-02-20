@@ -9,6 +9,14 @@ import UIKit
 
 final class ModifyUserProfileViewController: UIViewController {
     
+    // MARK: - Property
+    
+    enum EntryPoint {
+        case modify
+        case signIn
+    }
+    
+    private var entryPoint: EntryPoint
     // MARK: - View
     
     private let pageIndicatorLabel: UILabel = {
@@ -61,14 +69,17 @@ final class ModifyUserProfileViewController: UIViewController {
                                      userNamingTextField]))
     
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
-    
-    private let ageSelectCollectionView = SelectCollectionView(
+
+    private let ageSelectCollectionView: SelectCollectionView = {
+        $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
+        $0.constraint(.heightAnchor, constant: 102)
+        return $0
+    }(SelectCollectionView(
         widthState: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
-        widthSize: 23,
+        widthSize: 25,
         itemSpacing: 5
-    )
-    
+    ))
     private lazy var ageInputStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
@@ -79,12 +90,16 @@ final class ModifyUserProfileViewController: UIViewController {
     private let genderTitleLabel = InformationGuideLabel(guideText: "성별",
                                                          type: .required)
     
-    private let genderSelectCollectionView = SelectCollectionView(
+    private let genderSelectCollectionView: SelectCollectionView = {
+        $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
+        $0.constraint(.heightAnchor, constant: 46)
+        return $0
+    }(SelectCollectionView(
         widthState: .fixed,
         items: ["남자", "여자"],
-        widthSize: UIScreen.main.bounds.width - 40,
+        widthSize: (UIScreen.main.bounds.width - 41) / 2,
         itemSpacing: 8
-    )
+    ))
     
     private lazy var genderInputStackView: UIStackView = {
         $0.axis = .vertical
@@ -159,7 +174,6 @@ final class ModifyUserProfileViewController: UIViewController {
     
     private let contentView = UIView()
     
-    
     private lazy var contentStackView: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
@@ -175,8 +189,27 @@ final class ModifyUserProfileViewController: UIViewController {
                                      informationFillCompleteButton]))
     
     // MARK: - Life Cycle
+    
+    init(entryPoint: EntryPoint) {
+        self.entryPoint = entryPoint
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupLayout()
+        self.hideKeyboardWhenTappedAround()
+        switch entryPoint {
+        case .modify:
+            pageIndicatorLabel.removeFromSuperview()
+            // TODO: 선택했던 항목들 미리 선택해주는 함수
+        case .signIn:
+            return
+        }
     }
     
     private func attribute() {
@@ -184,7 +217,6 @@ final class ModifyUserProfileViewController: UIViewController {
     }
     
     private func setupLayout() {
-        
         //MARK: - scrollView
         
         view.addSubview(scrollView)
@@ -207,8 +239,8 @@ final class ModifyUserProfileViewController: UIViewController {
         contentStackView.constraint(top: contentView.topAnchor,
                                     leading: contentView.leadingAnchor,
                                     bottom: contentView.bottomAnchor,
-                                    trailing: contentView.trailingAnchor)
+                                    trailing: contentView.trailingAnchor,
+                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
         
     }
-    
 }

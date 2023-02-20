@@ -20,7 +20,7 @@ final class ModifyMyPageViewController: UIViewController {
             .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
             .plusPosition
         ]),
-        ModifyUserProfileViewController()]
+        ModifyUserProfileViewController(entryPoint: .modify)]
     
     private var currentPageNumber: Int = 0 {
         didSet {
@@ -28,7 +28,7 @@ final class ModifyMyPageViewController: UIViewController {
             self.pageViewController.setViewControllers(
                 [pageViewControllers[self.currentPageNumber]],
                 direction: direction,
-                animated: false
+                animated: true
             )
         }
     }
