@@ -58,16 +58,18 @@ class writeCommentTextView: UIView {
     
     private func attribute() {
         self.backgroundColor = .dark02
+        self.addTopBorder(color: .gray02, borderWidth: 0.5)
     }
     
     private func setupLayout() {
         self.addSubview(contentView)
+
         contentView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
             trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 15, left: 16, bottom: 10, right: 16)
+            padding: UIEdgeInsets(top: 15, left: 16, bottom: 50, right: 16)
         )
         
         self.contentView.addSubview(commentTextView)
