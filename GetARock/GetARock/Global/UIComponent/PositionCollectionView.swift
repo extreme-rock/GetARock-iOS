@@ -129,6 +129,20 @@ final class PositionCollectionView: UIView {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
         cell.cellIndex = indexPath.item
     }
+    
+    func deselectAllItem() {
+        let selectedIndexPath = self.collectionView.indexPathsForSelectedItems
+        selectedIndexPath?.forEach {
+            self.collectionView.deselectItem(at: $0, animated: true)
+        }
+        postDeselectAllPositionButtonHiddenToggle()
+    }
+    
+    private func postDeselectAllPositionButtonHiddenToggle() {
+        NotificationCenter.default.post(
+            name: Notification.Name.hideDeselectAllPositionButton,
+            object: nil)
+    }
 }
 
 // MARK: - diffable
@@ -182,7 +196,22 @@ extension PositionCollectionView: UICollectionViewDelegate {
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
+        if selectedCellCount == 1 {
+            postDeselectAllPositionButtonHiddenToggle()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
+        if selectedCellCount == 0 {
+            postDeselectAllPositionButtonHiddenToggle()
+        }
+    }
 }
+
 //MARK: 선택된 포지션 데이터 추출
 extension PositionCollectionView {
     func getSelectedInstruments() -> [InstrumentList] {
