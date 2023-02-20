@@ -61,9 +61,7 @@
 		A96F3688299E2EE100376620 /* UserSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3687299E2EE100376620 /* UserSearchTableViewCell.swift */; };
 		A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */; };
 		A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */; };
-		A96F368E299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */; };
 		A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368F299E301700376620 /* SearchedUserListDTO.swift */; };
-		A96F3692299E320A00376620 /* UnRegisteredMemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */; };
 		A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */; };
 		A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDD38D299A3114003F5392 /* BasicDataModel.swift */; };
 		B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B6962982A85F00A1A9E2 /* CustomMarker.swift */; };
@@ -165,9 +163,7 @@
 		A96F3687299E2EE100376620 /* UserSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchTableViewCell.swift; sourceTree = "<group>"; };
 		A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddTableHeader.swift; sourceTree = "<group>"; };
 		A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedBandMemberCell.swift; sourceTree = "<group>"; };
-		A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedAddUnRegisteredMemberViewController.swift; sourceTree = "<group>"; };
 		A96F368F299E301700376620 /* SearchedUserListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUserListDTO.swift; sourceTree = "<group>"; };
-		A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnRegisteredMemberCardView.swift; sourceTree = "<group>"; };
 		A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		A9EDD38D299A3114003F5392 /* BasicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDataModel.swift; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -306,7 +302,6 @@
 				A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */,
 				A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */,
 				A9ABD8F7299E384D0036D9E7 /* UserSearch+Invite */,
-				A9ABD8F8299E38B90036D9E7 /* UnRegisteredMemberAdd */,
 			);
 			path = BandMemberAddFlow;
 			sourceTree = "<group>";
@@ -319,15 +314,6 @@
 				A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */,
 			);
 			path = "UserSearch+Invite";
-			sourceTree = "<group>";
-		};
-		A9ABD8F8299E38B90036D9E7 /* UnRegisteredMemberAdd */ = {
-			isa = PBXGroup;
-			children = (
-				A96F368D299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift */,
-				A96F3691299E320A00376620 /* UnRegisteredMemberCardView.swift */,
-			);
-			path = UnRegisteredMemberAdd;
 			sourceTree = "<group>";
 		};
 		B8468F62297A94B900A9E77E /* Maps */ = {
@@ -777,7 +763,6 @@
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
-				A96F3692299E320A00376620 /* UnRegisteredMemberCardView.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
@@ -823,7 +808,6 @@
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
-				A96F368E299E2F3A00376620 /* AddedAddUnRegisteredMemberViewController.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */,
 				7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */,
@@ -997,7 +981,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1032,7 +1016,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;

@@ -76,8 +76,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     func configure(data: SearchedUserInfo) {
         self.userNameLabel.text = data.name
-        //TODO: 리스트 형태로 받을 수 있도록 바꿔야하
-        self.userInstrumentLabel.text = data.instrumentList.first!.name
+        self.userInstrumentLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
         self.id = data.id
     }
 }

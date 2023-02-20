@@ -9,18 +9,17 @@ import UIKit
 
 final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
 
-    // MARK: 이 뷰를 업로드할 때, 서버에 UID를 날리고 그 UID에 해당하는 닉네임을 업데이트해야함
-    private let stepLabel: BasicLabel = BasicLabel(contentText: "2/3", fontStyle: .caption, textColorInfo: .gray02)
+    private let pageIndicatorLabel: BasicLabel = BasicLabel(contentText: "2/3", fontStyle: .caption, textColorInfo: .gray02)
 
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "밴드 멤버를\n알려주세요", fontStyle: .largeTitle01, textColorInfo: .white))
+    }(BasicLabel(contentText: "밴드 멤버를\n모두 알려주세요", fontStyle: .largeTitle01, textColorInfo: .white))
 
     private let subTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "처음 선택한 악기가\n나의 Main 포지션이 됩니다.", fontStyle: .content, textColorInfo: .gray02))
+    }(BasicLabel(contentText: "다른 밴드가 우리 밴드 멤버를 볼 수 있도록\n모든 멤버를 초대 및 등록해주세요", fontStyle: .content, textColorInfo: .gray02))
 
     //TODO: BandInforSet VC에서 여기 configuration 적용 버튼 만들어야함
     let inviteMemberButton: DefaultButton = {
@@ -41,13 +40,18 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
         $0.distribution = .fillEqually
         $0.spacing = 5
         return $0
-    }(UIStackView(arrangedSubviews: [inviteMemberButton, inviteUnRegisteredMemberButton]))
+    }(UIStackView(arrangedSubviews: [inviteMemberButton,
+                                     inviteUnRegisteredMemberButton]))
 
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         return $0
-    }(UIStackView(arrangedSubviews: [stepLabel, titleLabel, subTitleLabel, buttonHstack, sectionTitle]))
+    }(UIStackView(arrangedSubviews: [pageIndicatorLabel,
+                                     titleLabel,
+                                     subTitleLabel,
+                                     buttonHstack,
+                                     sectionTitle]))
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)

@@ -202,7 +202,6 @@ extension UserSearchViewController {
                     guard let selectedCell = self.searchResultTable.cellForRow(at: indexPath) as? UserSearchTableViewCell else { return }
                     if selectedCell.id == cell.id {
                         self.searchResultTable.deselectRow(at: indexPath, animated: true)
-                        print("deselect cell")
                     }
                 }
             }

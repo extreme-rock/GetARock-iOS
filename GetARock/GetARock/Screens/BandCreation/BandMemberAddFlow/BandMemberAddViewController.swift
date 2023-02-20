@@ -56,13 +56,24 @@ final class BandMemberAddViewController: BaseViewController {
 
     private func setupLayout() {
         view.addSubview(tableView)
-        tableView.constraint(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 100, right: 16))
+        tableView.constraint(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            leading: view.safeAreaLayoutGuide.leadingAnchor,
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            trailing: view.safeAreaLayoutGuide.trailingAnchor,
+            padding: UIEdgeInsets(top: 20,
+                                  left: 16,
+                                  bottom: 100,
+                                  right: 16))
 
         view.addSubview(nextButton)
         nextButton.constraint(
             bottom: view.safeAreaLayoutGuide.bottomAnchor,
             centerX: view.centerXAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+            padding: UIEdgeInsets(top: 0,
+                                  left: 0,
+                                  bottom: 16,
+                                  right: 0))
     }
 
     private func attribute() {
@@ -72,11 +83,11 @@ final class BandMemberAddViewController: BaseViewController {
 
     private func configureAdminCell() {
         guard let admin: MemberList = BasicDataModel.bandCreationData.memberList.first else { return }
-        //MARK: 성별과 나이 정보는 추후 개인 유저 정보를 바탕으로 업데이트 해야함
         let transformedInstruments: [SearchedUserInstrumentList] = admin.instrumentList.map { SearchedUserInstrumentList(instrumentId: 0, isMain: false, name: $0.name)
         }
-        let initialData: SearchedUserInfo = SearchedUserInfo(memberId: admin.memberId ?? -1, name: admin.name, memberState: admin.memberState, instrumentList: transformedInstruments, gender: "MEN", age: "20대")
-        addedMembers.append(initialData)
+        //MARK: 성별과 나이 정보는 추후 개인 유저 정보를 바탕으로 업데이트 해야함
+        let bandAdminData: SearchedUserInfo = SearchedUserInfo(memberId: admin.memberId ?? -1, name: admin.name, memberState: admin.memberState, instrumentList: transformedInstruments, gender: "MEN", age: "20대")
+        addedMembers.append(bandAdminData)
         updateSnapShot(with: addedMembers)
     }
 }
@@ -97,6 +108,10 @@ extension BandMemberAddViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberAddTableViewCell.classIdentifier, for: indexPath) as? BandMemberAddTableViewCell else { return UITableViewCell() }
 
             cell.configure(data: cellData)
+            cell.selectionStyle = .none
+            if cellData.memberState == .admin {
+                cell.deleteButton.isHidden = true
+            }
 
             let deleteAction = UIAction { _ in
                 self.addedMembers.removeAll { $0.id == cell.id }
@@ -104,11 +119,6 @@ extension BandMemberAddViewController {
             }
 
             cell.deleteButton.addAction(deleteAction, for: .touchUpInside)
-            cell.selectionStyle = .none
-
-            if cellData.memberState == .admin {
-                cell.deleteButton.isHidden = true
-            }
 
             return cell
         }
@@ -138,21 +148,9 @@ extension BandMemberAddViewController: UITableViewDelegate {
             }
             self.present(nextViewController, animated: true)
         }
-
-        //TODO: 헤더뷰 내용물 캡슐화 필요
         headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
 
-        let unRegisteredMemberButtonAction = UIAction { _ in
-            let nextVC = AddUnRegisteredMemberViewController()
-            nextVC.completion = { addedMembers in
-                self.addedMembers = self.addedMembers + addedMembers
-                self.updateSnapShot(with: self.addedMembers)
-            }
-            self.present(nextVC, animated: true)
-        }
-
-        //TODO: 헤더뷰 내용물 캡슐화 필요
-        headerView.inviteUnRegisteredMemberButton.addAction(unRegisteredMemberButtonAction, for: .touchUpInside)
+        //TODO: 미가입 회원추가 곤련 코드 작성 예정
       return headerView
     }
 }

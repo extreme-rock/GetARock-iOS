@@ -73,13 +73,13 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
         contentView.addSubview(userNameLabel)
         userNameLabel.constraint(top: leftView.topAnchor,
-                              leading: leftView.trailingAnchor,
-                              padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0))
+                                 leading: leftView.trailingAnchor,
+                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0))
 
         contentView.addSubview(instrumentListLabel)
         instrumentListLabel.constraint(top: userNameLabel.bottomAnchor,
-                                 leading: userNameLabel.leadingAnchor,
-                                 padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
+                                       leading: userNameLabel.leadingAnchor,
+                                       padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
 
         contentView.addSubview(deleteButton)
         deleteButton.constraint(.widthAnchor, constant: 25)
@@ -98,10 +98,10 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
     func configure(data: SearchedUserInfo) {
         self.userNameLabel.text = data.name
-        //TODO: List로 받을 수 있게 수정해야leftView함
         self.instrumentListLabel.text = data.instrumentList.first?.name ?? ""
         self.id = data.id
-        
+
+        //Cell 왼쪽 아이콘 케이스 분류
         switch data.memberState {
         case .admin: leftView.image = ImageLiteral.leaderIcon
         case .none: leftView.image = ImageLiteral.memberIcon
@@ -112,9 +112,12 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         self.userNameLabel.text = data.name
         self.userAgeLabel.text = data.age
         self.userGenderLabel.text = data.gender
-        
-        if data.memberState == .annonymous { userDetailInfoHstack.isHidden = true }
-        self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ",")
+
+        switch data.memberState {
+        case .annonymous: userDetailInfoHstack.isHidden = true
+        default:
+            self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
+        }
     }
 }
 
