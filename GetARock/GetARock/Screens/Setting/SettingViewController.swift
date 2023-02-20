@@ -162,6 +162,16 @@ extension SettingViewController: UITableViewDataSource {
                 withIdentifier: SettingViewVersionCell.classIdentifier,
                 for: indexPath
             ) as! SettingViewVersionCell
+            
+            return cell
+        } else if indexPath.row > 4 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.text = model.title
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell.textLabel?.textColor = .gray02
+            cell.backgroundColor = .dark01
+            cell.selectionStyle = .none
+            
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
