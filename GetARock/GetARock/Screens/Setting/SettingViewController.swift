@@ -194,7 +194,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     func sendReportMail() {
         if MFMailComposeViewController.canSendMail() {
             let composeVC = MFMailComposeViewController()
-            let aenittoEmail = "ryomyomyom@gmail.com"
+            let getarockEmail = "ryomyomyom@gmail.com"
             // TODO: 유저디폴트에서 닉네임 가져오기
             let messageBody = """
                               
@@ -211,7 +211,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
                               """
             
             composeVC.mailComposeDelegate = self
-            composeVC.setToRecipients([aenittoEmail])
+            composeVC.setToRecipients([getarockEmail])
             composeVC.setSubject("[문의 사항]")
             composeVC.setMessageBody(messageBody, isHTML: false)
             
