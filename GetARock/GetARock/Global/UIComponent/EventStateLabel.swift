@@ -26,13 +26,9 @@ final class EventStateLabel: UILabel {
     }
     
     weak var delegate: DeleteDdayLabelDelegate?
-    
     private var labelData: String
-    
     private var days = 0
-    
     private var eventLabelType: EventLabelType
-    
     private var padding = UIEdgeInsets(top: 6.0, left: 10.0, bottom: 6.0, right: 10.0)
     
     // MARK: - Init

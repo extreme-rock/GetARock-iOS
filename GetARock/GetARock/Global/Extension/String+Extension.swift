@@ -10,6 +10,7 @@ import Foundation
 extension String {
     
     // MARK: 특수문자 제한 정규표현식
+    
     func checkStringExpression() -> Bool{
         do {
             let regex = try NSRegularExpression(
@@ -30,6 +31,7 @@ extension String {
     }
     
     // MARK: String -> Date로 변환
+    
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")

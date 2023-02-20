@@ -9,7 +9,7 @@ import UIKit
 
 final class EventStateLabelStackView: UIStackView {
 
-    // MARK: - VIew
+    // MARK: - View
     
     private let eventData: Event
     private lazy var dDayLabel = EventStateLabel(type: .dDay,
