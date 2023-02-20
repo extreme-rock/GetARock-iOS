@@ -141,6 +141,8 @@ extension CommentListView: UITableViewDataSource {
         
         cell.configure(data: commentData?[indexPath.row],
                        index: indexPath.row)
+        cell.selectionStyle = .none
+        
         return cell
     }
 }
