@@ -28,7 +28,7 @@ final class PlusPositionCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
-        addAction()
+        addActionToPlusButton()
     }
     
     required init?(coder: NSCoder) {
@@ -38,16 +38,15 @@ final class PlusPositionCollectionViewCell: UICollectionViewCell {
     private func setupLayout() {
         self.contentView.addSubview(containerView)
         self.containerView.constraint(to: self.contentView)
-        self.containerView.constraint(.widthAnchor, constant: CellSize.width)
         self.containerView.constraint(.heightAnchor, constant: 138)
         
         containerView.addSubview(plusPositionButton)
         self.plusPositionButton.constraint(to: self.containerView)
     }
     
-    private func addAction() {
+    private func addActionToPlusButton() {
         let action = UIAction { _ in
-            NotificationCenter.default.post(name: Notification.Name(StringLiteral.showPositionPlusModal),
+            NotificationCenter.default.post(name: Notification.Name.showPositionPlusModal,
                                             object: nil)
         }
         self.plusPositionButton.addAction(action, for: .touchUpInside)
