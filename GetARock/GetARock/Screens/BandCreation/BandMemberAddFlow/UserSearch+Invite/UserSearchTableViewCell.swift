@@ -11,13 +11,6 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     var id: String = "default"
 
-    var isChecked: Bool = false {
-          didSet {
-              selectButton.image = isChecked ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.circleSymbol
-              selectButton.tintColor = isChecked ? .systemPurple : .gray02
-          }
-      }
-
     let userNameLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
 
     private let userGenderLabel: BasicLabel = BasicLabel(contentText: "남", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
@@ -50,15 +43,11 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func prepareForReuse() {
-        self.isChecked = false
-        self.selectButton.image = ImageLiteral.circleSymbol
-    }
-    
+    //MARK: 셀이 select, deselect 될 때 마다 수행되는 함수
     override func setSelected(_ selected: Bool, animated: Bool) {
-        //MARK: 셀이 select, deselect 될 때 마다 수행되는 함수
          super.setSelected(selected, animated: animated)
-         isChecked.toggle()
+        selectButton.image = selected ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.circleSymbol
+        selectButton.tintColor = selected ? .systemPurple : .gray02
      }
 
     private func attribute() {

@@ -60,7 +60,9 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
 
     private func attribute() {
         self.backgroundContentView.layer.cornerRadius = 10
-        self.contentView.layer.borderColor = UIColor.white.cgColor
+        self.contentView.layer.borderWidth = 1
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.borderColor = UIColor.mainPurple.cgColor
     }
 
     private func setupLayout() {

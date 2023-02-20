@@ -99,14 +99,14 @@ final class UserSearchViewController: BaseViewController {
             leading: view.safeAreaLayoutGuide.leadingAnchor,
             bottom: doneButton.topAnchor,
             trailing: view.safeAreaLayoutGuide.trailingAnchor,
-            padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+            padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 0))
 
         view.addSubview(searchResultTable)
         searchResultTable.constraint(top: searchBar.bottomAnchor,
                                      leading: view.leadingAnchor,
                                      bottom: selectedUserListScrollView.topAnchor,
                                      trailing: view.trailingAnchor,
-                                     padding: UIEdgeInsets(top: 20, left: 25, bottom: 10, right: 25))
+                                     padding: UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16))
 
     }
 }
@@ -133,32 +133,25 @@ extension UserSearchViewController: UITableViewDelegate {
         return 65
     }
 
+    //MARK: Cell Select
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let selectedCell = tableView.cellForRow(at: indexPath) as! UserSearchTableViewCell
-        // 선택된 tableView의 데이터만 따로 추출
-        // 선택된 셀에 접근할 수 있으나 데이터는 따로 만들어야함
-        // CellInformation만들 때 임의의 id를 만들기 때문에, 만들고나서 선택한 cell의 id를 주입해줘야함
+        guard let selectedCell = tableView.cellForRow(at: indexPath) as? UserSearchTableViewCell else { return }
         var data = SearchedUserInfo(memberId: 0,
-                               name: selectedCell.userNameLabel.text ?? "",
+                                    name: selectedCell.userNameLabel.text ?? "",
                                     memberState: .none,
-                              instrumentList: [SearchedUserInstrumentList(
-                                instrumentId: 0,
-                                isMain: true,
-                                name: selectedCell.userInstrumentLabel.text ?? "")], gender: "MEN", age: "TWENTIES")
-        // 선택될 때 Cell의 아이디 그대로 데이터에 넣기
+                                    instrumentList: [SearchedUserInstrumentList(
+                                        instrumentId: 0,
+                                        isMain: true,
+                                        name: selectedCell.userInstrumentLabel.text ?? "")], gender: "MEN", age: "TWENTIES")
         data.id = selectedCell.id
-        //MARK: 이미 배열에 들어가있는 셀 없애기
-        //TODO: 함수로 따로 빼서 만들기
         selectedUsers.append(data)
-        selectedCell.isChecked = true
         self.updateSnapShot(with: selectedUsers)
     }
 
-    //MARK: Deselect Function
+    //MARK: Cell deselect
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let selectedCell = tableView.cellForRow(at: indexPath) as! UserSearchTableViewCell
-        selectedCell.isChecked = false
+        guard let selectedCell = tableView.cellForRow(at: indexPath) as? UserSearchTableViewCell else { return }
         selectedUsers.removeAll { $0.id == selectedCell.id }
         self.updateSnapShot(with: selectedUsers)
     }
@@ -167,17 +160,16 @@ extension UserSearchViewController: UITableViewDelegate {
 extension UserSearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //MARK: 동적 셀 크기 배정 코드
-         let leadingTrailingInset: CGFloat = 60
-         let cellHeight: CGFloat = 50
-         
+        let leadingTrailingInset: CGFloat = 60
+        let cellHeight: CGFloat = 50
         let nameText = selectedUsers[indexPath.row].name
-         let size: CGSize = .init(width: collectionView.frame.width, height: cellHeight)
-         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .regular)]
-         
-         let estimatedFrame = nameText.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-         let cellWidth: CGFloat = estimatedFrame.width + leadingTrailingInset
-         
-         return CGSize(width: cellWidth, height: cellHeight)
+        let size: CGSize = .init(width: collectionView.frame.width, height: cellHeight)
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .regular)]
+
+        let estimatedFrame = nameText.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        let cellWidth: CGFloat = estimatedFrame.width + leadingTrailingInset
+
+        return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 
@@ -199,14 +191,18 @@ extension UserSearchViewController {
             cell.configure(data: person)
 
             let deleteAction = UIAction { _ in
+                //MARK: 하단의 가로 스크롤뷰의 데이터 삭제 및 업데이트
                 self.selectedUsers.removeAll { $0.id == cell.id }
                 self.updateSnapShot(with: self.selectedUsers)
 
-                //TODO: Deselect 로직 수정 필요. 애초에 선택된 애들만 없앨 수 있게
-                for index in 0..<SearchedUserListDTO.testData.memberList.count {
-                    let searchResultTablecell = self.searchResultTable.cellForRow(at: IndexPath(row: index, section: 0)) as! UserSearchTableViewCell
-                    if searchResultTablecell.id == cell.id {
-                        searchResultTablecell.isChecked = false
+                //MARK: 하단의 가로 스크롤뷰 삭제로 원래 선택된 셀의 UI 업데이트
+                guard let indexPathForSelectedRows = self.searchResultTable.indexPathsForSelectedRows else { return }
+
+                for indexPath in indexPathForSelectedRows {
+                    guard let selectedCell = self.searchResultTable.cellForRow(at: indexPath) as? UserSearchTableViewCell else { return }
+                    if selectedCell.id == cell.id {
+                        self.searchResultTable.deselectRow(at: indexPath, animated: true)
+                        print("deselect cell")
                     }
                 }
             }
