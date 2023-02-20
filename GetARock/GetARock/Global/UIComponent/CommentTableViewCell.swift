@@ -51,6 +51,7 @@ final class CommentTableViewCell: UITableViewCell {
     private lazy var commentStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
+        $0.distribution = .equalSpacing
         return $0
     }(UIStackView(arrangedSubviews: [commentInfoStackView, commentTextLabel, commentDateLabel]))
     

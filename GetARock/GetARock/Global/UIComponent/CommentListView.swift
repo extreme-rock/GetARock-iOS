@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - class CommentListView
+// MARK: - CommentListView
 
 final class CommentListView: UIView {
     
@@ -31,9 +31,6 @@ final class CommentListView: UIView {
         return $0
     }(UITableView(frame: .zero, style: .grouped))
     
-    private let commentTextView = writeCommentTextView()
-    
-    
     private lazy var commentStackView: UIStackView = {
         $0.spacing = 20
         $0.axis = .vertical
@@ -42,6 +39,7 @@ final class CommentListView: UIView {
         return $0
     }(UIStackView(arrangedSubviews: [totalComentNumberLabel, tableView]))
     
+    private let commentwriteTextView = writeCommentTextView()
     
     // MARK: - Life Cycle
     
@@ -55,7 +53,7 @@ final class CommentListView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-//
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
            self.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
        }
@@ -69,21 +67,19 @@ final class CommentListView: UIView {
     }
     
     private func setupLayout() {
-        //        self.addSubview(commentStackView)
-        //        commentStackView.constraint(to:self)
-        //        commentStackView.constraint(top: self.topAnchor,
-        //                                   leading: self.leadingAnchor,
-        //                                   bottom: self.bottomAnchor,
-        //                                   trailing: self.trailingAnchor,
-        //                                   padding: UIEdgeInsets(top: 0, left: 0, bottom: -60, right: 0))
-        self.addSubview(commentTextView)
-        commentTextView.constraint(
-            top: self.topAnchor,
+                self.addSubview(commentStackView)
+//                commentStackView.constraint(to:self)
+                commentStackView.constraint(top: self.topAnchor,
+                                           leading: self.leadingAnchor,
+                                           trailing: self.trailingAnchor,
+                                           padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        self.addSubview(commentwriteTextView)
+        commentwriteTextView.constraint(
+            top: commentStackView.bottomAnchor,
             leading: self.leadingAnchor,
-//            bottom: self.bottomAnchor,
+            bottom: self.bottomAnchor,
             trailing: self.trailingAnchor,
             padding: UIEdgeInsets(top: 0, left: 0, bottom:0, right: 0))
-        
     }
     
     private func setTableView() {
