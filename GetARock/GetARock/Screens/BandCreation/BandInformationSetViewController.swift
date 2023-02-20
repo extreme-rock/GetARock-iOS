@@ -205,7 +205,7 @@ final class BandInformationSetViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        setDelegate()
+        setTextFieldDelegate()
         setKeyboardDismiss()
         setNotification()
     }
@@ -222,8 +222,6 @@ final class BandInformationSetViewController: BaseViewController {
     
     private func setKeyboardDismiss() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
-        recognizer.numberOfTapsRequired = 1
-        recognizer.numberOfTouchesRequired = 1
         mainScrollView.addGestureRecognizer(recognizer)
     }
     
@@ -252,7 +250,7 @@ final class BandInformationSetViewController: BaseViewController {
                                padding: UIEdgeInsets(top: 20, left: 16, bottom: 25, right: 16))
     }
     
-    private func setDelegate() {
+    private func setTextFieldDelegate() {
         youtubeTextField.textField.delegate = self
         instagramTextField.textField.delegate = self
         soundCloudTextField.textField.delegate = self
