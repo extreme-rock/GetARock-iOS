@@ -22,6 +22,7 @@ final class SettingViewController: BaseViewController {
     
     private lazy var settingTableView: UITableView = {
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        $0.register(SettingViewVersionCell.self, forCellReuseIdentifier: SettingViewVersionCell.classIdentifier)
         $0.backgroundColor = .dark01
         return $0
     }(UITableView())
@@ -39,8 +40,8 @@ final class SettingViewController: BaseViewController {
     // MARK: - Method
     
     private func setupTableView() {
-        settingTableView.dataSource = self
         settingTableView.delegate = self
+        settingTableView.dataSource = self
     }
     
     private func setupLayout() {
@@ -141,6 +142,8 @@ extension SettingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 3 { return 70 }
+        
         return 50
     }
 }
@@ -154,11 +157,19 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = options[indexPath.row]
+        if indexPath.row == 3 {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: SettingViewVersionCell.classIdentifier,
+                for: indexPath
+            ) as! SettingViewVersionCell
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = model.title
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         cell.backgroundColor = .dark01
         cell.selectionStyle = .none
-
+        
         return cell
     }
 
