@@ -22,6 +22,7 @@ final class SettingViewController: BaseViewController {
     
     private lazy var settingTableView: UITableView = {
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        $0.register(SettingViewDefaultCell.self, forCellReuseIdentifier: SettingViewDefaultCell.classIdentifier)
         $0.register(SettingViewVersionCell.self, forCellReuseIdentifier: SettingViewVersionCell.classIdentifier)
         $0.backgroundColor = .dark01
         return $0
@@ -142,7 +143,7 @@ extension SettingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 3 { return 70 }
+        if indexPath.row == 4 { return 70 }
         
         return 50
     }
@@ -157,32 +158,34 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = options[indexPath.row]
-        if indexPath.row == 3 {
+        if indexPath.row < 4 {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: SettingViewDefaultCell.classIdentifier,
+                for: indexPath
+            ) as! SettingViewDefaultCell
+            cell.configure(title: model.title)
+            
+            return cell
+        } else if indexPath.row == 4 {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: SettingViewVersionCell.classIdentifier,
                 for: indexPath
             ) as! SettingViewVersionCell
             
             return cell
-        } else if indexPath.row > 4 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            cell.textLabel?.text = model.title
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-            cell.textLabel?.textColor = .gray02
-            cell.backgroundColor = .dark01
-            cell.selectionStyle = .none
-            
-            return cell
         }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = model.title
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+        cell.textLabel?.textColor = .gray02
         cell.backgroundColor = .dark01
         cell.selectionStyle = .none
         
+        
         return cell
     }
-
+    
 }
 
 // MARK: - MFMailComposeViewControllerDelegate
