@@ -16,13 +16,13 @@ final class BandMemberAddViewController: BaseViewController {
 
     var addedMembers: [SearchedUserInfo] = [] {
         didSet {
-            guard let headerView = self.tableView.headerView(forSection: 0) as? BandMemberAddTableViewHeader else { return }
+            guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberAddTableViewHeader else { return }
             headerView.sectionTitle.text = "밴드 멤버 \(addedMembers.count)인"
         }
     }
 
     //MARK: - View
-    private lazy var tableView: UITableView = {
+    private lazy var bandMemberTableView: UITableView = {
         $0.register(BandMemberAddTableViewCell.self,
                     forCellReuseIdentifier: BandMemberAddTableViewCell.classIdentifier)
         $0.register(BandMemberAddTableViewHeader.self,
@@ -55,8 +55,8 @@ final class BandMemberAddViewController: BaseViewController {
     //MARK: - Method
 
     private func setupLayout() {
-        view.addSubview(tableView)
-        tableView.constraint(
+        view.addSubview(bandMemberTableView)
+        bandMemberTableView.constraint(
             top: view.safeAreaLayoutGuide.topAnchor,
             leading: view.safeAreaLayoutGuide.leadingAnchor,
             bottom: view.safeAreaLayoutGuide.bottomAnchor,
@@ -103,7 +103,7 @@ extension BandMemberAddViewController {
     }
 
     func makeDataSource() -> UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> {
-        return UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo>(tableView: self.tableView) { tableView, indexPath, cellData in
+        return UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in
 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberAddTableViewCell.classIdentifier, for: indexPath) as? BandMemberAddTableViewCell else { return UITableViewCell() }
 
