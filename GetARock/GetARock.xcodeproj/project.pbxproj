@@ -56,6 +56,7 @@
 		B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */; };
 		B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */; };
 		B863B481299B7D7E0016CC48 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B863B480299B7D7E0016CC48 /* SettingViewController.swift */; };
+		B88ABF3729A3C1FA004C1793 /* SettingViewVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88ABF3629A3C1FA004C1793 /* SettingViewVersionCell.swift */; };
 		B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88E1B9E2977A70E006072B7 /* AppDelegate.swift */; };
 		B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88E1BA02977A70E006072B7 /* SceneDelegate.swift */; };
 		B88E1BA82977A70F006072B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B88E1BA72977A70F006072B7 /* Assets.xcassets */; };
@@ -147,6 +148,7 @@
 		B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		B863B480299B7D7E0016CC48 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		B88ABF3629A3C1FA004C1793 /* SettingViewVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewVersionCell.swift; sourceTree = "<group>"; };
 		B88E1B9B2977A70E006072B7 /* GetARock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetARock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B88E1B9E2977A70E006072B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B88E1BA02977A70E006072B7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				B863B480299B7D7E0016CC48 /* SettingViewController.swift */,
+				B88ABF3629A3C1FA004C1793 /* SettingViewVersionCell.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -712,6 +715,7 @@
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
+				B88ABF3729A3C1FA004C1793 /* SettingViewVersionCell.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
 				9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */,
