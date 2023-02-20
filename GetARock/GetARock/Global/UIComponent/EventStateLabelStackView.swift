@@ -49,7 +49,7 @@ final class EventStateLabelStackView: UIStackView {
 // MARK: - DeleteDdayLabelDelegate
 
 extension EventStateLabelStackView: DeleteDdayLabelDelegate {
-    func DeleteDdayLabel() {
+    func deleteDdayLabel() {
         self.removeArrangedSubview(dDayLabel)
     }
 }

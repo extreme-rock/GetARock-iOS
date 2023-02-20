@@ -10,7 +10,7 @@ import UIKit
 // MARK: - DeleteDdayLableDelegate
 
 protocol DeleteDdayLabelDelegate: AnyObject {
-    func DeleteDdayLabel()
+    func deleteDdayLabel()
 }
 
 // MARK: - EventStateLabel class
@@ -111,7 +111,7 @@ final class EventStateLabel: UILabel {
                 setDefaultUI()
                 self.text = "D-\(days)"
             } else {
-                self.delegate?.DeleteDdayLabel()
+                self.delegate?.deleteDdayLabel()
             }
             
         case .state:
