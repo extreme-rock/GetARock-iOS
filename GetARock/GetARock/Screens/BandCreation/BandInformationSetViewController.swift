@@ -109,8 +109,7 @@ final class BandInformationSetViewController: BaseViewController {
     //TODO: 추후에 합주곡 삽입 action 추가 필요
     private lazy var addPracticeSongButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
-        //TODO: 이전 PR 머지 이후 이미지 리터럴로 변경하기
-        configuration.image = UIImage(systemName: "plus")
+        configuration.image = ImageLiteral.plusSymbol
         configuration.title = "합주곡 추가"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 10
