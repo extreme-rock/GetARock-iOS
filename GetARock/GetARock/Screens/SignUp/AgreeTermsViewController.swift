@@ -12,8 +12,8 @@ final class AgreeTermsViewController: UIViewController {
     // MARK: - Property
     
     private lazy var requiedTermButtons: [CheckMarkButton] = [serviceCheckMarkButton,
-                                                personalInfoCheckMarkButton,
-                                                ageLimitCheckMarkButton]
+                                                              personalInfoCheckMarkButton,
+                                                              ageLimitCheckMarkButton]
     
     // MARK: - View
     
@@ -118,9 +118,6 @@ final class AgreeTermsViewController: UIViewController {
         addTermsButtonAction()
     }
     
-    deinit {
-        print("deinint")
-    }
     // MARK: - Method
     
     private func attribute() {
