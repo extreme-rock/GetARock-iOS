@@ -20,6 +20,8 @@ enum ImageLiteral {
     static var plusSymbol: UIImage { .load(systemName: "plus") }
     static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
     static var chevronLeftSymbol: UIImage { .load(systemName: "chevron.backward") }
+    static var chevronRightSymbol: UIImage { .load(systemName: "chevron.right")}
+    static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     
     // MARK: - icon
     
@@ -31,6 +33,7 @@ enum ImageLiteral {
     static var leaderIcon: UIImage { .load(named: "leaderIcon")}
     static var memberIcon: UIImage { .load(named: "memberIcon")}
     static var unRegisteredMemberIcon: UIImage { .load(named: "unRegisteredMemberIcon")}
+    static var customPinIcon: UIImage { .load(named: "customPinIcon") }
 }
 
 extension UIImage {

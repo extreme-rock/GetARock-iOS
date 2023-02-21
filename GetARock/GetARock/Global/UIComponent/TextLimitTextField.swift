@@ -94,9 +94,12 @@ final class TextLimitTextField: UIView {
     
     private func attribute() {
         if type == .none {
-            checkButton.isHidden = true
+            self.checkButton.isHidden = true
+            self.textField.rightViewMode = .never
         }
         self.duplicationCheckLabel.isHidden = true
+        self.textField.rightView = TextFieldRightPaddingView()
+        self.textField.rightViewMode = .always
     }
 }
 
