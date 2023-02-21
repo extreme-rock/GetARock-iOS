@@ -63,7 +63,7 @@ final class AgreeTermsViewController: UIViewController {
     
     private let serviceCheckMarkButton = CheckMarkButton()
     
-    private let serviceTermStackView = TermGuideLabel(
+    private let serviceTermStackView = TermGuideStackView(
         guideText: "서비스 이용약관 동의",
         type: .required,
         isNeedUnderLine: true,
@@ -79,7 +79,7 @@ final class AgreeTermsViewController: UIViewController {
     
     private let personalInfoCheckMarkButton = CheckMarkButton()
     
-    private let personalInfoTermStackView = TermGuideLabel(
+    private let personalInfoTermStackView = TermGuideStackView(
         guideText: "개인정보 수집 및 이용 동의",
         type: .required,
         isNeedUnderLine: true,
@@ -95,7 +95,7 @@ final class AgreeTermsViewController: UIViewController {
     
     private let ageLimitCheckMarkButton = CheckMarkButton()
     
-    private let ageLimitTermStackView = TermGuideLabel(
+    private let ageLimitTermStackView = TermGuideStackView(
         guideText: "만 14세 이상",
         type: .required,
         isNeedUnderLine: false
@@ -204,134 +204,5 @@ extension AgreeTermsViewController {
         termsCheckedState.count == requiedTermButtons.count
         ? true
         : false
-    }
-}
-
-final class CheckMarkButton: UIButton {
-    
-    var isChecked: Bool = false {
-        didSet {
-            self.setImage(
-                isChecked
-                ? ImageLiteral.checkMarkCircleFillSymbol
-                : ImageLiteral.checkmarkCircleSymbol
-                , for: .normal)
-            self.tintColor = isChecked ? .mainPurple : .gray02
-        }
-    }
-    
-    init() {
-        super.init(frame: .zero)
-        attribute()
-        self.addTarget(self, action:#selector(buttonClicked(_:)), for: UIControl.Event.touchUpInside)
-        self.isChecked = false
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func buttonClicked(_ sender: UIButton) {
-        if sender == self {
-            isChecked.toggle()
-        }
-    }
-    
-    private func attribute() {
-        self.setImage(ImageLiteral.checkmarkCircleSymbol, for: .normal)
-        self.tintColor = .gray02
-        self.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    }
-}
-
-final class TermGuideLabel: UIStackView {
-    
-    // MARK: - Property
-    
-    enum InputType: String {
-        case optional = "(선택)"
-        case required = "(필수)"
-    }
-    
-    private let guideText: String
-    private let type: InputType
-    private let isNeedUnderLine: Bool
-    private let url: String?
-    
-    // MARK: - View
-    
-    private lazy var firstLabel: BasicLabel = {
-        $0.setContentHuggingPriority(
-            UILayoutPriority.defaultHigh,
-            for: .horizontal)
-        
-        let attributeString = NSMutableAttributedString(string: guideText)
-        attributeString.addAttribute(
-            .underlineStyle,
-            value: 1,
-            range: NSRange.init(location: 0, length: guideText.count)
-        )
-        $0.attributedText = attributeString
-        return $0
-    }(BasicLabel(contentText: guideText,
-                 fontStyle: .content,
-                 textColorInfo: .white))
-    
-    private lazy var guideButton: UIButton = {
-        $0.setTitle(guideText, for: .normal)
-        $0.setContentHuggingPriority(UILayoutPriority.defaultHigh,
-                                     for: .horizontal)
-        
-        if isNeedUnderLine {
-            let attributeString = NSMutableAttributedString(string: guideText)
-            attributeString.addAttribute(
-                .underlineStyle,
-                value: 1,
-                range: NSRange.init(location: 0, length: guideText.count)
-            )
-            $0.titleLabel?.attributedText = attributeString
-        }
-        $0.titleLabel?.font = .setFont(.content)
-        $0.titleLabel?.textColor = .white
-        
-      return $0
-    }(UIButton())
-    
-    private lazy var secondLabel = BasicLabel(contentText: type.rawValue,
-                                              fontStyle: .content,
-                                              textColorInfo: .gray02)
-    
-    // MARK: - Init
-    
-    init(guideText: String, type: InputType, isNeedUnderLine: Bool, url: String? = nil) {
-        self.guideText = guideText
-        self.type = type
-        self.isNeedUnderLine = isNeedUnderLine
-        self.url = url
-        super.init(frame: .zero)
-        attribute()
-        addGuideButtonAction()
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Method
-    
-    private func attribute() {
-        self.axis = .horizontal
-        self.spacing = 3
-        self.addArrangedSubview(guideButton)
-        self.addArrangedSubview(secondLabel)
-    }
-    
-    private func addGuideButtonAction() {
-        guard let url else { return }
-        let action = UIAction { _ in
-            guard let url = URL(string: url) else { return }
-            UIApplication.shared.open(url)
-        }
-        self.guideButton.addAction(action, for: .touchUpInside)
     }
 }
