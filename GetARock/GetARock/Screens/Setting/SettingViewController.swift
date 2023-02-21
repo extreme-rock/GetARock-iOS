@@ -159,18 +159,18 @@ extension SettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = options[indexPath.row]
         if indexPath.row < 4 {
-            let cell = tableView.dequeueReusableCell(
+            guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SettingViewDefaultCell.classIdentifier,
                 for: indexPath
-            ) as! SettingViewDefaultCell
+            ) as? SettingViewDefaultCell else { return UITableViewCell() }
             cell.configure(title: model.title)
             
             return cell
         } else if indexPath.row == 4 {
-            let cell = tableView.dequeueReusableCell(
+            guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SettingViewVersionCell.classIdentifier,
                 for: indexPath
-            ) as! SettingViewVersionCell
+            ) as? SettingViewVersionCell else { return UITableViewCell() }
             
             return cell
         }
