@@ -43,6 +43,8 @@
 		7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */; };
 		7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04132988FC1100186986 /* SNSListStackView.swift */; };
 		7B7B04162988FE9900186986 /* SNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04152988FE9900186986 /* SNS.swift */; };
+		7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA83299B708C00C44184 /* EventStateLabel.swift */; };
+		7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */; };
 		7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755D2987DF54008F4B9F /* BandButtonView.swift */; };
 		7BC275602987EA10008F4B9F /* emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755F2987EA10008F4B9F /* emptyView.swift */; };
 		7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */; };
@@ -147,6 +149,8 @@
 		7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B7B04132988FC1100186986 /* SNSListStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSListStackView.swift; sourceTree = "<group>"; };
 		7B7B04152988FE9900186986 /* SNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNS.swift; sourceTree = "<group>"; };
+		7BB4FA83299B708C00C44184 /* EventStateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabel.swift; sourceTree = "<group>"; };
+		7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabelStackView.swift; sourceTree = "<group>"; };
 		7BC2755D2987DF54008F4B9F /* BandButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandButtonView.swift; sourceTree = "<group>"; };
 		7BC2755F2987EA10008F4B9F /* emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emptyView.swift; sourceTree = "<group>"; };
 		7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Gradation.swift"; sourceTree = "<group>"; };
@@ -491,6 +495,8 @@
 				9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */,
 				7BC2755F2987EA10008F4B9F /* emptyView.swift */,
 				4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */,
+				7BB4FA83299B708C00C44184 /* EventStateLabel.swift */,
+				7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */,
 				7B6D3356299A50F2001FD630 /* DetailContentView.swift */,
 			);
 			path = UIComponent;
@@ -796,6 +802,7 @@
 				4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				7B236A8529854196006AE385 /* IconImageView.swift in Sources */,
+				7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */,
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
 				B8B17C5D29823AC900806899 /* Event.swift in Sources */,
@@ -817,6 +824,7 @@
 				9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */,
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
+				7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */,
