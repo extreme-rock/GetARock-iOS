@@ -12,7 +12,6 @@ final class writeCommentTextView: UIView {
     // MARK: - Property
     
     private let maxHeight: CGFloat = 116
-    private let textStyle = NSMutableParagraphStyle()
     private var textViewHeightConstraint: NSLayoutConstraint?
     private var keyBoardHeightPaddingConstraint: NSLayoutConstraint?
     private var keyboardHeight: CGFloat = 30
@@ -20,7 +19,6 @@ final class writeCommentTextView: UIView {
     // MARK: - View
     
     private lazy var commentTextView: UITextView = {
-        textStyle.lineSpacing = CGFloat(10)
         $0.font = UIFont.setFont(.content)
         $0.backgroundColor = .dark02
         $0.textColor = .white
@@ -96,7 +94,7 @@ final class writeCommentTextView: UIView {
             trailing: self.contentView.trailingAnchor,
             padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 80)
         )
-        setTextViewHeight()
+        setTextViewHeightConstraint()
         
         self.contentView.addSubview(addCommentButton)
         addCommentButton.constraint(
@@ -111,17 +109,10 @@ final class writeCommentTextView: UIView {
         setplaceholderLabelLayout()
     }
     
-    private func setTextViewHeight() {
-        textViewHeightConstraint = commentTextView.heightAnchor.constraint(
-            equalToConstant: 35
-        )
-        textViewHeightConstraint?.isActive = true
-    }
-    
     private func setTextViewHeightConstraint() {
         textViewHeightConstraint = commentTextView.heightAnchor.constraint(
             equalToConstant: 35
-        )
+    )
         textViewHeightConstraint?.isActive = true
     }
     
