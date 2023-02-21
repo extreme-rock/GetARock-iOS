@@ -17,9 +17,8 @@ final class SearchTextField: UIView {
         return $0
     }(UITextField.makeBasicTextField(placeholder: placeholder))
 
-    //TODO: ImageLiteral로 등록 필요
     private let searchImage: UIImageView = {
-        $0.image = UIImage(systemName: "magnifyingglass")
+        $0.image = ImageLiteral.magnifyingGlassSymbol
         $0.tintColor = .white
         $0.contentMode = .scaleAspectFill
         return $0

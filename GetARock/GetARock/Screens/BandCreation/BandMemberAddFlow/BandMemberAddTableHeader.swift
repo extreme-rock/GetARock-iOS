@@ -9,7 +9,9 @@ import UIKit
 
 final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
 
-    private let pageIndicatorLabel: BasicLabel = BasicLabel(contentText: "2/3", fontStyle: .caption, textColorInfo: .gray02)
+    private let pageIndicatorLabel: BasicLabel = BasicLabel(contentText: "2/3",
+                                                            fontStyle: .caption,
+                                                            textColorInfo: .gray02)
 
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
@@ -21,19 +23,33 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
         return $0
     }(BasicLabel(contentText: "다른 밴드가 우리 밴드 멤버를 볼 수 있도록\n모든 멤버를 초대 및 등록해주세요", fontStyle: .content, textColorInfo: .gray02))
 
-    //TODO: BandInforSet VC에서 여기 configuration 적용 버튼 만들어야함
     let inviteMemberButton: DefaultButton = {
-        $0.setTitle("멤버 초대", for: .normal)
-        return $0
-    }(DefaultButton())
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = ImageLiteral.magnifyingGlassSymbol
+        configuration.title = "멤버 초대"
+        configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
+        configuration.imagePadding = 5
+        let button = DefaultButton(configuration: configuration)
+        button.tintColor = .white
+        button.constraint(.heightAnchor, constant: 55)
+        return button
+    }()
 
-    //TODO: BandInforSet VC에서 여기 configuration 적용 버튼 만들어야함
     let inviteUnRegisteredMemberButton: DefaultButton = {
-        $0.setTitle("미가입 회원 추가", for: .normal)
-        return $0
-    }(DefaultButton())
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = ImageLiteral.plusSymbol
+        configuration.title = "미가입 회원 추가"
+        configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
+        configuration.imagePadding = 5
+        let button = DefaultButton(configuration: configuration)
+        button.tintColor = .white
+        button.constraint(.heightAnchor, constant: 55)
+        return button
+    }()
 
-    let sectionTitle = BasicLabel(contentText: "밴드 멤버 1인", fontStyle: .content, textColorInfo: .white)
+    let sectionTitle = BasicLabel(contentText: "밴드 멤버 1인",
+                                  fontStyle: .content,
+                                  textColorInfo: .white)
 
     private lazy var buttonHstack: UIStackView = {
         $0.axis = .horizontal

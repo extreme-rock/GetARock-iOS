@@ -150,7 +150,7 @@ extension BandMemberAddViewController: UITableViewDelegate {
         }
         headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
 
-        //TODO: 미가입 회원추가 곤련 코드 작성 예정
+        //TODO: 미가입 회원추가 관련 코드 작성 예정
       return headerView
     }
 }
