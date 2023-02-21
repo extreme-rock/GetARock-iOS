@@ -67,7 +67,7 @@ final class AgreeTermsViewController: UIViewController {
         guideText: "서비스 이용약관 동의",
         type: .required,
         isNeedUnderLine: true,
-        url: "https://fascinated-neem-285.notion.site/5c3e8ec8b2a94e149e55e8e12cb1a915"
+        url: StringLiteral.serviceTermLink
     )
     
     private lazy var personalInfoStackView: UIStackView = {
@@ -83,7 +83,7 @@ final class AgreeTermsViewController: UIViewController {
         guideText: "개인정보 수집 및 이용 동의",
         type: .required,
         isNeedUnderLine: true,
-        url: "https://fascinated-neem-285.notion.site/5c3e8ec8b2a94e149e55e8e12cb1a915"
+        url: StringLiteral.personalInfoTermLink
     )
     
     private lazy var ageLimitInfoStackView: UIStackView = {
@@ -154,6 +154,16 @@ final class AgreeTermsViewController: UIViewController {
                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 23, right: 0)
         )
     }
+   
+}
+
+// MARK: 버튼 Action 관련 Method
+
+extension AgreeTermsViewController {
+    private func addButtonActions() {
+        addAgreeAllButtonAction()
+        addTermsButtonAction()
+    }
     
     private func addAgreeAllButtonAction() {
         let action = UIAction { [weak self] _ in
@@ -179,17 +189,17 @@ final class AgreeTermsViewController: UIViewController {
     }
     
     private func applyTermButtonsStateToAgreeAllButton() {
-        if serviceCheckMarkButton.isChecked == true &&
-            ageLimitCheckMarkButton.isChecked == true &&
-            personalInfoCheckMarkButton.isChecked == true {
-            agreeAllTermsButton.isChecked = true
-        } else {
-            agreeAllTermsButton.isChecked = false
-        }
+        let termsCheckedState = self.requiedTermButtons.filter { $0.isChecked }
+        
+        agreeAllTermsButton.isChecked =
+        termsCheckedState.count == requiedTermButtons.count
+        ? true
+        : false
     }
     
     private func applyNextButtonEnabledState() {
         let termsCheckedState = self.requiedTermButtons.filter { $0.isChecked }
+        
         nextButton.isEnabled =
         termsCheckedState.count == requiedTermButtons.count
         ? true
