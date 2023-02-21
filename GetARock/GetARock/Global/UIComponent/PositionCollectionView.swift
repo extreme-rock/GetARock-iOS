@@ -41,7 +41,6 @@ final class PositionCollectionView: UIView {
     private let isNeedHeader: Bool
     private let headerView: UIView?
     private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
-//    private var selectedCellIndexPaths: [IndexPath] = []
     private var selectedCellIndexPaths: [(indexPath: IndexPath, isMain: Bool)] = []
     
     // MARK: - View
