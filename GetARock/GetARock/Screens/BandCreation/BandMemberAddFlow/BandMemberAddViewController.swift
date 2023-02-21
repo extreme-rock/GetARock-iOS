@@ -108,6 +108,7 @@ extension BandMemberAddViewController {
 
             cell.configure(data: cellData)
             cell.selectionStyle = .none
+            cell.separatorStyle = .none
             if cellData.memberState == .admin {
                 cell.deleteButton.isHidden = true
             }

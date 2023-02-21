@@ -8,9 +8,11 @@
 import UIKit
 
 final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
+    
+    //MARK: View
 
     private let pageIndicatorLabel: BasicLabel = BasicLabel(contentText: "2/3",
-                                                            fontStyle: .caption,
+                                                            fontStyle: .headline03,
                                                             textColorInfo: .gray02)
 
     private let titleLabel: BasicLabel = {
@@ -24,7 +26,7 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
         $0.numberOfLines = 2
         return $0
     }(BasicLabel(contentText: "다른 밴드가 우리 밴드 멤버를 볼 수 있도록\n모든 멤버를 초대 및 등록해주세요",
-                 fontStyle: .content,
+                 fontStyle: .headline03,
                  textColorInfo: .gray02))
 
     let inviteMemberButton: DefaultButton = {
@@ -58,7 +60,7 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
     private lazy var buttonHstack: UIStackView = {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
-        $0.spacing = 5
+        $0.spacing = 10
         return $0
     }(UIStackView(arrangedSubviews: [inviteMemberButton,
                                      inviteUnRegisteredMemberButton]))
@@ -72,12 +74,16 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
                                      subTitleLabel,
                                      buttonHstack,
                                      sectionTitle]))
+    
+    //MARK: init
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         attribute()
         setupLayout()
     }
+    
+    //MARK: Method
 
     private func setupLayout() {
         contentView.addSubview(titleVstack)

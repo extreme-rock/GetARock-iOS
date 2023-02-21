@@ -8,8 +8,12 @@
 import UIKit
 
 final class SearchTextField: UIView {
+    
+    //MARK: Property
 
     private let placeholder: String
+    
+    //MARK: View
 
     lazy var textField: UITextField = {
         $0.delegate = self
@@ -23,6 +27,8 @@ final class SearchTextField: UIView {
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
+    
+    //MARK: init
 
     init(placeholder: String) {
         self.placeholder = placeholder
@@ -30,6 +36,8 @@ final class SearchTextField: UIView {
         setupLayout()
         attribute()
     }
+    
+    //MARK: Methods
 
     private func setupLayout() {
         self.constraint(.heightAnchor, constant: 55)

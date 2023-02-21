@@ -19,22 +19,22 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
     private let instrumentListLabel: BasicLabel = BasicLabel(
         contentText: "",
         fontStyle: .content,
-        textColorInfo: .white.withAlphaComponent(0.5))
+        textColorInfo: .gray02))
     
     private let userGenderLabel: BasicLabel = BasicLabel(
         contentText: "",
         fontStyle: .content,
-        textColorInfo: .white.withAlphaComponent(0.5))
+        textColorInfo: .gray02)
 
     private let horizontalSeperator: BasicLabel = BasicLabel(
         contentText: "|",
         fontStyle: .content,
-        textColorInfo: .white.withAlphaComponent(0.5))
+        textColorInfo: .gray02)
 
     private let userAgeLabel: BasicLabel = BasicLabel(
         contentText: "",
         fontStyle: .content,
-        textColorInfo: .white.withAlphaComponent(0.5))
+        textColorInfo: .gray02)
 
     private lazy var userDetailInfoHstack: UIStackView = {
         $0.axis = .horizontal
