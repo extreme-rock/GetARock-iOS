@@ -146,7 +146,7 @@ extension BandMemberAddViewController: UITableViewDelegate {
                 }
                 self.updateSnapShot(with: self.addedMembers)
             }
-            self.present(nextViewController, animated: true)
+            self.navigationController?.pushViewController(nextViewController, animated: true)
         }
         headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
 

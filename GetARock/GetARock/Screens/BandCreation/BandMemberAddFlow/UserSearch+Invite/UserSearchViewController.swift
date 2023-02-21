@@ -51,9 +51,8 @@ final class UserSearchViewController: BaseViewController {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("완료", for: .normal)
         let action = UIAction { _ in
-            self.dismiss(animated: true){
-                self.completion(self.selectedUsers)
-            }
+            self.completion(self.selectedUsers)
+            self.navigationController?.popViewController(animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
