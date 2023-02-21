@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingViewDefaultCell: UITableViewCell {
+final class SettingViewDefaultCell: UITableViewCell {
     
     // MARK: - Property
     

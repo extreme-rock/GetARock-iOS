@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingViewVersionCell: UITableViewCell {
+final class SettingViewVersionCell: UITableViewCell {
     
     // MARK: - Property
 
