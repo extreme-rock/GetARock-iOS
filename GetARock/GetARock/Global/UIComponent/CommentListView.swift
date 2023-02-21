@@ -18,7 +18,7 @@ final class CommentListView: UIView {
     
     private let totalComentNumberLabel = BasicLabel(
         contentText: "총 0개",
-        fontStyle: .headline02,
+        fontStyle: .content,
         textColorInfo: .white
     )
     
@@ -35,7 +35,7 @@ final class CommentListView: UIView {
         $0.spacing = 20
         $0.axis = .vertical
         $0.distribution = .fill
-        $0.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        $0.layoutMargins = UIEdgeInsets(top: 30, left: 16, bottom: 0, right: 16)
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView(arrangedSubviews: [totalComentNumberLabel, tableView]))
@@ -98,10 +98,10 @@ final class CommentListView: UIView {
         )
     }
     
-    func setupTotalListNumberLabel() {
+    private func setupTotalListNumberLabel() {
         guard let count = commentData?.count else { return }
         self.totalComentNumber = count
-        totalComentNumberLabel.text = "총 \(totalComentNumber) 개"
+        totalComentNumberLabel.text = "총 \(totalComentNumber)개"
     }
 }
 

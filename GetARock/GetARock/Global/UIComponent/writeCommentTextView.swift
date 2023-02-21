@@ -7,7 +7,7 @@
 
 import UIKit
 
-class writeCommentTextView: UIView {
+final class writeCommentTextView: UIView {
     
     // MARK: - Property
     
@@ -182,7 +182,7 @@ extension writeCommentTextView: UITextViewDelegate {
 
 extension writeCommentTextView {
     
-    func setKeyboardObserver() {
+    private func setKeyboardObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
