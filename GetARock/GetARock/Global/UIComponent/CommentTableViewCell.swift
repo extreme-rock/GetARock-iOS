@@ -117,8 +117,8 @@ final class emptyTableViewHeader: UITableViewHeaderFooterView {
         self.contentView.addSubview(emptyCommentLabel)
         emptyCommentLabel.constraint(
             top: contentView.topAnchor,
+            centerX: contentView.centerXAnchor,
             padding: UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0)
         )
-        emptyCommentLabel.constraint(centerX: contentView.centerXAnchor)
     }
 }
