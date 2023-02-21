@@ -80,14 +80,11 @@ final class CommentTableViewCell: UITableViewCell {
     }
     
     func configure(data: CommentList?, index: Int) {
-        
         guard let comment = data else { return }
         self.cellIndex = index
-        
         self.bandNameLabel.text = comment.memberName
         self.commentTextLabel.text = comment.comment
         self.commentDateLabel.text = comment.createdDate
-        
     }
 }
 
