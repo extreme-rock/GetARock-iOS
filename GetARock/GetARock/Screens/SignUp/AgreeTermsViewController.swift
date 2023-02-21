@@ -99,7 +99,8 @@ final class AgreeTermsViewController: UIViewController {
         super.viewDidLoad()
         setupLayout()
         attribute()
-        
+        addAgreeAllButtonAction()
+        addTermsButtonAction()
     }
     
     private func attribute() {
@@ -135,7 +136,37 @@ final class AgreeTermsViewController: UIViewController {
                                centerX: view.centerXAnchor,
                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 23, right: 0)
         )
+    }
+    
+    private func addAgreeAllButtonAction() {
+        let action = UIAction { [weak self] _ in
+            guard let isAgreeAllButtonChecked = self?.agreeAllTermsButton.isChecked else { return }
+            self?.serviceCheckMarkButton.isChecked = isAgreeAllButtonChecked
+            self?.ageLimitCheckMarkButton.isChecked = isAgreeAllButtonChecked
+            self?.personalInfoCheckMarkButton.isChecked = isAgreeAllButtonChecked
+        }
+        self.agreeAllTermsButton.addAction(action, for: .touchUpInside)
+    }
+    
+    private func addTermsButtonAction() {
+        let action = UIAction { [weak self] _ in
+            self?.applyTermButtonsStateToAgreeAllButton()
+        }
         
+        serviceCheckMarkButton.addAction(action, for: .touchUpInside)
+        ageLimitCheckMarkButton.addAction(action, for: .touchUpInside)
+        personalInfoCheckMarkButton.addAction(action, for: .touchUpInside)
+        
+    }
+    
+    private func applyTermButtonsStateToAgreeAllButton() {
+        if serviceCheckMarkButton.isChecked == true &&
+            ageLimitCheckMarkButton.isChecked == true &&
+            personalInfoCheckMarkButton.isChecked == true {
+            agreeAllTermsButton.isChecked = true
+        } else {
+            agreeAllTermsButton.isChecked = false
+        }
     }
 }
 
@@ -155,18 +186,18 @@ final class CheckMarkButton: UIButton {
     init() {
         super.init(frame: .zero)
         attribute()
-        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControl.Event.touchUpInside)
+        self.addTarget(self, action:#selector(buttonClicked(_:)), for: UIControl.Event.touchUpInside)
         self.isChecked = false
     }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    @objc func buttonClicked(sender: UIButton) {
+    @objc func buttonClicked(_ sender: UIButton) {
         if sender == self {
             isChecked.toggle()
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func attribute() {
