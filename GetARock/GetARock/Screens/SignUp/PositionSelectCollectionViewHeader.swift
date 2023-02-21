@@ -8,6 +8,9 @@
 import UIKit
 
 final class PositionSelectCollectionViewHeader: UIView {
+    
+    //MARK: - View
+    
     private let pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.subTitle)
         $0.text = "1/3"
@@ -31,13 +34,47 @@ final class PositionSelectCollectionViewHeader: UIView {
         return $0
     }(UILabel())
     
+    private lazy var deselectAllPositionButton: UIButton = {
+        $0.setTitle("전체 선택 해제", for: .normal)
+        $0.setTitleColor(.gray02, for: .normal)
+        $0.titleLabel?.font = .setFont(.content)
+        $0.isHidden = true
+        let action = UIAction { _ in
+            self.postDeselectAllPosition()
+        }
+        $0.addAction(action, for: .touchUpInside)
+        return $0
+    }(UIButton())
+    
+    //MARK: - Life Cycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        addObserveHideDeselectAllPositionButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    //MARK: - Method
+    
+    private func addObserveHideDeselectAllPositionButton() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(hideDeselectButton),
+            name: Notification.Name.hideDeselectAllPositionButton,
+            object: nil)
+    }
+    
+    @objc
+    private func hideDeselectButton() {
+        self.deselectAllPositionButton.isHidden.toggle()
     }
     
     private func setupLayout() {
@@ -56,8 +93,19 @@ final class PositionSelectCollectionViewHeader: UIView {
         self.addSubview(subTitleLabel)
         subTitleLabel.constraint(top: titleLabel.bottomAnchor,
                                  leading: self.leadingAnchor,
-                                 bottom: self.bottomAnchor,
                                  trailing: self.trailingAnchor,
-                                 padding: UIEdgeInsets(top: 10, left: 16, bottom: 49, right: 16))
+                                 padding: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16))
+        
+        self.addSubview(deselectAllPositionButton)
+        deselectAllPositionButton.constraint(top: subTitleLabel.bottomAnchor,
+                                             bottom: self.bottomAnchor,
+                                             trailing: self.trailingAnchor,
+                                             padding: UIEdgeInsets(top: 15, left: 0, bottom: 11, right: 14))
+    }
+    
+    private func postDeselectAllPosition() {
+        NotificationCenter.default.post(
+            name: Notification.Name.deselectAllPosition,
+            object: nil)
     }
 }
