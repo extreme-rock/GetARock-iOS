@@ -30,7 +30,10 @@ final class BandInformationSetViewController: BaseViewController {
     private let contentViewSubTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "작성 정보는 프로필로 만들어집니다.\n밴드를 잘 어필할 수 있도록 작성해보세요! 😎", fontStyle: .headline03, textColorInfo: .gray02))
+    }(BasicLabel(
+        contentText: "작성 정보는 프로필로 만들어집니다.\n밴드를 잘 어필할 수 있도록 작성해보세요! 😎",
+        fontStyle: .headline03,
+        textColorInfo: .gray02))
     
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
@@ -124,7 +127,6 @@ final class BandInformationSetViewController: BaseViewController {
         $0.distribution = .equalSpacing
         $0.spacing = 20
         return $0
-        // ScrollView라서 여기는 StackView로 구현함
     }(UIStackView(arrangedSubviews: [addPracticeSongButton]))
 
     private lazy var practiceSongVstack: UIStackView = {
