@@ -214,9 +214,9 @@ extension PositionCollectionView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let indexOfSelectedCell = self.selectedCellIndexPaths.firstIndex(of: indexPath) ?? 0
-        self.selectedCellIndexPaths.remove(at:  indexOfSelectedCell )
+        self.selectedCellIndexPaths.remove(at: indexOfSelectedCell)
         
-        if  indexOfSelectedCell  == 0 {
+        if indexOfSelectedCell == 0 {
             removeMainLabel(indexPath: indexPath)
             if let firstIndex = selectedCellIndexPaths.first {
                 markMainLabel(indexPath: firstIndex)
@@ -241,6 +241,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
 }
 
 //MARK: 선택된 포지션 데이터 추출
+
 extension PositionCollectionView {
     func getSelectedInstruments() -> [InstrumentList] {
         var selectedInstruments: [InstrumentList] = []
