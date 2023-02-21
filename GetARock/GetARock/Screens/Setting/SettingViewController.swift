@@ -13,12 +13,12 @@ final class SettingViewController: BaseViewController {
     
     // MARK: - Property
     
-    struct Option {
+    private struct CellConfiguration {
       let title: String
       let handler: () -> Void
     }
     
-    private var options = [Option]()
+    private var options = [CellConfiguration]()
     
     private lazy var settingTableView: UITableView = {
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -62,43 +62,43 @@ final class SettingViewController: BaseViewController {
 
 extension SettingViewController {
     private func configureModels() {
-        options.append(Option(title: "알림 설정", handler: { [weak self] in
+        options.append(CellConfiguration(title: "알림 설정", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToNotificationSetting()
             }
         }))
         
-        options.append(Option(title: "약관 및 정책", handler: { [weak self] in
+        options.append(CellConfiguration(title: "약관 및 정책", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToPrivacyPolicy()
             }
         }))
         
-        options.append(Option(title: "문의하기", handler: { [weak self] in
+        options.append(CellConfiguration(title: "문의하기", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.sendReportMail()
             }
         }))
         
-        options.append(Option(title: "서드파티 정보", handler: { [weak self] in
+        options.append(CellConfiguration(title: "서드파티 정보", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToThirdPartyInfo()
             }
         }))
         
-        options.append(Option(title: "버전 정보", handler: { [weak self] in
+        options.append(CellConfiguration(title: "버전 정보", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.getVersionInfo()
             }
         }))
         
-        options.append(Option(title: "로그아웃", handler: { [weak self] in
+        options.append(CellConfiguration(title: "로그아웃", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToLogOut()
             }
         }))
         
-        options.append(Option(title: "탈퇴하기", handler: { [weak self] in
+        options.append(CellConfiguration(title: "탈퇴하기", handler: { [weak self] in
             DispatchQueue.main.async {
                 self?.goToDeleteAccount()
             }
