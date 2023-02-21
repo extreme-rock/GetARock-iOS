@@ -75,7 +75,7 @@ final class CommentTableViewCell: UITableViewCell {
             leading: contentView.leadingAnchor,
             bottom: contentView.bottomAnchor,
             trailing: contentView.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 15, bottom: 30, right: 15)
+            padding: UIEdgeInsets(top: 0, left: 15, bottom: 40, right: 15)
         )
     }
     
