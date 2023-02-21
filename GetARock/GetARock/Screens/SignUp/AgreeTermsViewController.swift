@@ -9,6 +9,14 @@ import UIKit
 
 final class AgreeTermsViewController: UIViewController {
     
+    // MARK: - Property
+    
+    private lazy var requiedTermButtons: [CheckMarkButton] = [serviceCheckMarkButton,
+                                                personalInfoCheckMarkButton,
+                                                ageLimitCheckMarkButton]
+    
+    // MARK: - View
+    
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
@@ -57,7 +65,9 @@ final class AgreeTermsViewController: UIViewController {
     
     private let serviceTermStackView = TermGuideLabel(
         guideText: "서비스 이용약관 동의",
-        type: .required
+        type: .required,
+        isNeedUnderLine: true,
+        url: "https://fascinated-neem-285.notion.site/5c3e8ec8b2a94e149e55e8e12cb1a915"
     )
     
     private lazy var personalInfoStackView: UIStackView = {
@@ -71,7 +81,9 @@ final class AgreeTermsViewController: UIViewController {
     
     private let personalInfoTermStackView = TermGuideLabel(
         guideText: "개인정보 수집 및 이용 동의",
-        type: .required
+        type: .required,
+        isNeedUnderLine: true,
+        url: "https://fascinated-neem-285.notion.site/5c3e8ec8b2a94e149e55e8e12cb1a915"
     )
     
     private lazy var ageLimitInfoStackView: UIStackView = {
@@ -85,15 +97,18 @@ final class AgreeTermsViewController: UIViewController {
     
     private let ageLimitTermStackView = TermGuideLabel(
         guideText: "만 14세 이상",
-        type: .required
+        type: .required,
+        isNeedUnderLine: false
     )
     
-    private let agreeButton: BottomButton =  {
+    private let nextButton: BottomButton =  {
         $0.setTitle("동의 후 프로필 만들기", for: .normal)
+        $0.isEnabled = false
         $0.titleLabel?.font = .setFont(.headline02)
         return $0
     }(BottomButton())
         
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +117,8 @@ final class AgreeTermsViewController: UIViewController {
         addAgreeAllButtonAction()
         addTermsButtonAction()
     }
+    
+    // MARK: - Method
     
     private func attribute() {
         self.view.backgroundColor = .dark03
@@ -131,8 +148,8 @@ final class AgreeTermsViewController: UIViewController {
                                   trailing: containerView.trailingAnchor,
                                    padding: UIEdgeInsets(top: 27, left: 20, bottom: 27, right: 20))
         
-        self.view.addSubview(agreeButton)
-        agreeButton.constraint(bottom: view.bottomAnchor,
+        self.view.addSubview(nextButton)
+        nextButton.constraint(bottom: view.bottomAnchor,
                                centerX: view.centerXAnchor,
                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 23, right: 0)
         )
@@ -144,6 +161,7 @@ final class AgreeTermsViewController: UIViewController {
             self?.serviceCheckMarkButton.isChecked = isAgreeAllButtonChecked
             self?.ageLimitCheckMarkButton.isChecked = isAgreeAllButtonChecked
             self?.personalInfoCheckMarkButton.isChecked = isAgreeAllButtonChecked
+            self?.applyNextButtonEnabledState()
         }
         self.agreeAllTermsButton.addAction(action, for: .touchUpInside)
     }
@@ -151,6 +169,7 @@ final class AgreeTermsViewController: UIViewController {
     private func addTermsButtonAction() {
         let action = UIAction { [weak self] _ in
             self?.applyTermButtonsStateToAgreeAllButton()
+            self?.applyNextButtonEnabledState()
         }
         
         serviceCheckMarkButton.addAction(action, for: .touchUpInside)
@@ -168,6 +187,14 @@ final class AgreeTermsViewController: UIViewController {
             agreeAllTermsButton.isChecked = false
         }
     }
+    
+    private func applyNextButtonEnabledState() {
+        let termsCheckedState = self.requiedTermButtons.filter { $0.isChecked }
+        nextButton.isEnabled =
+        termsCheckedState.count == requiedTermButtons.count
+        ? true
+        : false
+    }
 }
 
 final class CheckMarkButton: UIButton {
@@ -175,8 +202,8 @@ final class CheckMarkButton: UIButton {
     var isChecked: Bool = false {
         didSet {
             self.setImage(
-                isChecked ?
-                ImageLiteral.checkMarkCircleFillSymbol
+                isChecked
+                ? ImageLiteral.checkMarkCircleFillSymbol
                 : ImageLiteral.checkmarkCircleSymbol
                 , for: .normal)
             self.tintColor = isChecked ? .mainPurple : .gray02
@@ -209,14 +236,19 @@ final class CheckMarkButton: UIButton {
 
 final class TermGuideLabel: UIStackView {
     
+    // MARK: - Property
+    
     enum InputType: String {
         case optional = "(선택)"
         case required = "(필수)"
     }
     
     private let guideText: String
-    
     private let type: InputType
+    private let isNeedUnderLine: Bool
+    private let url: String?
+    
+    // MARK: - View
     
     private lazy var firstLabel: BasicLabel = {
         $0.setContentHuggingPriority(
@@ -235,26 +267,61 @@ final class TermGuideLabel: UIStackView {
                  fontStyle: .content,
                  textColorInfo: .white))
     
+    private lazy var guideButton: UIButton = {
+        $0.setTitle(guideText, for: .normal)
+        $0.setContentHuggingPriority(UILayoutPriority.defaultHigh,
+                                     for: .horizontal)
+        
+        if isNeedUnderLine {
+            let attributeString = NSMutableAttributedString(string: guideText)
+            attributeString.addAttribute(
+                .underlineStyle,
+                value: 1,
+                range: NSRange.init(location: 0, length: guideText.count)
+            )
+            $0.titleLabel?.attributedText = attributeString
+        }
+        $0.titleLabel?.font = .setFont(.content)
+        $0.titleLabel?.textColor = .white
+        
+      return $0
+    }(UIButton())
+    
     private lazy var secondLabel = BasicLabel(contentText: type.rawValue,
                                               fontStyle: .content,
                                               textColorInfo: .gray02)
     
-    init(guideText: String, type: InputType) {
+    // MARK: - Init
+    
+    init(guideText: String, type: InputType, isNeedUnderLine: Bool, url: String? = nil) {
         self.guideText = guideText
         self.type = type
+        self.isNeedUnderLine = isNeedUnderLine
+        self.url = url
         super.init(frame: .zero)
         attribute()
-    }
-    
-    private func attribute() {
-        self.axis = .horizontal
-        self.spacing = 3
-        self.addArrangedSubview(firstLabel)
-        self.addArrangedSubview(secondLabel)
+        addGuideButtonAction()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Method
+    
+    private func attribute() {
+        self.axis = .horizontal
+        self.spacing = 3
+        self.addArrangedSubview(guideButton)
+        self.addArrangedSubview(secondLabel)
+    }
+    
+    private func addGuideButtonAction() {
+        guard let url else { return }
+        let action = UIAction { _ in
+            guard let url = URL(string: url) else { return }
+            UIApplication.shared.open(url)
+        }
+        self.guideButton.addAction(action, for: .touchUpInside)
+    }
 }
