@@ -118,6 +118,9 @@ final class AgreeTermsViewController: UIViewController {
         addTermsButtonAction()
     }
     
+    deinit {
+        print("deinint")
+    }
     // MARK: - Method
     
     private func attribute() {
