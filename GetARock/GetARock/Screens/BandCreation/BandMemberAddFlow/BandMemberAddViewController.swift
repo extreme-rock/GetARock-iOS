@@ -28,6 +28,7 @@ final class BandMemberAddViewController: BaseViewController {
         $0.register(BandMemberAddTableViewHeader.self,
                     forHeaderFooterViewReuseIdentifier: BandMemberAddTableViewHeader.classIdentifier)
         $0.sectionHeaderHeight = 310
+        $0.separatorStyle = .none
         $0.backgroundColor = .dark01
         $0.delegate = self
         return $0
@@ -108,7 +109,6 @@ extension BandMemberAddViewController {
 
             cell.configure(data: cellData)
             cell.selectionStyle = .none
-            cell.separatorStyle = .none
             if cellData.memberState == .admin {
                 cell.deleteButton.isHidden = true
             }
