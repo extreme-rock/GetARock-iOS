@@ -25,7 +25,6 @@ enum CellSize {
     static let width = (UIScreen.main.bounds.width - 42) / 2
 }
 
-
 final class PositionCollectionView: UIView {
     
     // MARK: - Property
@@ -43,6 +42,7 @@ final class PositionCollectionView: UIView {
     private let headerView: UIView?
     private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
     private var selectedCellIndexPaths: [IndexPath] = []
+    private var selectedCellTuple: [(indexPath: IndexPath, isMain: Bool)] = []
     
     // MARK: - View
     
@@ -138,10 +138,17 @@ final class PositionCollectionView: UIView {
         }
         self.postDeselectAllPositionButtonHiddenToggle()
         //main라벨 삭제
-        if let mainPositionIndex = selectedCellIndexPaths.first {
-            self.removeMainLabel(indexPath: mainPositionIndex)
-            self.selectedCellIndexPaths = []
+//        if let mainPositionIndex = selectedCellIndexPaths.first {
+//            self.removeMainLabel(indexPath: mainPositionIndex)
+//            self.selectedCellIndexPaths = []
+//        }
+        
+        //Test
+        if let mainPositionTuple = selectedCellTuple.first {
+            self.removeMainLabel(indexPath: mainPositionTuple.indexPath)
+            self.selectedCellTuple = []
         }
+        //
     }
     
     private func postDeselectAllPositionButtonHiddenToggle() {
@@ -205,6 +212,10 @@ extension PositionCollectionView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedCellIndexPaths.append(indexPath)
+        // Test
+        self.selectedCellTuple.append((indexPath: indexPath,
+                                       isMain: selectedCellTuple.isEmpty ? true : false))
+        //
         let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
         if selectedCellCount == 1 {
             postDeselectAllPositionButtonHiddenToggle()
@@ -216,12 +227,29 @@ extension PositionCollectionView: UICollectionViewDelegate {
         let indexOfSelectedCell = self.selectedCellIndexPaths.firstIndex(of: indexPath) ?? 0
         self.selectedCellIndexPaths.remove(at: indexOfSelectedCell)
         
-        if indexOfSelectedCell == 0 {
+        // Test
+        let indexOfSelectedCellTuple = self.selectedCellTuple.firstIndex {
+            $0.indexPath == indexPath
+        }
+        print(selectedCellTuple, "before")
+        let deselectedCell = selectedCellTuple.remove(at: indexOfSelectedCellTuple!)
+        print(selectedCellTuple, "after")
+        if deselectedCell.isMain {
             removeMainLabel(indexPath: indexPath)
-            if let firstIndex = selectedCellIndexPaths.first {
-                markMainLabel(indexPath: firstIndex)
+            if let firstTuple = selectedCellTuple.first {
+                selectedCellTuple[0] = (indexPath: firstTuple.indexPath, isMain: true)
+                markMainLabel(indexPath: firstTuple.indexPath)
             }
         }
+        //
+//        
+//        
+//        if indexOfSelectedCell == 0 {
+//            removeMainLabel(indexPath: indexPath)
+//            if let firstIndex = selectedCellIndexPaths.first {
+//                markMainLabel(indexPath: firstIndex)
+//            }
+//        }
         
         let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
         if selectedCellCount == 0 {
