@@ -17,7 +17,7 @@ final class NotificationTableViewCell: UITableViewCell {
 
     private let uploadTime = BasicLabel(contentText: "", fontStyle: .caption, textColorInfo: .gray02)
 
-    private let acceptButton: DefaultButton = {
+    let acceptButton: DefaultButton = {
         $0.setTitle("수락", for: .normal)
         $0.constraint(.heightAnchor, constant: 40)
         return $0
@@ -32,7 +32,7 @@ final class NotificationTableViewCell: UITableViewCell {
     lazy var buttonHstack: UIStackView = {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
-        $0.spacing = 5
+        $0.spacing = 10
         return $0
     }(UIStackView(arrangedSubviews: [acceptButton, rejectButton]))
 
@@ -84,6 +84,10 @@ final class NotificationTableViewCell: UITableViewCell {
         if isInvitation == false {
             buttonHstack.isHidden = true
         }
+    }
+    
+    func updateTextAfterRejectInvitation(with bandName: String) {
+        self.subtitleLabel.text = "\(bandName)로부터 초대를 거절 했습니다."
     }
 }
 // CI/CD Test Code

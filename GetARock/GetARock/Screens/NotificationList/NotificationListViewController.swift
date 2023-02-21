@@ -29,11 +29,14 @@ final class NotificationListViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.backgroundColor = .dark01
         let rejectAction = UIAction { _ in self.rejectInvitation() }
+        let acceptAction = UIAction { _ in
+            //TODO: 초대 수락시 navigation Flow
+        }
         cell.rejectButton.addAction(rejectAction, for: .touchUpInside)
+        cell.acceptButton.addAction(acceptAction, for: .touchUpInside)
         //MARK: Test 코드, 추후 isInvitation case 분기처리 필요
         if indexPath.row == 0 { cell.buttonHstack.isHidden = false }
         
-
         return cell
     }
 
@@ -84,6 +87,10 @@ extension NotificationListViewController {
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         let actionTitle = NSLocalizedString("확인", comment: "Alert OK button title")
         alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
+            guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
+            cell.buttonHstack.removeFromSuperview()
+            cell.updateTextAfterRejectInvitation(with: "00밴드")
+            //TODO: Cell Size 변경 내용 적용 필요
             self.dismiss(animated: true)}))
         present(alert, animated: true, completion: nil)
     }
