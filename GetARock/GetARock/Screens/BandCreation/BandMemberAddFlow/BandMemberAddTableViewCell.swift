@@ -19,7 +19,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
     private let instrumentListLabel: BasicLabel = BasicLabel(
         contentText: "",
         fontStyle: .content,
-        textColorInfo: .gray02))
+        textColorInfo: .gray02)
     
     private let userGenderLabel: BasicLabel = BasicLabel(
         contentText: "",
