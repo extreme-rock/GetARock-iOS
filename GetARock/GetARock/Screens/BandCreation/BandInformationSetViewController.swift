@@ -241,7 +241,7 @@ final class BandInformationSetViewController: BaseViewController {
         
         mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
-                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                  bottom: view.bottomAnchor,
                                   trailing: view.safeAreaLayoutGuide.trailingAnchor)
 
         contentView.constraint(top: mainScrollView.topAnchor,
