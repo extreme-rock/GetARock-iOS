@@ -86,8 +86,12 @@ final class NotificationTableViewCell: UITableViewCell {
         }
     }
     
-    func updateTextAfterRejectInvitation(with bandName: String) {
+    func updateTextAfterRejectInvitation(bandName: String) {
         self.subtitleLabel.text = "\(bandName)로부터 초대를 거절 했습니다."
+    }
+    
+    func updateTextForInvitationRejectAlert(userName: String, bandName: String) {
+        self.subtitleLabel.text = "\(userName)이 \(bandName) 가입 요청을 거절 했습니다."
     }
 }
 // CI/CD Test Code

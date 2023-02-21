@@ -89,10 +89,16 @@ extension NotificationListViewController {
         alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
             guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
             cell.buttonHstack.removeFromSuperview()
-            cell.updateTextAfterRejectInvitation(with: "00밴드")
+            cell.updateTextAfterRejectInvitation(bandName: "00밴드")
             //TODO: Cell Size 변경 내용 적용 필요
             self.dismiss(animated: true)}))
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func getInvitationRejectAlert() {
+        //TODO: 이 뷰를 들어온 사용자가, 자신이 초대한 사람이 거절을 했을 경우, 그에 맞게 UI 업데이트, 분기처리가 따로 필요함
+        guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
+        cell.updateTextForInvitationRejectAlert(userName: "알로라", bandName: "00밴드")
     }
 }
 
