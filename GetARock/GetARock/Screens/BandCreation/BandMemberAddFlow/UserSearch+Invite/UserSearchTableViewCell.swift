@@ -11,21 +11,38 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     var id: String = "default"
 
-    let userNameLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
+    let userNameLabel: BasicLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .headline01,
+        textColorInfo: .white)
 
-    private let userGenderLabel: BasicLabel = BasicLabel(contentText: "남", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let userGenderLabel: BasicLabel = BasicLabel(
+        contentText: "남",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
 
-    private let horizontalSeperator: BasicLabel = BasicLabel(contentText: "|", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let horizontalSeperator: BasicLabel = BasicLabel(
+        contentText: "|",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
 
-    private let userAgeLabel: BasicLabel = BasicLabel(contentText: "20대", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let userAgeLabel: BasicLabel = BasicLabel(
+        contentText: "20대",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
 
     private lazy var userDetailInfoHstack: UIStackView = {
         $0.axis = .horizontal
         $0.spacing = 2
         return $0
-    }(UIStackView(arrangedSubviews: [userGenderLabel, horizontalSeperator, userAgeLabel]))
+    }(UIStackView(arrangedSubviews: [userGenderLabel,
+                                     horizontalSeperator,
+                                     userAgeLabel]))
 
-    let userInstrumentLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    let userInstrumentLabel: BasicLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
 
     private lazy var selectButton: UIImageView = {
         let imageView = UIImageView()
@@ -58,18 +75,26 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
         backgroundColor = .clear
 
         contentView.addSubview(userNameLabel)
-        userNameLabel.constraint(top: contentView.safeAreaLayoutGuide.topAnchor, leading: contentView.safeAreaLayoutGuide.leadingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 0))
+        userNameLabel.constraint(top: contentView.safeAreaLayoutGuide.topAnchor,
+                                 leading: contentView.safeAreaLayoutGuide.leadingAnchor,
+                                 padding: UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 0))
 
         contentView.addSubview(userDetailInfoHstack)
-        userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor, bottom: userNameLabel.bottomAnchor, padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
+        userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor,
+                                        bottom: userNameLabel.bottomAnchor,
+                                        padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
 
         contentView.addSubview(userInstrumentLabel)
-        userInstrumentLabel.constraint(top: userNameLabel.bottomAnchor, leading: userNameLabel.leadingAnchor, padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
+        userInstrumentLabel.constraint(top: userNameLabel.bottomAnchor,
+                                       leading: userNameLabel.leadingAnchor,
+                                       padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
 
         contentView.addSubview(selectButton)
         selectButton.constraint(.widthAnchor, constant: 25)
         selectButton.constraint(.heightAnchor, constant: 25)
-        selectButton.constraint(trailing: contentView.trailingAnchor, centerY: contentView.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10)
+        selectButton.constraint(trailing: contentView.trailingAnchor,
+                                centerY: contentView.centerYAnchor,
+                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10)
         )
 
     }

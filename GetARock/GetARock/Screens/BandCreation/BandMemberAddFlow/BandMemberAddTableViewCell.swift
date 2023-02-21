@@ -11,23 +11,39 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
     var id: String = "default"
 
-    private let userNameLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
+    private let userNameLabel: BasicLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .headline01,
+        textColorInfo: .white)
 
-    private let instrumentListLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let instrumentListLabel: BasicLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
     
-    private let userGenderLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let userGenderLabel: BasicLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
 
-    private let horizontalSeperator: BasicLabel = BasicLabel(contentText: "|", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let horizontalSeperator: BasicLabel = BasicLabel(
+        contentText: "|",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
 
-    private let userAgeLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white.withAlphaComponent(0.5))
+    private let userAgeLabel: BasicLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .content,
+        textColorInfo: .white.withAlphaComponent(0.5))
 
     private lazy var userDetailInfoHstack: UIStackView = {
         $0.axis = .horizontal
         $0.spacing = 2
         return $0
-    }(UIStackView(arrangedSubviews: [userGenderLabel, horizontalSeperator, userAgeLabel]))
+    }(UIStackView(arrangedSubviews: [userGenderLabel,
+                                     horizontalSeperator,
+                                     userAgeLabel]))
 
-    //TODO: 리더, 멤버, 미가입 회원에 따라서 이미지가 변화해야함
     private lazy var leftView: UIImageView = {
         $0.contentMode = .scaleAspectFit
         return $0

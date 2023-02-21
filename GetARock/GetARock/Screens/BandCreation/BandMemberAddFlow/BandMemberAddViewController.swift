@@ -35,7 +35,6 @@ final class BandMemberAddViewController: BaseViewController {
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
-    //TODO: Develop Pull 후 비슷한 옵션 추가
     private lazy var nextButton: BottomButton = {
         let action = UIAction { _ in
             self.confirmBandMemberList()

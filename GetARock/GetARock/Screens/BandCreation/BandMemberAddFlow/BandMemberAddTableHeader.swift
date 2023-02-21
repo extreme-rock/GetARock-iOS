@@ -16,12 +16,16 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "밴드 멤버를\n모두 알려주세요", fontStyle: .largeTitle01, textColorInfo: .white))
+    }(BasicLabel(contentText: "밴드 멤버를\n모두 알려주세요",
+                 fontStyle: .largeTitle01,
+                 textColorInfo: .white))
 
     private let subTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "다른 밴드가 우리 밴드 멤버를 볼 수 있도록\n모든 멤버를 초대 및 등록해주세요", fontStyle: .content, textColorInfo: .gray02))
+    }(BasicLabel(contentText: "다른 밴드가 우리 밴드 멤버를 볼 수 있도록\n모든 멤버를 초대 및 등록해주세요",
+                 fontStyle: .content,
+                 textColorInfo: .gray02))
 
     let inviteMemberButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
