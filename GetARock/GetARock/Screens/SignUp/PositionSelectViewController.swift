@@ -50,13 +50,33 @@ final class PositionSelectViewController: UIViewController {
         positionCollectionView.delegate = self
     }
     
+    private func setupLayout() {
+        self.view.addSubview(positionCollectionView)
+        self.view.addSubview(nextButton)
+        
+        positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                          leading: view.leadingAnchor,
+                                          bottom: nextButton.topAnchor,
+                                          trailing: view.trailingAnchor,
+                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        
+        
+        nextButton.constraint(bottom: view.bottomAnchor,
+                              centerX: view.centerXAnchor,
+                              padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
+    }
+}
+
+//MARK: - observer 관련 Method
+
+extension PositionSelectViewController {
     private func addAllObserver() {
-        addObservePositionPlusButtonTapped()
-        addObservePositionDeleteButtonTapped()
-        addObserveDeselectAllPositionButtonTapped()
+        addObserveShowPositionPlusModal()
+        addObserveDelePositionCell()
+        addObserveDeselectAllPosition()
     }
     
-    private func addObserveDeselectAllPositionButtonTapped() {
+    private func addObserveDeselectAllPosition() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(deselectAllPosition),
@@ -69,7 +89,7 @@ final class PositionSelectViewController: UIViewController {
         self.positionCollectionView.deselectAllItem()
     }
     
-    private func addObservePositionPlusButtonTapped() {
+    private func addObserveShowPositionPlusModal() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(showPositionPlusModal),
@@ -84,7 +104,7 @@ final class PositionSelectViewController: UIViewController {
         present(viewController, animated: true)
     }
     
-    private func addObservePositionDeleteButtonTapped() {
+    private func addObserveDelePositionCell() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(deletePosition(_:)),
@@ -104,22 +124,6 @@ final class PositionSelectViewController: UIViewController {
         for index in startIndex..<endIndex {
             positionCollectionView.updateCellIndex(at: IndexPath(item: index, section: 0))
         }
-    }
-    
-    private func setupLayout() {
-        self.view.addSubview(positionCollectionView)
-        self.view.addSubview(nextButton)
-        
-        positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
-                                          leading: view.leadingAnchor,
-                                          bottom: nextButton.topAnchor,
-                                          trailing: view.trailingAnchor,
-                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-        
-        
-        nextButton.constraint(bottom: view.bottomAnchor,
-                              centerX: view.centerXAnchor,
-                              padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
     }
 }
 
