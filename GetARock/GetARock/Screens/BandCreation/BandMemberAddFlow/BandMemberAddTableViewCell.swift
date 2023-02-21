@@ -52,14 +52,9 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
     lazy var deleteButton: UIButton = {
         $0.setImage(UIImage(
             systemName: "xmark.circle.fill",
-            withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),
-                    for: .normal)
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),for: .normal)
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .gray02
-        $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
-                                     for: .horizontal)
-        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
-                                                   for: .horizontal)
         return $0
     }(UIButton(type: .custom))
 
