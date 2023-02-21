@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class writeCommentTextView: UIView {
+final class WriteCommentTextView: UIView {
     
     // MARK: - Property
     
     private let maxHeight: CGFloat = 116
     private var textViewHeightConstraint: NSLayoutConstraint?
-    private var keyBoardHeightPaddingConstraint: NSLayoutConstraint?
+    private var keyboardHeightPaddingConstraint: NSLayoutConstraint?
     private var keyboardHeight: CGFloat = 30
     
     // MARK: - View
@@ -42,7 +42,7 @@ final class writeCommentTextView: UIView {
         textColorInfo: .gray02
     )
     
-    private let keyBoardHeightPaddingView: UIView = {
+    private let keyboardHeightPaddingView: UIView = {
         return $0
     }(UIView())
     
@@ -76,8 +76,8 @@ final class writeCommentTextView: UIView {
             padding: UIEdgeInsets(top: 15, left: 16, bottom: 0, right: 16)
         )
         
-        self.addSubview(keyBoardHeightPaddingView)
-        keyBoardHeightPaddingView.constraint(
+        self.addSubview(keyboardHeightPaddingView)
+        keyboardHeightPaddingView.constraint(
             top:  contentView.bottomAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
@@ -106,7 +106,7 @@ final class writeCommentTextView: UIView {
         addCommentButton.constraint(.heightAnchor, constant: 40)
         addCommentButton.isHidden = true
         
-        setplaceholderLabelLayout()
+        setPlaceholderLabelLayout()
     }
     
     private func setTextViewHeightConstraint() {
@@ -117,13 +117,13 @@ final class writeCommentTextView: UIView {
     }
     
     private func setKeyBoardHeightPaddingConstraint() {
-        keyBoardHeightPaddingConstraint = keyBoardHeightPaddingView.heightAnchor.constraint(
+        keyboardHeightPaddingConstraint = keyboardHeightPaddingView.heightAnchor.constraint(
             equalToConstant: 40
         )
-        keyBoardHeightPaddingConstraint?.isActive = true
+        keyboardHeightPaddingConstraint?.isActive = true
     }
     
-    private func setplaceholderLabelLayout() {
+    private func setPlaceholderLabelLayout() {
         self.addSubview(placeholderLabel)
         placeholderLabel.constraint(
             top: commentTextView.topAnchor,
@@ -150,7 +150,7 @@ final class writeCommentTextView: UIView {
 
 // MARK: - UITextViewDelegate
 
-extension writeCommentTextView: UITextViewDelegate {
+extension WriteCommentTextView: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         self.adjustTextViewHeight()
@@ -171,7 +171,7 @@ extension writeCommentTextView: UITextViewDelegate {
 
 // MARK: - Keyboard NotificationCenter
 
-extension writeCommentTextView {
+extension WriteCommentTextView {
     
     private func setKeyboardObserver() {
         NotificationCenter.default.addObserver(
@@ -195,11 +195,11 @@ extension writeCommentTextView {
         ] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
-            self.keyBoardHeightPaddingConstraint?.constant = self.keyboardHeight + 10
+            self.keyboardHeightPaddingConstraint?.constant = self.keyboardHeight + 10
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        self.keyBoardHeightPaddingConstraint?.constant = 40
+        self.keyboardHeightPaddingConstraint?.constant = 40
     }
 }

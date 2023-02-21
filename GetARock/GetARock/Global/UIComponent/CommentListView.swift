@@ -12,11 +12,11 @@ import UIKit
 final class CommentListView: UIView {
     
     private var commentData: [CommentList]?
-    private var totalComentNumber: Int = 0
+    private var totalCommentNumber: Int = 0
     
     // MARK: - View
     
-    private let totalComentNumberLabel = BasicLabel(
+    private let totalCommentNumberLabel = BasicLabel(
         contentText: "총 0개",
         fontStyle: .content,
         textColorInfo: .white
@@ -38,9 +38,9 @@ final class CommentListView: UIView {
         $0.layoutMargins = UIEdgeInsets(top: 30, left: 16, bottom: 0, right: 16)
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
-    }(UIStackView(arrangedSubviews: [totalComentNumberLabel, tableView]))
+    }(UIStackView(arrangedSubviews: [totalCommentNumberLabel, tableView]))
     
-    private let commentwriteTextView = writeCommentTextView()
+    private let commentWriteTextView = WriteCommentTextView()
     
     // MARK: - Life Cycle
     
@@ -76,8 +76,8 @@ final class CommentListView: UIView {
             padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         )
         
-        self.addSubview(commentwriteTextView)
-        commentwriteTextView.constraint(
+        self.addSubview(commentWriteTextView)
+        commentWriteTextView.constraint(
             top: commentStackView.bottomAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
@@ -100,8 +100,8 @@ final class CommentListView: UIView {
     
     private func setupTotalListNumberLabel() {
         guard let count = commentData?.count else { return }
-        self.totalComentNumber = count
-        totalComentNumberLabel.text = "총 \(totalComentNumber)개"
+        self.totalCommentNumber = count
+        totalCommentNumberLabel.text = "총 \(totalCommentNumber)개"
     }
 }
 
@@ -124,7 +124,7 @@ extension CommentListView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
-        if totalComentNumber <= 0 {
+        if totalCommentNumber <= 0 {
             return 50.0
         } else {
             return 0.0
