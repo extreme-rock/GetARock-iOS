@@ -90,7 +90,7 @@ final class CommentTableViewCell: UITableViewCell {
 
 // MARK: - UITableViewHeaderFooterView
 
-class emptyTableViewHeader: UITableViewHeaderFooterView {
+final class emptyTableViewHeader: UITableViewHeaderFooterView {
     
     //MARK: - view
     
