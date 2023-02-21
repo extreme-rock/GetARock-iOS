@@ -43,6 +43,7 @@ final class UserSearchViewController: BaseViewController {
         $0.backgroundColor = .dark01
         $0.register(UserSearchTableViewCell.self, forCellReuseIdentifier: UserSearchTableViewCell.classIdentifier)
         $0.allowsMultipleSelection = true
+        $0.separatorStyle = .none
         return $0
     }(UITableView())
 
