@@ -29,7 +29,7 @@ class BaseViewController: UIViewController {
         let backButton = UIButton(type: .system)
         backButton.setImage(ImageLiteral.chevronLeftSymbol, for: .normal)
         backButton.tintColor = .white
-        backButton.addTarget(self, action: #selector(dudBackButtonTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(didBackButtonTapped), for: .touchUpInside)
         let backButtonItem = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = backButtonItem
     }
@@ -44,7 +44,7 @@ class BaseViewController: UIViewController {
     }
     
     @objc
-    func dudBackButtonTapped() {
+    func didBackButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
 }
