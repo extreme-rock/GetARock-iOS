@@ -51,8 +51,7 @@ final class SettingViewController: BaseViewController {
             top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.safeAreaLayoutGuide.leadingAnchor,
             bottom: self.view.safeAreaLayoutGuide.bottomAnchor,
-            trailing: self.view.safeAreaLayoutGuide.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            trailing: self.view.safeAreaLayoutGuide.trailingAnchor
         )
     }
 
@@ -182,7 +181,6 @@ extension SettingViewController: UITableViewDataSource {
         cell.backgroundColor = .dark01
         cell.selectionStyle = .none
         
-        
         return cell
     }
     
@@ -223,7 +221,11 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     }
     
     private func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "메일 전송 실패", message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", preferredStyle: .alert)
+        let sendMailErrorAlert = UIAlertController(
+            title: "메일 전송 실패",
+            message: "아이폰 이메일 설정을 확인하고 다시 시도해주세요.",
+            preferredStyle: .alert
+        )
         let confirmAction = UIAlertAction(title: "확인", style: .default) {
             (action) in
             print("확인")
@@ -232,7 +234,11 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         self.present(sendMailErrorAlert, animated: true, completion: nil)
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    func mailComposeController(
+        _ controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: Error?
+    ) {
         controller.dismiss(animated: true, completion: nil)
     }
 }
