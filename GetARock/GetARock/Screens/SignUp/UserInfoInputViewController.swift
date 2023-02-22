@@ -158,9 +158,10 @@ final class UserInfoInputViewController: BaseViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let informationFillCompleteButton: BottomButton = {
+    private let nextButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("다음", for: .normal)
+        $0.isEnabled = false
         return $0
     }(BottomButton())
     
@@ -184,13 +185,20 @@ final class UserInfoInputViewController: BaseViewController {
                                      genderInputStackView,
                                      textViewStackView,
                                      snsInformationStackView,
-                                     informationFillCompleteButton]))
+                                     nextButton]))
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
+        self.configureDelegate()
+    }
+    
+    private func configureDelegate() {
+        self.genderSelectCollectionView.delegate = self
+        self.ageSelectCollectionView.delegate = self
+        self.userNamingTextField.delegate = self
     }
     
     private func attribute() {
@@ -223,5 +231,29 @@ final class UserInfoInputViewController: BaseViewController {
                                     trailing: contentView.trailingAnchor,
                                     padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
         
+    }
+    
+    private func checkNextButtonEnabledState() {
+        let isAgeSelected = ageSelectCollectionView.isSelected()
+        let isGenderSelected = genderSelectCollectionView.isSelected()
+        let isDuplicated = userNamingTextField.isNameDuplicated()
+        
+        if isAgeSelected && isGenderSelected && isDuplicated {
+            self.nextButton.isEnabled = true
+        } else {
+            self.nextButton.isEnabled = false
+        }
+    }
+}
+
+extension UserInfoInputViewController: SelectCollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.checkNextButtonEnabledState()
+    }
+}
+
+extension UserInfoInputViewController: TextLimitTextFieldDelegate {
+    func checkDuplicateButtonTapped() {
+        self.checkNextButtonEnabledState()
     }
 }
