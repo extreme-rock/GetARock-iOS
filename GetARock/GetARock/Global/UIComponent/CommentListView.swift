@@ -94,8 +94,8 @@ final class CommentListView: UIView {
             forCellReuseIdentifier: CommentTableViewCell.classIdentifier
         )
         tableView.register(
-            emptyTableViewHeader.self,
-            forHeaderFooterViewReuseIdentifier: emptyTableViewHeader.classIdentifier
+            EmptyTableViewHeader.self,
+            forHeaderFooterViewReuseIdentifier: EmptyTableViewHeader.classIdentifier
         )
     }
     
@@ -113,8 +113,8 @@ extension CommentListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(
-            withIdentifier: emptyTableViewHeader.classIdentifier
-        ) as? emptyTableViewHeader
+            withIdentifier: EmptyTableViewHeader.classIdentifier
+        ) as? EmptyTableViewHeader
         return view
     }
     
