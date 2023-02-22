@@ -78,7 +78,6 @@ final class SelectCollectionView: UIView {
 
 extension SelectCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(items)
         return items.count
     }
     
