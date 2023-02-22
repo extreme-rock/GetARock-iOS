@@ -42,6 +42,8 @@ final class DetailContentView: UIView {
         }
     }
     
+    private var bandData: BandInformationVO
+    
     // MARK: - View
     
     var detailContentViewControllers: [UIViewController] = []
@@ -62,8 +64,9 @@ final class DetailContentView: UIView {
     
     // MARK: - Init
     
-    init(type: DetailTopInfoType) {
+    init(type: DetailTopInfoType, bandData: BandInformationVO ) {
         self.detailTopInfoType = type
+        self.bandData = bandData
         super.init(frame: .zero)
         setupLayout()
         attribute()
@@ -116,7 +119,14 @@ final class DetailContentView: UIView {
             }(UIViewController())
             
             let vc3: UIViewController = {
-                $0.view.backgroundColor = .yellow
+                let bandCommentList = CommentListView(data: bandData.commentList)
+                $0.view.addSubview(bandCommentList)
+                bandCommentList.constraint(
+                    top: $0.view.topAnchor,
+                    leading: $0.view.leadingAnchor,
+                    bottom: $0.view.bottomAnchor,
+                    trailing: $0.view.trailingAnchor
+                )
                 return $0
             }(UIViewController())
             
