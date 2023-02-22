@@ -36,38 +36,46 @@ final class NotificationTableViewCell: UITableViewCell {
         return $0
     }(UIStackView(arrangedSubviews: [acceptButton, rejectButton]))
 
-    private lazy var contentStackView: UIStackView = {
+    private lazy var contentTextVstack: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         $0.spacing = 7
         return $0
     }(UIStackView(arrangedSubviews: [titleLabel,
                                      subtitleLabel,
-                                     uploadTime,
-                                     buttonHstack]))
+                                     uploadTime,]))
+    
+    private lazy var contentInformationVstack: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [contentTextVstack, buttonHstack]))
 
     private let cellImage: UIImageView = {
         //TODO: 이미지 리터럴로 바꾸기
         $0.image = UIImage(systemName: "circle.fill")!
         $0.contentMode = .scaleAspectFit
+        $0.constraint(.widthAnchor, constant: 40)
+        $0.constraint(.widthAnchor, constant: 40)
+        $0.setContentHuggingPriority(UILayoutPriority.fittingSizeLevel, for: .vertical)
         return $0
     }(UIImageView(frame: .zero))
+    
+    
+    private lazy var contentLayoutStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 15
+        $0.alignment = .top
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        $0.isLayoutMarginsRelativeArrangement = true
+        return $0
+    }(UIStackView(arrangedSubviews: [cellImage, contentInformationVstack]))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        contentView.addSubview(cellImage)
-        cellImage.constraint(.widthAnchor, constant: 40)
-        cellImage.constraint(.heightAnchor, constant: 40)
-        cellImage.constraint(top: contentView.topAnchor,
-                             leading: contentView.leadingAnchor,
-                             padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
-
-        contentView.addSubview(contentStackView)
-        contentStackView.constraint(top: cellImage.topAnchor,
-                                    leading: cellImage.trailingAnchor,
-                                    trailing: contentView.safeAreaLayoutGuide.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+        self.contentView.addSubview(contentLayoutStackView)
+        contentLayoutStackView.constraint(to: self.contentView)
 
     }
 
@@ -83,6 +91,13 @@ final class NotificationTableViewCell: UITableViewCell {
         self.isInvitation = data.isInvitation
         if isInvitation == false {
             buttonHstack.isHidden = true
+        }
+        
+        if data.bandID > 0 {
+            self.cellImage.image = ImageLiteral.bandIcon
+        }
+        if data.eventID > 0 {
+            self.cellImage.image = ImageLiteral.eventIcon
         }
     }
     

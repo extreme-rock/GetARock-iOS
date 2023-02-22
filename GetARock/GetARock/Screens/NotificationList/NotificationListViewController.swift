@@ -9,12 +9,12 @@ import UIKit
 
 final class NotificationListViewController: UITableViewController {
 
+    //TODO: 추후에 API를 통해 update 할 알람 리스트
     private var alertListData: [NotificationInfo] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
-        fetchAlertListData()
     }
     
     private func attribute() {
@@ -25,7 +25,7 @@ final class NotificationListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.classIdentifier, for: indexPath) as? NotificationTableViewCell else { return UITableViewCell() }
-        cell.configure(with: alertListData[indexPath.row])
+        cell.configure(with: NotificationListDTO.testData[indexPath.row])
         cell.selectionStyle = .none
         cell.backgroundColor = .dark01
         let rejectAction = UIAction { _ in self.rejectInvitation() }
@@ -40,8 +40,9 @@ final class NotificationListViewController: UITableViewController {
         return cell
     }
 
+    //TODO: 추후 API 데이터로 변경 필요
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.alertListData.count
+        NotificationListDTO.testData.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
