@@ -52,8 +52,9 @@ final class BandDetailViewController: BaseViewController {
     ){
         didSet{
             print("정보 바뀜")
+            print("didSet 작동 중")
             // 델리게이트 작동안함 왜 안하냐고 ㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜ;;;;;
-            self.delegate?.refreshCommentList(data: bandData.commentList)
+//            self.delegate?.refreshCommentList(data: bandData.commentList)
         }
     }
     
@@ -67,7 +68,7 @@ final class BandDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
+        //MARK: 비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
         Task {
             await getBandData()
             print("가져오기 성공")

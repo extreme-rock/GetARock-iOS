@@ -54,7 +54,7 @@
 		7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA1874297AA10800A40488 /* UIFont+Extension.swift */; };
 		7BEB09D6299CEEA70076A82F /* CommentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB09D5299CEEA70076A82F /* CommentListView.swift */; };
 		7BEB09D8299CF12E0076A82F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB09D7299CF12E0076A82F /* CommentTableViewCell.swift */; };
-		7BEB09DA299CFEC20076A82F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB09D9299CFEC20076A82F /* Comment.swift */; };
+		7BEB09DA299CFEC20076A82F /* CommentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB09D9299CFEC20076A82F /* CommentDTO.swift */; };
 		7BFE01A12982643E009608A2 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFE01A02982643E009608A2 /* Song.swift */; };
 		7BFE0DDF299E1B4E002D6574 /* WriteCommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFE0DDE299E1B4E002D6574 /* WriteCommentTextView.swift */; };
 		943928805D82F089F179FC19 /* Pods_GetARock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */; };
@@ -172,7 +172,7 @@
 		7BEA1874297AA10800A40488 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		7BEB09D5299CEEA70076A82F /* CommentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListView.swift; sourceTree = "<group>"; };
 		7BEB09D7299CF12E0076A82F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
-		7BEB09D9299CFEC20076A82F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		7BEB09D9299CFEC20076A82F /* CommentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDTO.swift; sourceTree = "<group>"; };
 		7BFE01A02982643E009608A2 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		7BFE0DDE299E1B4E002D6574 /* WriteCommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentTextView.swift; sourceTree = "<group>"; };
 		9519F0525025E6972410CA40 /* Pods-GetARock-GetARockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock-GetARockUITests.debug.xcconfig"; path = "Target Support Files/Pods-GetARock-GetARockUITests/Pods-GetARock-GetARockUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -560,7 +560,7 @@
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
-				7BEB09D9299CFEC20076A82F /* Comment.swift */,
+				7BEB09D9299CFEC20076A82F /* CommentDTO.swift */,
 				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */,
@@ -832,7 +832,7 @@
 				A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */,
 				4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */,
 				4AC4CE41297FB85B00BB823C /* Position.swift in Sources */,
-				7BEB09DA299CFEC20076A82F /* Comment.swift in Sources */,
+				7BEB09DA299CFEC20076A82F /* CommentDTO.swift in Sources */,
 				B8B17C522980B93300806899 /* Location.swift in Sources */,
 				7BFE0DDF299E1B4E002D6574 /* WriteCommentTextView.swift in Sources */,
 				A9D7253E299B2CF500404E22 /* BandInformationSetViewController.swift in Sources */,
