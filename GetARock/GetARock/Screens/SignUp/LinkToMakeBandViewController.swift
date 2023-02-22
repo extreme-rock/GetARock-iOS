@@ -63,15 +63,6 @@ final class LinkToMakeBandViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let passMakingBandContainerView: UIView = {
-        $0.backgroundColor = .dark02
-        $0.layer.borderColor = UIColor.gray02.cgColor
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 10
-        $0.layer.masksToBounds = true
-        return $0
-    }(UIView())
-    
     private let passMakingBandTitleLabel: UILabel = {
         $0.font = .setFont(.subTitle2)
         $0.text = "밴드 다음에 만들기"
