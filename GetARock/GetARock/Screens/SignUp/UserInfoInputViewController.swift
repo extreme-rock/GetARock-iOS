@@ -158,10 +158,14 @@ final class UserInfoInputViewController: BaseViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let nextButton: BottomButton = {
+    private lazy var nextButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("다음", for: .normal)
         $0.isEnabled = false
+        let action = UIAction { _ in
+            self.showBandCreationDecisionViewController()
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -188,6 +192,7 @@ final class UserInfoInputViewController: BaseViewController {
                                      nextButton]))
     
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
@@ -243,6 +248,11 @@ final class UserInfoInputViewController: BaseViewController {
         } else {
             self.nextButton.isEnabled = false
         }
+    }
+    
+    private func showBandCreationDecisionViewController() {
+        let viewcontroller = BandCreationDecisionViewController()
+        self.navigationController?.pushViewController(viewcontroller, animated: true)
     }
 }
 
