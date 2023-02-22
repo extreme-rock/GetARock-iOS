@@ -11,12 +11,12 @@ struct BasicComponentSize {
 }
 
 struct TextFieldSize {
-    static let width = UIScreen.main.bounds.width * 0.9
+    static let width = UIScreen.main.bounds.width - 32
     static let height = CGFloat(55)
 }
 
 struct TextViewSize {
-    static let width = UIScreen.main.bounds.width * 0.9
+    static let width = UIScreen.main.bounds.width - 32
     static let height = CGFloat(250)
 }
 
@@ -28,3 +28,8 @@ struct BandButtonSize {
     static let  width = UIScreen.main.bounds.width - 32
     static let height = CGFloat(100)
 }
+
+struct DividerSize {
+    static let height = CGFloat(8)
+}
+

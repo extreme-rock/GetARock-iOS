@@ -35,8 +35,11 @@ final class PositionSelectViewController: UIViewController {
         setupLayout()
         attribute()
         configureDelegate()
-        addObservePositionPlusButtonTapped()
-        addObservePositionDeleteButtonTapped()
+        addAllObserver()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func attribute() {
@@ -45,41 +48,6 @@ final class PositionSelectViewController: UIViewController {
     
     private func configureDelegate() {
         positionCollectionView.delegate = self
-    }
-    
-    private func addObservePositionPlusButtonTapped() {
-         NotificationCenter.default.addObserver(self,
-                                                selector: #selector(showPositionPlusModal),
-                                                name: Notification.Name(StringLiteral.showPositionPlusModal),
-                                                object: nil)
-     }
-    
-    @objc
-    private func showPositionPlusModal() {
-        let viewController = PlusPositionViewController()
-        viewController.delegate = self
-        present(viewController, animated: true)
-    }
-    
-    private func addObservePositionDeleteButtonTapped() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deletePosition(_:)),
-                                               name: Notification.Name(StringLiteral.deletePositionCell),
-                                               object: nil)
-    }
-    
-    @objc
-    private func deletePosition(_ notification: Notification) {
-        guard let deleteIndexPath = notification.userInfo?["index"] as? Int else { return }
-        positions.remove(at: deleteIndexPath)
-        self.positionCollectionView.applySnapshot(with: positions)
-        self.updateDataSourceIndex(from: deleteIndexPath, endIndex: positions.count - 1)
-    }
-    
-    private func updateDataSourceIndex(from startIndex: Int, endIndex: Int) {
-        for index in startIndex..<endIndex {
-            positionCollectionView.updateCellIndex(at: IndexPath(item: index, section: 0))
-        }
     }
     
     private func setupLayout() {
@@ -96,6 +64,66 @@ final class PositionSelectViewController: UIViewController {
         nextButton.constraint(bottom: view.bottomAnchor,
                               centerX: view.centerXAnchor,
                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
+    }
+}
+
+//MARK: - observer 관련 Method
+
+extension PositionSelectViewController {
+    private func addAllObserver() {
+        addObserveShowPositionPlusModal()
+        addObserveDelePositionCell()
+        addObserveDeselectAllPosition()
+    }
+    
+    private func addObserveDeselectAllPosition() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deselectAllPosition),
+            name: Notification.Name.deselectAllPosition,
+            object: nil)
+    }
+    
+    @objc
+    private func deselectAllPosition() {
+        self.positionCollectionView.deselectAllItem()
+    }
+    
+    private func addObserveShowPositionPlusModal() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showPositionPlusModal),
+            name: Notification.Name.showPositionPlusModal,
+            object: nil)
+    }
+    
+    @objc
+    private func showPositionPlusModal() {
+        let viewController = PlusPositionViewController()
+        viewController.delegate = self
+        present(viewController, animated: true)
+    }
+    
+    private func addObserveDelePositionCell() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deletePosition(_:)),
+            name: Notification.Name.deletePositionCell,
+            object: nil)
+    }
+    
+    @objc
+    private func deletePosition(_ notification: Notification) {
+        guard let deleteIndexPath = notification.userInfo?["index"] as? Int else { return }
+        positions.remove(at: deleteIndexPath)
+        self.positionCollectionView.applySnapshot(with: positions)
+        self.updateDataSourceIndex(from: deleteIndexPath, endIndex: positions.count - 1)
+    }
+    
+    private func updateDataSourceIndex(from startIndex: Int, endIndex: Int) {
+        for index in startIndex..<endIndex {
+            positionCollectionView.updateCellIndex(at: IndexPath(item: index, section: 0))
+        }
     }
 }
 
