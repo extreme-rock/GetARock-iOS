@@ -49,15 +49,14 @@ final class NotificationTableViewCell: UITableViewCell {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [contentTextVstack, buttonHstack]))
+    }(UIStackView(arrangedSubviews: [contentTextVstack]))
 
     private let cellImage: UIImageView = {
         //TODO: 이미지 리터럴로 바꾸기
         $0.image = UIImage(systemName: "circle.fill")!
         $0.contentMode = .scaleAspectFit
         $0.constraint(.widthAnchor, constant: 40)
-        $0.constraint(.widthAnchor, constant: 40)
-        $0.setContentHuggingPriority(UILayoutPriority.fittingSizeLevel, for: .vertical)
+        $0.constraint(.heightAnchor, constant: 40)
         return $0
     }(UIImageView(frame: .zero))
     
@@ -89,8 +88,8 @@ final class NotificationTableViewCell: UITableViewCell {
         self.subtitleLabel.text = data.content
         self.uploadTime.text = data.updatedDate
         self.isInvitation = data.isInvitation
-        if isInvitation == false {
-            buttonHstack.isHidden = true
+        if isInvitation {
+            contentInformationVstack.addArrangedSubview(buttonHstack)
         }
         
         if data.bandID > 0 {
