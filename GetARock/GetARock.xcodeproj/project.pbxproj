@@ -46,7 +46,6 @@
 		7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04132988FC1100186986 /* SNSListStackView.swift */; };
 		7B7B04162988FE9900186986 /* SNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04152988FE9900186986 /* SNS.swift */; };
 		7B80E5DE29A5F57F0050F010 /* BandInformationVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B80E5DD29A5F57F0050F010 /* BandInformationVO.swift */; };
-		7B80E5E029A5F8100050F010 /* BandCommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B80E5DF29A5F8100050F010 /* BandCommentListViewController.swift */; };
 		7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA83299B708C00C44184 /* EventStateLabel.swift */; };
 		7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */; };
 		7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755D2987DF54008F4B9F /* BandButtonView.swift */; };
@@ -165,7 +164,6 @@
 		7B7B04132988FC1100186986 /* SNSListStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSListStackView.swift; sourceTree = "<group>"; };
 		7B7B04152988FE9900186986 /* SNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNS.swift; sourceTree = "<group>"; };
 		7B80E5DD29A5F57F0050F010 /* BandInformationVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationVO.swift; sourceTree = "<group>"; };
-		7B80E5DF29A5F8100050F010 /* BandCommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCommentListViewController.swift; sourceTree = "<group>"; };
 		7BB4FA83299B708C00C44184 /* EventStateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabel.swift; sourceTree = "<group>"; };
 		7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabelStackView.swift; sourceTree = "<group>"; };
 		7BC2755D2987DF54008F4B9F /* BandButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandButtonView.swift; sourceTree = "<group>"; };
@@ -326,7 +324,6 @@
 			children = (
 				7B6D3355299A4F13001FD630 /* Component */,
 				7B6D3353299A2F76001FD630 /* BandDetailViewController.swift */,
-				7B80E5DF29A5F8100050F010 /* BandCommentListViewController.swift */,
 			);
 			path = BandDetail;
 			sourceTree = "<group>";
@@ -856,7 +853,6 @@
 				4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */,
 				4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
-				7B80E5E029A5F8100050F010 /* BandCommentListViewController.swift in Sources */,
 				4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */,
 				A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */,
 				9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */,
