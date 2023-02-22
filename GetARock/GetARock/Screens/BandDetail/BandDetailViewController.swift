@@ -11,7 +11,7 @@ import UIKit
 
 protocol CommentListUpdateDelegate: AnyObject {
     func refreshCommentList(data: [CommentList]?)
-    }
+}
 
 // MARK: - Get BandData
 
@@ -38,60 +38,61 @@ final class BandDetailViewController: BaseViewController {
         snsList: [],
         eventList: [],
         commentList: [CommentList.init(commentID: 01,
-                                        memberName: "블랙로즈",
-                                        comment: "댓글내용입니당",
-                                        createdDate: "2022.11.19 13:20"),
-                       CommentList.init(commentID: 02,
-                                        memberName: "오아시스",
-                                        comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
-                                        createdDate: "2022.11.19 13:20"),
-                       CommentList.init(commentID: 03,
-                                        memberName: "3번쨰 밴드",
-                                        comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
-                                        createdDate: "2022.11.19 13:20")]
+                                       memberName: "블랙로즈",
+                                       comment: "댓글내용입니당",
+                                       createdDate: "2022.11.19 13:20"),
+                      CommentList.init(commentID: 02,
+                                       memberName: "오아시스",
+                                       comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
+                                       createdDate: "2022.11.19 13:20"),
+                      CommentList.init(commentID: 03,
+                                       memberName: "3번쨰 밴드",
+                                       comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
+                                       createdDate: "2022.11.19 13:20")]
     ){
         didSet{
-            print("삐빅")
+            print("정보 바뀜")
+            // 델리게이트 작동안함 왜 안하냐고 ㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜ;;;;;
             self.delegate?.refreshCommentList(data: bandData.commentList)
-            print("전송하는댓글정보 : \(bandData.commentList)")
         }
-        
     }
     
     // MARK: - View
     
     lazy var bandTopInfoView = BandTopInfoView()
-    lazy var bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
+    lazy var bandDetailContentView: DetailContentView? = nil
     
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         
         //비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
-        Task{
+        Task {
             await getBandData()
             print("가져오기 성공")
             print(bandData)
+            
+            bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
+            
+            //MARK: 데이터를 넣어준다음에 뷰를 그리는 순서를 잡아주기 위해 레이아웃 코드를 여기 넣어야함.(Task 안에 코드는 순서대로 진행됨)
+            view.addSubview(bandTopInfoView)
+            bandTopInfoView.constraint(
+                top: self.view.topAnchor,
+                leading: self.view.leadingAnchor,
+                trailing: self.view.trailingAnchor,
+                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            )
+            
+            view.addSubview(bandDetailContentView ?? UIView(frame: .zero))
+            bandDetailContentView?.constraint(
+                top: bandTopInfoView.bottomAnchor,
+                leading: self.view.leadingAnchor,
+                bottom: self.view.bottomAnchor,
+                trailing: self.view.trailingAnchor,
+                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            )
         }
-        
-        view.addSubview(bandTopInfoView)
-        bandTopInfoView.constraint(
-            top: self.view.topAnchor,
-            leading: self.view.leadingAnchor,
-            trailing: self.view.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        )
-        
-        view.addSubview(bandDetailContentView)
-        bandDetailContentView.constraint(
-            top: bandTopInfoView.bottomAnchor,
-            leading: self.view.leadingAnchor,
-            bottom: self.view.bottomAnchor,
-            trailing: self.view.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        )
     }
 }
 
