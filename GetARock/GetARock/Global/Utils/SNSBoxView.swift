@@ -19,7 +19,7 @@ final class SNSBoxView: UIView {
 
     private let textFieldPlaceholder: String
 
-    private lazy var basicLabel = BasicLabel(contentText: type.rawValue, fontStyle: .content, textColorInfo: .white)
+    private lazy var basicLabel: BasicLabel = BasicLabel(contentText: type.rawValue, fontStyle: .content, textColorInfo: .white)
 
     lazy var textField: UITextField = {
         $0.attributedPlaceholder = NSAttributedString(
@@ -63,16 +63,21 @@ final class SNSBoxView: UIView {
     
     private func setupLayout() {
         addSubview(basicLeftView)
-        if type == .soundCloud {
+        switch type {
+        case .soundCloud:
             basicLeftView.constraint(.widthAnchor, constant: 23)
             basicLeftView.constraint(.heightAnchor, constant: 25)
-
-            basicLeftView.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 17, bottom: 0, right: 0))
-        } else {
+            basicLeftView.constraint(
+                leading: self.leadingAnchor,
+                centerY: self.centerYAnchor,
+                padding: UIEdgeInsets(top: 0, left: 17, bottom: 0, right: 0))
+        default:
             basicLeftView.constraint(.widthAnchor, constant: 20)
             basicLeftView.constraint(.heightAnchor, constant: 20)
-
-            basicLeftView.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
+            basicLeftView.constraint(
+                leading: self.leadingAnchor,
+                centerY: self.centerYAnchor,
+                padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
         }
 
         addSubview(basicLabel)
@@ -83,18 +88,18 @@ final class SNSBoxView: UIView {
         )
 
         addSubview(textField)
-        if type == .soundCloud {
+        switch type {
+        case .soundCloud:
             textField.constraint(
                 leading: basicLabel.trailingAnchor,
                 centerY: basicLabel.centerYAnchor,
-                padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-                )
-        } else {
+                padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0))
+
+        default:
             textField.constraint(
                 leading: basicLabel.trailingAnchor,
                 centerY: basicLabel.centerYAnchor,
-                padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-                )
+                padding: UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0))
         }
     }
 

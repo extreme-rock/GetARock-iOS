@@ -25,7 +25,6 @@ enum CellSize {
     static let width = (UIScreen.main.bounds.width - 42) / 2
 }
 
-
 final class PositionCollectionView: UIView {
     
     // MARK: - Property
@@ -42,6 +41,7 @@ final class PositionCollectionView: UIView {
     private let isNeedHeader: Bool
     private let headerView: UIView?
     private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = self.makeDataSource()
+    private var selectedCellIndexPaths: [(indexPath: IndexPath, isMain: Bool)] = []
     
     // MARK: - View
     
@@ -129,6 +129,25 @@ final class PositionCollectionView: UIView {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
         cell.cellIndex = indexPath.item
     }
+    
+    func deselectAllItem() {
+        let selectedIndexPath = self.collectionView.indexPathsForSelectedItems
+        selectedIndexPath?.forEach {
+            self.collectionView.deselectItem(at: $0, animated: true)
+        }
+        self.postDeselectAllPositionButtonHiddenToggle()
+        
+        if let mainPositionTuple = selectedCellIndexPaths.first {
+            self.removeMainLabel(indexPath: mainPositionTuple.indexPath)
+            self.selectedCellIndexPaths = []
+        }
+    }
+    
+    private func postDeselectAllPositionButtonHiddenToggle() {
+        NotificationCenter.default.post(
+            name: Notification.Name.hideDeselectAllPositionButton,
+            object: nil)
+    }
 }
 
 // MARK: - diffable
@@ -182,8 +201,51 @@ extension PositionCollectionView: UICollectionViewDelegate {
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedCellIndexPaths.append((indexPath: indexPath,
+                                       isMain: selectedCellIndexPaths.isEmpty ? true : false))
+        
+        let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
+        if selectedCellCount == 1 {
+            postDeselectAllPositionButtonHiddenToggle()
+            markMainLabel(indexPath: indexPath)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let indexOfSelectedCell = self.selectedCellIndexPaths.firstIndex(where: { element in
+            element.indexPath == indexPath
+        }) else { return }
+        
+        let deselectedCell = selectedCellIndexPaths.remove(at: indexOfSelectedCell)
+        if deselectedCell.isMain {
+            removeMainLabel(indexPath: indexPath)
+            if let mainPosition = selectedCellIndexPaths.first {
+                selectedCellIndexPaths[0].isMain = true
+                markMainLabel(indexPath: mainPosition.indexPath)
+            }
+        }
+        
+        let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
+        if selectedCellCount == 0 {
+            postDeselectAllPositionButtonHiddenToggle()
+        }
+    }
+    
+    private func markMainLabel(indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
+            cell.setupMainLabelLayout()
+    }
+    
+    private func removeMainLabel(indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
+            cell.removeMainLabel()
+    }
 }
+
 //MARK: 선택된 포지션 데이터 추출
+
 extension PositionCollectionView {
     func getSelectedInstruments() -> [InstrumentList] {
         var selectedInstruments: [InstrumentList] = []
