@@ -68,6 +68,7 @@ final class CommentListView: UIView {
         self.backgroundColor = .dark01
         setupTotalListNumberLabel()
         setTableView()
+        refreshCommentList(data: commentData)
     }
     
     private func setupLayout() {

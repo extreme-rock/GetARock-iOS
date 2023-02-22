@@ -54,7 +54,7 @@ final class BandDetailViewController: BaseViewController {
             print("정보 바뀜")
             print("didSet 작동 중")
             // 델리게이트 작동안함 왜 안하냐고 ㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜ;;;;;
-//            self.delegate?.refreshCommentList(data: bandData.commentList)
+            self.delegate?.refreshCommentList(data: bandData.commentList)
         }
     }
     
