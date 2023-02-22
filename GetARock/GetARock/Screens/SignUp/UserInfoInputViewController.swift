@@ -190,6 +190,7 @@ final class UserInfoInputViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
+        self.hideKeyboardWhenTappedAround()
     }
     
     private func attribute() {
