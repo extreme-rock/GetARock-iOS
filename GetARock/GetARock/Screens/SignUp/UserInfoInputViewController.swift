@@ -233,7 +233,7 @@ final class UserInfoInputViewController: BaseViewController {
                                     leading: scrollView.contentLayoutGuide.leadingAnchor,
                                     bottom: scrollView.contentLayoutGuide.bottomAnchor,
                                     trailing: scrollView.contentLayoutGuide.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16))
     }
     
     private func checkNextButtonEnabledState() {
