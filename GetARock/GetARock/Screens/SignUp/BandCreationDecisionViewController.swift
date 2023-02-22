@@ -1,5 +1,5 @@
 //
-//  LinkToMakeBandViewController.swift
+//  BandCreationDecisionViewController.swift
 //  GetARock
 //
 //  Created by 최동권 on 2023/02/12.
@@ -7,16 +7,13 @@
 
 import UIKit
 
-final class LinkToMakeBandViewController: UIViewController {
+final class BandCreationDecisionViewController: UIViewController {
     
     //MARK: - View
     
-    private let pageIndicatorLabel: UILabel = {
-        $0.font = .setFont(.subTitle)
-        $0.text = "3/3"
-        $0.textColor = .gray02
-        return $0
-    }(UILabel())
+    private let pageIndicatorLabel = BasicLabel(contentText: "3/3",
+                                                fontStyle: .subTitle,
+                                                textColorInfo: .gray02)
     
     private let titleLabel: UILabel = {
         $0.font = .setFont(.largeTitle01)
@@ -39,12 +36,11 @@ final class LinkToMakeBandViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let makeBandTitleLabel: UILabel = {
-        $0.font = .setFont(.subTitle2)
-        $0.text = "내 밴드 만들기"
-        $0.textColor = .white
-        return $0
-    }(UILabel())
+    private let makeBandTitleLabel = BasicLabel(contentText: "내 밴드 만들기",
+                                                fontStyle: .subTitle2,
+                                                textColorInfo: .white)
+    
+    
     
     private let makeBandContentLabel: UILabel = {
         $0.font = .setFont(.contentLight)
@@ -63,12 +59,11 @@ final class LinkToMakeBandViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let passMakingBandTitleLabel: UILabel = {
-        $0.font = .setFont(.subTitle2)
-        $0.text = "밴드 다음에 만들기"
-        $0.textColor = .white
-        return $0
-    }(UILabel())
+    private let passMakingBandTitleLabel = BasicLabel(contentText: "밴드 다음에 만들기",
+                                                      fontStyle: .subTitle2,
+                                                      textColorInfo: .white)
+    
+    
     
     private let passMakingBandContentLabel: UILabel = {
         $0.font = .setFont(.contentLight)
@@ -115,9 +110,9 @@ final class LinkToMakeBandViewController: UIViewController {
         
         self.view.addSubview(makeBandButton)
         makeBandButton.constraint(top: subTitleLabel.bottomAnchor,
-                                     leading: self.view.leadingAnchor,
-                                     trailing: self.view.trailingAnchor,
-                                     padding: UIEdgeInsets(top: 43, left: 16, bottom: 0, right: 16))
+                                  leading: self.view.leadingAnchor,
+                                  trailing: self.view.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 43, left: 16, bottom: 0, right: 16))
         makeBandButton.constraint(.heightAnchor, constant: 160)
         
         self.makeBandButton.addSubview(makeBandTitleLabel)
@@ -132,9 +127,9 @@ final class LinkToMakeBandViewController: UIViewController {
         
         self.view.addSubview(passMakingBandButton)
         passMakingBandButton.constraint(top: makeBandButton.bottomAnchor,
-                                               leading: view.leadingAnchor,
-                                               trailing: view.trailingAnchor,
-                                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
+                                        leading: view.leadingAnchor,
+                                        trailing: view.trailingAnchor,
+                                        padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
         passMakingBandButton.constraint(.heightAnchor, constant: 160)
         
         self.passMakingBandButton.addSubview(passMakingBandTitleLabel)
@@ -144,8 +139,8 @@ final class LinkToMakeBandViewController: UIViewController {
         
         self.passMakingBandButton.addSubview(passMakingBandContentLabel)
         passMakingBandContentLabel.constraint(top: passMakingBandTitleLabel.bottomAnchor,
-                                            leading: passMakingBandButton.leadingAnchor,
-                                            padding: UIEdgeInsets(top: 14, left: 37, bottom: 0, right: 0))
+                                              leading: passMakingBandButton.leadingAnchor,
+                                              padding: UIEdgeInsets(top: 14, left: 37, bottom: 0, right: 0))
     }
     
     private func addActionToButtons() {

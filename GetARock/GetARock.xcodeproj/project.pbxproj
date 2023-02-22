@@ -16,7 +16,7 @@
 		4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20271029863D800042EEFA /* ModifyPageSegmentedControl.swift */; };
 		4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20271229865BEB0042EEFA /* InformationPageSegmentedControl.swift */; };
 		4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2027152987627E0042EEFA /* PositionSelectViewController.swift */; };
-		4A4AF2D82999122800E48791 /* LinkToMakeBandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2D72999122800E48791 /* LinkToMakeBandViewController.swift */; };
+		4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
 		4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */; };
 		4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */; };
@@ -104,7 +104,7 @@
 		4A20271029863D800042EEFA /* ModifyPageSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPageSegmentedControl.swift; sourceTree = "<group>"; };
 		4A20271229865BEB0042EEFA /* InformationPageSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationPageSegmentedControl.swift; sourceTree = "<group>"; };
 		4A2027152987627E0042EEFA /* PositionSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectViewController.swift; sourceTree = "<group>"; };
-		4A4AF2D72999122800E48791 /* LinkToMakeBandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkToMakeBandViewController.swift; sourceTree = "<group>"; };
+		4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationDecisionViewController.swift; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
 		4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectCollectionViewHeader.swift; sourceTree = "<group>"; };
 		4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 				4A5931892989041200C8DA31 /* PlusPositionViewController.swift */,
 				4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */,
 				4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */,
-				4A4AF2D72999122800E48791 /* LinkToMakeBandViewController.swift */,
+				4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -702,7 +702,7 @@
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
-				4A4AF2D82999122800E48791 /* LinkToMakeBandViewController.swift in Sources */,
+				4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
