@@ -93,10 +93,10 @@ final class NotificationTableViewCell: UITableViewCell {
         }
         
         if data.bandID > 0 {
-            self.cellImage.image = ImageLiteral.bandIcon
+            self.cellImage.image = ImageLiteral.bandNotificationIcon
         }
         if data.eventID > 0 {
-            self.cellImage.image = ImageLiteral.eventIcon
+            self.cellImage.image = ImageLiteral.eventNotificationIcon
         }
     }
     

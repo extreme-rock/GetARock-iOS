@@ -36,7 +36,7 @@ extension NotificationListDTO {
         NotificationInfo(alertID: 0, isInvitation: false, alertType: "", title: "‘블랙로즈' 방명록 🦹", content: "밴드 ‘블랙로즈'에 새로운 방명록이 달렸어요!", isChecked: false, updatedDate: "2022-13-11", bandID: 1, eventID: -1),
         NotificationInfo(alertID: 0, isInvitation: false, alertType: "", title: "블랙로즈' 모여락 🤘", content: "연말공연 같이할 팀 구해요 어쩌...’ 모여락에 새로운 댓글이 달렸어요!", isChecked: false, updatedDate: "2022-13-11", bandID: -1, eventID: 1),
         NotificationInfo(alertID: 0, isInvitation: false, alertType: "", title: "내가 댓글 남긴 모여락 🤘", content: "안녕하세요 여러분 모여락....’ 모여락에 새로운 댓글이 달렸어요!", isChecked: false, updatedDate: "2022-13-11", bandID: -1, eventID: 1),
-        NotificationInfo(alertID: 0, isInvitation: false, alertType: "", title: "밴드 권한 변경 👑️" , content: "밴드 ‘로젤리아'의 리더로 임명되었어요!", isChecked: false, updatedDate: "2022-13-11", bandID: 0, eventID: 0)
+        NotificationInfo(alertID: 0, isInvitation: false, alertType: "", title: "밴드 권한 변경 👑️" , content: "밴드 ‘로젤리아'의 리더로 임명되었어요!", isChecked: false, updatedDate: "2022-13-11", bandID: 1, eventID: 0)
     ]
 }
 
