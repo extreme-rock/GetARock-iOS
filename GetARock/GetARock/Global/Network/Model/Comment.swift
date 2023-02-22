@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CommentList: Codable {
-    let commentID: Int
-    let memberName, comment, createdDate: String
-}
+//struct CommentList: Codable {
+//    let commentID: Int
+//    let memberName, comment, createdDate: String
+//}
