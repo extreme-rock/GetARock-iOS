@@ -19,13 +19,13 @@ final class SettingViewVersionCell: UITableViewCell {
     
     private lazy var latestVersionLabel = BasicLabel(
         // TODO: 테스트 플라이트 혹은 배포 후에 최신 버전 정보로 변경
-        contentText: "최신버전: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)",
+        contentText: "최신버전: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "--")",
         fontStyle: .caption,
         textColorInfo: .gray02
     )
     
     private let currentVersionLabel = BasicLabel(
-        contentText: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String,
+        contentText: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "--",
         fontStyle: .content,
         textColorInfo: .mainPurple
     )
