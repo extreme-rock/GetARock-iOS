@@ -23,23 +23,6 @@ final class TermGuideStackView: UIStackView {
     
     // MARK: - View
     
-    private lazy var firstLabel: BasicLabel = {
-        $0.setContentHuggingPriority(
-            UILayoutPriority.defaultHigh,
-            for: .horizontal)
-        
-        let attributeString = NSMutableAttributedString(string: guideText)
-        attributeString.addAttribute(
-            .underlineStyle,
-            value: 1,
-            range: NSRange.init(location: 0, length: guideText.count)
-        )
-        $0.attributedText = attributeString
-        return $0
-    }(BasicLabel(contentText: guideText,
-                 fontStyle: .content,
-                 textColorInfo: .white))
-    
     private lazy var guideButton: UIButton = {
         $0.setTitle(guideText, for: .normal)
         $0.setContentHuggingPriority(UILayoutPriority.defaultHigh,
