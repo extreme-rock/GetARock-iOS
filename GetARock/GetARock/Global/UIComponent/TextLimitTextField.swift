@@ -12,9 +12,15 @@ enum DuplicationCheckType {
     case none
 }
 
+protocol TextLimitTextFieldDelegate: AnyObject {
+    func checkDuplicateButtonTapped()
+}
+
 final class TextLimitTextField: UIView {
     
     // MARK: - Property
+    
+    weak var delegate: TextLimitTextFieldDelegate?
     
     private let placeholder: String
     
@@ -23,6 +29,8 @@ final class TextLimitTextField: UIView {
     private let type: DuplicationCheckType
 
     private let textExpressionCheck: Bool
+    
+    private var isDuplicated = false
     
     // MARK: - View
     
@@ -101,6 +109,10 @@ final class TextLimitTextField: UIView {
         self.textField.rightView = TextFieldRightPaddingView()
         self.textField.rightViewMode = .always
     }
+    
+    func isNameDuplicated() -> Bool {
+        return self.isDuplicated
+    }
 }
 
 //MARK: 글자수 제한 로직
@@ -123,12 +135,15 @@ extension TextLimitTextField {
             do {
                 if textField.text == "모여락" {
                     showDuplicationCheckLabel(with: true)
+                    self.isDuplicated = true
                 } else {
                     let isDuplicated = try await DuplicationCheckRequest.checkDuplication(
                         checkCase: type,
                         word: textField.text ?? "")
                     showDuplicationCheckLabel(with: isDuplicated)
+                    self.isDuplicated = isDuplicated
                 }
+                delegate?.checkDuplicateButtonTapped()
             } catch {
                 print(error)
             }

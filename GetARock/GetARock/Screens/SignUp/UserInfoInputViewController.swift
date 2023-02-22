@@ -1,13 +1,13 @@
 //
-//  ModifyUserProfileViewController.swift
+//  UserInfoInputViewController.swift
 //  GetARock
 //
-//  Created by 최동권 on 2023/02/13.
+//  Created by 최동권 on 2023/02/17.
 //
 
 import UIKit
 
-final class ModifyUserProfileViewController: UIViewController {
+final class UserInfoInputViewController: BaseViewController {
     
     // MARK: - View
     
@@ -62,13 +62,22 @@ final class ModifyUserProfileViewController: UIViewController {
     
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
     
-    private let ageSelectCollectionView = SelectCollectionView(
+//    private let ageSelectCollectionView = SelectCollectionView(
+//        widthState: .flexable,
+//        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
+//        widthSize: 23,
+//        itemSpacing: 5
+//    )
+    private let ageSelectCollectionView: SelectCollectionView = {
+        $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
+        $0.constraint(.heightAnchor, constant: 102)
+        return $0
+    }(SelectCollectionView(
         widthState: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
-        widthSize: 23,
+        widthSize: 25,
         itemSpacing: 5
-    )
-    
+    ))
     private lazy var ageInputStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
@@ -79,12 +88,16 @@ final class ModifyUserProfileViewController: UIViewController {
     private let genderTitleLabel = InformationGuideLabel(guideText: "성별",
                                                          type: .required)
     
-    private let genderSelectCollectionView = SelectCollectionView(
+    private let genderSelectCollectionView: SelectCollectionView = {
+        $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
+        $0.constraint(.heightAnchor, constant: 46)
+        return $0
+    }(SelectCollectionView(
         widthState: .fixed,
         items: ["남자", "여자"],
-        widthSize: UIScreen.main.bounds.width - 40,
+        widthSize: (UIScreen.main.bounds.width - 41) / 2,
         itemSpacing: 8
-    )
+    ))
     
     private lazy var genderInputStackView: UIStackView = {
         $0.axis = .vertical
@@ -145,9 +158,10 @@ final class ModifyUserProfileViewController: UIViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let informationFillCompleteButton: BottomButton = {
+    private let nextButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("다음", for: .normal)
+        $0.isEnabled = false
         return $0
     }(BottomButton())
     
@@ -158,7 +172,6 @@ final class ModifyUserProfileViewController: UIViewController {
     }(UIScrollView())
     
     private let contentView = UIView()
-    
     
     private lazy var contentStackView: UIStackView = {
         $0.axis = .vertical
@@ -172,11 +185,20 @@ final class ModifyUserProfileViewController: UIViewController {
                                      genderInputStackView,
                                      textViewStackView,
                                      snsInformationStackView,
-                                     informationFillCompleteButton]))
+                                     nextButton]))
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupLayout()
+        self.hideKeyboardWhenTappedAround()
+        self.configureDelegate()
+    }
+    
+    private func configureDelegate() {
+        self.genderSelectCollectionView.delegate = self
+        self.ageSelectCollectionView.delegate = self
+        self.userNamingTextField.delegate = self
     }
     
     private func attribute() {
@@ -184,7 +206,6 @@ final class ModifyUserProfileViewController: UIViewController {
     }
     
     private func setupLayout() {
-        
         //MARK: - scrollView
         
         view.addSubview(scrollView)
@@ -207,8 +228,32 @@ final class ModifyUserProfileViewController: UIViewController {
         contentStackView.constraint(top: contentView.topAnchor,
                                     leading: contentView.leadingAnchor,
                                     bottom: contentView.bottomAnchor,
-                                    trailing: contentView.trailingAnchor)
+                                    trailing: contentView.trailingAnchor,
+                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
         
     }
     
+    private func checkNextButtonEnabledState() {
+        let isAgeSelected = ageSelectCollectionView.isSelected()
+        let isGenderSelected = genderSelectCollectionView.isSelected()
+        let isDuplicated = userNamingTextField.isNameDuplicated()
+        
+        if isAgeSelected && isGenderSelected && isDuplicated {
+            self.nextButton.isEnabled = true
+        } else {
+            self.nextButton.isEnabled = false
+        }
+    }
+}
+
+extension UserInfoInputViewController: SelectCollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.checkNextButtonEnabledState()
+    }
+}
+
+extension UserInfoInputViewController: TextLimitTextFieldDelegate {
+    func checkDuplicateButtonTapped() {
+        self.checkNextButtonEnabledState()
+    }
 }

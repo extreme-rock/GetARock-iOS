@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SelectCollectionViewDelegate: AnyObject {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+}
+
 enum WidthOption {
     case fixed
     case flexable
@@ -16,6 +20,7 @@ final class SelectCollectionView: UIView {
     
     // MARK: - Property
     
+    weak var delegate: SelectCollectionViewDelegate?
     private let items: [String]
     private var widthOption: WidthOption
     private var widthSize: CGFloat
@@ -44,6 +49,7 @@ final class SelectCollectionView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(SelectCollectionViewCell.self, forCellWithReuseIdentifier: "SelectCollectionViewCell")
         return collectionView
     }()
@@ -74,6 +80,13 @@ final class SelectCollectionView: UIView {
         let selectedIndex = collectionView.indexPathsForSelectedItems?.first
         return items[selectedIndex?.item ?? 0]
     }
+    
+    func isSelected() -> Bool {
+        guard let selectedIndex = collectionView.indexPathsForSelectedItems else { return false}
+        let isSelected = !(selectedIndex.isEmpty)
+        return isSelected
+    }
+    
 }
 
 extension SelectCollectionView: UICollectionViewDataSource {
@@ -97,5 +110,14 @@ extension SelectCollectionView: UICollectionViewDataSource {
         cell.configure(color: backgroundColor, text: self.items[indexPath.item])
         
         return cell
+    }
+}
+
+extension SelectCollectionView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.delegate?.collectionView(
+            collectionView,
+            didSelectItemAt: indexPath
+        )
     }
 }
