@@ -25,6 +25,7 @@ final class SettingViewController: BaseViewController {
         $0.register(SettingViewDefaultCell.self, forCellReuseIdentifier: SettingViewDefaultCell.classIdentifier)
         $0.register(SettingViewVersionCell.self, forCellReuseIdentifier: SettingViewVersionCell.classIdentifier)
         $0.backgroundColor = .dark01
+        $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return $0
     }(UITableView())
     
