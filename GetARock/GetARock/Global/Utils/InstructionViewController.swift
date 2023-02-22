@@ -13,7 +13,7 @@ final class InstructionViewController: UIViewController {
     
     private lazy var labelStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = 10
+        $0.spacing = 15
         return $0
     }(UIStackView(arrangedSubviews: [titleLabel, subTitleLabel]))
     

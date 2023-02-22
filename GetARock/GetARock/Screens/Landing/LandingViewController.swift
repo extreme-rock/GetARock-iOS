@@ -35,6 +35,7 @@ class LandingViewController: UIViewController {
             $0.font = .setFont(.headline03)
             $0.numberOfLines = 3
             $0.textColor = .white
+            $0.addLabelSpacing(lineSpacing: 10)
             return $0
         }(UILabel())
         
@@ -42,6 +43,7 @@ class LandingViewController: UIViewController {
             $0.text = "모여락에서 주변의 밴드와 소통하며\n즐거운 밴드 생활을 즐겨볼 준비되셨나요?\n시작하기전에 아래 주의사항을 확인해주세요!모여락에서 주변의 밴드와 소통하며\n즐거운 밴드 생활을 즐겨볼 준비되셨나요?\n시작하기전에 아래 주의사항을 확인해주세요!모여락에서 주변의 밴드와 소통하며\n즐거운 밴드 생활을 즐겨볼 준비되셨나요?\n시작하기전에 아래 주의사항을 확인해주세요!"
             $0.font = .setFont(.headline03)
             $0.numberOfLines = 0
+            $0.addLabelSpacing(lineSpacing: 10)
             $0.textColor = .white
             return $0
         }(UILabel())
