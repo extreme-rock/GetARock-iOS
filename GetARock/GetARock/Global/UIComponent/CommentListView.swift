@@ -109,12 +109,7 @@ final class CommentListView: UIView {
 // MARK: - UITableViewDelegate
 
 extension CommentListView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView,
-                   willDisplay cell: UITableViewCell,
-                   forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.clear
-    }
-    
+
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(
@@ -151,6 +146,7 @@ extension CommentListView: UITableViewDataSource {
             for: indexPath ) as? CommentTableViewCell
         else { return UITableViewCell()}
         
+        cell.backgroundColor = UIColor.clear
         cell.configure(data: commentData?[indexPath.row],
                        index: indexPath.row)
         cell.selectionStyle = .none
