@@ -7,10 +7,16 @@
 
 import UIKit
 
+//// MARK: - CommentDataGeteDelegate
+//protocol CommentDataGeteDelegate: AnyObject {
+//    func getCommentData(data: [CommentList]?)
+//    }
+
 // MARK: - CommentListView
 
 final class CommentListView: UIView {
     
+//    weak  var delegate: CommentDataGeteDelegate?
     private var commentData: [CommentList]?
     private var totalCommentNumber: Int = 0
     
@@ -49,6 +55,9 @@ final class CommentListView: UIView {
         super.init(frame: .zero)
         attribute()
         setupLayout()
+        let vc = BandDetailViewController()
+        vc.delegate = self
+        
     }
     
     required init?(coder: NSCoder) {
@@ -60,6 +69,14 @@ final class CommentListView: UIView {
     }
     
     // MARK: - Method
+//    private func getbandData(){
+//        self.delegate?.getCommentData(data: commentData)
+//        print(commentData)
+//        self.tableView.reloadData()
+//        self.setupTotalListNumberLabel()
+//
+//    }
+    
     
     private func attribute() {
         self.backgroundColor = .dark01
@@ -155,5 +172,16 @@ extension CommentListView: UITableViewDataSource {
         cell.selectionStyle = .none
         
         return cell
+    }
+}
+
+// MARK: - CommentListUpdateDelegate
+
+extension CommentListView: CommentListUpdateDelegate {
+    func refreshCommentList(data: [CommentList]?) {
+        commentData = data
+        print(commentData)
+        self.tableView.reloadData()
+        self.setupTotalListNumberLabel()
     }
 }

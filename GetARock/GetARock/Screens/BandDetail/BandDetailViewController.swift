@@ -7,11 +7,22 @@
 
 import UIKit
 
+// MARK: - CommentListUpdateDelegate
+
+protocol CommentListUpdateDelegate: AnyObject {
+    func refreshCommentList(data: [CommentList]?)
+    }
+
+// MARK: - Get BandData
+
 final class BandDetailViewController: BaseViewController {
     
     // MARK: - Property
     
-    //서버에서 Get하는 데이터 양식
+    weak var delegate: CommentListUpdateDelegate?
+    
+    //TODO: 사용자가 선택한 밴드 아이디를 지도로부터 받아와야함
+    private var bandID = "1"
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
@@ -26,8 +37,26 @@ final class BandDetailViewController: BaseViewController {
         songList: [],
         snsList: [],
         eventList: [],
-        commentList: []
-    )
+        commentList: [CommentList.init(commentID: 01,
+                                        memberName: "블랙로즈",
+                                        comment: "댓글내용입니당",
+                                        createdDate: "2022.11.19 13:20"),
+                       CommentList.init(commentID: 02,
+                                        memberName: "오아시스",
+                                        comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
+                                        createdDate: "2022.11.19 13:20"),
+                       CommentList.init(commentID: 03,
+                                        memberName: "3번쨰 밴드",
+                                        comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
+                                        createdDate: "2022.11.19 13:20")]
+    ){
+        didSet{
+            print("삐빅")
+            self.delegate?.refreshCommentList(data: bandData.commentList)
+            print("전송하는댓글정보 : \(bandData.commentList)")
+        }
+        
+    }
     
     // MARK: - View
     
@@ -38,6 +67,7 @@ final class BandDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         //비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
         Task{
@@ -65,26 +95,29 @@ final class BandDetailViewController: BaseViewController {
     }
 }
 
+// MARK: - Get BandData
+
 extension BandDetailViewController {
     
     func getBandData() async {
         var queryURLComponent = URLComponents(string: "http://43.201.55.66:8080/band")
-        let idQuery = URLQueryItem(name: "id", value: "1")
+        let idQuery = URLQueryItem(name: "id", value: bandID)
         queryURLComponent?.queryItems = [idQuery]
         guard let url = queryURLComponent?.url else { return }
-
+        
         do {
             //MARK: 데이터 받아오기
             let (data, response) = try await URLSession.shared.data(from: url)
-
+            
             //MARK: 데이터 디코딩
             let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
-                print("Response data raw: \(data)")
-                print("fetch Data")
-                print("\(response)")
-                self.bandData = decodedData
+            print("Response data raw: \(data)")
+            print("fetch Data")
+            print("\(response)")
+            self.bandData = decodedData
         } catch {
             print("bad news! decoding error occuerd")
         }
     }
+    
 }
