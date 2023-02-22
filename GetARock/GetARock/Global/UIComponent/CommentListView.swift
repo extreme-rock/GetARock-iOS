@@ -16,6 +16,7 @@ final class CommentListView: UIView {
     
     // MARK: - View
     
+    //TODO: - 댓글 작성 POST 연동 후 didSet 처리 추가해야함!
     private let totalCommentNumberLabel = BasicLabel(
         contentText: "총 0개",
         fontStyle: .content,
