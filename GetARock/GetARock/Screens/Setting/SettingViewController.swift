@@ -110,15 +110,17 @@ extension SettingViewController {
     }
     
     private func goToPrivacyPolicy() {
-        let notionURL = NSURL(string: "https://fascinated-neem-285.notion.site/907e9564134e4bbfa1b026324e85339d")
-        let notionSafariView: SFSafariViewController = SFSafariViewController(url: notionURL! as URL)
-        self.present(notionSafariView, animated: true, completion: nil)
+        if let notionURL = NSURL(string: StringLiteral.privacyPolicyNotionURL) {
+            let notionSafariView: SFSafariViewController = SFSafariViewController(url: notionURL as URL)
+            self.present(notionSafariView, animated: true, completion: nil)
+        }
     }
     
     private func goToThirdPartyInfo() {
-        let notionURL = NSURL(string: "https://fascinated-neem-285.notion.site/72e315a117dd402aa5056cb4244b7f43")
-        let notionSafariView: SFSafariViewController = SFSafariViewController(url: notionURL! as URL)
-        self.present(notionSafariView, animated: true, completion: nil)
+        if let notionURL = NSURL(string: StringLiteral.thirdPartyInfoNotionURL) {
+            let notionSafariView: SFSafariViewController = SFSafariViewController(url: notionURL as URL)
+            self.present(notionSafariView, animated: true, completion: nil)
+        }
     }
     
     private func getVersionInfo() {
