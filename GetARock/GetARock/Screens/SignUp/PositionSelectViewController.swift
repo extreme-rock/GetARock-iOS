@@ -25,8 +25,12 @@ final class PositionSelectViewController: UIViewController {
         headerView: PositionSelectCollectionViewHeader()
     )
     
-    private let nextButton: BottomButton = {
+    private lazy var nextButton: BottomButton = {
         $0.setTitle("다음", for: .normal)
+        let action = UIAction { _ in
+            self.showUserInfoInputViewController()
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -58,12 +62,17 @@ final class PositionSelectViewController: UIViewController {
                                           leading: view.leadingAnchor,
                                           bottom: nextButton.topAnchor,
                                           trailing: view.trailingAnchor,
-                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+                                          padding: UIEdgeInsets(top: 0, left: 16, bottom: 10, right: 16))
         
         
         nextButton.constraint(bottom: view.bottomAnchor,
                               centerX: view.centerXAnchor,
                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
+    }
+    
+    private func showUserInfoInputViewController() {
+        let viewController = UserInfoInputViewController()
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
