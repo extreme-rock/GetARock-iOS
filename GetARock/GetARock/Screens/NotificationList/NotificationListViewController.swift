@@ -67,12 +67,9 @@ extension NotificationListViewController {
         let okayAction = NSLocalizedString("확인", comment: "Alert OK button title")
         let cancelAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
         alert.addAction(UIAlertAction(title: cancelAction, style: .destructive))
-        alert.addAction(UIAlertAction(title: okayAction, style: .default, handler: { [weak self] _ in
-            self?.tableView.beginUpdates()
-            self?.reconfigureCellAfterRejectInvitation()
-            self?.dismiss(animated: true, completion: { [weak self] in
-                self?.tableView.endUpdates()
-            })}))
+        alert.addAction(UIAlertAction(title: okayAction, style: .default, handler: { _ in
+            self.tableView.performBatchUpdates { self.reconfigureCellAfterRejectInvitation() }
+        }))
         present(alert, animated: true, completion: nil)
     }
     
