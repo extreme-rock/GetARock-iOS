@@ -46,21 +46,12 @@ final class NotificationListViewController: UITableViewController {
 }
 
 extension NotificationListViewController {
-    //TODO: 추후 테스트 API는 삭제하고 다른 API로 대체해야함
+    //TODO: 추후 테스트 API는 삭제하고 다른 API로 대체해야함, viewDidload 과정에서 초기 데이터 세팅 과정 필요
     private func fetchAlertListData() {
         Task {
             do {
-                guard let url = URL(string: "http://43.201.55.66:8080/alerts/test") else { throw NetworkError.badURL }
-                
-                let (data, response) = try await URLSession.shared.data(from: url)
-                let httpResponse = response as! HTTPURLResponse
-                
-                if (200..<300).contains(httpResponse.statusCode) {
-                    let decodedData = try JSONDecoder().decode(NotificationListDTO.self, from: data)
-                    self.alertListData = decodedData.alertList
-                } else {
-                    throw NetworkError.failedRequest(status: httpResponse.statusCode)
-                }
+                let serverData: [NotificationInfo] = try await NetworkManager.shared.getNotificationList(memberId: 1)
+                self.alertListData = serverData
             } catch {
                 print(error)
             }
@@ -76,21 +67,26 @@ extension NotificationListViewController {
         let okayAction = NSLocalizedString("확인", comment: "Alert OK button title")
         let cancelAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
         alert.addAction(UIAlertAction(title: cancelAction, style: .destructive))
-        alert.addAction(UIAlertAction(title: okayAction, style: .default, handler: { _ in
-            guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
-            self.tableView.beginUpdates()
-            cell.buttonHstack.removeFromSuperview()
-            cell.updateTextAfterRejectInvitation(bandName: "00밴드")
-            self.dismiss(animated: true, completion: {
-                self.tableView.endUpdates()
+        alert.addAction(UIAlertAction(title: okayAction, style: .default, handler: { [weak self] _ in
+            self?.tableView.beginUpdates()
+            self?.reConfigureCellAfterRejectInvitation()
+            self?.dismiss(animated: true, completion: { [weak self] in
+                self?.tableView.endUpdates()
             })}))
         present(alert, animated: true, completion: nil)
     }
     
-    private func getInvitationRejectAlert() {
+    private func getInvitationRejectNotification() {
         //TODO: 이 뷰를 들어온 사용자가, 자신이 초대한 사람이 거절을 했을 경우, 그에 맞게 UI 업데이트, 분기처리가 따로 필요함
+        //MARK: 하지만 바로 양쪽 사용자 모두 업데이트 시키는게 쉽지않을듯? 초대한 사람이 결과를 업데이트 받으려면 나갓다오게 하는 걸로...
         guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
         cell.updateTextForInvitationRejectAlert(userName: "알로라", bandName: "00밴드")
+    }
+    
+    private func reConfigureCellAfterRejectInvitation() {
+        guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
+        cell.buttonHstack.removeFromSuperview()
+        cell.updateTextAfterRejectInvitation(bandName: "00밴드")
     }
 }
 
