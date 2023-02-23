@@ -235,9 +235,9 @@ final class UserInfoInputViewController: BaseViewController {
     private func checkNextButtonEnabledState() {
         let isAgeSelected = ageSelectCollectionView.isSelected()
         let isGenderSelected = genderSelectCollectionView.isSelected()
-        let isDuplicated = userNamingTextField.isNameDuplicated()
-        
-        if isAgeSelected && isGenderSelected && isDuplicated {
+        let isAvailableName = userNamingTextField.isAvailableName()
+        print(isAvailableName)
+        if isAgeSelected && isGenderSelected && isAvailableName {
             self.nextButton.isEnabled = true
         } else {
             self.nextButton.isEnabled = false
@@ -252,7 +252,7 @@ extension UserInfoInputViewController: SelectCollectionViewDelegate {
 }
 
 extension UserInfoInputViewController: TextLimitTextFieldDelegate {
-    func checkDuplicateButtonTapped() {
+    func textFieldTextDidChanged() {
         self.checkNextButtonEnabledState()
     }
 }

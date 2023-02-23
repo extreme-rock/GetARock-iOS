@@ -13,7 +13,7 @@ enum DuplicationCheckType {
 }
 
 protocol TextLimitTextFieldDelegate: AnyObject {
-    func checkDuplicateButtonTapped()
+    func textFieldTextDidChanged()
 }
 
 final class TextLimitTextField: UIView {
@@ -31,6 +31,8 @@ final class TextLimitTextField: UIView {
     private let textExpressionCheck: Bool
     
     private var isDuplicated = false
+    
+    private var availableName: String? = nil
     
     // MARK: - View
     
@@ -113,6 +115,16 @@ final class TextLimitTextField: UIView {
     func isNameDuplicated() -> Bool {
         return self.isDuplicated
     }
+    
+    func isTextFieldEmpty() -> Bool {
+        guard let isTextFieldEmpty = self.textField.text?.isEmpty else { return true }
+        return isTextFieldEmpty
+    }
+    
+    func isAvailableName() -> Bool {
+        guard let availableName else { return false }
+        return self.textField.text == availableName
+    }
 }
 
 //MARK: 글자수 제한 로직
@@ -127,6 +139,9 @@ extension TextLimitTextField {
                 self.textField.text = fixedText
             }
         }
+        
+        // textField의 text가 바뀔때마다 nextButton enabled 체크
+        delegate?.textFieldTextDidChanged()
     }
     
     //MARK: 중복 확인 버튼
@@ -136,6 +151,7 @@ extension TextLimitTextField {
                 if textField.text == "모여락" {
                     showDuplicationCheckLabel(with: true)
                     self.isDuplicated = true
+                    self.availableName = textField.text
                 } else {
                     let isDuplicated = try await DuplicationCheckRequest.checkDuplication(
                         checkCase: type,
@@ -143,13 +159,13 @@ extension TextLimitTextField {
                     showDuplicationCheckLabel(with: isDuplicated)
                     self.isDuplicated = isDuplicated
                 }
-                delegate?.checkDuplicateButtonTapped()
+                delegate?.textFieldTextDidChanged()
             } catch {
                 print(error)
             }
         }
     }
-
+    
     private func showDuplicationCheckLabel(with isDuplicated: Bool) {
         self.duplicationCheckLabel.isHidden = false
 
