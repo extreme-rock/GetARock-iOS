@@ -139,7 +139,12 @@ extension TextLimitTextField {
                 self.textField.text = fixedText
             }
         }
-        
+        // 중복체크 성공 후 텍스트 변경시, 다시 중복체크를 요구하는 로직
+        if !isAvailableName() {
+            showLabelForRequringDuplicationCheck()
+        } else {
+            showDuplicationCheckPassedLabel()
+        }
         // textField의 text가 바뀔때마다 nextButton enabled 체크
         delegate?.textFieldTextDidChanged()
     }
@@ -148,6 +153,7 @@ extension TextLimitTextField {
     @objc func didTapCheckButton() {
         Task {
             do {
+                //TODO: 추후 API 완성 이후 duplicationCheck 결과가 true일 경우의 코드 수정 필요
                 if textField.text == "모여락" {
                     showDuplicationCheckLabel(with: true)
                     self.isDuplicated = true
@@ -168,16 +174,34 @@ extension TextLimitTextField {
     
     private func showDuplicationCheckLabel(with isDuplicated: Bool) {
         self.duplicationCheckLabel.isHidden = false
-
         // 중복 체크 라벨의 이미지 변경
         guard let imageView = duplicationCheckLabel.arrangedSubviews.first as? UIImageView else { return }
         imageView.image = isDuplicated ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.xmarkCircleSymbol
         imageView.tintColor = isDuplicated ? .blue02 : .warningRed
-
         // 중복 체크 라벨의 텍스트 변경
         guard let label = duplicationCheckLabel.arrangedSubviews.last as? UILabel else { return }
         label.text = isDuplicated ? StringLiteral.duplicationCheckPassed : StringLiteral.duplicationCheckUnPassed
         label.textColor = isDuplicated ? .blue02 : .warningRed
+    }
+    
+    private func showLabelForRequringDuplicationCheck() {
+        guard let imageView = duplicationCheckLabel.arrangedSubviews.first as? UIImageView else { return }
+        imageView.image = ImageLiteral.exclamationMarkCircleSymbol
+        imageView.tintColor = .warningRed
+
+        guard let label = duplicationCheckLabel.arrangedSubviews.last as? UILabel else { return }
+        label.text = StringLiteral.needDuplicationCheck
+        label.textColor = .warningRed
+    }
+    
+    private func showDuplicationCheckPassedLabel() {
+        guard let imageView = duplicationCheckLabel.arrangedSubviews.first as? UIImageView else { return }
+        imageView.image = ImageLiteral.checkmarkCircleSymbol
+        imageView.tintColor =  .blue02
+        // 중복 체크 라벨의 텍스트 변경
+        guard let label = duplicationCheckLabel.arrangedSubviews.last as? UILabel else { return }
+        label.text = StringLiteral.duplicationCheckPassed
+        label.textColor = .blue02
     }
 }
 
