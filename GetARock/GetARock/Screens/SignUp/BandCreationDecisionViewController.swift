@@ -31,10 +31,6 @@ final class BandCreationDecisionViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private lazy var makeBandStackView: UIStackView = {
-        return $0
-    }(UIStackView(arrangedSubviews: [makeBandTitleLabel]))
-    
     private let makeBandButton: UIButton = {
         $0.setImage(UIImage(named: "makeMyBandBanner"), for: .normal)
         return $0
@@ -43,8 +39,6 @@ final class BandCreationDecisionViewController: UIViewController {
     private let makeBandTitleLabel = BasicLabel(contentText: "내 밴드 만들기",
                                                 fontStyle: .subTitle2,
                                                 textColorInfo: .white)
-    
-    
     
     private let makeBandContentLabel: UILabel = {
         $0.font = .setFont(.contentLight)
@@ -67,8 +61,6 @@ final class BandCreationDecisionViewController: UIViewController {
                                                       fontStyle: .subTitle2,
                                                       textColorInfo: .white)
     
-    
-    
     private let skipMakingBandContentLabel: UILabel = {
         $0.font = .setFont(.contentLight)
         $0.text = "밴드가 없으면 모여락 이벤트를 만들 수 없어요🥹\n하지만 이벤트 참여와 소통은 가능해요!"
@@ -76,7 +68,6 @@ final class BandCreationDecisionViewController: UIViewController {
         $0.numberOfLines = 2
         return $0
     }(UILabel())
-    
     
     //MARK: - Life Cycle
     
