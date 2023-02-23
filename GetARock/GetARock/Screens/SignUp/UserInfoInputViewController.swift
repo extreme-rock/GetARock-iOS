@@ -65,13 +65,7 @@ final class UserInfoInputViewController: BaseViewController {
                                      userNamingTextField]))
     
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
-    
-//    private let ageSelectCollectionView = SelectCollectionView(
-//        widthState: .flexable,
-//        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
-//        widthSize: 23,
-//        itemSpacing: 5
-//    )
+
     private let ageSelectCollectionView: SelectCollectionView = {
         $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
         $0.constraint(.heightAnchor, constant: 102)
@@ -80,7 +74,8 @@ final class UserInfoInputViewController: BaseViewController {
         widthState: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
         widthSize: 25,
-        itemSpacing: 5
+        itemSpacing: 5,
+        cellBackgroundColor: .dark02
     ))
     private lazy var ageInputStackView: UIStackView = {
         $0.axis = .vertical
@@ -100,7 +95,8 @@ final class UserInfoInputViewController: BaseViewController {
         widthState: .fixed,
         items: ["남자", "여자"],
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
-        itemSpacing: 8
+        itemSpacing: 8,
+        cellBackgroundColor: .dark02
     ))
     
     private lazy var genderInputStackView: UIStackView = {

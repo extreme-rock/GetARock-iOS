@@ -146,7 +146,7 @@ final class ModifyUserProfileViewController: UIViewController {
                                      soundCloudTextField]))
 
     private let informationFillCompleteButton: BottomButton = {
-        //TODO: 밴드 정보 POST action 추가 필요
+        //TODO: 개인 정보 POST action 추가 필요
         $0.setTitle("다음", for: .normal)
         return $0
     }(BottomButton())

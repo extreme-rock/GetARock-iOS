@@ -88,7 +88,7 @@ final class SelectCollectionView: UIView {
     }
     
     func isSelected() -> Bool {
-        guard let selectedIndex = collectionView.indexPathsForSelectedItems else { return false}
+        guard let selectedIndex = collectionView.indexPathsForSelectedItems else { return false }
         let isSelected = !(selectedIndex.isEmpty)
         return isSelected
     }
