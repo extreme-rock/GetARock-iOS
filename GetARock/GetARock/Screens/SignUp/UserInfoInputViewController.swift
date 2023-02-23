@@ -236,7 +236,7 @@ final class UserInfoInputViewController: BaseViewController {
         let isAgeSelected = ageSelectCollectionView.isSelected()
         let isGenderSelected = genderSelectCollectionView.isSelected()
         let isAvailableName = userNamingTextField.isAvailableName()
-        print(isAvailableName)
+        
         if isAgeSelected && isGenderSelected && isAvailableName {
             self.nextButton.isEnabled = true
         } else {
