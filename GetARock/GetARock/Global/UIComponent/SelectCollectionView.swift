@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SelectCollectionViewDelegate: AnyObject {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    func collectionViewCellDidSelect()
 }
 
 enum WidthOption {
@@ -112,9 +112,6 @@ extension SelectCollectionView: UICollectionViewDataSource {
 
 extension SelectCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.delegate?.collectionView(
-            collectionView,
-            didSelectItemAt: indexPath
-        )
+        self.delegate?.collectionViewCellDidSelect()
     }
 }

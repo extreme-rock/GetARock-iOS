@@ -246,7 +246,7 @@ final class UserInfoInputViewController: BaseViewController {
 }
 
 extension UserInfoInputViewController: SelectCollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionViewCellDidSelect() {
         self.checkNextButtonEnabledState()
     }
 }
