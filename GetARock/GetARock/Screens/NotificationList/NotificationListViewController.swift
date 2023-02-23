@@ -8,10 +8,10 @@
 import UIKit
 
 final class NotificationListViewController: UITableViewController {
-
+    
     //TODO: 추후에 API를 통해 update 할 알람 리스트
     private var alertListData: [NotificationInfo] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -22,7 +22,7 @@ final class NotificationListViewController: UITableViewController {
         self.tableView.backgroundColor = .dark01
         self.tableView.separatorStyle = .none
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.classIdentifier, for: indexPath) as? NotificationTableViewCell else { return UITableViewCell() }
         cell.configure(with: NotificationListDTO.testData[indexPath.row])
@@ -35,26 +35,13 @@ final class NotificationListViewController: UITableViewController {
         cell.rejectButton.addAction(rejectAction, for: .touchUpInside)
         cell.acceptButton.addAction(acceptAction, for: .touchUpInside)
         //MARK: Test 코드, 추후 isInvitation case 분기처리 필요
-        if indexPath.row == 0 { cell.buttonHstack.isHidden = false }
         
         return cell
     }
-
+    
     //TODO: 추후 API 데이터로 변경 필요
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         NotificationListDTO.testData.count
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 150
-        }
-//        let invitationIndexList: [Int] = alertListData.enumerated().filter { $1.isInvitation == true }.map { $0.offset }
-//        if invitationIndexList.contains(indexPath.row) {
-//            return 150
-//        }
-//
-        return 100
     }
 }
 
@@ -64,10 +51,10 @@ extension NotificationListViewController {
         Task {
             do {
                 guard let url = URL(string: "http://43.201.55.66:8080/alerts/test") else { throw NetworkError.badURL }
-
+                
                 let (data, response) = try await URLSession.shared.data(from: url)
                 let httpResponse = response as! HTTPURLResponse
-
+                
                 if (200..<300).contains(httpResponse.statusCode) {
                     let decodedData = try JSONDecoder().decode(NotificationListDTO.self, from: data)
                     self.alertListData = decodedData.alertList
@@ -80,7 +67,7 @@ extension NotificationListViewController {
             self.tableView.reloadData()
         }
     }
-
+    
     private func rejectInvitation() {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
         let alertTitle = NSLocalizedString("초대 거절", comment: "Invitation reject title")
@@ -91,6 +78,11 @@ extension NotificationListViewController {
             guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
             cell.buttonHstack.removeFromSuperview()
             cell.updateTextAfterRejectInvitation(bandName: "00밴드")
+            Task {
+                self.tableView.beginUpdates()
+                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                self.tableView.endUpdates()
+            }
             //TODO: Cell Size 변경 내용 적용 필요
             self.dismiss(animated: true)}))
         present(alert, animated: true, completion: nil)

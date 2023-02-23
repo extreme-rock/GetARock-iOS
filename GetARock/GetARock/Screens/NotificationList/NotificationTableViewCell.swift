@@ -65,7 +65,7 @@ final class NotificationTableViewCell: UITableViewCell {
         $0.axis = .horizontal
         $0.spacing = 15
         $0.alignment = .top
-        $0.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        $0.layoutMargins = UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
         $0.isLayoutMarginsRelativeArrangement = true
         return $0
     }(UIStackView(arrangedSubviews: [cellImage, contentInformationVstack]))
@@ -86,7 +86,7 @@ final class NotificationTableViewCell: UITableViewCell {
         //TODO: 추후 titleLabel은 data.title로 바꾸기. 테스트 API를 사용하기 때문에 둘다 content를 사용함
         self.titleLabel.text = data.content
         self.subtitleLabel.text = data.content
-        self.uploadTime.text = data.updatedDate
+        self.uploadTime.text = data.updatedDate.transformToDate().abbreviatedRelativeKRTime
         self.isInvitation = data.isInvitation
         if isInvitation {
             contentInformationVstack.addArrangedSubview(buttonHstack)

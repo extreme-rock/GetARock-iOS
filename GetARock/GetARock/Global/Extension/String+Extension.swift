@@ -43,4 +43,15 @@ extension String {
             return nil
         }
     }
+    
+    func transformToDate() -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.timeZone = TimeZone(identifier: "KST")
+        guard let date = dateFormatter.date(from:self) else { return Date()}
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        return calendar.date(from:components) ?? Date()
+    }
 }

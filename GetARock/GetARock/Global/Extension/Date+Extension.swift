@@ -8,9 +8,10 @@
 import Foundation
 //
 extension Date {
-    var abbreviatedRelativeTime: String {
+    var abbreviatedRelativeKRTime: String {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .abbreviated
+        formatter.locale = Locale(identifier: "ko_KR")
         return formatter.localizedString(for: self, relativeTo: Date())
     }
 }
