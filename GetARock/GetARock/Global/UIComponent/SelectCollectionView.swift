@@ -22,6 +22,7 @@ final class SelectCollectionView: UIView {
     
     weak var delegate: SelectCollectionViewDelegate?
     private let items: [String]
+    private let cellBackgroundColor: UIColor
     private var widthOption: WidthOption
     private var widthSize: CGFloat
     private var itemSpacing: CGFloat
@@ -56,11 +57,16 @@ final class SelectCollectionView: UIView {
     
     //MARK: - Init
     
-    init(widthState: WidthOption, items: [String], widthSize: CGFloat, itemSpacing: CGFloat) {
+    init(widthState: WidthOption,
+         items: [String],
+         widthSize: CGFloat,
+         itemSpacing: CGFloat,
+         cellBackgroundColor: UIColor) {
         self.widthOption = widthState
         self.items = items
         self.widthSize = widthSize
         self.itemSpacing = itemSpacing
+        self.cellBackgroundColor = cellBackgroundColor
         super.init(frame: .zero)
         setupLayout()
     }
@@ -97,17 +103,8 @@ extension SelectCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectCollectionViewCell.classIdentifier, for: indexPath) as? SelectCollectionViewCell else { return UICollectionViewCell() }
         
-        var backgroundColor: UIColor
-        
-        switch widthOption {
-        case .fixed:
-            backgroundColor = .dark03
-        case .flexable:
-            backgroundColor = .dark02
-        }
-        
         cell.setupLayout(width: widthSize, widthState: widthOption)
-        cell.configure(color: backgroundColor, text: self.items[indexPath.item])
+        cell.configure(color: self.cellBackgroundColor, text: self.items[indexPath.item])
         
         return cell
     }
