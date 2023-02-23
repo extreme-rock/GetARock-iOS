@@ -73,18 +73,17 @@ extension NotificationListViewController {
         let alertTitle = NSLocalizedString("초대 거절", comment: "Invitation reject title")
         let alertMessage = NSLocalizedString("밴드 ‘00 밴드’의 초대를 거절하시겠습니까?", comment: "Invitation reject message")
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-        let actionTitle = NSLocalizedString("확인", comment: "Alert OK button title")
-        alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
+        let okayAction = NSLocalizedString("확인", comment: "Alert OK button title")
+        let cancelAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
+        alert.addAction(UIAlertAction(title: cancelAction, style: .destructive))
+        alert.addAction(UIAlertAction(title: okayAction, style: .default, handler: { _ in
             guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
-            cell.buttonHstack.removeFromSuperview()
+            self.tableView.beginUpdates()
+            cell.buttonHstack.isHidden = true
             cell.updateTextAfterRejectInvitation(bandName: "00밴드")
-            Task {
-                self.tableView.beginUpdates()
-                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            self.dismiss(animated: true, completion: {
                 self.tableView.endUpdates()
-            }
-            //TODO: Cell Size 변경 내용 적용 필요
-            self.dismiss(animated: true)}))
+            })}))
         present(alert, animated: true, completion: nil)
     }
     
