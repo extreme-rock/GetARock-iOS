@@ -69,7 +69,7 @@ extension NotificationListViewController {
         alert.addAction(UIAlertAction(title: cancelAction, style: .destructive))
         alert.addAction(UIAlertAction(title: okayAction, style: .default, handler: { [weak self] _ in
             self?.tableView.beginUpdates()
-            self?.reConfigureCellAfterRejectInvitation()
+            self?.reconfigureCellAfterRejectInvitation()
             self?.dismiss(animated: true, completion: { [weak self] in
                 self?.tableView.endUpdates()
             })}))
@@ -83,7 +83,7 @@ extension NotificationListViewController {
         cell.updateTextForInvitationRejectAlert(userName: "알로라", bandName: "00밴드")
     }
     
-    private func reConfigureCellAfterRejectInvitation() {
+    private func reconfigureCellAfterRejectInvitation() {
         guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
         cell.buttonHstack.removeFromSuperview()
         cell.updateTextAfterRejectInvitation(bandName: "00밴드")
