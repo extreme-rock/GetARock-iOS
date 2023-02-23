@@ -57,12 +57,12 @@ final class SelectCollectionView: UIView {
     
     //MARK: - Init
     
-    init(widthState: WidthOption,
+    init(widthOption: WidthOption,
          items: [String],
          widthSize: CGFloat,
          itemSpacing: CGFloat,
          cellBackgroundColor: UIColor) {
-        self.widthOption = widthState
+        self.widthOption = widthOption
         self.items = items
         self.widthSize = widthSize
         self.itemSpacing = itemSpacing
@@ -103,7 +103,7 @@ extension SelectCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectCollectionViewCell.classIdentifier, for: indexPath) as? SelectCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.setupLayout(width: widthSize, widthState: widthOption)
+        cell.setupLayout(width: widthSize, widthOption: widthOption)
         cell.configure(color: self.cellBackgroundColor, text: self.items[indexPath.item])
         
         return cell

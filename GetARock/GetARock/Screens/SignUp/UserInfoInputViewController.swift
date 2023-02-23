@@ -71,7 +71,7 @@ final class UserInfoInputViewController: BaseViewController {
         $0.constraint(.heightAnchor, constant: 102)
         return $0
     }(SelectCollectionView(
-        widthState: .flexable,
+        widthOption: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
         widthSize: 25,
         itemSpacing: 5,
@@ -92,7 +92,7 @@ final class UserInfoInputViewController: BaseViewController {
         $0.constraint(.heightAnchor, constant: 46)
         return $0
     }(SelectCollectionView(
-        widthState: .fixed,
+        widthOption: .fixed,
         items: ["남자", "여자"],
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
         itemSpacing: 8,

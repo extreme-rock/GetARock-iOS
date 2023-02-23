@@ -17,8 +17,8 @@ enum ImageLiteral {
     static var checkmarkCircleSymbol: UIImage { .load(systemName: "checkmark.circle") }
     static var xmarkCircleSymbol: UIImage { .load(systemName: "x.circle") }
     static var plusSymbol: UIImage { .load(systemName: "plus") }
-    static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
     static var chevronRightSymbol: UIImage { .load(systemName: "chevron.right")}
+    static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
     static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     static var exclamationMarkCircleSymbol: UIImage { .load(systemName: "exclamationmark.circle") }
     

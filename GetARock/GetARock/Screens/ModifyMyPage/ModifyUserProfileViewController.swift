@@ -63,7 +63,7 @@ final class ModifyUserProfileViewController: UIViewController {
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
     
     private let ageSelectCollectionView = SelectCollectionView(
-        widthState: .flexable,
+        widthOption: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
         widthSize: 23,
         itemSpacing: 5,
@@ -81,7 +81,7 @@ final class ModifyUserProfileViewController: UIViewController {
                                                          type: .required)
     
     private let genderSelectCollectionView = SelectCollectionView(
-        widthState: .fixed,
+        widthOption: .fixed,
         items: ["남자", "여자"],
         widthSize: UIScreen.main.bounds.width - 40,
         itemSpacing: 8,
