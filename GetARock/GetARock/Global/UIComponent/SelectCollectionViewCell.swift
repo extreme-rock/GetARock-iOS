@@ -62,7 +62,6 @@ final class SelectCollectionViewCell: UICollectionViewCell {
         
         switch widthState {
         case .fixed:
-            self.containerView.constraint(.widthAnchor, constant: width)
             self.label.constraint(
                 top: containerView.topAnchor,
                 bottom: containerView.bottomAnchor,
