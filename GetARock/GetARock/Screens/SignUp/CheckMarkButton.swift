@@ -27,7 +27,7 @@ final class CheckMarkButton: UIButton {
     init() {
         super.init(frame: .zero)
         attribute()
-        self.addTarget(self, action:#selector(buttonClicked(_:)), for: UIControl.Event.touchUpInside)
+        self.addTarget(self, action:#selector(buttonClicked), for: .touchUpInside)
         self.isChecked = false
     }
 
@@ -37,7 +37,7 @@ final class CheckMarkButton: UIButton {
     
     // MARK: - Method
     
-    @objc func buttonClicked(_ sender: UIButton) {
+    @objc func buttonClicked() {
             isChecked.toggle()
     }
     
