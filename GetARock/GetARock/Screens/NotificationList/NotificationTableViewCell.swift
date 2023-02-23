@@ -11,11 +11,14 @@ final class NotificationTableViewCell: UITableViewCell {
 
     var isInvitation: Bool = false
 
-    private let titleLabel = BasicLabel(contentText: "", fontStyle: .headline02, textColorInfo: .white)
+    private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline02, textColorInfo: .white)
 
-    private let subtitleLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .gray02)
+    private let subtitleLabel: BasicLabel = {
+        $0.numberOfLines = 3
+        return $0
+    }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .gray02))
 
-    private let uploadTime = BasicLabel(contentText: "", fontStyle: .caption, textColorInfo: .gray02)
+    private let uploadTime: BasicLabel = BasicLabel(contentText: "", fontStyle: .caption, textColorInfo: .gray02)
 
     let acceptButton: DefaultButton = {
         $0.setTitle("수락", for: .normal)
