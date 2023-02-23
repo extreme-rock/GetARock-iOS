@@ -79,7 +79,7 @@ extension NotificationListViewController {
         alert.addAction(UIAlertAction(title: okayAction, style: .default, handler: { _ in
             guard let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? NotificationTableViewCell else { return }
             self.tableView.beginUpdates()
-            cell.buttonHstack.isHidden = true
+            cell.buttonHstack.removeFromSuperview()
             cell.updateTextAfterRejectInvitation(bandName: "00밴드")
             self.dismiss(animated: true, completion: {
                 self.tableView.endUpdates()
