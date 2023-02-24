@@ -20,6 +20,7 @@
 		4A268C65299A187B0068F200 /* ModifyPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */; };
 		4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */; };
 		4A4A6E9429A8F58B005CF076 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A6E9329A8F58B005CF076 /* User.swift */; };
+		4A4A6E9629A8F9CC005CF076 /* SignUpNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */; };
 		4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */; };
 		4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
@@ -131,6 +132,7 @@
 		4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPositionViewController.swift; sourceTree = "<group>"; };
 		4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyUserProfileViewController.swift; sourceTree = "<group>"; };
 		4A4A6E9329A8F58B005CF076 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNetworkManager.swift; sourceTree = "<group>"; };
 		4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAuthorizationViewController.swift; sourceTree = "<group>"; };
 		4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationDecisionViewController.swift; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				4AC4CE3F297FB82C00BB823C /* Model */,
 				9A78BFE2298A9CD900953E4B /* NetworkError.swift */,
 				9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */,
+				4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 			children = (
 				4AC4CE40297FB85B00BB823C /* Position.swift */,
 				4AC4CE42297FB8AD00BB823C /* BandMember.swift */,
+				4A4A6E9329A8F58B005CF076 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -552,7 +556,6 @@
 				B8B17C5C29823AC900806899 /* Event.swift */,
 				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
-				4A4A6E9329A8F58B005CF076 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -808,6 +811,7 @@
 				7B6D3354299A2F76001FD630 /* BandDetailViewController.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
+				4A4A6E9629A8F9CC005CF076 /* SignUpNetworkManager.swift in Sources */,
 				4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
