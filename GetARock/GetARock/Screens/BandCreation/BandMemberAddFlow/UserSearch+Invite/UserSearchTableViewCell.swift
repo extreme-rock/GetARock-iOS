@@ -63,7 +63,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
     //MARK: 셀이 select, deselect 될 때 마다 수행되는 함수
     override func setSelected(_ selected: Bool, animated: Bool) {
          super.setSelected(selected, animated: animated)
-        selectButton.image = selected ? ImageLiteral.checkmarkCircleSymbol : ImageLiteral.circleSymbol
+        selectButton.image = selected ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol
         selectButton.tintColor = selected ? .systemPurple : .gray02
      }
 
