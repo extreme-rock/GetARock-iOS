@@ -14,6 +14,6 @@ struct User: Codable {
     let gender: String
     let introduction: String?
     let instrumentList: [InstrumentList]
-    let snsList: [SnsList]?
+    let snsList: [SnsList]
 }
 

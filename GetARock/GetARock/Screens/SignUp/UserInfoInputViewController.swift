@@ -9,6 +9,10 @@ import UIKit
 
 final class UserInfoInputViewController: BaseViewController {
     
+    // MARK: - Property
+    
+    private let instrumentList: [InstrumentList]?
+    
     // MARK: - View
     
     private let pageIndicatorLabel: UILabel = {
@@ -62,12 +66,6 @@ final class UserInfoInputViewController: BaseViewController {
     
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
     
-//    private let ageSelectCollectionView = SelectCollectionView(
-//        widthState: .flexable,
-//        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
-//        widthSize: 23,
-//        itemSpacing: 5
-//    )
     private let ageSelectCollectionView: SelectCollectionView = {
         $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
         $0.constraint(.heightAnchor, constant: 102)
@@ -193,6 +191,15 @@ final class UserInfoInputViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
+    init(instrumentList: [InstrumentList]? = nil) {
+        self.instrumentList = instrumentList
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
@@ -251,7 +258,20 @@ final class UserInfoInputViewController: BaseViewController {
     }
     
     private func showBandCreationDecisionViewController() {
-        let viewcontroller = BandCreationDecisionViewController()
+        guard let instrumentList else { return }
+        let snsList = [youtubeTextField.inputText(),
+                       instagramTextField.inputText(),
+                       soundCloudTextField.inputText()]
+        
+        let user = User(memberId: nil,
+                        name: self.userNamingTextField.inputText(),
+                        age: ageSelectCollectionView.selectedItem(),
+                        gender: genderSelectCollectionView.selectedItem(),
+                        introduction: self.userIntroTextView.inputText(),
+                        instrumentList: instrumentList,
+                        snsList: snsList)
+        
+        let viewcontroller = BandCreationDecisionViewController(user: user)
         self.navigationController?.pushViewController(viewcontroller, animated: true)
     }
 }

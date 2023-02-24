@@ -9,7 +9,11 @@ import UIKit
 
 final class BandCreationDecisionViewController: UIViewController {
     
-    //MARK: - View
+    // MARK: - Property
+    
+    private let user: User
+    
+    // MARK: - View
     
     private let pageIndicatorLabel = BasicLabel(contentText: "3/3",
                                                 fontStyle: .subTitle,
@@ -74,7 +78,16 @@ final class BandCreationDecisionViewController: UIViewController {
     }(UILabel())
     
     
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +96,7 @@ final class BandCreationDecisionViewController: UIViewController {
         addActionToButtons()
     }
     
-    //MARK: - Method
+    // MARK: - Method
     
     private func attribute() {
         self.view.backgroundColor = .dark01

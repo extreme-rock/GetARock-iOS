@@ -71,7 +71,8 @@ final class PositionSelectViewController: UIViewController {
     }
     
     private func showUserInfoInputViewController() {
-        let viewController = UserInfoInputViewController()
+        let selectedInstrument = self.positionCollectionView.getSelectedInstruments()
+        let viewController = UserInfoInputViewController(instrumentList: selectedInstrument)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
