@@ -19,6 +19,7 @@ enum ImageLiteral {
     static var circleSymbol: UIImage {.load(systemName: "circle") }
     static var xmarkCircleSymbol: UIImage { .load(systemName: "x.circle") }
     static var plusSymbol: UIImage { .load(systemName: "plus") }
+    static var chevronRightSymbol: UIImage { .load(systemName: "chevron.right")}
     static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
     static var chevronLeftSymbol: UIImage { .load(systemName: "chevron.backward") }
     static var chevronRightSymbol: UIImage { .load(systemName: "chevron.right")}
