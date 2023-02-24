@@ -19,6 +19,7 @@
 		4A268C63299A18660068F200 /* ModifyMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */; };
 		4A268C65299A187B0068F200 /* ModifyPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */; };
 		4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */; };
+		4A4A6E9429A8F58B005CF076 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A6E9329A8F58B005CF076 /* User.swift */; };
 		4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */; };
 		4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
@@ -129,6 +130,7 @@
 		4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMyPageViewController.swift; sourceTree = "<group>"; };
 		4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPositionViewController.swift; sourceTree = "<group>"; };
 		4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyUserProfileViewController.swift; sourceTree = "<group>"; };
+		4A4A6E9329A8F58B005CF076 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAuthorizationViewController.swift; sourceTree = "<group>"; };
 		4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationDecisionViewController.swift; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
@@ -550,6 +552,7 @@
 				B8B17C5C29823AC900806899 /* Event.swift */,
 				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
+				4A4A6E9329A8F58B005CF076 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -792,11 +795,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
 				A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */,
-
 				7B6D3357299A50F2001FD630 /* DetailContentView.swift in Sources */,
-
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
@@ -874,6 +874,7 @@
 				B8B17C542980B99900806899 /* Coordinate.swift in Sources */,
 				4A8355E3299F78AD00D82AF3 /* UserInfoInputViewController.swift in Sources */,
 				4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */,
+				4A4A6E9429A8F58B005CF076 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
