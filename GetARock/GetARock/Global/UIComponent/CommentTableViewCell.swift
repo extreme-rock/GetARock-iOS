@@ -36,7 +36,7 @@ final class CommentTableViewCell: UITableViewCell {
         textColorInfo: .white)
     )
     
-    let commentDateLabel = BasicLabel(
+    private let commentDateLabel = BasicLabel(
         contentText: "",
         fontStyle: .caption,
         textColorInfo: .gray02
@@ -90,7 +90,7 @@ final class CommentTableViewCell: UITableViewCell {
 
 // MARK: - UITableViewHeaderFooterView
 
-final class emptyTableViewHeader: UITableViewHeaderFooterView {
+final class EmptyTableViewHeader: UITableViewHeaderFooterView {
     
     //MARK: - view
     

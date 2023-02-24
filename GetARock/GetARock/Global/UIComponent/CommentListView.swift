@@ -17,6 +17,7 @@ final class CommentListView: UIView {
     
     // MARK: - View
     
+    //TODO: - 댓글 작성 POST 연동 후 didSet 처리 추가해야함!
     private let totalCommentNumberLabel = BasicLabel(
         contentText: "총 0개",
         fontStyle: .content,
@@ -97,8 +98,8 @@ final class CommentListView: UIView {
             forCellReuseIdentifier: CommentTableViewCell.classIdentifier
         )
         tableView.register(
-            emptyTableViewHeader.self,
-            forHeaderFooterViewReuseIdentifier: emptyTableViewHeader.classIdentifier
+            EmptyTableViewHeader.self,
+            forHeaderFooterViewReuseIdentifier: EmptyTableViewHeader.classIdentifier
         )
     }
     
@@ -112,17 +113,12 @@ final class CommentListView: UIView {
 // MARK: - UITableViewDelegate
 
 extension CommentListView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView,
-                   willDisplay cell: UITableViewCell,
-                   forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.clear
-    }
-    
+
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(
-            withIdentifier: emptyTableViewHeader.classIdentifier
-        ) as? emptyTableViewHeader
+            withIdentifier: EmptyTableViewHeader.classIdentifier
+        ) as? EmptyTableViewHeader
         return view
     }
     
@@ -154,6 +150,7 @@ extension CommentListView: UITableViewDataSource {
             for: indexPath ) as? CommentTableViewCell
         else { return UITableViewCell()}
         
+        cell.backgroundColor = UIColor.clear
         cell.configure(data: commentData?[indexPath.row],
                        index: indexPath.row)
         cell.selectionStyle = .none
