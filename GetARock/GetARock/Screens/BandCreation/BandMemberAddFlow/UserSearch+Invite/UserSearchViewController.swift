@@ -15,16 +15,12 @@ enum BottomScrollSection: Int {
 
 final class UserSearchViewController: BaseViewController {
 
-    private enum Size {
-        static let cellHeight: CGFloat = 36
-        static let cellContentInset: CGFloat = 50
-    }
-
     private var tempWidth: CGFloat = 0
 
     var completion: (_ selectedUsers: [SearchedUserInfo]) -> Void = { selectedUsers in }
 
     var selectedUsers: [SearchedUserInfo] = []
+    
     private var selectedListWithID: [(indexPath: IndexPath, id: String)] = []
     
     private lazy var searchBar: SearchTextField = {

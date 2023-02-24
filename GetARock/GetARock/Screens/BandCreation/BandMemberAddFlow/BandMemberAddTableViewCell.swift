@@ -131,4 +131,3 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         }
     }
 }
-

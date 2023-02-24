@@ -92,10 +92,6 @@ final class BandMemberAddTableViewHeader: UITableViewHeaderFooterView {
                                bottom: contentView.safeAreaLayoutGuide.bottomAnchor,
                                trailing: contentView.safeAreaLayoutGuide.trailingAnchor,
                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
-
-        inviteMemberButton.constraint(.heightAnchor, constant: 55)
-
-        inviteUnRegisteredMemberButton.constraint(.heightAnchor, constant: 55)
     }
 
     private func attribute() {

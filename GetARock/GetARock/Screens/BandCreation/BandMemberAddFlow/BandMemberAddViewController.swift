@@ -14,7 +14,7 @@ enum BandMemberAddTableViewSection: String {
 
 final class BandMemberAddViewController: BaseViewController {
 
-    var addedMembers: [SearchedUserInfo] = [] {
+    private var addedMembers: [SearchedUserInfo] = [] {
         didSet {
             guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberAddTableViewHeader else { return }
             headerView.sectionTitle.text = "밴드 멤버 \(addedMembers.count)인"
@@ -86,7 +86,12 @@ final class BandMemberAddViewController: BaseViewController {
         let transformedInstruments: [SearchedUserInstrumentList] = admin.instrumentList.map { SearchedUserInstrumentList(instrumentId: 0, isMain: false, name: $0.name)
         }
         //MARK: 성별과 나이 정보는 추후 개인 유저 정보를 바탕으로 업데이트 해야함
-        let bandAdminData: SearchedUserInfo = SearchedUserInfo(memberId: admin.memberId ?? -1, name: admin.name, memberState: admin.memberState, instrumentList: transformedInstruments, gender: "MEN", age: "20대")
+        let bandAdminData: SearchedUserInfo = SearchedUserInfo(
+            memberId: admin.memberId ?? -1,
+            name: admin.name,
+            memberState: admin.memberState,
+            instrumentList: transformedInstruments,
+            gender: "MEN", age: "20대")
         addedMembers.append(bandAdminData)
         updateSnapShot(with: addedMembers)
     }
@@ -136,20 +141,19 @@ extension BandMemberAddViewController: UITableViewDelegate {
             withIdentifier: BandMemberAddTableViewHeader.classIdentifier) as? BandMemberAddTableViewHeader else { return UIView() }
 
         //MARK: 회원 검색 뷰로 이동
-        let inviteMemberButtonAction = UIAction { _ in
+        let inviteMemberButtonAction = UIAction { [weak self] _ in
             let nextViewController = UserSearchViewController()
             nextViewController.completion = { selectedUsers in
                 for data in selectedUsers {
-                    if self.addedMembers.contains(where: { $0.id == data.id }) == false {
-                        self.addedMembers.append(data)
+                    if self?.addedMembers.contains(where: { $0.id == data.id }) == false {
+                        self?.addedMembers.append(data)
                     }
                 }
-                self.updateSnapShot(with: self.addedMembers)
+                self?.updateSnapShot(with: self?.addedMembers ?? [])
             }
-            self.navigationController?.pushViewController(nextViewController, animated: true)
+            self?.navigationController?.pushViewController(nextViewController, animated: true)
         }
         headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
-
         //TODO: 미가입 회원추가 관련 코드 작성 예정
       return headerView
     }
@@ -162,7 +166,10 @@ extension BandMemberAddViewController {
 
             let instrumentList: [InstrumentList] = $0.instrumentList.map { InstrumentList(name: $0.name) }
 
-            let individualMember: MemberList = MemberList(memberId: $0.memberId, name: $0.name, memberState: $0.memberState, instrumentList: instrumentList)
+            let individualMember: MemberList = MemberList(memberId: $0.memberId,
+                                                          name: $0.name,
+                                                          memberState: $0.memberState,
+                                                          instrumentList: instrumentList)
 
             confirmedMembers.append(individualMember)
         }

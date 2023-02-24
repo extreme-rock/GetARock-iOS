@@ -15,7 +15,7 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
     private let backgroundContentView: UIView = {
         let view = UIView()
         view.layer.masksToBounds = true
-        view.backgroundColor = .activeGradationPurple
+        view.applyMainGradient()
         return view
     }()
     
