@@ -32,7 +32,7 @@ final class BandMemberAddViewController: BaseViewController {
         $0.backgroundColor = .dark01
         $0.delegate = self
         return $0
-    }(UITableView(frame: .zero, style: .grouped))
+    }(UITableView())
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> = self.makeDataSource()
 

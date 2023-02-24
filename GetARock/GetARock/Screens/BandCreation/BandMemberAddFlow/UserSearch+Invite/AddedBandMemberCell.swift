@@ -19,24 +19,12 @@ final class AddedBandMemberCell: UICollectionViewCell, Identifiable {
         return view
     }()
     
-    private let addedMemberLabel: UILabel = {
-        let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .subheadline)
-        label.textColor = .white
-        return label
-    }()
+    private let addedMemberLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white)
 
     lazy var deleteButton: UIButton = {
-        $0.setImage(UIImage(
-            systemName: "xmark.circle.fill",
-            withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),
-            for: .normal)
+        $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .gray02
-        $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
-                                     for: .horizontal)
-        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
-                                                   for: .horizontal)
         return $0
     }(UIButton(type: .custom))
 
