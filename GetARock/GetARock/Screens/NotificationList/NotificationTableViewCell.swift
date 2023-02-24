@@ -84,7 +84,9 @@ final class NotificationTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+extension NotificationTableViewCell {
     func configure(with data: NotificationInfo) {
         //TODO: 추후 titleLabel은 data.title로 바꾸기. 테스트 API를 사용하기 때문에 둘다 content를 사용함
         self.titleLabel.text = data.content
@@ -111,5 +113,4 @@ final class NotificationTableViewCell: UITableViewCell {
         self.subtitleLabel.text = "\(userName)이 \(bandName) 가입 요청을 거절 했습니다."
     }
 }
-// CI/CD Test Code
 

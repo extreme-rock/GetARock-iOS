@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class NetworkManager {
+final class NotificationNetworkManager {
     
-    static let shared = NetworkManager()
+    static let shared = NotificationNetworkManager()
     
     func getNotificationList(memberId: Int) async throws -> [NotificationInfo] {
         var returnData: [NotificationInfo] = []
-        var baseURL = "https://api.ryomyom.com/alerts"
+        let baseURL = "https://api.ryomyom.com/alerts"
         
         var queryURLComponent = URLComponents(string: baseURL)
         let memberIdQuery = URLQueryItem(name: "memberId", value: String(memberId))
@@ -35,5 +35,10 @@ final class NetworkManager {
             print(error)
         }
         return returnData
+    }
+    
+    //TODO: 초대 수락 후, 포지션 선택까지 완료한 후 실행되는 함수 작성 예정
+    func acceptInvitation() {
+        
     }
 }

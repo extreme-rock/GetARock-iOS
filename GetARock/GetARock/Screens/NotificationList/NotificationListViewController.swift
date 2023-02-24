@@ -34,8 +34,6 @@ final class NotificationListViewController: UITableViewController {
         }
         cell.rejectButton.addAction(rejectAction, for: .touchUpInside)
         cell.acceptButton.addAction(acceptAction, for: .touchUpInside)
-        //MARK: Test 코드, 추후 isInvitation case 분기처리 필요
-        
         return cell
     }
     
@@ -50,7 +48,7 @@ extension NotificationListViewController {
     private func fetchAlertListData() {
         Task {
             do {
-                let serverData: [NotificationInfo] = try await NetworkManager.shared.getNotificationList(memberId: 1)
+                let serverData: [NotificationInfo] = try await NotificationNetworkManager.shared.getNotificationList(memberId: 1)
                 self.alertListData = serverData
             } catch {
                 print(error)
