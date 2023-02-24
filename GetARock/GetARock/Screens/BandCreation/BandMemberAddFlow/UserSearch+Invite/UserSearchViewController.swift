@@ -25,7 +25,8 @@ final class UserSearchViewController: BaseViewController {
     var completion: (_ selectedUsers: [SearchedUserInfo]) -> Void = { selectedUsers in }
 
     var selectedUsers: [SearchedUserInfo] = []
-
+    private var selectedListWithID: [(indexPath: IndexPath, id: String)] = []
+    
     private lazy var searchBar: SearchTextField = {
         let searchBar = SearchTextField(placeholder: "닉네임으로 검색")
         let action = UIAction { _ in
@@ -147,6 +148,7 @@ extension UserSearchViewController: UITableViewDelegate {
                                         name: selectedCell.userInstrumentLabel.text ?? "")], gender: "MEN", age: "TWENTIES")
         data.id = selectedCell.id
         selectedUsers.append(data)
+        self.selectedListWithID.append((indexPath: indexPath, id: selectedCell.id))
         self.updateSnapShot(with: selectedUsers)
     }
 
@@ -190,19 +192,18 @@ extension UserSearchViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddedBandMemberCell.classIdentifier, for: indexPath) as? AddedBandMemberCell else { return UICollectionViewCell() }
 
             cell.configure(data: person)
-
-            let deleteAction = UIAction { _ in
+            
+            let deleteAction = UIAction { [weak self] _ in
                 //MARK: 하단의 가로 스크롤뷰의 데이터 삭제 및 업데이트
-                self.selectedUsers.removeAll { $0.id == cell.id }
-                self.updateSnapShot(with: self.selectedUsers)
-
+                self?.selectedUsers.removeAll { $0.id == cell.id }
+                self?.updateSnapShot(with: self?.selectedUsers ?? [])
+                
                 //MARK: 하단의 가로 스크롤뷰 삭제로 원래 선택된 셀의 UI 업데이트
-                guard let indexPathForSelectedRows = self.searchResultTable.indexPathsForSelectedRows else { return }
-
-                for indexPath in indexPathForSelectedRows {
-                    guard let selectedCell = self.searchResultTable.cellForRow(at: indexPath) as? UserSearchTableViewCell else { return }
-                    if selectedCell.id == cell.id {
-                        self.searchResultTable.deselectRow(at: indexPath, animated: true)
+                
+                self?.selectedListWithID.forEach { element in
+                    if cell.id == element.id {
+                        self?.selectedListWithID.removeAll { $0 == element }
+                        self?.searchResultTable.deselectRow(at: element.indexPath, animated: true)
                     }
                 }
             }
