@@ -17,7 +17,9 @@ enum ImageLiteral {
     static var checkmarkCircleSymbol: UIImage { .load(systemName: "checkmark.circle") }
     static var xmarkCircleSymbol: UIImage { .load(systemName: "x.circle") }
     static var plusSymbol: UIImage { .load(systemName: "plus") }
+    static var chevronRightSymbol: UIImage { .load(systemName: "chevron.right")}
     static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
+    static var chevronRightSymbol: UIImage { .load(systemName: "chevron.right")}
     static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     static var checkMarkCircleFillSymbol: UIImage { .load(systemName: "checkmark.circle.fill") }
     
@@ -28,6 +30,7 @@ enum ImageLiteral {
     static var youtubeIcon: UIImage { .load(named: "youtubeIcon") }
     static var instagramIcon: UIImage { .load(named: "instagramIcon") }
     static var soundCloudIcon: UIImage { .load(named: "soundCloudIcon") }
+    static var customPinIcon: UIImage { .load(named: "customPinIcon") }
 }
 
 extension UIImage {
