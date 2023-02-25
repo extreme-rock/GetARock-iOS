@@ -137,7 +137,6 @@ final class BandCreationDecisionViewController: UIViewController {
                                             trailing: skipMakingBandButton.trailingAnchor,
                                             centerY: skipMakingBandButton.centerYAnchor,
                                             padding: UIEdgeInsets(top: 42, left: 37, bottom: 0, right: 37))
-        
     }
     
     private func addActionToButtons() {
