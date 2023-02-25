@@ -17,3 +17,16 @@ struct User: Codable {
     let snsList: [SnsList]
 }
 
+enum Gender: String {
+    case woman = "WOMAN"
+    case man = "MAN"
+}
+
+enum Age: String {
+    case undertwenties = "UNDERTWENDTIES"
+    case twenties = "TWENTIES"
+    case thirties = "THIRTIES"
+    case fourties = "FOURTIES"
+    case fifties = "FIFTIES"
+    case oversixties = "OVERSIXTIES"
+}
