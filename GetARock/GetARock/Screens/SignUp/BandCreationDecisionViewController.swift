@@ -159,7 +159,7 @@ final class BandCreationDecisionViewController: UIViewController {
     private func addActionToButtons() {
         // TODO: 각 상황에 따라 VC 연결하기
         let makeBandAction = UIAction { _ in
-            print("make")
+            SignUpNetworkManager.postMember(user: self.user)
         }
         
         let passMakeBandAction = UIAction { _ in

@@ -263,10 +263,18 @@ final class UserInfoInputViewController: BaseViewController {
                        instagramTextField.inputText(),
                        soundCloudTextField.inputText()]
         
+//        let user = User(memberId: nil,
+//                        name: self.userNamingTextField.inputText(),
+//                        age: ageSelectCollectionView.selectedItem(),
+//                        gender: genderSelectCollectionView.selectedItem(),
+//                        introduction: self.userIntroTextView.inputText(),
+//                        instrumentList: instrumentList,
+//                        snsList: snsList)
+//        
         let user = User(memberId: nil,
                         name: self.userNamingTextField.inputText(),
-                        age: ageSelectCollectionView.selectedItem(),
-                        gender: genderSelectCollectionView.selectedItem(),
+                        age: "TWENTIES",
+                        gender: "MAN",
                         introduction: self.userIntroTextView.inputText(),
                         instrumentList: instrumentList,
                         snsList: snsList)
