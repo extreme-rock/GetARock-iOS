@@ -31,7 +31,7 @@ final class InstructionViewController: UIViewController {
     
     private let confirmButton: BottomButton = {
         $0.setTitle("확인했습니다.", for: .normal)
-        $0.titleLabel?.font = .setFont(.headline01)
+        $0.titleLabel?.font = .setFont(.headline02)
         $0.titleLabel?.textColor = .white
         return $0
     }(BottomButton())
