@@ -8,22 +8,21 @@
 import Foundation
 
 final class SignUpNetworkManager {
-    static func postMember(user: User) {
+    static func postMember(user: User) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"
         ]
         
-        guard let url = URL(string: "https://api.ryomyom.com/member") else { return }
+        guard let url = URL(string: "https://api.ryomyom.com/member") else { throw NetworkError.badURL }
         var request = URLRequest(url: url)
         var encodedData = Data()
         
         do {
             let data = try JSONEncoder().encode(user)
             encodedData = data
-            print(encodedData)
         } catch {
-            print("Data Encoding Error")
+            throw NetworkError.badJSON(error: error)
         }
         
         request.httpMethod = "POST"
@@ -32,24 +31,18 @@ final class SignUpNetworkManager {
         
         let dataTask = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
             if error != nil {
-                print("Network Error in dataTask")
-            } else {
-                print(response, "response")
-                do {
-                    let result = try JSONDecoder().decode(SignUpResult.self, from: data!)
-                    print(result)
-                } catch {
-                    print("dcode error")
+                print(NetworkError.badResponse.localizedDescription)
+            } else if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case (200...299):
+                    print("success")
+                case (300...599):
+                    print(NetworkError.failedRequest(status: httpResponse.statusCode))
+                default:
+                    print("unknown")
                 }
-                
             }
         }
         dataTask.resume()
     }
 }
-
-struct SignUpResult: Codable {
-    let id: Int?
-    let success: Bool
-}
-

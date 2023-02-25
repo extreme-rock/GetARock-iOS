@@ -72,7 +72,7 @@ final class UserInfoInputViewController: BaseViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .flexable,
-        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
+        items: Age.allCases.map { $0.rawValue },
         widthSize: 25,
         itemSpacing: 5
     ))
@@ -92,7 +92,7 @@ final class UserInfoInputViewController: BaseViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .fixed,
-        items: ["남자", "여자"],
+        items: Gender.allCases.map { $0.rawValue },
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
         itemSpacing: 8
     ))
@@ -258,26 +258,29 @@ final class UserInfoInputViewController: BaseViewController {
     }
     
     private func showBandCreationDecisionViewController() {
-        guard let instrumentList else { return }
+        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.codingKye,
+              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.codingKye,
+              let instrumentList else { return }
+        
         let snsList = [youtubeTextField.inputText(),
                        instagramTextField.inputText(),
                        soundCloudTextField.inputText()]
         
-//        let user = User(memberId: nil,
-//                        name: self.userNamingTextField.inputText(),
-//                        age: ageSelectCollectionView.selectedItem(),
-//                        gender: genderSelectCollectionView.selectedItem(),
-//                        introduction: self.userIntroTextView.inputText(),
-//                        instrumentList: instrumentList,
-//                        snsList: snsList)
-//        
         let user = User(memberId: nil,
                         name: self.userNamingTextField.inputText(),
-                        age: "TWENTIES",
-                        gender: "MAN",
+                        age: age,
+                        gender: gender,
                         introduction: self.userIntroTextView.inputText(),
                         instrumentList: instrumentList,
                         snsList: snsList)
+        
+//        let user = User(memberId: nil,
+//                        name: self.userNamingTextField.inputText(),
+//                        age: "TWENTIES",
+//                        gender: "MAN",
+//                        introduction: self.userIntroTextView.inputText(),
+//                        instrumentList: instrumentList,
+//                        snsList: snsList)
         
         let viewcontroller = BandCreationDecisionViewController(user: user)
         self.navigationController?.pushViewController(viewcontroller, animated: true)
