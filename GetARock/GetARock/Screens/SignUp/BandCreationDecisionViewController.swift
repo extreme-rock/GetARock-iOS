@@ -12,7 +12,7 @@ final class BandCreationDecisionViewController: UIViewController {
     //MARK: - View
     
     private let pageIndicatorLabel = BasicLabel(contentText: "3/3",
-                                                fontStyle: .subTitle,
+                                                fontStyle: .headline03,
                                                 textColorInfo: .gray02)
     
     private let titleLabel: UILabel = {
@@ -24,7 +24,7 @@ final class BandCreationDecisionViewController: UIViewController {
     }(UILabel())
     
     private let subTitleLabel: UILabel = {
-        $0.font = .setFont(.subTitle)
+        $0.font = .setFont(.headline03)
         $0.text = "이미 가입하고 싶은 밴드가 모여락에 있다면\n밴드 리더로부터 초대를 받아 가입할 수 있어요!"
         $0.textColor = .gray02
         $0.numberOfLines = 2
