@@ -15,7 +15,9 @@ final class SignUpNetworkManager {
         ]
         
         guard let url = URL(string: "https://api.ryomyom.com/member") else { throw NetworkError.badURL }
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url,
+                                 cachePolicy: .useProtocolCachePolicy,
+                                 timeoutInterval: 10)
         var encodedData = Data()
         
         do {
