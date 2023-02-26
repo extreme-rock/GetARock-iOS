@@ -19,6 +19,9 @@
 		4A268C63299A18660068F200 /* ModifyMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */; };
 		4A268C65299A187B0068F200 /* ModifyPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */; };
 		4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */; };
+		4A43E6EB29A33B4F00EC4BA5 /* AgreeTermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */; };
+		4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */; };
+		4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */; };
 		4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
 		4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */; };
@@ -142,6 +145,9 @@
 		4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMyPageViewController.swift; sourceTree = "<group>"; };
 		4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPositionViewController.swift; sourceTree = "<group>"; };
 		4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyUserProfileViewController.swift; sourceTree = "<group>"; };
+		4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsViewController.swift; sourceTree = "<group>"; };
+		4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkButton.swift; sourceTree = "<group>"; };
+		4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermGuideStackView.swift; sourceTree = "<group>"; };
 		4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAuthorizationViewController.swift; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
 		4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectCollectionViewHeader.swift; sourceTree = "<group>"; };
@@ -289,6 +295,9 @@
 				4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */,
 				4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */,
 				4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */,
+				4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */,
+				4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */,
+				4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -861,10 +870,15 @@
 				A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */,
 				7B6D3357299A50F2001FD630 /* DetailContentView.swift in Sources */,
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
+				4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
 				A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
+
 				A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */,
+
+				4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */,
+
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
@@ -940,6 +954,7 @@
 				7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */,
 				9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */,
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
+				4A43E6EB29A33B4F00EC4BA5 /* AgreeTermsViewController.swift in Sources */,
 				B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
 				7B7598AD29893A1E00FA6B78 /* SNSButtonView.swift in Sources */,
