@@ -20,7 +20,8 @@ final class ModifyMyPageViewController: UIViewController {
             .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
             .plusPosition
         ]),
-        ModifyUserProfileViewController(entryPoint: .modify)]
+        UserInfoInputViewController(entryPoint: .modify)
+        ]
     
     private var currentPageNumber: Int = 0 {
         didSet {

@@ -206,6 +206,7 @@ final class ModifyUserProfileViewController: UIViewController {
         switch entryPoint {
         case .modify:
             pageIndicatorLabel.removeFromSuperview()
+            informationFillCompleteButton.removeFromSuperview()
             // TODO: 선택했던 항목들 미리 선택해주는 함수
         case .signIn:
             return
@@ -222,7 +223,7 @@ final class ModifyUserProfileViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                               leading: view.safeAreaLayoutGuide.leadingAnchor,
-                              bottom: view.keyboardLayoutGuide.topAnchor,
+                              bottom: view.bottomAnchor,
                               trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
         scrollView.addSubview(contentView)
