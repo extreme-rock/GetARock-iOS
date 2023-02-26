@@ -65,6 +65,7 @@
 		9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */; };
 		9A67BF2B29AB8A77002C0C32 /* MapSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2A29AB8A77002C0C32 /* MapSearchViewController.swift */; };
 		9A67BF2D29AB8B1D002C0C32 /* MapSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2C29AB8B1D002C0C32 /* MapSearchResultTableViewCell.swift */; };
+		9A67BF2F29AB8C14002C0C32 /* PracticeSongCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */; };
 		9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE2298A9CD900953E4B /* NetworkError.swift */; };
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
 		9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */; };
@@ -189,6 +190,7 @@
 		9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimitTextField.swift; sourceTree = "<group>"; };
 		9A67BF2A29AB8A77002C0C32 /* MapSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchViewController.swift; sourceTree = "<group>"; };
 		9A67BF2C29AB8B1D002C0C32 /* MapSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongCardView.swift; sourceTree = "<group>"; };
 		9A78BFE2298A9CD900953E4B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
 		9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicBoxView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */,
 				9A67BF2A29AB8A77002C0C32 /* MapSearchViewController.swift */,
 				9A67BF2C29AB8B1D002C0C32 /* MapSearchResultTableViewCell.swift */,
+				9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */,
 			);
 			path = BandCreation;
 			sourceTree = "<group>";
@@ -848,6 +851,7 @@
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */,
+				9A67BF2F29AB8C14002C0C32 /* PracticeSongCardView.swift in Sources */,
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
 				7B6D3354299A2F76001FD630 /* BandDetailViewController.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
