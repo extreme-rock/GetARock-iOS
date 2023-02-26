@@ -62,12 +62,6 @@ final class UserInfoInputViewController: BaseViewController {
     
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
     
-//    private let ageSelectCollectionView = SelectCollectionView(
-//        widthState: .flexable,
-//        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
-//        widthSize: 23,
-//        itemSpacing: 5
-//    )
     private let ageSelectCollectionView: SelectCollectionView = {
         $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
         $0.constraint(.heightAnchor, constant: 102)
