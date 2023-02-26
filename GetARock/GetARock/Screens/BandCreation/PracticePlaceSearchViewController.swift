@@ -87,6 +87,7 @@ final class PracticePlaceSearchViewController: UIViewController {
 
     private func configureSearchCompleter() {
         searchCompleter.delegate = self
+        //TODO: 이게 뭔지 조사필요
         searchCompleter.resultTypes = .query
     }
 }
@@ -132,7 +133,7 @@ extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
         searchResultTable.reloadData()
     }
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        // 에러 처리
+        print(error)
     }
 }
 
@@ -146,10 +147,10 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.identifier, for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.classIdentifier, for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell()}
 
         let searchResult = searchResults[indexPath.row]
-        cell.setUI(mapSearchResult: searchResult)
+        cell.configure(mapSearchResult: searchResult)
 
         return cell
     }
@@ -177,7 +178,6 @@ extension PracticePlaceSearchViewController: UITableViewDelegate {
 
 extension PracticePlaceSearchViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.searchBar.searchTextField.becomeFirstResponder()
         self.searchBar.textField.becomeFirstResponder()
     }
 }

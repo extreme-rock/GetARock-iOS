@@ -9,12 +9,13 @@ import UIKit
 
 final class PracticeSongCardView: UIStackView, Identifiable {
 
-    let id: String
+//    let id: String
 
     lazy var deleteButton: UIButton = {
         let deleteAction: UIAction = UIAction { _ in
             self.removeFromSuperview()
         }
+        //TODO: ImageLiteral로 추후 변경 필요
         $0.setImage(UIImage(systemName: "xmark"), for: .normal)
         $0.tintColor = .white
         $0.addAction(deleteAction, for: .touchUpInside)
@@ -57,8 +58,7 @@ final class PracticeSongCardView: UIStackView, Identifiable {
         return $0
     }(UIStackView(arrangedSubviews: [linkLabel, linkDescription, linkTextField]))
     
-    init(identifier: String) {
-        self.id = identifier
+    init() {
         super.init(frame: .zero)
         setupLayout()
         attribute()
@@ -68,10 +68,6 @@ final class PracticeSongCardView: UIStackView, Identifiable {
         self.addArrangedSubview(practiceSongNameVstack)
         self.addArrangedSubview(artistNameVstack)
         self.addArrangedSubview(linkVstack)
-        self.axis = .vertical
-        self.spacing = 40
-        self.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
-        self.isLayoutMarginsRelativeArrangement = true
 
         self.addSubview(deleteButton)
         deleteButton.constraint(top: self.topAnchor,
@@ -84,6 +80,10 @@ final class PracticeSongCardView: UIStackView, Identifiable {
         self.layer.cornerRadius = 10
         self.layer.borderColor = UIColor.white.cgColor
         self.backgroundColor = .dark02
+        self.axis = .vertical
+        self.spacing = 40
+        self.isLayoutMarginsRelativeArrangement = true
+        self.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
         deleteButton.isHidden = true
     }
     

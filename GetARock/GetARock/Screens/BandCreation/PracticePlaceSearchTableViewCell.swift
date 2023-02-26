@@ -37,6 +37,7 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: Cell 재사용 전 값 초기화
     override func prepareForReuse() {
         self.titleLabel.text = nil
         self.subTitleLabel.text = nil
@@ -59,7 +60,8 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
                                  padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
     }
     
-    func setUI(mapSearchResult: MKLocalSearchCompletion){
+    //TODO: 불필요한 코드 체크 필요
+    func configure(mapSearchResult: MKLocalSearchCompletion){
         // titleAttribute
         let titleString = mapSearchResult.title
         let attributedTitleString = NSMutableAttributedString(string: titleString)
