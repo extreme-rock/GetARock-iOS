@@ -75,6 +75,8 @@ final class ModifyMyPageViewController: UIViewController {
                                   direction: .forward,
                                   animated: true)
         }
+        $0.dataSource = self
+        $0.delegate = self
         return $0
     }(UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal))
     
@@ -145,3 +147,42 @@ final class ModifyMyPageViewController: UIViewController {
         currentPageNumber = self.segmentedController.selectedSegmentIndex
     }
 }
+// MARK: - UIPageViewControllerDataSource
+
+ extension ModifyMyPageViewController: UIPageViewControllerDataSource {
+
+     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore
+                             viewController: UIViewController) -> UIViewController? {
+
+         guard let index = self.pageViewControllers.firstIndex(of: viewController),
+               index - 1 >= 0
+         else { return nil }
+         return self.pageViewControllers[index - 1]
+     }
+
+     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter
+                             viewController: UIViewController) -> UIViewController? {
+
+         guard let index = self.pageViewControllers.firstIndex(of: viewController),
+               index + 1 < self.pageViewControllers.count
+         else { return nil }
+         return self.pageViewControllers[index + 1]
+     }
+ }
+
+ // MARK: - UIPageViewControllerDelegate
+
+ extension ModifyMyPageViewController: UIPageViewControllerDelegate {
+
+     func pageViewController(_ pageViewController: UIPageViewController,
+                             didFinishAnimating finished: Bool,
+                             previousViewControllers: [UIViewController],
+                             transitionCompleted completed: Bool) {
+
+         guard let viewController = pageViewController.viewControllers?[0],
+               let index = self.pageViewControllers.firstIndex(of: viewController)
+         else { return }
+         self.currentPageNumber = index
+         self.segmentedController.selectedSegmentIndex = index
+     }
+ }
