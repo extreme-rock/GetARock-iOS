@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MapSearchResultTableViewCell: UITableViewCell {
+final class PracticePlaceSearchTableViewCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -21,14 +21,15 @@ class MapSearchResultTableViewCell: UITableViewCell {
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.setFont(.content)
-        label.textColor = .white.withAlphaComponent(0.5)
+        label.textColor = .gray02
         
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
+        attribute()
+        setupLayout()
     }
     
     
@@ -41,14 +42,21 @@ class MapSearchResultTableViewCell: UITableViewCell {
         self.subTitleLabel.text = nil
     }
     
-    private func layout() {
+    private func attribute() {
         backgroundColor = .clear
+    }
+    
+    private func setupLayout() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(subTitleLabel)
         
-        titleLabel.constraint(top: contentView.topAnchor, leading: contentView.leadingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 20))
+        titleLabel.constraint(top: contentView.topAnchor,
+                              leading: contentView.leadingAnchor,
+                              padding: UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 20))
         
-        subTitleLabel.constraint(top: titleLabel.bottomAnchor, leading: titleLabel.leadingAnchor, padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
+        subTitleLabel.constraint(top: titleLabel.bottomAnchor,
+                                 leading: titleLabel.leadingAnchor,
+                                 padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
     }
     
     func setUI(mapSearchResult: MKLocalSearchCompletion){
@@ -74,7 +82,5 @@ class MapSearchResultTableViewCell: UITableViewCell {
         
         self.titleLabel.text = mapSearchResult.title
         self.subTitleLabel.text = mapSearchResult.subtitle
-        //        self.titleLabel.attributedText = attributedTitleString
-        //        self.subTitleLabel.attributedText = attribtuedSubTitleString
     }
 }

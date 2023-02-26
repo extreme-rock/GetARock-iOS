@@ -26,11 +26,10 @@ final class PracticeSongCardView: UIStackView, Identifiable {
     private let practiceSongTextField: BasicTextField = BasicTextField(placeholder: "합주곡 제목을 입력해주세요")
     
     private lazy var practiceSongNameVstack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [practiceSongName, practiceSongTextField])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        return stackView
-    }()
+        $0.axis = .vertical
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [practiceSongName, practiceSongTextField]))
     
     private let artistName: InformationGuideLabel = InformationGuideLabel(guideText: "아티스트", type: .required)
     
@@ -45,7 +44,10 @@ final class PracticeSongCardView: UIStackView, Identifiable {
     
     private let linkLabel: InformationGuideLabel = InformationGuideLabel(guideText: "링크", type: .optional)
     
-    private let linkDescription: BasicLabel = BasicLabel(contentText: "* 우리밴드가 해당 곡을 합주한 작업물 링크를 입력해주세요", fontStyle: .content, textColorInfo: .gray02)
+    private let linkDescription: BasicLabel = BasicLabel(
+        contentText: "* 우리밴드가 해당 곡을 합주한 작업물 링크를 입력해주세요",
+        fontStyle: .content,
+        textColorInfo: .gray02)
     
     private let linkTextField: BasicTextField = BasicTextField(placeholder: "합주 영상이나 녹음파일 링크를 입력해주세요")
     
@@ -72,7 +74,9 @@ final class PracticeSongCardView: UIStackView, Identifiable {
         self.isLayoutMarginsRelativeArrangement = true
 
         self.addSubview(deleteButton)
-        deleteButton.constraint(top: self.topAnchor, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 10))
+        deleteButton.constraint(top: self.topAnchor,
+                                trailing: self.trailingAnchor,
+                                padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 10))
     }
     
     private func attribute() {

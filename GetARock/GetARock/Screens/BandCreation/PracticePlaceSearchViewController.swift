@@ -11,7 +11,7 @@ import UIKit
 
 //MARK: 알로라 피알 참고하여 진행
 
-final class MapSearchViewController: UIViewController {
+final class PracticePlaceSearchViewController: UIViewController {
     var completion: (_ mapItem: MKMapItem) -> Void = { mapItem in }
 
     private let locationManager = CLLocationManager()
@@ -31,7 +31,7 @@ final class MapSearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .dark01
-        tableView.register(MapSearchResultTableViewCell.self, forCellReuseIdentifier: MapSearchResultTableViewCell.identifier)
+        tableView.register(PracticePlaceSearchTableViewCell.self, forCellReuseIdentifier: PracticePlaceSearchTableViewCell.identifier)
 
         return tableView
     }()
@@ -83,7 +83,7 @@ final class MapSearchViewController: UIViewController {
     }
 }
 
-extension MapSearchViewController {
+extension PracticePlaceSearchViewController {
     @objc func textFieldDidChange(_ sender: Any?) {
         if searchBar.textField.text == "" {
             searchResults.removeAll()
@@ -99,7 +99,7 @@ extension MapSearchViewController {
       }
 }
 
-extension MapSearchViewController: CLLocationManagerDelegate {
+extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -117,7 +117,7 @@ extension MapSearchViewController: CLLocationManagerDelegate {
     }
 }
 
-extension MapSearchViewController: MKLocalSearchCompleterDelegate {
+extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
   // 자동완성 완료시 결과를 받는 method
   func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = completer.results
@@ -128,7 +128,7 @@ extension MapSearchViewController: MKLocalSearchCompleterDelegate {
     }
 }
 
-extension MapSearchViewController: UITableViewDataSource {
+extension PracticePlaceSearchViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -138,7 +138,7 @@ extension MapSearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MapSearchResultTableViewCell.identifier, for: indexPath) as? MapSearchResultTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.identifier, for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell()}
 
         let searchResult = searchResults[indexPath.row]
         cell.setUI(mapSearchResult: searchResult)
@@ -147,7 +147,7 @@ extension MapSearchViewController: UITableViewDataSource {
     }
 }
 
-extension MapSearchViewController: UITableViewDelegate {
+extension PracticePlaceSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
     }
@@ -167,7 +167,7 @@ extension MapSearchViewController: UITableViewDelegate {
     }
 }
 
-extension MapSearchViewController: UIScrollViewDelegate {
+extension PracticePlaceSearchViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        self.searchBar.searchTextField.becomeFirstResponder()
         self.searchBar.textField.becomeFirstResponder()
