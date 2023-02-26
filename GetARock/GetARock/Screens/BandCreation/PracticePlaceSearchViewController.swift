@@ -12,6 +12,7 @@ import UIKit
 //MARK: 알로라 피알 참고하여 진행
 
 final class PracticePlaceSearchViewController: UIViewController {
+    
     var completion: (_ mapItem: MKMapItem) -> Void = { mapItem in }
 
     private let locationManager = CLLocationManager()
@@ -20,21 +21,18 @@ final class PracticePlaceSearchViewController: UIViewController {
     
     private var searchResults = [MKLocalSearchCompletion]()
     
-    private lazy var searchBar = {
-        let searchBar = SearchTextField(placeholder: "합주실 주소 검색")
-        searchBar.textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-        return searchBar
-    }()
+    private lazy var searchBar: SearchTextField = {
+        $0.textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        return $0
+    }(SearchTextField(placeholder: "합주실 주소 검색"))
     
     private lazy var searchResultTable: UITableView = {
-        let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .dark01
-        tableView.register(PracticePlaceSearchTableViewCell.self, forCellReuseIdentifier: PracticePlaceSearchTableViewCell.identifier)
-
-        return tableView
-    }()
+        $0.delegate = self
+        $0.dataSource = self
+        $0.backgroundColor = .dark01
+        $0.register(PracticePlaceSearchTableViewCell.self, forCellReuseIdentifier: PracticePlaceSearchTableViewCell.classIdentifier)
+        return $0
+    }(UITableView())
     
     //MARK: Google Map으로 현재 위치 바꿔야함...
     //TODO: 밴드 멤버 추가 버튼 레이아웃 참고하여 바꾸기 
@@ -55,31 +53,41 @@ final class PracticePlaceSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .dark01
-        self.addSubViews()
-        self.configureConstraints()
-        self.configureSearchCompleter()
-        self.setLocationManager()
+        setupLayout()
+        attribute()
+        configureSearchCompleter()
+        setLocationManager()
+    }
+    
+    private func attribute() {
+        self.view.backgroundColor = .dark01
     }
 
-    private func addSubViews() {
+    private func setupLayout() {
+        
         view.addSubview(searchBar)
+        searchBar.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                             leading: view.leadingAnchor,
+                             trailing: view.trailingAnchor,
+                             padding: UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 25))
+        
         view.addSubview(searchResultTable)
+        currentLocationButton.constraint(top: searchBar.bottomAnchor,
+                                         leading: searchBar.leadingAnchor,
+                                         padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0))
+        
         view.addSubview(currentLocationButton)
-    }
-
-    private func configureConstraints() {
-        searchBar.constraint(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 25))
+        searchResultTable.constraint(top: currentLocationButton.bottomAnchor,
+                                     leading: view.leadingAnchor,
+                                     bottom: view.bottomAnchor,
+                                     trailing: view.trailingAnchor,
+                                     padding: UIEdgeInsets(top: 20, left: 25, bottom: 10, right: 25))
         
-        currentLocationButton.constraint(top: searchBar.bottomAnchor, leading: searchBar.leadingAnchor, padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0))
-        
-        searchResultTable.constraint(top: currentLocationButton.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 25, bottom: 10, right: 25))
     }
 
     private func configureSearchCompleter() {
-        self.searchCompleter.delegate = self
-        self.searchCompleter.resultTypes = .query
+        searchCompleter.delegate = self
+        searchCompleter.resultTypes = .query
     }
 }
 
