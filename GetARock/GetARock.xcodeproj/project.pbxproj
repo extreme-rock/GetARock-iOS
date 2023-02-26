@@ -47,6 +47,8 @@
 		7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */; };
 		7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04132988FC1100186986 /* SNSListStackView.swift */; };
 		7B7B04162988FE9900186986 /* SNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B04152988FE9900186986 /* SNS.swift */; };
+		7B921B6729AB48D70053A18B /* TimeLineTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B921B6629AB48D70053A18B /* TimeLineTableView.swift */; };
+		7B921B6929AB4F060053A18B /* TimeLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B921B6829AB4F060053A18B /* TimeLineTableViewCell.swift */; };
 		7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA83299B708C00C44184 /* EventStateLabel.swift */; };
 		7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */; };
 		7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755D2987DF54008F4B9F /* BandButtonView.swift */; };
@@ -169,6 +171,8 @@
 		7B76C5E72982D54100076637 /* SongListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B7B04132988FC1100186986 /* SNSListStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSListStackView.swift; sourceTree = "<group>"; };
 		7B7B04152988FE9900186986 /* SNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNS.swift; sourceTree = "<group>"; };
+		7B921B6629AB48D70053A18B /* TimeLineTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineTableView.swift; sourceTree = "<group>"; };
+		7B921B6829AB4F060053A18B /* TimeLineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineTableViewCell.swift; sourceTree = "<group>"; };
 		7BB4FA83299B708C00C44184 /* EventStateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabel.swift; sourceTree = "<group>"; };
 		7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabelStackView.swift; sourceTree = "<group>"; };
 		7BC2755D2987DF54008F4B9F /* BandButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandButtonView.swift; sourceTree = "<group>"; };
@@ -555,6 +559,8 @@
 				7BB4FA83299B708C00C44184 /* EventStateLabel.swift */,
 				7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */,
 				7B6D3356299A50F2001FD630 /* DetailContentView.swift */,
+				7B921B6629AB48D70053A18B /* TimeLineTableView.swift */,
+				7B921B6829AB4F060053A18B /* TimeLineTableViewCell.swift */,
 			);
 			path = UIComponent;
 			sourceTree = "<group>";
@@ -829,11 +835,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
+				7B921B6729AB48D70053A18B /* TimeLineTableView.swift in Sources */,
 				A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */,
-
 				7B6D3357299A50F2001FD630 /* DetailContentView.swift in Sources */,
-
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
@@ -851,6 +855,7 @@
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
+				7B921B6929AB4F060053A18B /* TimeLineTableViewCell.swift in Sources */,
 				B88ABF3729A3C1FA004C1793 /* SettingViewVersionCell.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				9AFE014729990FE0004B0BCF /* BandInformationDTO.swift in Sources */,
