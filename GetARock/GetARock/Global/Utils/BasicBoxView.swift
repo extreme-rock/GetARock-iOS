@@ -32,7 +32,6 @@ final class BasicBoxView: UIView {
         self.layer.cornerRadius = 10
         self.backgroundColor = .dark02
         self.layer.borderColor = UIColor.white.cgColor
-        
         basicRightView.isHidden = true
     }
     

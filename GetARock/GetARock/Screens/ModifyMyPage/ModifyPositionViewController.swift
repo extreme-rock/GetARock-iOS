@@ -75,7 +75,7 @@ final class ModifyPositionViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(deselectAllPosition),
-            name: Notification.Name(StringLiteral.deselectAllPosition),
+            name: Notification.Name.deselectAllPosition,
             object: nil)
     }
     
@@ -88,7 +88,7 @@ final class ModifyPositionViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(showPositionPlusModal),
-            name: Notification.Name(StringLiteral.showPositionPlusModal),
+            name: Notification.Name.showPositionPlusModal,
             object: nil)
     }
     
@@ -103,7 +103,7 @@ final class ModifyPositionViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(deletePosition(_:)),
-            name: Notification.Name(StringLiteral.deletePositionCell),
+            name: Notification.Name.deletePositionCell,
             object: nil)
     }
     

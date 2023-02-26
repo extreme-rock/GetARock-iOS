@@ -70,13 +70,17 @@ final class PositionSelectCollectionViewHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: - Method
     
     private func addObserveHideDeselectAllPositionButton() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(hideDeselectButton),
-            name: Notification.Name(StringLiteral.hideDeselectAllPositionButton),
+            name: Notification.Name.hideDeselectAllPositionButton,
             object: nil)
     }
     
@@ -90,25 +94,25 @@ final class PositionSelectCollectionViewHeader: UIView {
         pageIndicatorLabel.constraint(top: self.topAnchor,
                                       leading: self.leadingAnchor,
                                       trailing: self.trailingAnchor,
-                                      padding: UIEdgeInsets(top: 20, left: 17, bottom: 0, right: 0))
+                                      padding: UIEdgeInsets(top: 20, left: 1, bottom: 0, right: 0))
         
         self.addSubview(titleLabel)
         titleLabel.constraint(top: pageIndicatorLabel.bottomAnchor,
                               leading: self.leadingAnchor,
                               trailing: self.trailingAnchor,
-                              padding: UIEdgeInsets(top: 6, left: 16, bottom: 0, right: 16))
+                              padding: UIEdgeInsets(top: 6, left: 0, bottom: 0, right: 0))
         
         self.addSubview(subTitleLabel)
         subTitleLabel.constraint(top: titleLabel.bottomAnchor,
                                  leading: self.leadingAnchor,
                                  trailing: self.trailingAnchor,
-                                 padding: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16))
+                                 padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
         
         self.addSubview(deselectAllPositionButton)
         deselectAllPositionButton.constraint(top: subTitleLabel.bottomAnchor,
                                              bottom: self.bottomAnchor,
                                              trailing: self.trailingAnchor,
-                                             padding: UIEdgeInsets(top: 15, left: 0, bottom: 11, right: 14))
+                                             padding: UIEdgeInsets(top: 15, left: 0, bottom: 11, right: 0))
     }
     
     private func setupLayoutWithoutPageIndicator() {
@@ -133,7 +137,7 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     private func postDeselectAllPosition() {
         NotificationCenter.default.post(
-            name: Notification.Name(StringLiteral.deselectAllPosition),
+            name: Notification.Name.deselectAllPosition,
             object: nil)
     }
 }

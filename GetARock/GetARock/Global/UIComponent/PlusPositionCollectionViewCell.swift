@@ -46,7 +46,7 @@ final class PlusPositionCollectionViewCell: UICollectionViewCell {
     
     private func addActionToPlusButton() {
         let action = UIAction { _ in
-            NotificationCenter.default.post(name: Notification.Name(StringLiteral.showPositionPlusModal),
+            NotificationCenter.default.post(name: Notification.Name.showPositionPlusModal,
                                             object: nil)
         }
         self.plusPositionButton.addAction(action, for: .touchUpInside)

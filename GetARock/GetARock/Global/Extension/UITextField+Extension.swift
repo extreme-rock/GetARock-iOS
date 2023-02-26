@@ -49,8 +49,8 @@ final class TextFieldLeftPaddingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        constraint(.widthAnchor, constant: 20)
-        constraint(.heightAnchor, constant: 20)
+        self.constraint(.widthAnchor, constant: 20)
+        self.constraint(.heightAnchor, constant: 20)
     }
     
     required init?(coder: NSCoder) {
@@ -62,8 +62,8 @@ final class TextFieldRightPaddingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
 
-        constraint(.widthAnchor, constant: 100)
-        constraint(.heightAnchor, constant: 20)
+        self.constraint(.widthAnchor, constant: 100)
+        self.constraint(.heightAnchor, constant: 20)
     }
 
     required init?(coder: NSCoder) {

@@ -19,11 +19,17 @@ final class InformationGuideLabel: UIStackView {
     private let type: InputType
 
     private lazy var firstLabel: BasicLabel = {
-        $0.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        $0.setContentHuggingPriority(
+            UILayoutPriority.defaultHigh,
+            for: .horizontal)
         return $0
-    }(BasicLabel(contentText: guideText, fontStyle: .headline01, textColorInfo: .white))
+    }(BasicLabel(contentText: guideText,
+                 fontStyle: .headline01,
+                 textColorInfo: .white))
 
-    private lazy var secondLabel = BasicLabel(contentText: type.rawValue, fontStyle: .content, textColorInfo: .gray02)
+    private lazy var secondLabel: BasicLabel = BasicLabel(contentText: type.rawValue,
+                                              fontStyle: .content,
+                                              textColorInfo: .gray02)
 
     init(guideText: String, type: InputType) {
         self.guideText = guideText

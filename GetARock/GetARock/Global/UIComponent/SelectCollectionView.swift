@@ -50,8 +50,8 @@ final class SelectCollectionView: UIView {
     
     //MARK: - Init
     
-    init(widthState: WidthOption, items: [String], widthSize: CGFloat, itemSpacing: CGFloat) {
-        self.widthOption = widthState
+    init(widthOption: WidthOption, items: [String], widthSize: CGFloat, itemSpacing: CGFloat) {
+        self.widthOption = widthOption
         self.items = items
         self.widthSize = widthSize
         self.itemSpacing = itemSpacing
@@ -94,7 +94,7 @@ extension SelectCollectionView: UICollectionViewDataSource {
             backgroundColor = .dark02
         }
         
-        cell.setupLayout(width: widthSize, widthState: widthOption)
+        cell.setupLayout(width: widthSize, widthOption: widthOption)
         cell.configure(color: backgroundColor, text: self.items[indexPath.item])
         
         return cell

@@ -1,10 +1,9 @@
 //
-//  UIViewControlle+Extension.swift
+//  UIViewController+Extension.swift
 //  GetARock
 //
-//  Created by 최동권 on 2023/02/18.
+//  Created by Jisu Jang on 2023/02/20.
 //
-
 import UIKit
 
 extension UIViewController {
@@ -13,8 +12,9 @@ extension UIViewController {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
-    
-    @objc func dismissKeyboard() {
+
+    @objc
+    func dismissKeyboard() {
         view.endEditing(true)
     }
 }

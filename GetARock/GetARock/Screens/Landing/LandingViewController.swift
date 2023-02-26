@@ -9,29 +9,9 @@ import UIKit
 
 class LandingViewController: UIViewController {
     
-    private let button = UIButton(type: .system)
-    
-    deinit {
-        print("deinit, landingviewcontroller")
-    }
      override func viewDidLoad() {
          super.viewDidLoad()
-         self.view.backgroundColor = .blue03
-         button.setTitle("모달", for: .normal)
-         view.addSubview(button)
-         button.constraint(centerX: view.centerXAnchor,
-                           centerY: view.centerYAnchor)
-         addAction()
-         
+   
      }
-    
-    func addAction() {
-        let action = UIAction { [weak self] _ in
-            let vc = ModifyMyPageViewController()
-//            vc.modalPresentationStyle = .fullScreen
-            self?.present(vc, animated: true)
-        }
-        button.addAction(action, for: .touchUpInside)
-    }
  }
 
