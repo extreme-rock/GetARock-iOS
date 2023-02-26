@@ -147,6 +147,7 @@ final class ModifyMyPageViewController: UIViewController {
         currentPageNumber = self.segmentedController.selectedSegmentIndex
     }
 }
+
 // MARK: - UIPageViewControllerDataSource
 
  extension ModifyMyPageViewController: UIPageViewControllerDataSource {
