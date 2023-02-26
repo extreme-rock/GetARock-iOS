@@ -165,7 +165,9 @@ final class BandCreationDecisionViewController: UIViewController {
         }
         
         let passMakeBandAction = UIAction { _ in
-            print("pass")
+            Task {
+                try await SignUpNetworkManager.postMember(user: self.user)
+            }
         }
         self.makeBandButton.addAction(makeBandAction, for: .touchUpInside)
         self.passMakingBandButton.addAction(passMakeBandAction, for: .touchUpInside)
