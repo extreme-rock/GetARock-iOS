@@ -11,7 +11,7 @@ import UIKit
 
 //MARK: 알로라 피알 참고하여 진행
 
-final class PracticePlaceSearchViewController: UIViewController {
+final class PracticePlaceSearchViewController: BaseViewController {
     
     var completion: (_ mapItem: MKMapItem) -> Void = { mapItem in }
 
@@ -30,6 +30,7 @@ final class PracticePlaceSearchViewController: UIViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.backgroundColor = .dark01
+        $0.separatorStyle = .none
         $0.register(PracticePlaceSearchTableViewCell.self,
                     forCellReuseIdentifier: PracticePlaceSearchTableViewCell.classIdentifier)
         return $0
@@ -43,7 +44,7 @@ final class PracticePlaceSearchViewController: UIViewController {
         configuration.image = ImageLiteral.scopeSymbol
         configuration.title = "현재 위치"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
-        configuration.imagePadding = 10
+        configuration.imagePadding = 5
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.widthAnchor, constant: 118)
@@ -65,6 +66,7 @@ final class PracticePlaceSearchViewController: UIViewController {
     
     private func attribute() {
         self.view.backgroundColor = .dark01
+        self.searchBar.textField.becomeFirstResponder()
     }
 
     private func setupLayout() {
@@ -73,19 +75,19 @@ final class PracticePlaceSearchViewController: UIViewController {
         searchBar.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                              leading: view.leadingAnchor,
                              trailing: view.trailingAnchor,
-                             padding: UIEdgeInsets(top: 20, left: 25, bottom: 0, right: 25))
-        
-        view.addSubview(searchResultTable)
-        currentLocationButton.constraint(top: searchBar.bottomAnchor,
-                                         leading: searchBar.leadingAnchor,
-                                         padding: UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0))
+                             padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
         
         view.addSubview(currentLocationButton)
+        currentLocationButton.constraint(top: searchBar.bottomAnchor,
+                                         leading: searchBar.leadingAnchor,
+                                         padding: UIEdgeInsets(top: 19, left: 5, bottom: 0, right: 0))
+        
+        view.addSubview(searchResultTable)
         searchResultTable.constraint(top: currentLocationButton.bottomAnchor,
                                      leading: view.leadingAnchor,
                                      bottom: view.bottomAnchor,
                                      trailing: view.trailingAnchor,
-                                     padding: UIEdgeInsets(top: 20, left: 25, bottom: 10, right: 25))
+                                     padding: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
         
     }
 
@@ -172,17 +174,9 @@ extension PracticePlaceSearchViewController: UITableViewDelegate {
         search.start { (response, error) in
             guard error == nil else { return }
             guard let mapItem = response?.mapItems.first else { return }
-            self.dismiss(animated: true){
-                print("함수 종료")
-                self.completion(mapItem)
-            }
+            self.completion(mapItem)
+            self.navigationController?.popViewController(animated: true)
         }
-    }
-}
-
-extension PracticePlaceSearchViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.searchBar.textField.becomeFirstResponder()
     }
 }
 //MARK: Merge 이후 삭제 예정

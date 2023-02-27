@@ -12,20 +12,18 @@ final class AddPracticeSongViewController: UIViewController {
     let firstPracticeSongCard = PracticeSongCardView()
 
     private lazy var contentView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [firstPracticeSongCard])
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 40
-        return stackView
-    }()
+        $0.axis = .vertical
+        $0.distribution = .equalSpacing
+        $0.spacing = 40
+        return $0
+    }(UIStackView(arrangedSubviews: [firstPracticeSongCard]))
 
     private lazy var mainScrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = true
-        scrollView.backgroundColor = .dark01
-        scrollView.delegate = self
-        return scrollView
-    }()
+        $0.showsVerticalScrollIndicator = true
+        $0.backgroundColor = .dark01
+        $0.delegate = self
+        return $0
+    }(UIScrollView())
     
     private lazy var addPracticeSongButton = {
         var configuration = UIButton.Configuration.filled()
@@ -33,12 +31,11 @@ final class AddPracticeSongViewController: UIViewController {
         container.font = UIFont.setFont(.contentBold)
         configuration.baseBackgroundColor = .systemPurple
         configuration.attributedTitle = AttributedString("합주곡 추가", attributes: container)
-        configuration.image = UIImage(systemName: "plus")
+        configuration.image = ImageLiteral.plusSymbol
         configuration.imagePadding = 10
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 13, leading: 0, bottom: 13, trailing: 0)
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
-        
         return button
     }()
     
@@ -101,7 +98,7 @@ final class AddPracticeSongViewController: UIViewController {
     }
 
     private func applyButtonSnapshot() {
-        // StackView에 들어간 하위뷰들은 UIView 타입으로 인식합니다. 그래서 그 안에 cancleButton 프로퍼티에 접근하기 위해 map을 사용합니다.
+        //TODO: 강제언래핑 없애기
         if contentView.arrangedSubviews.count == 1 {
             contentView.arrangedSubviews.map { $0 as! PracticeSongCardView }.forEach { $0.deleteButton.isHidden = true }
         } else {

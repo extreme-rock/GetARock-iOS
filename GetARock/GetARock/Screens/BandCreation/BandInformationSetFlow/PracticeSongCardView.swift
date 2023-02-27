@@ -13,7 +13,6 @@ final class PracticeSongCardView: UIStackView {
         let deleteAction: UIAction = UIAction { _ in
             self.removeFromSuperview()
         }
-        //TODO: ImageLiteral로 추후 변경 필요
         $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         $0.tintColor = .white
         $0.addAction(deleteAction, for: .touchUpInside)
@@ -35,11 +34,10 @@ final class PracticeSongCardView: UIStackView {
     private let artistNameTextField: BasicTextField = BasicTextField(placeholder: "아티스트를 입력해주세요")
     
     private lazy var artistNameVstack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [artistName, artistNameTextField])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        return stackView
-    }()
+        $0.axis = .vertical
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [artistName, artistNameTextField]))
     
     private let linkLabel: InformationGuideLabel = InformationGuideLabel(guideText: "링크", type: .optional)
     

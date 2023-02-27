@@ -272,14 +272,8 @@ extension BandInformationSetViewController {
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 
-    // TODO: - 추후 합주곡 등록 VC로 넘어가는 코드 추가
     @objc func didTapAddPracticeSong() {
-        let nextViewController = PracticePlaceSearchViewController()
-        nextViewController.completion = { mapItem in
-            print("completion Handler 작동")
-            self.practicePlaceSearchButton.configureText(with: mapItem.name ?? "")
-            self.practicePlaceSearchButton.hideRightView()
-        }
+        let nextViewController = AddPracticeSongViewController()
         navigationController?.pushViewController(nextViewController, animated: true)
     }
     
