@@ -41,7 +41,7 @@ extension NotificationListVO {
 }
 
 // MARK: - Encode/decode helpers
-
+//TODO: 백엔드 테스트 데이터 수정 후 삭제 예정
 class JSONNull: Codable, Hashable {
 
     public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
