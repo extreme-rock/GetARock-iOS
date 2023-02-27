@@ -11,14 +11,7 @@ final class ModifyPositionViewController: UIViewController {
     
     //MARK: - Property
     
-    private var positions: [Item] = [
-        .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
-        .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
-        .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
-        .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
-        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
-        .plusPosition
-    ]
+    private var positions: [Item] = []
     
     //MARK: - View
     

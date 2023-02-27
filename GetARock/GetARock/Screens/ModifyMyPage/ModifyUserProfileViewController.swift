@@ -37,7 +37,7 @@ final class ModifyUserProfileViewController: UIViewController {
     
     private let userNamingGuideSubLabel = BasicLabel(
         contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",
-        fontStyle: .content,
+        fontStyle: .caption,
         textColorInfo: .gray02)
 
     private lazy var userNamingTextField: TextLimitTextField = TextLimitTextField(
@@ -46,7 +46,7 @@ final class ModifyUserProfileViewController: UIViewController {
         duplicationCheckType: .userName,
         textExpressionCheck: true)
     
-    private lazy var textFieldStackView: UIStackView = {
+    private lazy var userNameInputStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
@@ -64,7 +64,8 @@ final class ModifyUserProfileViewController: UIViewController {
         widthOption: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
         widthSize: 25,
-        itemSpacing: 5
+        itemSpacing: 5,
+        cellBackgroundColor: .dark02
     ))
     private lazy var ageInputStackView: UIStackView = {
         $0.axis = .vertical
@@ -84,7 +85,8 @@ final class ModifyUserProfileViewController: UIViewController {
         widthOption: .fixed,
         items: ["남자", "여자"],
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
-        itemSpacing: 8
+        itemSpacing: 8,
+        cellBackgroundColor: .dark02
     ))
     
     private lazy var genderInputStackView: UIStackView = {
@@ -101,7 +103,7 @@ final class ModifyUserProfileViewController: UIViewController {
         maxCount: 300
     )
 
-    private lazy var textViewStackView: UIStackView = {
+    private lazy var userIntroStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
@@ -112,13 +114,13 @@ final class ModifyUserProfileViewController: UIViewController {
 
     private let snsFirstSubTitleLabel = BasicLabel(
         contentText: "* 본인의 SNS 계정을 입력해주세요.",
-        fontStyle: .content,
+        fontStyle: .caption,
         textColorInfo: .gray02
     )
 
     private let snsSecondSubTitleLabel = BasicLabel(
         contentText: "* 본인계정이 아닌 계정 등록 시 책임은 본인에게 있습니다.",
-        fontStyle: .content,
+        fontStyle: .caption,
         textColorInfo: .gray02
     )
     
@@ -132,9 +134,7 @@ final class ModifyUserProfileViewController: UIViewController {
                                      snsSecondSubTitleLabel]))
 
     private let youtubeTextField = SNSBoxView(type: .youTube, placeholder: "채널명")
-
     private let instagramTextField = SNSBoxView(type: .instagram, placeholder: "사용자 계정")
-
     private let soundCloudTextField = SNSBoxView(type: .soundCloud, placeholder: "사용자 계정")
 
     private lazy var snsInformationStackView: UIStackView = {
@@ -161,10 +161,10 @@ final class ModifyUserProfileViewController: UIViewController {
         $0.backgroundColor = .dark01
         return $0
     }(UIStackView(arrangedSubviews: [titleStackView,
-                                     textFieldStackView,
+                                     userNameInputStackView,
                                      ageInputStackView,
                                      genderInputStackView,
-                                     textViewStackView,
+                                     userIntroStackView,
                                      snsInformationStackView]))
     
     // MARK: - Life Cycle

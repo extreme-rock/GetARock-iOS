@@ -9,6 +9,10 @@ import UIKit
 
 final class UserInfoInputViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    private var keyBoardHeight: CGFloat = 280
+    
     // MARK: - View
     
     private let pageIndicatorLabel: UILabel = {
@@ -70,7 +74,8 @@ final class UserInfoInputViewController: UIViewController {
         widthOption: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
         widthSize: 25,
-        itemSpacing: 5
+        itemSpacing: 5,
+        cellBackgroundColor: .dark02
     ))
     private lazy var ageInputStackView: UIStackView = {
         $0.axis = .vertical
@@ -90,7 +95,8 @@ final class UserInfoInputViewController: UIViewController {
         widthOption: .fixed,
         items: ["남자", "여자"],
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
-        itemSpacing: 8
+        itemSpacing: 8,
+        cellBackgroundColor: .dark02
     ))
     
     private lazy var genderInputStackView: UIStackView = {
@@ -152,9 +158,10 @@ final class UserInfoInputViewController: UIViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let informationFillCompleteButton: BottomButton = {
+    private let nextButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("다음", for: .normal)
+        $0.isEnabled = false
         return $0
     }(BottomButton())
     
@@ -163,8 +170,6 @@ final class UserInfoInputViewController: UIViewController {
         $0.backgroundColor = .dark01
         return $0
     }(UIScrollView())
-    
-    private let contentView = UIView()
     
     private lazy var contentStackView: UIStackView = {
         $0.axis = .vertical
@@ -178,7 +183,7 @@ final class UserInfoInputViewController: UIViewController {
                                      genderInputStackView,
                                      textViewStackView,
                                      snsInformationStackView,
-                                     informationFillCompleteButton]))
+                                     nextButton]))
     
     // MARK: - Life Cycle
     
@@ -186,6 +191,27 @@ final class UserInfoInputViewController: UIViewController {
         super.viewDidLoad()
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
+        self.configureDelegate()
+        self.setNotification()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+    }
+    
+    // MARK: - Method
+    
+    private func configureDelegate() {
+        self.genderSelectCollectionView.delegate = self
+        self.ageSelectCollectionView.delegate = self
+        self.userNamingTextField.delegate = self
+        self.youtubeTextField.textField.delegate = self
+        self.instagramTextField.textField.delegate = self
+        self.soundCloudTextField.textField.delegate = self
     }
     
     private func attribute() {
@@ -193,30 +219,67 @@ final class UserInfoInputViewController: UIViewController {
     }
     
     private func setupLayout() {
-        //MARK: - scrollView
-        
         view.addSubview(scrollView)
         scrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                               leading: view.safeAreaLayoutGuide.leadingAnchor,
                               bottom: view.bottomAnchor,
                               trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
-        scrollView.addSubview(contentView)
-        contentView.constraint(top: scrollView.contentLayoutGuide.topAnchor,
-                               leading: scrollView.contentLayoutGuide.leadingAnchor,
-                               bottom: scrollView.contentLayoutGuide.bottomAnchor,
-                               trailing: scrollView.contentLayoutGuide.trailingAnchor)
+        scrollView.addSubview(contentStackView)
+        contentStackView.constraint(top: scrollView.contentLayoutGuide.topAnchor,
+                                    leading: scrollView.contentLayoutGuide.leadingAnchor,
+                                    bottom: scrollView.contentLayoutGuide.bottomAnchor,
+                                    trailing: scrollView.contentLayoutGuide.trailingAnchor,
+                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16))
+    }
+    
+    private func checkNextButtonEnabledState() {
+        let isAgeSelected = ageSelectCollectionView.isSelected()
+        let isGenderSelected = genderSelectCollectionView.isSelected()
+        let isAvailableName = userNamingTextField.isAvailableName()
         
-        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        
-        //MARK: - contentView
-        
-        contentView.addSubview(contentStackView)
-        contentStackView.constraint(top: contentView.topAnchor,
-                                    leading: contentView.leadingAnchor,
-                                    bottom: contentView.bottomAnchor,
-                                    trailing: contentView.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
-        
+        if isAgeSelected && isGenderSelected && isAvailableName {
+            self.nextButton.isEnabled = true
+        } else {
+            self.nextButton.isEnabled = false
+        }
+    }
+}
+
+extension UserInfoInputViewController: SelectCollectionViewDelegate {
+    func collectionViewCellDidSelect() {
+        self.checkNextButtonEnabledState()
+    }
+}
+
+extension UserInfoInputViewController: TextLimitTextFieldDelegate {
+    func textFieldTextDidChanged() {
+        self.checkNextButtonEnabledState()
+    }
+}
+
+// MARK: 키보드 높이 관련 함수
+
+extension UserInfoInputViewController {
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(getKeyboardHeight(notification: )),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+    }
+    
+    @objc func getKeyboardHeight(notification: Notification) {
+        keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
+    }
+}
+
+extension UserInfoInputViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.view.frame.origin.y -= self.keyBoardHeight
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view.frame.origin.y += self.keyBoardHeight
     }
 }
