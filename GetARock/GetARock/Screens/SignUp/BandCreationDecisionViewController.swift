@@ -122,7 +122,7 @@ final class BandCreationDecisionViewController: UIViewController {
         makeBandLabelStackView.constraint(leading: makeBandButton.leadingAnchor,
                                           trailing: makeBandButton.trailingAnchor,
                                           centerY: makeBandButton.centerYAnchor,
-                                          padding: UIEdgeInsets(top: 42, left: 37, bottom: 0, right: 37))
+                                          padding: UIEdgeInsets(top: 42, left: 30, bottom: 0, right: 30))
         
         
         self.view.addSubview(skipMakingBandButton)
@@ -136,7 +136,7 @@ final class BandCreationDecisionViewController: UIViewController {
         skipMakingLabelStackView.constraint(leading: skipMakingBandButton.leadingAnchor,
                                             trailing: skipMakingBandButton.trailingAnchor,
                                             centerY: skipMakingBandButton.centerYAnchor,
-                                            padding: UIEdgeInsets(top: 42, left: 37, bottom: 0, right: 37))
+                                            padding: UIEdgeInsets(top: 42, left: 30, bottom: 0, right: 30))
     }
     
     private func addActionToButtons() {
