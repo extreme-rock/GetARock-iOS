@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LeaderPositionSelectViewController: UIViewController {
+final class LeaderPositionSelectViewController: BaseViewController {
     
     //MARK: - Property
     
@@ -101,14 +101,11 @@ extension LeaderPositionSelectViewController {
             self.memberList.append(firstMember)
         }
         self.bandCreationData.memberList = self.memberList
-        //MARK: Merge 전 삭제 필요
-        print(self.bandCreationData)
-        print("======================")
-        print(self.memberList.count)
     }
     
     private func navigateToNext() {
-        self.navigationController?.pushViewController(BandMemberAddViewController(), animated: true)
+        let nextVC = BandMemberAddViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
         self.navigationController?.navigationBar.isHidden = false
     }
 }
