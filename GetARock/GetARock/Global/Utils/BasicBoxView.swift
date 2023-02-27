@@ -55,4 +55,12 @@ final class BasicBoxView: UIView {
     func showRightView() {
         basicRightView.isHidden = false
     }
+    
+    func hideRightView() {
+        basicRightView.isHidden = true
+    }
+    
+    func configureText(with text: String) {
+        self.basicLabel.text = text
+    }
 }

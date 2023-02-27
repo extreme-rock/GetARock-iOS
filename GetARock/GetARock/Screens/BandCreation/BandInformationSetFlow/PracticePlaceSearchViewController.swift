@@ -30,26 +30,30 @@ final class PracticePlaceSearchViewController: UIViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.backgroundColor = .dark01
-        $0.register(PracticePlaceSearchTableViewCell.self, forCellReuseIdentifier: PracticePlaceSearchTableViewCell.classIdentifier)
+        $0.register(PracticePlaceSearchTableViewCell.self,
+                    forCellReuseIdentifier: PracticePlaceSearchTableViewCell.classIdentifier)
         return $0
     }(UITableView())
     
     //MARK: Google Map으로 현재 위치 바꿔야함...
-    //TODO: 밴드 멤버 추가 버튼 레이아웃 참고하여 바꾸기 
-    private lazy var currentLocationButton = {
-        let button = BasicButton(text: "현재 위치", widthPadding: 20, heightPadding: 10)
-        button.setImage(UIImage(systemName: "scope"), for: .normal)
-        button.backgroundColor = .systemPurple
-        button.tintColor = . white
-        button.layer.cornerRadius = 8
-        
+    //TODO: 밴드 멤버 추가 버튼 레이아웃 참고하여 바꾸기
+    
+    private lazy var currentLocationButton: DefaultButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = ImageLiteral.scopeSymbol
+        configuration.title = "현재 위치"
+        configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
+        configuration.imagePadding = 10
+        let button = DefaultButton(configuration: configuration)
+        button.tintColor = .white
+        button.constraint(.widthAnchor, constant: 118)
+        button.constraint(.heightAnchor, constant: 45)
         let action = UIAction { _ in
             self.locationManager.requestWhenInUseAuthorization()
         }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -181,67 +185,6 @@ extension PracticePlaceSearchViewController: UIScrollViewDelegate {
         self.searchBar.textField.becomeFirstResponder()
     }
 }
-
-//MARK: Merge 이후 삭제 예정
-import UIKit
-
-final class SearchTextField: UIView {
-
-    var placeholder: String
-
-    lazy var textField: UITextField = {
-        let textField = UITextField.makeBasicTextField(placeholder: placeholder)
-        textField.layer.borderWidth = 0
-        return textField
-    }()
-    
-    let searchImage = MagnifyGlassImageView(frame: .zero)
-
-    init(placeholder: String) {
-        self.placeholder = placeholder
-        super.init(frame: .zero)
-        setupLayout()
-        attribute()
-    }
-    
-    private func setupLayout() {
-        self.constraint(.heightAnchor, constant: 55)
-
-        self.addSubview(textField)
-        self.addSubview(searchImage)
-        textField.constraint(leading: self.leadingAnchor, trailing: self.trailingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
-        
-        searchImage.constraint(.widthAnchor, constant: 20)
-        searchImage.constraint(.heightAnchor, constant: 20)
-        searchImage.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0))
-    }
-    
-    private func attribute() {
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 10
-        self.layer.borderColor = UIColor.white.cgColor
-        self.backgroundColor = .dark02
-    }
-
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class MagnifyGlassImageView: UIImageView {
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        
-        self.image = UIImage(systemName: "magnifyingglass")
-        self.tintColor = .white
-        self.contentMode = .scaleAspectFill
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 //MARK: Merge 이후 삭제 예정
 
 import UIKit

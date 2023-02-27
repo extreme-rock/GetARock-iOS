@@ -72,9 +72,9 @@ final class BandInformationSetViewController: BaseViewController {
         textColorInfo: .gray02)
 
     //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
-    private lazy var practicePlaceSearchButton = {
+    private lazy var practicePlaceSearchButton: BasicBoxView = {
         $0.showRightView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchViewController))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPracticePlaceSearchButton))
         $0.addGestureRecognizer(tapGesture)
         return $0
     }(BasicBoxView(text: "주소 검색"))
@@ -262,12 +262,25 @@ final class BandInformationSetViewController: BaseViewController {
 
 extension BandInformationSetViewController {
 
-    // TODO: - 추후 합주실 위치 검색 VC로 넘어가는 코드 추가
-    @objc func presentLocationSearchViewController() {
+    @objc func didTapPracticePlaceSearchButton() {
+        let nextViewController = PracticePlaceSearchViewController()
+        nextViewController.completion = { mapItem in
+            print("completion Handler 작동")
+            self.practicePlaceSearchButton.configureText(with: mapItem.name ?? "")
+            self.practicePlaceSearchButton.hideRightView()
+        }
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     // TODO: - 추후 합주곡 등록 VC로 넘어가는 코드 추가
     @objc func didTapAddPracticeSong() {
+        let nextViewController = PracticePlaceSearchViewController()
+        nextViewController.completion = { mapItem in
+            print("completion Handler 작동")
+            self.practicePlaceSearchButton.configureText(with: mapItem.name ?? "")
+            self.practicePlaceSearchButton.hideRightView()
+        }
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
     
     @objc func didTouchScreen() {

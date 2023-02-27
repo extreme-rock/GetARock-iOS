@@ -7,16 +7,14 @@
 
 import UIKit
 
-final class PracticeSongCardView: UIStackView, Identifiable {
-
-//    let id: String
+final class PracticeSongCardView: UIStackView {
 
     lazy var deleteButton: UIButton = {
         let deleteAction: UIAction = UIAction { _ in
             self.removeFromSuperview()
         }
         //TODO: ImageLiteral로 추후 변경 필요
-        $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+        $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         $0.tintColor = .white
         $0.addAction(deleteAction, for: .touchUpInside)
         return $0

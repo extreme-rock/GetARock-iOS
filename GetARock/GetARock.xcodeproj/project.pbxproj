@@ -64,6 +64,7 @@
 		9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */; };
 		9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E9297E233900D4A433 /* BasicTextField.swift */; };
 		9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */; };
+		9A67975929ACDD8700F08B00 /* AddPracticeSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67975829ACDD8700F08B00 /* AddPracticeSongViewController.swift */; };
 		9A67BF2B29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2A29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift */; };
 		9A67BF2D29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2C29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift */; };
 		9A67BF2F29AB8C14002C0C32 /* PracticeSongCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */; };
@@ -197,6 +198,7 @@
 		9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentSize.swift; sourceTree = "<group>"; };
 		9A29E6E9297E233900D4A433 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
 		9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimitTextField.swift; sourceTree = "<group>"; };
+		9A67975829ACDD8700F08B00 /* AddPracticeSongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPracticeSongViewController.swift; sourceTree = "<group>"; };
 		9A67BF2A29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePlaceSearchViewController.swift; sourceTree = "<group>"; };
 		9A67BF2C29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePlaceSearchTableViewCell.swift; sourceTree = "<group>"; };
 		9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongCardView.swift; sourceTree = "<group>"; };
@@ -381,19 +383,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9A67975729ACD86A00F08B00 /* BandInformationSetFlow */ = {
+			isa = PBXGroup;
+			children = (
+				A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */,
+				9A67BF2A29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift */,
+				9A67BF2C29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift */,
+				9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */,
+				9A67975829ACDD8700F08B00 /* AddPracticeSongViewController.swift */,
+			);
+			path = BandInformationSetFlow;
+			sourceTree = "<group>";
+		};
 		9AFE014329990705004B0BCF /* BandCreation */ = {
 			isa = PBXGroup;
 			children = (
 				9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */,
 				9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */,
-				A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */,
-
-				9A67BF2A29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift */,
-				9A67BF2C29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift */,
-				9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */,
-
+				9A67975729ACD86A00F08B00 /* BandInformationSetFlow */,
 				A96F3682299E2D2700376620 /* BandMemberAddFlow */,
-
 			);
 			path = BandCreation;
 			sourceTree = "<group>";
@@ -635,9 +643,8 @@
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
-				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
 				7BEB09D9299CFEC20076A82F /* Comment.swift */,
-				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
+				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				A96F368F299E301700376620 /* SearchedUserListDTO.swift */,
 			);
@@ -887,17 +894,11 @@
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
-
 				9A67BF2D29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift in Sources */,
-
 				A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */,
-
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
-
 				A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */,
-
 				4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */,
-
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
@@ -912,6 +913,7 @@
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
 				B88ABF3729A3C1FA004C1793 /* SettingViewVersionCell.swift in Sources */,
+				9A67975929ACDD8700F08B00 /* AddPracticeSongViewController.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				9AFE014729990FE0004B0BCF /* BandCreationDTO.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,
@@ -957,11 +959,8 @@
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
 				4A6A9A3C299DC2AD0039C0F7 /* Notification.Name+Extension.swift in Sources */,
 				4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */,
-
 				A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */,
-
 				7BEB09D6299CEEA70076A82F /* CommentListView.swift in Sources */,
-
 				A9D72540299B2D4400404E22 /* InformationGuideLabel.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
 				9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */,
