@@ -30,7 +30,7 @@ final class NotificationListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.classIdentifier, for: indexPath) as? NotificationTableViewCell else { return UITableViewCell() }
 
-        cell.configure(with: NotificationListDTO.testData[indexPath.row])
+        cell.configure(with: NotificationListVO.testData[indexPath.row])
         cell.selectionStyle = .none
         cell.backgroundColor = .dark01
 
@@ -46,7 +46,7 @@ final class NotificationListViewController: UITableViewController {
     
     //TODO: 추후 API 데이터로 변경 필요
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        NotificationListDTO.testData.count
+        NotificationListVO.testData.count
     }
 }
 

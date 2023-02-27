@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - AlertData
-struct NotificationListDTO: Codable {
+struct NotificationListVO: Codable {
     let alertList: [NotificationInfo]
 }
 
@@ -30,7 +30,7 @@ struct NotificationInfo: Codable {
     }
 }
 
-extension NotificationListDTO {
+extension NotificationListVO {
     static var testData: [NotificationInfo] = [
         NotificationInfo(alertID: 0, isInvitation: true, alertType: "", title: "새로운 밴드 초대 💌", content: "00밴드로부터 초대장이 왔어요", isChecked: false, updatedDate: "2023-02-23 13:33", bandID: 1, eventID: -1),
         NotificationInfo(alertID: 0, isInvitation: false, alertType: "", title: "‘블랙로즈' 방명록 🦹", content: "밴드 ‘블랙로즈'에 새로운 방명록이 달렸어요!", isChecked: false, updatedDate: "2023-02-23 11:33", bandID: 1, eventID: -1),
