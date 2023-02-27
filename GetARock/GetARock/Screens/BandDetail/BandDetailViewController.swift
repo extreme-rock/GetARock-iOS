@@ -40,8 +40,9 @@ final class BandDetailViewController: BaseViewController {
         commentList: []
     ){
         didSet{
-//            print("didSet 작동함")
-//            self.delegate?.refreshCommentList(data: bandData.commentList)
+            print("🔥🚨🔥🚨didSet 작동함🔥🚨🔥🚨")
+            print(bandData.commentList)
+            self.delegate?.refreshCommentList(data: bandData.commentList)
         }
     }
     
@@ -58,8 +59,6 @@ final class BandDetailViewController: BaseViewController {
         //MARK: 비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
         Task {
             await getBandData()
-//            print("가져오기 성공")
-//            print(bandData)
             
             bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
             
@@ -99,8 +98,8 @@ extension BandDetailViewController {
             let (data, response) = try await URLSession.shared.data(from: url)
             //MARK: 데이터 디코딩
             let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
-            print("❤️ Response data raw : \(data)")
-            print("응답 내용 : \(response)")
+//            print("❤️ Response data raw : \(data)")
+//            print("응답 내용 : \(response)")
             self.bandData = decodedData
         } catch {
             print("bad news! decoding error occuerd")

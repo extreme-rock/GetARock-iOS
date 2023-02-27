@@ -8,8 +8,8 @@
 import Foundation
 
 struct CommentListDTO: Codable {
-    let memberId: Int
-    let bandID: Int
+    let memberId: String
+    let bandId: String
     let content: String
 }
 

@@ -6,21 +6,26 @@
 //
 
 import UIKit
+//
+//protocol CommentListUpdateDelegate: AnyObject {
+//    func refreshCommentList()
+//}
 
 final class WriteCommentTextView: UIView {
     
     // MARK: - Property
     
+//    weak var delegate: CommentListUpdateDelegate?
     private let maxHeight: CGFloat = 116
     private var textViewHeightConstraint: NSLayoutConstraint?
     private var keyboardHeightPaddingConstraint: NSLayoutConstraint?
     private var keyboardHeight: CGFloat = 30
     
     //TODO: 멤버아이디랑 밴드ID는 로그인한 사용자 정보를 가져와서 사용해야함
-    private var memberId = 0
-    private var bandID = 0
-//    private var commentText = ""
-    private lazy var postcomment = CommentListDTO(memberId: memberId, bandID:  bandID, content: "댓글 포스트 성공")
+    private var memberId = "10"
+    private var bandId = "1"
+    private var contentText = ""
+//    private lazy var postcomment = CommentListDTO(memberId: memberId, bandId:  bandId, content: "댓글 포스트 성공")
     
     // MARK: - View
     
@@ -155,8 +160,17 @@ final class WriteCommentTextView: UIView {
     }
     
     @objc func TapAddCommentButton() {
-        print("버튼눌림")
-        postComment()
+        print("🔥버튼눌림🔥")
+        if self.commentTextView.text.isEmpty == false {
+            self.contentText = commentTextView.text
+            postComment()
+            self.commentTextView.text.removeAll()
+            //테이블뷰 리로드
+            Task {
+                await BandDetailViewController().getBandData()
+            }
+        }
+        
     }
 }
 
@@ -220,7 +234,6 @@ extension WriteCommentTextView {
 
 extension WriteCommentTextView {
     
-    //TODO: 아직 서버에 등록된 멤버,밴드 ID가 없어서 테스트 못하는 중.. 구엘이 만들어 주시면 테스트해보기~
     func postComment() {
         do {
             let headers = [
@@ -229,33 +242,28 @@ extension WriteCommentTextView {
                 "Notion-Version": "2022-06-28",
                 "content-type": "application/json"
             ]
-
-            let request = NSMutableURLRequest(url: NSURL(string: "http://43.201.55.66:8080/comment/band")! as URL,
+            
+            var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/comment/band")
+            let memberIdQuery = URLQueryItem(name: "memberId", value: memberId)
+            let bandIdQuery = URLQueryItem(name: "bandId", value: bandId)
+            let content = URLQueryItem(name: "content", value: contentText)
+            queryURLComponent?.queryItems = [memberIdQuery,bandIdQuery,content]
+            
+            guard let url = queryURLComponent?.url else { return }
+            let request = NSMutableURLRequest(url: url,
                                               cachePolicy: .useProtocolCachePolicy,
                                               timeoutInterval: 10.0)
-
-            var encodedData = Data()
-            //MARK: 데이터 인코딩
-            do {
-                let data = try JSONEncoder().encode(self.postcomment)
-                encodedData = data
-                print(encodedData)
-            } catch {
-                print("encoding Error Occured")
-            }
-
             request.httpMethod = "POST"
-            request.httpBody = encodedData
             request.allHTTPHeaderFields = headers
 
-            //MARK: TASK를 만들어주는 과정
-            let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            let dataTask = URLSession.shared.dataTask(with: request as URLRequest,
+                                                      completionHandler: { (data, response, error) -> Void in
                 if (error != nil) {
                     print("통신 과정에서 에러가 났습니다.")
                     print(error?.localizedDescription ?? "error case occured")
                 } else {
                     print("response는 다음과 같습니다")
-                    print(response)
+//                    print(response)
                 }
             })
             dataTask.resume()

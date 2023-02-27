@@ -14,6 +14,7 @@ final class CommentListView: UIView {
     
     private var commentData: [CommentList]?
     private var totalCommentNumber: Int = 0
+    private let vc = BandDetailViewController()
     
     // MARK: - View
     
@@ -30,6 +31,7 @@ final class CommentListView: UIView {
         $0.separatorColor = .clear
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = UITableView.automaticDimension
+        
         return $0
     }(UITableView(frame: .zero, style: .grouped))
     
@@ -51,8 +53,8 @@ final class CommentListView: UIView {
         super.init(frame: .zero)
         attribute()
         setupLayout()
-        let vc = BandDetailViewController()
         vc.delegate = self
+        refreshCommentList(data: commentData)
     }
     
     required init?(coder: NSCoder) {
@@ -69,7 +71,7 @@ final class CommentListView: UIView {
         self.backgroundColor = .dark01
         setupTotalListNumberLabel()
         setTableView()
-        refreshCommentList(data: commentData)
+        //        refreshCommentList(data: commentData)
     }
     
     private func setupLayout() {
@@ -113,7 +115,7 @@ final class CommentListView: UIView {
 // MARK: - UITableViewDelegate
 
 extension CommentListView: UITableViewDelegate {
-
+    
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(
@@ -163,10 +165,12 @@ extension CommentListView: UITableViewDataSource {
 
 extension CommentListView: CommentListUpdateDelegate {
     func refreshCommentList(data: [CommentList]?) {
-        commentData = data
-        print("델리게이트 일하고 있습니다~")
-        print("댓글 정보 이거 받았어요~ \(commentData)")
-        self.tableView.reloadData()
-        self.setupTotalListNumberLabel()
+        self.commentData = data
+        print(self.commentData)
+        DispatchQueue.main.async { [weak self] in
+            print("🔥🚨🔥🚨델리게이트 일하고 있습니다~🔥🚨🔥🚨")
+            self?.tableView.reloadData()
+            self?.setupTotalListNumberLabel()
+        }
     }
 }
