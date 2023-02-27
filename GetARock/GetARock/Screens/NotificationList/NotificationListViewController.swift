@@ -9,7 +9,7 @@ import UIKit
 
 final class NotificationListViewController: UITableViewController {
     
-    private var alertListData: [NotificationInfo] = []
+    private var notificationList: [NotificationInfo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +21,10 @@ final class NotificationListViewController: UITableViewController {
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.classIdentifier)
         self.tableView.backgroundColor = .dark01
         self.tableView.separatorStyle = .none
+        
+        self.customizeBackButton()
+        self.fixNavigationBarColorWhenScrollDown()
+        self.setNavigationInlineTitle(title: "알림함")
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,7 +56,7 @@ extension NotificationListViewController {
         Task {
             do {
                 let serverData: [NotificationInfo] = try await NotificationNetworkManager.shared.getNotificationList(memberId: 1)
-                self.alertListData = serverData
+                self.notificationList = serverData
             } catch {
                 print(error)
             }
@@ -83,7 +87,6 @@ extension NotificationListViewController {
     }
     
     //TODO: 이 뷰를 들어온 사용자가, 자신이 초대한 사람이 거절을 했을 경우, 그에 맞게 UI 업데이트, 분기처리가 따로 필요함
-    //MARK: 하지만 바로 양쪽 사용자 모두 업데이트 시키는게 쉽지않을듯? 추후에 테스트를 다시 하겠지만 현재 (02.24)우선순위가 낮다고 판단..
     private func getInvitationRejectNotification(cellIndexPath: IndexPath) {
         guard let cell = self.tableView.cellForRow(at: cellIndexPath) as? NotificationTableViewCell else { return }
         cell.updateTextForInvitationRejectAlert(userName: "알로라", bandName: "00밴드")
