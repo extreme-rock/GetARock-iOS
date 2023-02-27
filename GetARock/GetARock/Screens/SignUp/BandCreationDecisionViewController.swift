@@ -12,6 +12,8 @@ final class BandCreationDecisionViewController: BaseViewController {
     // MARK: - Property
     
     private let user: User
+    private var isMakeBandButtonTapped = false
+    private var isSkipMakingBandButtonTapped = false
     
     // MARK: - View
     
@@ -76,7 +78,6 @@ final class BandCreationDecisionViewController: BaseViewController {
         $0.numberOfLines = 2
         return $0
     }(UILabel())
-    
     
     // MARK: - Life Cycle
     
@@ -161,16 +162,26 @@ final class BandCreationDecisionViewController: BaseViewController {
     
     private func addActionToButtons() {
         // TODO: 각 상황에 따라 VC 연결하기
-        let makeBandAction = UIAction { _ in
-            Task {
-                try await SignUpNetworkManager.postMember(user: self.user)
+        let makeBandAction = UIAction { [weak self] _ in
+            guard let isMakeBandButtonTapped = self?.isMakeBandButtonTapped else { return }
+            if !isMakeBandButtonTapped {
+                Task {
+                    guard let user = self?.user else { return }
+                    try await SignUpNetworkManager.postMember(user: user)
+                }
             }
+            self?.isMakeBandButtonTapped = true
         }
         
-        let passMakeBandAction = UIAction { _ in
-            Task {
-                try await SignUpNetworkManager.postMember(user: self.user)
+        let passMakeBandAction = UIAction { [weak self] _ in
+            guard let isSkipMakingBandButtonTapped = self?.isSkipMakingBandButtonTapped else { return }
+            if !isSkipMakingBandButtonTapped {
+                Task {
+                    guard let user = self?.user else { return }
+                    try await SignUpNetworkManager.postMember(user: user)
+                }
             }
+            self?.isSkipMakingBandButtonTapped = true
         }
         self.makeBandButton.addAction(makeBandAction, for: .touchUpInside)
         self.passMakingBandButton.addAction(passMakeBandAction, for: .touchUpInside)
