@@ -829,11 +829,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
 				A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */,
-
 				7B6D3357299A50F2001FD630 /* DetailContentView.swift in Sources */,
-
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
