@@ -26,9 +26,9 @@ final class BandDetailViewController: BaseViewController {
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
-        introduction: "",
         age: "",
-        address: Address(city: "",
+        introduction: "",
+        address: AddressVO(city: "",
                          street: "",
                          detail: "",
                          longitude: 0.0,
@@ -37,24 +37,11 @@ final class BandDetailViewController: BaseViewController {
         songList: [],
         snsList: [],
         eventList: [],
-        commentList: [CommentList.init(commentID: 01,
-                                       memberName: "블랙로즈",
-                                       comment: "댓글내용입니당",
-                                       createdDate: "2022.11.19 13:20"),
-                      CommentList.init(commentID: 02,
-                                       memberName: "오아시스",
-                                       comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
-                                       createdDate: "2022.11.19 13:20"),
-                      CommentList.init(commentID: 03,
-                                       memberName: "3번쨰 밴드",
-                                       comment: "오 효자동 근처 밴드네요! 반갑습니당 >///< 저희도 근처에 있는데 꼭 공연보러갈게요!",
-                                       createdDate: "2022.11.19 13:20")]
+        commentList: []
     ){
         didSet{
-            print("정보 바뀜")
-            print("didSet 작동 중")
-            // 델리게이트 작동안함 왜 안하냐고 ㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜ;;;;;
-            self.delegate?.refreshCommentList(data: bandData.commentList)
+//            print("didSet 작동함")
+//            self.delegate?.refreshCommentList(data: bandData.commentList)
         }
     }
     
@@ -71,8 +58,8 @@ final class BandDetailViewController: BaseViewController {
         //MARK: 비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
         Task {
             await getBandData()
-            print("가져오기 성공")
-            print(bandData)
+//            print("가져오기 성공")
+//            print(bandData)
             
             bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
             
@@ -102,7 +89,7 @@ final class BandDetailViewController: BaseViewController {
 extension BandDetailViewController {
     
     func getBandData() async {
-        var queryURLComponent = URLComponents(string: "http://43.201.55.66:8080/band")
+        var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
         let idQuery = URLQueryItem(name: "id", value: bandID)
         queryURLComponent?.queryItems = [idQuery]
         guard let url = queryURLComponent?.url else { return }
@@ -110,12 +97,10 @@ extension BandDetailViewController {
         do {
             //MARK: 데이터 받아오기
             let (data, response) = try await URLSession.shared.data(from: url)
-            
             //MARK: 데이터 디코딩
             let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
-            print("Response data raw: \(data)")
-            print("fetch Data")
-            print("\(response)")
+            print("❤️ Response data raw : \(data)")
+            print("응답 내용 : \(response)")
             self.bandData = decodedData
         } catch {
             print("bad news! decoding error occuerd")
