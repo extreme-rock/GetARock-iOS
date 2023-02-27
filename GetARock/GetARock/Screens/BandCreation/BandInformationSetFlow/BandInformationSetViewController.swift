@@ -71,7 +71,6 @@ final class BandInformationSetViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
     private lazy var practicePlaceSearchButton: BasicBoxView = {
         $0.showRightView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPracticePlaceSearchButton))
@@ -119,6 +118,7 @@ final class BandInformationSetViewController: BaseViewController {
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
+        button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
         return button
     }()
 
@@ -264,16 +264,20 @@ extension BandInformationSetViewController {
 
     @objc func didTapPracticePlaceSearchButton() {
         let nextViewController = PracticePlaceSearchViewController()
-        nextViewController.completion = { mapItem in
+        nextViewController.completion = { [weak self] mapItem in
             print("completion Handler 작동")
-            self.practicePlaceSearchButton.configureText(with: mapItem.name ?? "")
-            self.practicePlaceSearchButton.hideRightView()
+            self?.practicePlaceSearchButton.configureText(with: mapItem.name ?? "")
+            self?.practicePlaceSearchButton.hideRightView()
         }
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     @objc func didTapAddPracticeSong() {
         let nextViewController = AddPracticeSongViewController()
+        nextViewController.completion = { [weak self] songs in
+            let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
+            addedSongs.forEach { self?.practiceSongVstack.addArrangedSubview($0)}
+        }
         navigationController?.pushViewController(nextViewController, animated: true)
     }
     
@@ -298,5 +302,17 @@ extension BandInformationSetViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y += self.keyBoardHeight
+    }
+}
+
+extension BandInformationSetViewController {
+    func makePracticeSongBoxes(with data: [PracticeSongCardView]) -> [PracticeSongBoxView] {
+        var result: [PracticeSongBoxView] = []
+        for datum in data {
+            let practiceSong: PracticeSongBoxView = PracticeSongBoxView()
+            practiceSong.configure(data: datum)
+            result.append(practiceSong)
+        }
+        return result
     }
 }

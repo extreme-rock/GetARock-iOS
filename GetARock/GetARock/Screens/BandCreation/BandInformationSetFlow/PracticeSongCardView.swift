@@ -86,4 +86,12 @@ final class PracticeSongCardView: UIStackView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func getArtistName() -> String {
+        return artistNameTextField.textField.text ?? ""
+    }
+    
+    func getSongName() -> String {
+        return practiceSongTextField.textField.text ?? ""
+    }
 }

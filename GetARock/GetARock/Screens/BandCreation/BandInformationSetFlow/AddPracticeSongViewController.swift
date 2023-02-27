@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class AddPracticeSongViewController: UIViewController {
+final class AddPracticeSongViewController: BaseViewController {
+    
+    var completion: (_ songs: [PracticeSongCardView]) -> Void = { songs in }
 
     let firstPracticeSongCard = PracticeSongCardView()
 
@@ -39,7 +41,7 @@ final class AddPracticeSongViewController: UIViewController {
         return button
     }()
     
-    private lazy var completeAddButton = {
+    private lazy var completeButton = {
         var configuration = UIButton.Configuration.filled()
         var container = AttributeContainer()
         container.font = UIFont.setFont(.contentBold)
@@ -47,7 +49,7 @@ final class AddPracticeSongViewController: UIViewController {
         configuration.attributedTitle = AttributedString("입력 완료", attributes: container)
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0)
         let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapCompleteButton), for: .touchUpInside)
         return button
     }()
 
@@ -58,7 +60,7 @@ final class AddPracticeSongViewController: UIViewController {
     }
 
     override func viewDidLayoutSubviews() {
-        applyButtonSnapshot()
+        updateDeleteButtonState()
     }
 
     private func attribute() {
@@ -89,15 +91,15 @@ final class AddPracticeSongViewController: UIViewController {
                                          trailing: contentView.trailingAnchor,
                                          padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20))
         
-        mainScrollView.addSubview(completeAddButton)
+        mainScrollView.addSubview(completeButton)
 
-        completeAddButton.constraint(top: addPracticeSongButton.bottomAnchor,
+        completeButton.constraint(top: addPracticeSongButton.bottomAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
                                   trailing: view.safeAreaLayoutGuide.trailingAnchor,
                                   padding: UIEdgeInsets(top: 40, left: 20, bottom: 10, right: 20))
     }
 
-    private func applyButtonSnapshot() {
+    private func updateDeleteButtonState() {
         //TODO: 강제언래핑 없애기
         if contentView.arrangedSubviews.count == 1 {
             contentView.arrangedSubviews.map { $0 as! PracticeSongCardView }.forEach { $0.deleteButton.isHidden = true }
@@ -121,6 +123,12 @@ extension AddPracticeSongViewController {
         let newCard = PracticeSongCardView()
         guard contentView.arrangedSubviews.count < 3 else { return }
         contentView.insertArrangedSubview(newCard, at: contentView.arrangedSubviews.endIndex)
-        applyButtonSnapshot()
+        updateDeleteButtonState()
+    }
+    
+    @objc func didTapCompleteButton() {
+        let addedSongs: [PracticeSongCardView] = contentView.arrangedSubviews.map { $0 as! PracticeSongCardView }
+        completion(addedSongs)
+        self.navigationController?.popViewController(animated: true)
     }
 }

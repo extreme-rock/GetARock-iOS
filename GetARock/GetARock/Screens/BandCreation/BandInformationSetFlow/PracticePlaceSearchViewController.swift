@@ -36,22 +36,19 @@ final class PracticePlaceSearchViewController: BaseViewController {
         return $0
     }(UITableView())
     
-    //MARK: Google Map으로 현재 위치 바꿔야함...
-    //TODO: 밴드 멤버 추가 버튼 레이아웃 참고하여 바꾸기
-    
+    //MARK: Google Map으로 현재 위치 바꿔야하나?
     private lazy var currentLocationButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.scopeSymbol
         configuration.title = "현재 위치"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 5
+        
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.widthAnchor, constant: 118)
         button.constraint(.heightAnchor, constant: 45)
-        let action = UIAction { _ in
-            self.locationManager.requestWhenInUseAuthorization()
-        }
+        let action = UIAction { [weak self] _ in self?.locationManager.requestWhenInUseAuthorization() }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -176,38 +173,6 @@ extension PracticePlaceSearchViewController: UITableViewDelegate {
             guard let mapItem = response?.mapItems.first else { return }
             self.completion(mapItem)
             self.navigationController?.popViewController(animated: true)
-        }
-    }
-}
-//MARK: Merge 이후 삭제 예정
-
-import UIKit
-
-final class BasicButton : UIButton {
-    
-    var contentText: String
-    var widthPadding: Double?
-    var heightPadding: Double?
-    
-    init(text: String, widthPadding: Double? = nil, heightPadding: Double? = nil) {
-        self.contentText = text
-        if let widthPadding = widthPadding { self.widthPadding = widthPadding }
-        if let heightPadding = heightPadding { self.heightPadding = heightPadding }
-        super.init(frame: .zero)
-        titleLabel?.font = UIFont.setFont(.contentBold)
-        self.setTitle(contentText, for: .normal)
-        backgroundColor = .systemPurple
-        layer.cornerRadius = 10
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        get {
-            let baseSize = super.intrinsicContentSize
-            return CGSize(width: baseSize.width + (widthPadding ?? 0), height: baseSize.height + (heightPadding ?? 0))
         }
     }
 }
