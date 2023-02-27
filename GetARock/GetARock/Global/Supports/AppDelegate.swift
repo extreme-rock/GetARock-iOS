@@ -19,6 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken
+                     deviceToken: Data) {
+        self.sendDeviceTokenToServer(token: deviceToken)
+    }
+    
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError
+                     error: Error) {
+        print("An error has occurred while registering notifications: \(error.localizedDescription)")
+    }
+    
     // MARK: UISceneSession Lifecycle
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -50,5 +62,39 @@ extension AppDelegate {
             }
         }
         
+    }
+    
+    private func sendDeviceTokenToServer(token: Data) {
+        let deviceTokenString = token.map { String(format: "%02x", $0) }.joined()
+        let deviceToken = DeviceTokenDTO(memberID: 1, deviceToken: deviceTokenString)
+        
+        do {
+            let headers = ["content-type": "application/json"]
+            let request = NSMutableURLRequest(url: NSURL(string: "https://api.ryomyom.com/apns/device-token")! as URL,
+                                              cachePolicy: .useProtocolCachePolicy,
+                                              timeoutInterval: 10.0)
+            var encodedData = Data()
+           
+            do {
+                let data = try JSONEncoder().encode(deviceToken)
+                encodedData = data
+            } catch let error as NSError{
+                print("An error has occurred while encoding JSONObject: \(error.localizedDescription)")
+            }
+
+            request.httpMethod = "POST"
+            request.httpBody = encodedData
+            request.allHTTPHeaderFields = headers
+
+            let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+                if (error != nil) {
+                    print("An error has occurred : \(error?.localizedDescription ?? "")")
+                } else {
+                    print(String(data: data!, encoding: String.Encoding.utf8) ?? "no responce")
+                }
+            })
+            
+            dataTask.resume()
+        }
     }
 }
