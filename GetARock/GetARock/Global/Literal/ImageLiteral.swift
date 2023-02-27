@@ -21,6 +21,7 @@ enum ImageLiteral {
     static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
     static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     static var checkMarkCircleFillSymbol: UIImage { .load(systemName: "checkmark.circle.fill") }
+    static var exclamationMarkCircleSymbol: UIImage { .load(systemName: "exclamationmark.circle") }
     
     // MARK: - icon
     
