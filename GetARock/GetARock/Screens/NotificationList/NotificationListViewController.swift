@@ -14,7 +14,6 @@ final class NotificationListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //TODO: 추후에 API를 통해 데이터 업데이트 과정이 필요함
-//        fetchAlertListData()
         attribute()
     }
     
@@ -26,10 +25,13 @@ final class NotificationListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.classIdentifier, for: indexPath) as? NotificationTableViewCell else { return UITableViewCell() }
+
         cell.configure(with: NotificationListDTO.testData[indexPath.row])
         cell.selectionStyle = .none
         cell.backgroundColor = .dark01
+
         let rejectAction = UIAction { _ in self.rejectInvitation(cellIndexPath: indexPath) }
+
         let acceptAction = UIAction { _ in
             //TODO: 초대 수락시 navigation Flow
         }
@@ -63,8 +65,10 @@ extension NotificationListViewController {
         let alertTitle = NSLocalizedString("초대 거절", comment: "Invitation reject title")
         let alertMessage = NSLocalizedString("밴드 ‘00 밴드’의 초대를 거절하시겠습니까?", comment: "Invitation reject message")
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
         let okayAction = NSLocalizedString("확인", comment: "Alert OK button title")
         let cancelAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
+
         alertController.addAction(UIAlertAction(title: cancelAction, style: .destructive))
         alertController.addAction(UIAlertAction(title: okayAction, style: .default, handler: { _ in
             self.tableView.performBatchUpdates { self.reconfigureCellAfterRejectInvitation(cellIndexPath: cellIndexPath) }

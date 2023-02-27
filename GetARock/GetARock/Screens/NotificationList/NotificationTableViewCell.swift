@@ -88,12 +88,12 @@ extension NotificationTableViewCell {
     func configure(with data: NotificationInfo) {
         self.titleLabel.text = data.title
         self.subtitleLabel.text = data.content
-        self.uploadTime.text = data.updatedDate.transformToDate().abbreviatedRelativeKRTime
+        self.uploadTime.text = data.updatedDate.toDateWithDateComponents().abbreviatedRelativeKRTime
         self.isInvitation = data.isInvitation
         if isInvitation {
             contentInformationVstack.addArrangedSubview(buttonHstack)
         }
-        
+
         //TODO: 추후 밴드 알람인지 모여락 알람인지 어떻게 구분할지 논의 필요
         if data.bandID > 0 {
             self.cellImage.image = ImageLiteral.bandNotificationIcon

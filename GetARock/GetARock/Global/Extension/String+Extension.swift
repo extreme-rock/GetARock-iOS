@@ -44,7 +44,7 @@ extension String {
         }
     }
     
-    func transformToDate() -> Date {
+    func toDateWithDateComponents() -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
