@@ -36,7 +36,7 @@ final class TextLimitTextField: UIView {
     
     // MARK: - View
     
-    private lazy var textField: UITextField = {
+    lazy var textField: UITextField = {
         $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
         $0.delegate = self
         return $0
