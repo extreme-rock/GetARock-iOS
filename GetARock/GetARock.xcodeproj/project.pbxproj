@@ -23,7 +23,6 @@
 		4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */; };
 		4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */; };
 		4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */; };
-		4A43E6E929A08CE300EC4BA5 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6E829A08CE300EC4BA5 /* UIViewController+Extension.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
 		4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */; };
 		4A6A9A3C299DC2AD0039C0F7 /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */; };
@@ -144,7 +143,6 @@
 		4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkButton.swift; sourceTree = "<group>"; };
 		4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermGuideStackView.swift; sourceTree = "<group>"; };
 		4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAuthorizationViewController.swift; sourceTree = "<group>"; };
-		4A43E6E829A08CE300EC4BA5 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
 		4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectCollectionViewHeader.swift; sourceTree = "<group>"; };
 		4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
@@ -508,7 +506,6 @@
 				A951F6522989EF6C00902CED /* String+Extension.swift */,
 				7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */,
 				4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */,
-				4A43E6E829A08CE300EC4BA5 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -920,7 +917,6 @@
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
 				4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */,
 				7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */,
-				4A43E6E929A08CE300EC4BA5 /* UIViewController+Extension.swift in Sources */,
 				B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */,
 				4AC4CE49297FE16600BB823C /* UIButton+Extension.swift in Sources */,
 				4A268C63299A18660068F200 /* ModifyMyPageViewController.swift in Sources */,
