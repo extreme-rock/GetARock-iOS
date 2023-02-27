@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PositionSelectViewController: UIViewController {
+final class PositionSelectViewController: BaseViewController {
     
     private var positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
@@ -40,6 +40,10 @@ final class PositionSelectViewController: UIViewController {
         attribute()
         configureDelegate()
         addAllObserver()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     deinit {
