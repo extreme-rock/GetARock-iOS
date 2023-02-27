@@ -6,7 +6,7 @@
 //
 
 struct BasicDataModel {
-    static var bandCreationData: BandInformationDTO = BandInformationDTO(
+    static var bandCreationData: BandCreationDTO = BandCreationDTO(
         name: "user",
         address: Address(city: "default",
                          street: "default",

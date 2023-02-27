@@ -12,6 +12,7 @@ final class UserInfoInputViewController: BaseViewController {
     // MARK: - Property
     
     private let instrumentList: [InstrumentList]?
+    private var keyBoardHeight: CGFloat = 280
     
     // MARK: - View
     
@@ -65,7 +66,7 @@ final class UserInfoInputViewController: BaseViewController {
                                      userNamingTextField]))
     
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
-    
+
     private let ageSelectCollectionView: SelectCollectionView = {
         $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
         $0.constraint(.heightAnchor, constant: 102)
@@ -74,7 +75,8 @@ final class UserInfoInputViewController: BaseViewController {
         widthOption: .flexable,
         items: Age.allCases.map { $0.rawValue },
         widthSize: 25,
-        itemSpacing: 5
+        itemSpacing: 5,
+        cellBackgroundColor: .dark02
     ))
     private lazy var ageInputStackView: UIStackView = {
         $0.axis = .vertical
@@ -94,7 +96,8 @@ final class UserInfoInputViewController: BaseViewController {
         widthOption: .fixed,
         items: Gender.allCases.map { $0.rawValue },
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
-        itemSpacing: 8
+        itemSpacing: 8,
+        cellBackgroundColor: .dark02
     ))
     
     private lazy var genderInputStackView: UIStackView = {
@@ -173,8 +176,6 @@ final class UserInfoInputViewController: BaseViewController {
         return $0
     }(UIScrollView())
     
-    private let contentView = UIView()
-    
     private lazy var contentStackView: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
@@ -205,12 +206,26 @@ final class UserInfoInputViewController: BaseViewController {
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
         self.configureDelegate()
+        self.setNotification()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+    }
+    
+    // MARK: - Method
     
     private func configureDelegate() {
         self.genderSelectCollectionView.delegate = self
         self.ageSelectCollectionView.delegate = self
         self.userNamingTextField.delegate = self
+        self.youtubeTextField.textField.delegate = self
+        self.instagramTextField.textField.delegate = self
+        self.soundCloudTextField.textField.delegate = self
     }
     
     private func attribute() {
@@ -218,39 +233,26 @@ final class UserInfoInputViewController: BaseViewController {
     }
     
     private func setupLayout() {
-        //MARK: - scrollView
-        
         view.addSubview(scrollView)
         scrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                               leading: view.safeAreaLayoutGuide.leadingAnchor,
-                              bottom: view.keyboardLayoutGuide.topAnchor,
+                              bottom: view.bottomAnchor,
                               trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
-        scrollView.addSubview(contentView)
-        contentView.constraint(top: scrollView.contentLayoutGuide.topAnchor,
-                               leading: scrollView.contentLayoutGuide.leadingAnchor,
-                               bottom: scrollView.contentLayoutGuide.bottomAnchor,
-                               trailing: scrollView.contentLayoutGuide.trailingAnchor)
-        
-        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        
-        //MARK: - contentView
-        
-        contentView.addSubview(contentStackView)
-        contentStackView.constraint(top: contentView.topAnchor,
-                                    leading: contentView.leadingAnchor,
-                                    bottom: contentView.bottomAnchor,
-                                    trailing: contentView.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
-        
+        scrollView.addSubview(contentStackView)
+        contentStackView.constraint(top: scrollView.contentLayoutGuide.topAnchor,
+                                    leading: scrollView.contentLayoutGuide.leadingAnchor,
+                                    bottom: scrollView.contentLayoutGuide.bottomAnchor,
+                                    trailing: scrollView.contentLayoutGuide.trailingAnchor,
+                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16))
     }
     
     private func checkNextButtonEnabledState() {
         let isAgeSelected = ageSelectCollectionView.isSelected()
         let isGenderSelected = genderSelectCollectionView.isSelected()
-        let isDuplicated = userNamingTextField.isNameDuplicated()
+        let isAvailableName = userNamingTextField.isAvailableName()
         
-        if isAgeSelected && isGenderSelected && isDuplicated {
+        if isAgeSelected && isGenderSelected && isAvailableName {
             self.nextButton.isEnabled = true
         } else {
             self.nextButton.isEnabled = false
@@ -288,13 +290,39 @@ final class UserInfoInputViewController: BaseViewController {
 }
 
 extension UserInfoInputViewController: SelectCollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionViewCellDidSelect() {
         self.checkNextButtonEnabledState()
     }
 }
 
 extension UserInfoInputViewController: TextLimitTextFieldDelegate {
-    func checkDuplicateButtonTapped() {
+    func textFieldTextDidChanged() {
         self.checkNextButtonEnabledState()
+    }
+}
+
+// MARK: 키보드 높이 관련 함수
+
+extension UserInfoInputViewController {
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(getKeyboardHeight(notification: )),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+    }
+    
+    @objc func getKeyboardHeight(notification: Notification) {
+        keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
+    }
+}
+
+extension UserInfoInputViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.view.frame.origin.y -= self.keyBoardHeight
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view.frame.origin.y += self.keyBoardHeight
     }
 }
