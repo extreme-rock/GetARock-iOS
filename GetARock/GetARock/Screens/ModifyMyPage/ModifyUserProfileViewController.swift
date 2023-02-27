@@ -11,21 +11,8 @@ final class ModifyUserProfileViewController: UIViewController {
     
     // MARK: - Property
     
-    enum EntryPoint {
-        case modify
-        case signIn
-    }
-    
-    private var entryPoint: EntryPoint
     // MARK: - View
     
-    private let pageIndicatorLabel: UILabel = {
-        $0.font = .setFont(.headline03)
-        $0.text = "3/3"
-        $0.textColor = .gray02
-        return $0
-    }(UILabel())
-
     private let contentViewTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
@@ -42,8 +29,7 @@ final class ModifyUserProfileViewController: UIViewController {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [pageIndicatorLabel,
-                                     contentViewTitleLabel,
+    }(UIStackView(arrangedSubviews: [contentViewTitleLabel,
                                      contentViewSubTitleLabel]))
 
     private let userNamingGuideTitleLabel = InformationGuideLabel(guideText: "닉네임",
@@ -159,12 +145,6 @@ final class ModifyUserProfileViewController: UIViewController {
                                      youtubeTextField,
                                      instagramTextField,
                                      soundCloudTextField]))
-
-    private let informationFillCompleteButton: BottomButton = {
-        //TODO: 밴드 정보 POST action 추가 필요
-        $0.setTitle("다음", for: .normal)
-        return $0
-    }(BottomButton())
     
     private lazy var scrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
@@ -185,32 +165,14 @@ final class ModifyUserProfileViewController: UIViewController {
                                      ageInputStackView,
                                      genderInputStackView,
                                      textViewStackView,
-                                     snsInformationStackView,
-                                     informationFillCompleteButton]))
+                                     snsInformationStackView]))
     
     // MARK: - Life Cycle
-    
-    init(entryPoint: EntryPoint) {
-        self.entryPoint = entryPoint
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
-        switch entryPoint {
-        case .modify:
-            pageIndicatorLabel.removeFromSuperview()
-            informationFillCompleteButton.removeFromSuperview()
-            // TODO: 선택했던 항목들 미리 선택해주는 함수
-        case .signIn:
-            return
-        }
     }
     
     private func attribute() {
