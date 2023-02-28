@@ -108,7 +108,6 @@ final class BandInformationSetViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    //TODO: 추후에 합주곡 삽입 action 추가 필요
     private lazy var addPracticeSongButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.plusSymbol

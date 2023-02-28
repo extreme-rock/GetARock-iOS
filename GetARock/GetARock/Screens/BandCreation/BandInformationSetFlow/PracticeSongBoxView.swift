@@ -9,12 +9,6 @@ import UIKit
 
 final class PracticeSongBoxView: UIView {
     
-    // MARK: - Property
-    
-    private let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 20)
-    
-    private var cellIndex: Int = -1
-    
     // MARK: - View
     
     private let songTitleLabel: UILabel = {
@@ -32,9 +26,7 @@ final class PracticeSongBoxView: UIView {
     }(UILabel())
     
     private lazy var musicIconImage: UIImageView = {
-        $0.image = UIImage(
-            systemName: "music.quarternote.3"
-        )
+        $0.image = UIImage(systemName: "music.quarternote.3")
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .white
         $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
@@ -44,33 +36,13 @@ final class PracticeSongBoxView: UIView {
         return $0
     }(UIImageView())
     
-    private lazy var linkButton: UIButton = {
-        $0.setImage(UIImage(
-            systemName: "arrow.up.right",
-            withConfiguration: imageConfiguation), for: .normal
-        )
-        $0.contentMode = .scaleAspectFit
-        $0.tintColor = .white
-        $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
-                                     for: .horizontal)
-        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
-                                                   for: .horizontal
-        )
-        return $0
-    }(UIButton())
-    
     private lazy var deleteButton: UIButton = {
-        $0.setImage(UIImage(
-            systemName: "xmark.circle.fill",
-            withConfiguration: imageConfiguation),for: .normal
-        )
+        $0.setImage(ImageLiteral.xmarkCircleSymbol, for: .normal)
+        let action = UIAction { _ in self.removeFromSuperview() }
+        $0.addAction(action, for: .touchUpInside)
         $0.contentMode = .scaleAspectFit
-        $0.tintColor = .gray02
-        $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
-                                     for: .horizontal)
-        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
-                                                   for: .horizontal
-        )
+        $0.constraint(.widthAnchor, constant: 24)
+        $0.constraint(.heightAnchor, constant: 24)
         return $0
     }(UIButton())
     
@@ -91,14 +63,14 @@ final class PracticeSongBoxView: UIView {
         $0.layer.borderColor = UIColor.gray02.cgColor
         $0.layer.borderWidth = 1
         return $0
-    }(UIStackView(arrangedSubviews: [musicIconImage,songLabelStackView]))
+    }(UIStackView(arrangedSubviews: [musicIconImage,
+                                     songLabelStackView]))
     
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupLayout()
-        addDeleteAction()
     }
     
     required init?(coder: NSCoder) {
@@ -110,22 +82,8 @@ final class PracticeSongBoxView: UIView {
     private func setupLayout() {
         self.addSubview(songStackView)
         self.songStackView.constraint(to: self)
-    }
-    
-    private func setupDeleteButtonLayout() {
-        self.songStackView.addArrangedSubview(deleteButton)
-    }
-    
-    private func setupLinkButtonLayout() {
-        self.songStackView.addArrangedSubview(linkButton)
-    }
-    
-    
-    func addDeleteAction() {
-        let action = UIAction { _ in
-            self.removeFromSuperview()
-        }
-        self.deleteButton.addAction(action, for: .touchUpInside)
+        self.addSubview(deleteButton)
+        deleteButton.constraint(trailing: self.trailingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
     }
     
     func configure(data: PracticeSongCardView) {
