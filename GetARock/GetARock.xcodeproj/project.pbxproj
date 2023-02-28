@@ -23,8 +23,11 @@
 		4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */; };
 		4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */; };
 		4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */; };
+		4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
 		4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */; };
+		4A63BE5429A601F900A30CA8 /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */; };
+		4A63BE5629A604BC00A30CA8 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A63BE5529A604BC00A30CA8 /* UILabel+Extension.swift */; };
 		4A6A9A3C299DC2AD0039C0F7 /* Notification.Name+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */; };
 		4A8355E3299F78AD00D82AF3 /* UserInfoInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */; };
 		4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */; };
@@ -155,8 +158,11 @@
 		4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkButton.swift; sourceTree = "<group>"; };
 		4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermGuideStackView.swift; sourceTree = "<group>"; };
 		4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAuthorizationViewController.swift; sourceTree = "<group>"; };
+		4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationDecisionViewController.swift; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
 		4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectCollectionViewHeader.swift; sourceTree = "<group>"; };
+		4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
+		4A63BE5529A604BC00A30CA8 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extension.swift"; sourceTree = "<group>"; };
 		4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoInputViewController.swift; sourceTree = "<group>"; };
 		4ABFB6332988160D004BF232 /* PositionCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -311,6 +317,7 @@
 				4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */,
 				4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */,
 				4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */,
+				4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -355,6 +362,7 @@
 				9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */,
 				9ACA5857299B6CEE00C6C2BC /* SNSBoxView.swift */,
 				A9EDD38D299A3114003F5392 /* BasicDataModel.swift */,
+				4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -562,7 +570,11 @@
 				A951F6522989EF6C00902CED /* String+Extension.swift */,
 				7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */,
 				4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */,
+
 				9AA0BB5529A4FD1800871A05 /* Date+Extension.swift */,
+
+				4A63BE5529A604BC00A30CA8 /* UILabel+Extension.swift */,
+
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -910,6 +922,7 @@
 				7B6D3354299A2F76001FD630 /* BandDetailViewController.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
+				4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
@@ -936,6 +949,7 @@
 				4A268C65299A187B0068F200 /* ModifyPositionViewController.swift in Sources */,
 				7B64C25B2983CFFE00E95911 /* SongListView.swift in Sources */,
 				4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */,
+				4A63BE5629A604BC00A30CA8 /* UILabel+Extension.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				9ACA5858299B6CEE00C6C2BC /* SNSBoxView.swift in Sources */,
 				7B236A8529854196006AE385 /* IconImageView.swift in Sources */,
@@ -954,6 +968,7 @@
 				4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */,
 				A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */,
 				9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */,
+				4A63BE5429A601F900A30CA8 /* InstructionViewController.swift in Sources */,
 				A951F6532989EF6C00902CED /* String+Extension.swift in Sources */,
 				7BC275602987EA10008F4B9F /* emptyView.swift in Sources */,
 				A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */,
