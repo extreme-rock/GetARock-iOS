@@ -260,8 +260,8 @@ final class UserInfoInputViewController: BaseViewController {
     }
     
     private func showBandCreationDecisionViewController() {
-        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.codingKye,
-              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.codingKye,
+        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.codingKey,
+              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.codingKey,
               let instrumentList else { return }
         
         let snsList = [youtubeTextField.inputText(),

@@ -21,7 +21,7 @@ enum Gender: String, CaseIterable {
     case man = "남자"
     case woman = "여자"
     
-    var codingKye: String {
+    var codingKey: String {
         switch self {
         case .woman:
             return "WOMAN"
@@ -39,7 +39,7 @@ enum Age: String, CaseIterable {
     case fifties = "50대"
     case oversixties = "60대 이상"
     
-    var codingKye: String {
+    var codingKey: String {
         switch self {
         case .undertwenties:
             return "UNDERTWENDTIES"

@@ -111,16 +111,11 @@ final class BandCreationDecisionViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        attribute()
         setupLayout()
         addActionToButtons()
     }
     
     // MARK: - Method
-    
-    private func attribute() {
-        self.view.backgroundColor = .dark01
-    }
     
     private func setupLayout() {
         self.view.addSubview(titleStackView)

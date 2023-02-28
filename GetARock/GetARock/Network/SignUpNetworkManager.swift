@@ -8,7 +8,7 @@
 import Foundation
 
 final class SignUpNetworkManager {
-    static func postMember(user: User) async throws {
+    static func postUserInformation(user: User) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"
@@ -33,7 +33,7 @@ final class SignUpNetworkManager {
         
         let dataTask = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
             if error != nil {
-                print(NetworkError.badResponse.localizedDescription)
+                print(error)
             } else if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case (200...299):
@@ -48,7 +48,7 @@ final class SignUpNetworkManager {
         dataTask.resume()
     }
     
-    static func putMember(user: User) async throws {
+    static func putUserInformation(user: User) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"
