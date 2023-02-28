@@ -40,13 +40,9 @@ final class BandDetailViewController: BaseViewController {
         commentList: []
     ){
         didSet{
-            DispatchQueue.main.async {
-                print("🔥🚨🔥🚨didSet 작동함🔥🚨🔥🚨 : \(self.bandData.commentList)")
-                // self.delegate?.refreshCommentList(data: self.bandData.commentList)
-                
-                // 델리게이트 작동안해서 일단 데이터 때려박음..
-                CommentListView(data: self.bandData.commentList).commentData = self.bandData.commentList
-            }
+            // 그냥 bandData.commentList 를 넘기려고 했으나... userInfo에는 딕셔너리 타입이 들어가야 한다고 해서 딕셔너리 변수 만들어서 넘겼습니당
+            let bandDataDict: [String: [CommentList]?] = ["data": bandData.commentList]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil, userInfo: bandDataDict as [AnyHashable : Any])
         }
     }
     

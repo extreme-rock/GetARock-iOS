@@ -73,7 +73,10 @@ final class CommentListView: UIView {
         setupLayout()
         setTableView()
         initRefresh()
-        //self.refreshCommentList(data: commentData)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(loadList),
+                                               name: NSNotification.Name(rawValue: "load"),
+                                               object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -143,6 +146,17 @@ final class CommentListView: UIView {
             self.setupTotalListNumberLabel()
         }
         print("새로고침 완료")
+    }
+    
+    @objc func loadList(notification: NSNotification){
+        print("만약 이 친구가 잘 돌아가고 있다는 것을 확인하고 싶다면 나를 출력하게나")
+            // BandDetailViewController 에서 넘긴 bandDataDict 를 key 값으로 이렇게 찾아서 쓰나봐요
+        // 신기방구
+        if let data = notification.userInfo?["data"] as? [CommentList]? {
+            self.commentData = data
+        }
+        self.tableView.reloadData()
+        self.setupTotalListNumberLabel()
     }
     
 }
