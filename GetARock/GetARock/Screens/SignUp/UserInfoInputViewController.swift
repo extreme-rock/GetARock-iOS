@@ -276,14 +276,6 @@ final class UserInfoInputViewController: BaseViewController {
                         instrumentList: instrumentList,
                         snsList: snsList)
         
-//        let user = User(memberId: nil,
-//                        name: self.userNamingTextField.inputText(),
-//                        age: "TWENTIES",
-//                        gender: "MAN",
-//                        introduction: self.userIntroTextView.inputText(),
-//                        instrumentList: instrumentList,
-//                        snsList: snsList)
-        
         let viewcontroller = BandCreationDecisionViewController(user: user)
         self.navigationController?.pushViewController(viewcontroller, animated: true)
     }
