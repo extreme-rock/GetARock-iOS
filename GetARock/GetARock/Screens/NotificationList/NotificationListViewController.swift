@@ -67,7 +67,7 @@ extension NotificationListViewController {
     private func rejectInvitation(cellIndexPath: IndexPath) {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
         let alertTitle = NSLocalizedString("초대 거절", comment: "Invitation reject title")
-        let alertMessage = NSLocalizedString("밴드 ‘00 밴드’의 초대를 거절하시겠습니까?", comment: "Invitation reject message")
+        let alertMessage = NSLocalizedString("밴드 ‘00 밴드’의\n초대를 거절하시겠습니까?", comment: "Invitation reject message")
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
 
         let rejectAction = NSLocalizedString("거절", comment: "Alert OK button title")
