@@ -161,31 +161,20 @@ final class PositionCollectionView: UIView {
     }
     
     func selectItems(with instrumentList: [InstrumentList]) {
-        //        let selectedItems = instrumentList.map {
-        //            ["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
-        //            ? Item.position(Position(instrumentName: $0.name,
-        //                                     instrumentImageName: Instrument(rawValue: $0.name) ?? .vocal, isETC: false))
-        //            : Item.position(Position(instrumentName: $0.name,
-        //                                      instrumentImageName: .etc, isETC: true))
-        //        }
+        
         for instrument in instrumentList {
             guard let index = self.items.firstIndex(where: { $0.name() == instrument.name }) else { return }
             let indexPath = IndexPath(row: index, section: 0)
+            self.selectedCellIndexPaths.append((indexPath: indexPath, isMain: true))
             self.collectionView.selectItem(at: indexPath,
                                            animated: true,
                                            scrollPosition: .top)
         }
-        
-//        instrumentList.forEach { instrument in
-//            let index = self.items.firstIndex { item in
-//                guard let name = item.name() else { return }
-//                if name == instrument.name {
-//                    return item
-//                }
-//            }
-//            let indexPath = IndexPath(row: index!, section: 0)
-//            print(indexPath)
-//        }
+        guard let mainInstrumentIndexPath = self.selectedCellIndexPaths.first?.indexPath else { return }
+        DispatchQueue.main.async {
+            self.markMainLabel(indexPath: mainInstrumentIndexPath)
+            self.postDeselectAllPositionButtonHiddenToggle()
+        }
     }
 }
 
