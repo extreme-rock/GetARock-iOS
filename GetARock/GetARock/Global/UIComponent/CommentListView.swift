@@ -12,9 +12,27 @@ import UIKit
 
 final class CommentListView: UIView {
     
-    private var commentData: [CommentList]?
+    var commentData: [CommentList]? {
+        didSet {
+            
+           
+//            DispatchQueue.main.async {
+//                //                let vc = BandDetailViewController()
+//                //                vc.delegate = self
+//                self.tableView.reloadData()
+//                self.setupTotalListNumberLabel()
+//            }
+            
+            // 추가하면 commentData에 댓글은 박히는데 테이블뷰 리로드가 안됨..ㅠㅠ
+            DispatchQueue.main.async(execute: {
+                print("🔥🚨🔥🚨테이블뷰 데이터🔥🚨🔥🚨: \(self.commentData)")
+                print("🔥🚨🔥🚨테이블뷰 데이터🔥🚨🔥🚨: \(self.commentData?.count)")
+                self.tableView.reloadData()
+            })
+        }
+    }
     private var totalCommentNumber: Int = 0
-    private let vc = BandDetailViewController()
+    private let tableviewRefreshControl = UIRefreshControl()
     
     // MARK: - View
     
@@ -53,8 +71,9 @@ final class CommentListView: UIView {
         super.init(frame: .zero)
         attribute()
         setupLayout()
-        vc.delegate = self
-        refreshCommentList(data: commentData)
+        setTableView()
+        initRefresh()
+        //self.refreshCommentList(data: commentData)
     }
     
     required init?(coder: NSCoder) {
@@ -70,8 +89,7 @@ final class CommentListView: UIView {
     private func attribute() {
         self.backgroundColor = .dark01
         setupTotalListNumberLabel()
-        setTableView()
-        //        refreshCommentList(data: commentData)
+//        setTableView()
     }
     
     private func setupLayout() {
@@ -110,6 +128,23 @@ final class CommentListView: UIView {
         self.totalCommentNumber = count
         totalCommentNumberLabel.text = "총 \(totalCommentNumber)개"
     }
+    
+    func initRefresh() {
+        tableviewRefreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
+        tableviewRefreshControl.tintColor = .gray02
+        self.tableView.refreshControl = tableviewRefreshControl
+    }
+    
+    @objc func refreshTable(refresh: UIRefreshControl) {
+        print("새로고침 시작")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.tableView.reloadData()
+            refresh.endRefreshing()
+            self.setupTotalListNumberLabel()
+        }
+        print("새로고침 완료")
+    }
+    
 }
 
 // MARK: - UITableViewDelegate
@@ -141,6 +176,7 @@ extension CommentListView: UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         tableView.indexPath(for: UITableViewCell())
+        
         return commentData?.count ?? 0
     }
     
@@ -162,15 +198,15 @@ extension CommentListView: UITableViewDataSource {
 }
 
 // MARK: - CommentListUpdateDelegate
-
+//
 extension CommentListView: CommentListUpdateDelegate {
     func refreshCommentList(data: [CommentList]?) {
-        self.commentData = data
-        print(self.commentData)
-        DispatchQueue.main.async { [weak self] in
-            print("🔥🚨🔥🚨델리게이트 일하고 있습니다~🔥🚨🔥🚨")
-            self?.tableView.reloadData()
-            self?.setupTotalListNumberLabel()
-        }
+//        self.commentData = data
+//        print("🔥🚨🔥🚨델리게이트 일하고 있습니다~🔥🚨🔥🚨 \(self.commentData)")
+        //        DispatchQueue.main.async { [weak self] in
+        //            print("🔥🚨🔥🚨델리게이트 일하고 있습니다~🔥🚨🔥🚨")
+        //            self?.tableView.reloadData()
+        //            self?.setupTotalListNumberLabel()
+        //        }
     }
 }

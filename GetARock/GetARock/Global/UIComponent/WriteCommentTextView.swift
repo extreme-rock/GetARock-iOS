@@ -165,10 +165,6 @@ final class WriteCommentTextView: UIView {
             self.contentText = commentTextView.text
             postComment()
             self.commentTextView.text.removeAll()
-            //테이블뷰 리로드
-            Task {
-                await BandDetailViewController().getBandData()
-            }
         }
         
     }
@@ -255,6 +251,9 @@ extension WriteCommentTextView {
                                               timeoutInterval: 10.0)
             request.httpMethod = "POST"
             request.allHTTPHeaderFields = headers
+            Task {
+                await BandDetailViewController().getBandData()
+            }
 
             let dataTask = URLSession.shared.dataTask(with: request as URLRequest,
                                                       completionHandler: { (data, response, error) -> Void in
@@ -263,7 +262,7 @@ extension WriteCommentTextView {
                     print(error?.localizedDescription ?? "error case occured")
                 } else {
                     print("response는 다음과 같습니다")
-//                    print(response)
+                    print(response)
                 }
             })
             dataTask.resume()

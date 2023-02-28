@@ -40,9 +40,13 @@ final class BandDetailViewController: BaseViewController {
         commentList: []
     ){
         didSet{
-            print("🔥🚨🔥🚨didSet 작동함🔥🚨🔥🚨")
-            print(bandData.commentList)
-            self.delegate?.refreshCommentList(data: bandData.commentList)
+            DispatchQueue.main.async {
+                print("🔥🚨🔥🚨didSet 작동함🔥🚨🔥🚨 : \(self.bandData.commentList)")
+                // self.delegate?.refreshCommentList(data: self.bandData.commentList)
+                
+                // 델리게이트 작동안해서 일단 데이터 때려박음..
+                CommentListView(data: self.bandData.commentList).commentData = self.bandData.commentList
+            }
         }
     }
     
