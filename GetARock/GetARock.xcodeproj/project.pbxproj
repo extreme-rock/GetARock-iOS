@@ -64,10 +64,8 @@
 		9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */; };
 		9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E9297E233900D4A433 /* BasicTextField.swift */; };
 		9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */; };
-		9A67975929ACDD8700F08B00 /* AddPracticeSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67975829ACDD8700F08B00 /* AddPracticeSongViewController.swift */; };
 		9A67BF2B29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2A29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift */; };
 		9A67BF2D29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2C29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift */; };
-		9A67BF2F29AB8C14002C0C32 /* PracticeSongCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */; };
 		9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE2298A9CD900953E4B /* NetworkError.swift */; };
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
 		9AA4E29529A4975F00CED0AE /* BandMemberAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA4E29429A4975F00CED0AE /* BandMemberAddViewController.swift */; };
@@ -77,7 +75,6 @@
 		9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */; };
 		9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */; };
 		9AFE014729990FE0004B0BCF /* BandCreationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */; };
-		9AFE930C29ADDD8A00D3C964 /* PracticeSongBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE930B29ADDD8A00D3C964 /* PracticeSongBoxView.swift */; };
 		A769E177D6AA52251CAA0997 /* Pods_GetARockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */; };
 		A951F6532989EF6C00902CED /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A951F6522989EF6C00902CED /* String+Extension.swift */; };
 		A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96B8A0A2981706C00905BC9 /* BasicTextView.swift */; };
@@ -199,10 +196,8 @@
 		9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentSize.swift; sourceTree = "<group>"; };
 		9A29E6E9297E233900D4A433 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
 		9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimitTextField.swift; sourceTree = "<group>"; };
-		9A67975829ACDD8700F08B00 /* AddPracticeSongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPracticeSongViewController.swift; sourceTree = "<group>"; };
 		9A67BF2A29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePlaceSearchViewController.swift; sourceTree = "<group>"; };
 		9A67BF2C29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePlaceSearchTableViewCell.swift; sourceTree = "<group>"; };
-		9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongCardView.swift; sourceTree = "<group>"; };
 		9A78BFE2298A9CD900953E4B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
 		9AA4E29429A4975F00CED0AE /* BandMemberAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandMemberAddViewController.swift; sourceTree = "<group>"; };
@@ -212,7 +207,6 @@
 		9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectViewController.swift; sourceTree = "<group>"; };
 		9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderPositionSelectHeaderView.swift; sourceTree = "<group>"; };
 		9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationDTO.swift; sourceTree = "<group>"; };
-		9AFE930B29ADDD8A00D3C964 /* PracticeSongBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongBoxView.swift; sourceTree = "<group>"; };
 		A951F6522989EF6C00902CED /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A96B8A0A2981706C00905BC9 /* BasicTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextView.swift; sourceTree = "<group>"; };
 		A96B8A0C2981714800905BC9 /* BasicLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabel.swift; sourceTree = "<group>"; };
@@ -391,9 +385,6 @@
 				A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */,
 				9A67BF2A29AB8A77002C0C32 /* PracticePlaceSearchViewController.swift */,
 				9A67BF2C29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift */,
-				9A67BF2E29AB8C14002C0C32 /* PracticeSongCardView.swift */,
-				9A67975829ACDD8700F08B00 /* AddPracticeSongViewController.swift */,
-				9AFE930B29ADDD8A00D3C964 /* PracticeSongBoxView.swift */,
 			);
 			path = BandInformationSetFlow;
 			sourceTree = "<group>";
@@ -895,7 +886,6 @@
 				A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */,
 				7B6D3357299A50F2001FD630 /* DetailContentView.swift in Sources */,
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
-				9AFE930C29ADDD8A00D3C964 /* PracticeSongBoxView.swift in Sources */,
 				4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
 				9A67BF2D29AB8B1D002C0C32 /* PracticePlaceSearchTableViewCell.swift in Sources */,
@@ -908,7 +898,6 @@
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */,
-				9A67BF2F29AB8C14002C0C32 /* PracticeSongCardView.swift in Sources */,
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
 				7B6D3354299A2F76001FD630 /* BandDetailViewController.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
@@ -917,7 +906,6 @@
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
 				B88ABF3729A3C1FA004C1793 /* SettingViewVersionCell.swift in Sources */,
-				9A67975929ACDD8700F08B00 /* AddPracticeSongViewController.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				9AFE014729990FE0004B0BCF /* BandCreationDTO.swift in Sources */,
 				B88E1BD32977A95E006072B7 /* BaseViewController.swift in Sources */,

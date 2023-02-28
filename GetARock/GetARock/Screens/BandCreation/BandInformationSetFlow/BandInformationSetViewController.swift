@@ -271,16 +271,8 @@ extension BandInformationSetViewController {
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 
+    //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
-        let nextViewController = AddPracticeSongViewController()
-        nextViewController.completion = { [weak self] songs in
-            let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
-            for song in addedSongs {
-                if self?.practiceSongList.arrangedSubviews.count ?? 0 > 3 { break }
-                self?.practiceSongList.addArrangedSubview(song)
-            }
-        }
-        navigationController?.pushViewController(nextViewController, animated: true)
     }
     
     @objc func didTouchScreen() {
@@ -304,17 +296,5 @@ extension BandInformationSetViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y += self.keyBoardHeight
-    }
-}
-
-extension BandInformationSetViewController {
-    func makePracticeSongBoxes(with data: [PracticeSongCardView]) -> [PracticeSongBoxView] {
-        var result: [PracticeSongBoxView] = []
-        for datum in data {
-            let practiceSong: PracticeSongBoxView = PracticeSongBoxView()
-            practiceSong.configure(data: datum)
-            result.append(practiceSong)
-        }
-        return result
     }
 }
