@@ -159,7 +159,7 @@ final class BandCreationDecisionViewController: BaseViewController {
             if !isMakeBandButtonTapped {
                 Task {
                     guard let user = self?.user else { return }
-                    try await SignUpNetworkManager.postMember(user: user)
+                    try await SignUpNetworkManager.postUserInformation(user: user)
                 }
             }
             self?.isMakeBandButtonTapped = true
@@ -170,7 +170,7 @@ final class BandCreationDecisionViewController: BaseViewController {
             if !isSkipMakingBandButtonTapped {
                 Task {
                     guard let user = self?.user else { return }
-                    try await SignUpNetworkManager.postMember(user: user)
+                    try await SignUpNetworkManager.postUserInformation(user: user)
                 }
             }
             self?.isSkipMakingBandButtonTapped = true
