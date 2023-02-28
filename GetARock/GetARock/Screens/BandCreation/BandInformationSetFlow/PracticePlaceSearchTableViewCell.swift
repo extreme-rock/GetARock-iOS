@@ -16,6 +16,7 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        attribute()
         setupLayout()
     }
     
@@ -27,6 +28,10 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         self.titleLabel.text = nil
         self.subTitleLabel.text = nil
+    }
+    
+    private func attribute() {
+        backgroundColor = .clear
     }
     
     private func setupLayout() {
