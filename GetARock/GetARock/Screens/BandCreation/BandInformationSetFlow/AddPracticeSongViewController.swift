@@ -9,9 +9,11 @@ import UIKit
 
 final class AddPracticeSongViewController: BaseViewController {
     
+    private var keyBoardHeight: CGFloat = 280
+    
     var completion: (_ songs: [PracticeSongCardView]) -> Void = { songs in }
     
-    let firstPracticeSongCard = PracticeSongCardView()
+    lazy var firstPracticeSongCard: PracticeSongCardView = PracticeSongCardView()
     
     private lazy var contentView: UIStackView = {
         $0.axis = .vertical
@@ -33,7 +35,9 @@ final class AddPracticeSongViewController: BaseViewController {
         configuration.title = "합주곡 추가"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 10
+        
         let button = DefaultButton(configuration: configuration)
+        button.setBackgroundColor(.dark02, for: .normal)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
         button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
@@ -56,6 +60,7 @@ final class AddPracticeSongViewController: BaseViewController {
         setupLayout()
         attribute()
         setKeyboardDismiss()
+        setNotification()
     }
     
     override func viewDidLayoutSubviews() {
@@ -111,6 +116,14 @@ final class AddPracticeSongViewController: BaseViewController {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
         mainScrollView.addGestureRecognizer(recognizer)
     }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(getKeyboardHeight(notification: )),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+    }
 }
 
 // ScrollView 가로 스크롤 막기
@@ -126,6 +139,7 @@ extension AddPracticeSongViewController {
     @objc
     func didTapAddPracticeSong() {
         let newCard = PracticeSongCardView()
+        newCard.setTextFieldDelegate(controller: self)
         guard contentView.arrangedSubviews.count < 3 else { return }
         contentView.insertArrangedSubview(newCard, at: contentView.arrangedSubviews.endIndex)
         updateDeleteButtonState()
@@ -141,5 +155,20 @@ extension AddPracticeSongViewController {
     @objc
     func didTouchScreen() {
         self.view.endEditing(true)
+    }
+    
+    @objc
+    func getKeyboardHeight(notification: Notification) {
+        keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
+    }
+}
+
+extension AddPracticeSongViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.view.frame.origin.y -= self.keyBoardHeight
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view.frame.origin.y += self.keyBoardHeight
     }
 }

@@ -124,7 +124,7 @@ final class BandInformationSetViewController: BaseViewController {
     private lazy var practiceSongList: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
-        $0.spacing = 20
+        $0.spacing = 10
         return $0
     }(UIStackView(arrangedSubviews: [addPracticeSongButton]))
 
@@ -275,7 +275,10 @@ extension BandInformationSetViewController {
         let nextViewController = AddPracticeSongViewController()
         nextViewController.completion = { [weak self] songs in
             let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
-            addedSongs.forEach { self?.practiceSongVstack.addArrangedSubview($0)}
+            for song in addedSongs {
+                if self?.practiceSongList.arrangedSubviews.count ?? 0 > 3 { break }
+                self?.practiceSongList.addArrangedSubview(song)
+            }
         }
         navigationController?.pushViewController(nextViewController, animated: true)
     }

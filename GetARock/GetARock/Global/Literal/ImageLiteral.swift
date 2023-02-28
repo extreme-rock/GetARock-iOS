@@ -29,6 +29,7 @@ enum ImageLiteral {
     static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     static var checkMarkCircleFillSymbol: UIImage { .load(systemName: "checkmark.circle.fill") }
     static var scopeSymbol: UIImage { .load(systemName: "scope") }
+    static var quarternoteSymbol: UIImage { .load(systemName: "music.quarternote.3") }
 
 
 

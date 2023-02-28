@@ -11,22 +11,20 @@ final class PracticeSongBoxView: UIView {
     
     // MARK: - View
     
-    private let songTitleLabel: UILabel = {
-        $0.font = UIFont.setFont(.content)
+    private let songTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
-        $0.textColor = .white
         return $0
-    }(UILabel())
+    }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white))
     
-    private let artistLabel: UILabel = {
-        $0.font = UIFont.setFont(.content)
+    private let artistLabel: BasicLabel = {
         $0.numberOfLines = 2
-        $0.textColor = .gray02
         return $0
-    }(UILabel())
+    }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .gray02))
     
     private lazy var musicIconImage: UIImageView = {
-        $0.image = UIImage(systemName: "music.quarternote.3")
+        $0.image = ImageLiteral.quarternoteSymbol
+        $0.constraint(.widthAnchor, constant: 24)
+        $0.constraint(.heightAnchor, constant: 24)
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .white
         $0.setContentHuggingPriority(UILayoutPriority(rawValue: 500),
@@ -37,12 +35,15 @@ final class PracticeSongBoxView: UIView {
     }(UIImageView())
     
     private lazy var deleteButton: UIButton = {
-        $0.setImage(ImageLiteral.xmarkCircleSymbol, for: .normal)
+        let imageConfiguation = UIImage.SymbolConfiguration(pointSize: 20)
+        $0.setImage(UIImage(
+            systemName: "xmark.circle.fill",
+            withConfiguration: imageConfiguation),for: .normal
+        )
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = .gray02
         let action = UIAction { _ in self.removeFromSuperview() }
         $0.addAction(action, for: .touchUpInside)
-        $0.contentMode = .scaleAspectFit
-        $0.constraint(.widthAnchor, constant: 24)
-        $0.constraint(.heightAnchor, constant: 24)
         return $0
     }(UIButton())
     
@@ -81,13 +82,16 @@ final class PracticeSongBoxView: UIView {
     
     private func setupLayout() {
         self.addSubview(songStackView)
-        self.songStackView.constraint(to: self)
+        songStackView.constraint(to: self)
+        songStackView.constraint(.heightAnchor, constant: 70)
         self.addSubview(deleteButton)
-        deleteButton.constraint(trailing: self.trailingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+        deleteButton.constraint(trailing: self.trailingAnchor,
+                                centerY: self.centerYAnchor,
+                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
     }
     
     func configure(data: PracticeSongCardView) {
-        self.songTitleLabel.text = data.getSongName()
-        self.artistLabel.text = data.getArtistName()
+        songTitleLabel.text = data.getSongName()
+        artistLabel.text = data.getArtistName()
     }
 }

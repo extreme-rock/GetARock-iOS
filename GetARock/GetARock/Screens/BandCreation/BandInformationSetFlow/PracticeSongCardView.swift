@@ -94,4 +94,10 @@ final class PracticeSongCardView: UIStackView {
     func getSongName() -> String {
         return practiceSongTextField.textField.text ?? ""
     }
+    
+    func setTextFieldDelegate(controller: UITextFieldDelegate) {
+        artistNameTextField.textField.delegate = controller
+        practiceSongTextField.textField.delegate = controller
+        linkTextField.textField.delegate = controller
+    }
 }
