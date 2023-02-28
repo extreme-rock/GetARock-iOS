@@ -4,17 +4,14 @@
 //
 //  Created by 장지수 on 2023/02/26.
 //
-
+import UIKit
 import CoreLocation
 import MapKit
-import UIKit
-
-//MARK: 알로라 피알 참고하여 진행
 
 final class PracticePlaceSearchViewController: BaseViewController {
     
-    var completion: (_ mapItem: MKMapItem) -> Void = { mapItem in }
-
+    var completion: (_ locationInfo: String) -> Void = { locationInfo in }
+    
     private let locationManager = CLLocationManager()
     
     private var searchCompleter = MKLocalSearchCompleter()
@@ -49,12 +46,12 @@ final class PracticePlaceSearchViewController: BaseViewController {
         button.constraint(.heightAnchor, constant: 45)
         let action = UIAction { [weak self] _ in
             self?.locationManager.requestWhenInUseAuthorization()
-            self?.getCurrentLocation()
+            self?.getCurrentAddressInfo()
         }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -67,7 +64,7 @@ final class PracticePlaceSearchViewController: BaseViewController {
         self.view.backgroundColor = .dark01
         self.searchBar.textField.becomeFirstResponder()
     }
-
+    
     private func setupLayout() {
         
         view.addSubview(searchBar)
@@ -89,16 +86,16 @@ final class PracticePlaceSearchViewController: BaseViewController {
                                      padding: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
         
     }
-
+    
     private func configureSearchCompleter() {
         searchCompleter.delegate = self
         searchCompleter.resultTypes = .query
     }
     
     private func setLocationManager() {
-          self.locationManager.delegate = self
-          self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-      }
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
 }
 
 extension PracticePlaceSearchViewController {
@@ -107,9 +104,9 @@ extension PracticePlaceSearchViewController {
             searchResults.removeAll()
             searchResultTable.reloadData()
         }
-      // 사용자가 search bar 에 입력한 text를 자동완성 대상에 넣는다
+        // 사용자가 search bar 에 입력한 text를 자동완성 대상에 넣는다
         searchCompleter.queryFragment = searchBar.textField.text ?? ""
-        }
+    }
 }
 
 extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
@@ -124,21 +121,39 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
         }
     }
     
-    func getCurrentLocation() {
-        if let location = locationManager.location {
-            let userLocation = CLLocation(latitude: location.coordinate.latitude,
-                                          longitude: location.coordinate.longitude)
-            print("==============")
-            print(userLocation)
-            searchCompleter.region = MKCoordinateRegion(center: userLocation.coordinate,
-                                                        span: MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 100))
+    func getCurrentAddressInfo() {
+        guard let userLocation = locationManager.location else { return }
+        let location = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        print(userLocation.coordinate)
+        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+            
+            if let placemark = placemarks?.first {
+                var address = ""
+                var queryString = ""
+                
+                if let administrativeArea = placemark.administrativeArea {
+                    address = administrativeArea //ex.서울특별시
+                }
+                if let locality = placemark.locality {
+                    address += " "+locality //ex.광진구
+                }
+                if let thoroughfare = placemark.thoroughfare {
+                    address += " "+thoroughfare //ex.중곡동
+                    queryString = address
+                }
+                if let subThoroughfare = placemark.subThoroughfare {
+                    address += " "+subThoroughfare //ex.272-13
+                }
+                self.searchBar.textField.text = address
+                self.searchCompleter.queryFragment = queryString
+            }
         }
     }
 }
 
 extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
-  // 자동완성 완료시 결과를 받는 method
-  func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+    // 자동완성 완료시 결과를 받는 method
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = completer.results
         searchResultTable.reloadData()
     }
@@ -151,18 +166,18 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.classIdentifier,
                                                        for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell()}
-
+        
         let searchResult = searchResults[indexPath.row]
         cell.configure(mapSearchResult: searchResult)
-
+        
         return cell
     }
 }
@@ -171,16 +186,14 @@ extension PracticePlaceSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedResult = searchResults[indexPath.row]
-        let searchRequest = MKLocalSearch.Request(completion: selectedResult)
-        let search = MKLocalSearch(request: searchRequest)
-        search.start { (response, error) in
-            guard error == nil else { return }
-            guard let mapItem = response?.mapItems.first else { return }
-            self.completion(mapItem)
-            self.navigationController?.popViewController(animated: true)
+        if selectedResult.subtitle.isEmpty {
+            completion(selectedResult.title)
+        } else {
+            completion(selectedResult.subtitle)
         }
+        self.navigationController?.popViewController(animated: true)
     }
 }

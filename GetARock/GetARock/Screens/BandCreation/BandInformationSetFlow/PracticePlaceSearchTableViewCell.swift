@@ -16,7 +16,6 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        attribute()
         setupLayout()
     }
     
@@ -28,10 +27,6 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         self.titleLabel.text = nil
         self.subTitleLabel.text = nil
-    }
-    
-    private func attribute() {
-        backgroundColor = .clear
     }
     
     private func setupLayout() {
@@ -47,7 +42,6 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
                                  padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
     }
     
-    //TODO: 불필요한 코드 체크 필요
     func configure(mapSearchResult: MKLocalSearchCompletion){
         self.titleLabel.text = mapSearchResult.title
         self.subTitleLabel.text = mapSearchResult.subtitle

@@ -263,9 +263,9 @@ extension BandInformationSetViewController {
 
     @objc func didTapPracticePlaceSearchButton() {
         let nextViewController = PracticePlaceSearchViewController()
-        nextViewController.completion = { [weak self] mapItem in
+        nextViewController.completion = { [weak self] locationInformation in
             print("completion Handler 작동")
-            self?.practicePlaceSearchButton.configureText(with: mapItem.name ?? "")
+            self?.practicePlaceSearchButton.configureText(with: locationInformation)
             self?.practicePlaceSearchButton.hideRightView()
         }
         navigationController?.pushViewController(nextViewController, animated: true)
