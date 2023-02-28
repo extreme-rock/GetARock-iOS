@@ -10,7 +10,7 @@ import UIKit
 final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Property
-    
+
     private let pageViewControllers: [UIViewController] = [
         ModifyPositionViewController(positions: [
             .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
@@ -36,6 +36,14 @@ final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - View
     
+    private lazy var customNavigationBarStackView: UIStackView = {
+        $0.backgroundColor = .dark02
+        $0.axis = .horizontal
+        $0.distribution = .fill
+        $0.backgroundColor = .dark01
+        return $0
+    }(UIStackView(arrangedSubviews: [dismissButton, viewControllerTitleLabel, completeButton]))
+    
     private lazy var dismissButton: UIButton = {
         $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         $0.tintColor = .white
@@ -43,7 +51,12 @@ final class ModifyMyPageViewController: UIViewController {
             self?.dismissButtonTapped()
         }
         $0.addAction(action, for: .touchUpInside)
-       return $0
+        $0.addAction(action, for: .touchUpInside)
+        $0.setContentHuggingPriority(
+            .defaultHigh,
+            for: .horizontal
+        )
+        return $0
     }(UIButton())
     
     private lazy var completeButton: UIButton = {
@@ -54,14 +67,20 @@ final class ModifyMyPageViewController: UIViewController {
             self?.completeButtonTapped()
         }
         $0.addAction(action, for: .touchUpInside)
-       return $0
+        $0.setContentHuggingPriority(
+            .defaultHigh,
+            for: .horizontal
+        )
+        return $0
     }(UIButton())
     
-    private let viewControllerTitleLabel = BasicLabel(
-        contentText: "프로필 수정",
+    private let viewControllerTitleLabel: BasicLabel = {
+        $0.textAlignment = .center
+        return $0
+    }(BasicLabel(contentText: "프로필 수정",
         fontStyle: .headline02,
-        textColorInfo: .white
-    )
+        textColorInfo: .white))
+        
     private lazy var segmentedController: ModifyPageSegmentedControl = {
         $0.addTarget(self,
                      action: #selector(segmentedControlValueChanged(_:)),
@@ -104,30 +123,15 @@ final class ModifyMyPageViewController: UIViewController {
     }
     
     private func setupLayout() {
-        self.view.addSubview(dismissButton)
-        dismissButton.constraint(top: view.safeAreaLayoutGuide.topAnchor,
-                                 leading: view.leadingAnchor,
-                                 padding: UIEdgeInsets(top: 19, left: 19, bottom: 0, right: 0))
-        dismissButton.constraint(
-            .heightAnchor,
-            constant: dismissButton.imageView?.intrinsicContentSize.height ?? 15.5)
+        self.view.addSubview(customNavigationBarStackView)
+        customNavigationBarStackView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                        leading: view.leadingAnchor,
+                                        trailing: view.trailingAnchor,
+                                        padding: UIEdgeInsets(top: 19, left: 16, bottom: 0, right: 16))
+        customNavigationBarStackView.constraint(.heightAnchor, constant: 20)
         
-        self.view.addSubview(viewControllerTitleLabel)
-        viewControllerTitleLabel.constraint(top: view.safeAreaLayoutGuide.topAnchor,
-                                            centerX: view.centerXAnchor,
-                                            padding: UIEdgeInsets(top: 19, left: 0, bottom: 0, right: 0))
-        
-        self.view.addSubview(completeButton)
-        completeButton.constraint(top: view.safeAreaLayoutGuide.topAnchor,
-                                  trailing: view.trailingAnchor,
-                                  padding: UIEdgeInsets(top: 19, left: 0, bottom: 0, right: 19))
-        completeButton.constraint(
-            .heightAnchor,
-            constant: completeButton.titleLabel?.intrinsicContentSize.height ?? 0
-        )
-
         self.view.addSubview(segmentedController)
-        segmentedController.constraint(top: viewControllerTitleLabel.bottomAnchor,
+        segmentedController.constraint(top: customNavigationBarStackView.bottomAnchor,
                                        leading: view.leadingAnchor,
                                        trailing: view.trailingAnchor,
                                        padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
