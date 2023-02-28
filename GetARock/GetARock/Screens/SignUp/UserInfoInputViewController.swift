@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class UserInfoInputViewController: BaseViewController {
+final class UserInfoInputViewController: UIViewController {
     
     // MARK: - Property
     
