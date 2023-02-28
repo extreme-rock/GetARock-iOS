@@ -22,7 +22,8 @@ final class NotificationNetworkManager {
         
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
-            let httpResponse = response as! HTTPURLResponse
+
+            guard let httpResponse = response as? HTTPURLResponse else { return [] }
             
             if (200..<300).contains(httpResponse.statusCode) {
                 let decodedData = try JSONDecoder().decode([NotificationInfo].self, from: data)

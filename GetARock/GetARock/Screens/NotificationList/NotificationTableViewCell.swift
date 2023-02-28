@@ -9,7 +9,7 @@ import UIKit
 
 final class NotificationTableViewCell: UITableViewCell {
 
-    var isInvitation: Bool = false
+    private var isInvitation: Bool = false
 
     private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline02, textColorInfo: .white)
 
@@ -61,7 +61,6 @@ final class NotificationTableViewCell: UITableViewCell {
         return $0
     }(UIImageView(frame: .zero))
     
-    
     private lazy var contentLayoutStackView: UIStackView = {
         $0.axis = .horizontal
         $0.spacing = 15
@@ -111,4 +110,3 @@ extension NotificationTableViewCell {
         self.subtitleLabel.text = "\(userName)이 \(bandName) 가입 요청을 거절 했습니다."
     }
 }
-
