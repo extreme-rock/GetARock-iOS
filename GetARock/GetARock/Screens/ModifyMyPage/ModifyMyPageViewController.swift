@@ -10,8 +10,9 @@ import UIKit
 final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Property
-
-    private let pageViewControllers: [UIViewController] = [
+    private var userInfo: User
+    
+    private lazy var pageViewControllers: [UIViewController] = [
         ModifyPositionViewController(positions: [
             .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
             .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
@@ -20,12 +21,13 @@ final class ModifyMyPageViewController: UIViewController {
             .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
             .plusPosition
         ]),
-        ModifyUserProfileViewController()
+        ModifyUserProfileViewController(userInfo: self.userInfo)
         ]
     
     private var currentPageNumber: Int = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPageNumber ? .forward : .reverse
+            
             self.pageViewController.setViewControllers(
                 [pageViewControllers[self.currentPageNumber]],
                 direction: direction,
@@ -102,6 +104,16 @@ final class ModifyMyPageViewController: UIViewController {
     //MARK: - Life Cycle
     
     // init 시에 유저에 대한 정보가 들어와야함
+    
+    init(userInfo: User) {
+        self.userInfo = userInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()

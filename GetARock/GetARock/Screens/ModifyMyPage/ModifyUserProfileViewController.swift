@@ -11,6 +11,8 @@ final class ModifyUserProfileViewController: UIViewController {
     
     // MARK: - Property
     
+    private var userInfo: User
+    
     // MARK: - View
     
     private let contentViewTitleLabel: BasicLabel = {
@@ -169,12 +171,22 @@ final class ModifyUserProfileViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(userInfo: User) {
+        self.userInfo = userInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
+        self.configure(with: self.userInfo)
     }
-    
+
     private func attribute() {
         self.view.backgroundColor = .dark01
     }
@@ -206,4 +218,34 @@ final class ModifyUserProfileViewController: UIViewController {
                                     padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
         
     }
+    
+    func configure(with userInfo: User) {
+        guard let age = Age(rawValue: Age.CodingKeys(rawValue: userInfo.age)?.rawAgeValue ?? "")?.rawValue,
+              let gender = Gender(rawValue: Gender.CodingKeys(rawValue: userInfo.gender)?.rawGenderValue ?? "")?.rawValue  else { return }
+
+        self.userNamingTextField.writeText(with: userInfo.name)
+        self.userIntroTextView.writeText(with: userInfo.introduction)
+        self.ageSelectCollectionView.selectItem(with: age)
+        self.genderSelectCollectionView.selectItem(with: gender)
+        userInfo.snsList.forEach { sns in
+            switch sns.type {
+            case .youtube:
+                self.youtubeTextField.writeText(with: sns.link)
+            case .instagram:
+                self.instagramTextField.writeText(with: sns.link)
+            case .soundcloud:
+                self.soundCloudTextField.writeText(with: sns.link)
+            }
+        }
+    }
+}
+
+struct User1: Codable {
+    let memberId: Int?
+    let name: String
+    let age: String
+    let gender: String
+    let introduction: String?
+    let instrumentList: [InstrumentList]
+    let snsList: [SnsList]
 }

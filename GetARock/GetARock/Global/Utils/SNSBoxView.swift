@@ -127,4 +127,9 @@ final class SNSBoxView: UIView {
             return SnsList(type: self.type.snsType, link: nil)
         }
     }
+    
+    func writeText(with text: String?) {
+        guard let text else { return }
+        self.textField.text = text
+    }
 }

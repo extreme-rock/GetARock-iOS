@@ -130,6 +130,10 @@ final class TextLimitTextField: UIView {
         guard let text = self.textField.text else { return ""}
         return text
     }
+    
+    func writeText(with text: String) {
+        self.textField.text = text
+    }
 }
 
 //MARK: 글자수 제한 로직

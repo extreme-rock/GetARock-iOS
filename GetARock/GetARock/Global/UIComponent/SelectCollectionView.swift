@@ -93,6 +93,11 @@ final class SelectCollectionView: UIView {
         return isSelected
     }
     
+    func selectItem(with item: String) {
+        guard let index = self.items.firstIndex(of: item) else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+    }
 }
 
 extension SelectCollectionView: UICollectionViewDataSource {

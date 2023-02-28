@@ -94,6 +94,12 @@ final class BasicTextView: UIView {
     func inputText() -> String? {
         return self.textView.text == placeholder ? nil : self.textView.text
     }
+    
+    func writeText(with text: String?) {
+        guard let text else { return }
+        self.textView.text = text
+        self.placeholderLabel.isHidden = true
+    }
 }
 
 extension BasicTextView: UITextViewDelegate {
