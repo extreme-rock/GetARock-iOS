@@ -12,15 +12,17 @@ final class ModifyMyPageViewController: UIViewController {
     //MARK: - Property
     private var userInfo: User
     
+    private lazy var selectedInstrument: [Item] = self.userInfo.instrumentList.map {
+        ["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
+        ? Item.position(Position(instrumentName: $0.name,
+                                 instrumentImageName: Instrument(rawValue: $0.name) ?? .vocal, isETC: false))
+        : Item.position(Position(instrumentName: $0.name,
+                                 instrumentImageName: .etc, isETC: true))
+        
+    }
+    
     private lazy var pageViewControllers: [UIViewController] = [
-        ModifyPositionViewController(positions: [
-            .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
-            .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
-            .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
-            .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
-            .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
-            .plusPosition
-        ]),
+        ModifyPositionViewController(positions: self.userInfo.instrumentList),
         ModifyUserProfileViewController(userInfo: self.userInfo)
         ]
     

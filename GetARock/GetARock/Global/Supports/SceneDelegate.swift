@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                            age: "TWENTIES",
                            gender: "MAN",
                            introduction: "안녕하십니가 데이크입니다용",
-                           instrumentList: [InstrumentList(name: "기타"), InstrumentList(name: "드럼")],
+                           instrumentList: [InstrumentList(name: "기타"), InstrumentList(name: "캐스터네츠")],
                            snsList: [SnsList(type: .instagram, link: "dake"),
                                      SnsList(type: .youtube, link: "dake"),
                                      SnsList(type: .soundcloud, link: "dake")])

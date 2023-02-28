@@ -19,6 +19,17 @@ enum Item: Hashable {
     case bandMember(BandMember)
     case position(Position)
     case plusPosition
+    
+    func name() -> String? {
+        switch self {
+        case .bandMember(let bandMember):
+            return bandMember.userName
+        case .position(let position):
+            return position.instrumentName
+        case .plusPosition:
+            return nil
+        }
+    }
 }
 
 enum CellSize {
@@ -147,6 +158,34 @@ final class PositionCollectionView: UIView {
         NotificationCenter.default.post(
             name: Notification.Name.hideDeselectAllPositionButton,
             object: nil)
+    }
+    
+    func selectItems(with instrumentList: [InstrumentList]) {
+        //        let selectedItems = instrumentList.map {
+        //            ["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
+        //            ? Item.position(Position(instrumentName: $0.name,
+        //                                     instrumentImageName: Instrument(rawValue: $0.name) ?? .vocal, isETC: false))
+        //            : Item.position(Position(instrumentName: $0.name,
+        //                                      instrumentImageName: .etc, isETC: true))
+        //        }
+        for instrument in instrumentList {
+            guard let index = self.items.firstIndex(where: { $0.name() == instrument.name }) else { return }
+            let indexPath = IndexPath(row: index, section: 0)
+            self.collectionView.selectItem(at: indexPath,
+                                           animated: true,
+                                           scrollPosition: .top)
+        }
+        
+//        instrumentList.forEach { instrument in
+//            let index = self.items.firstIndex { item in
+//                guard let name = item.name() else { return }
+//                if name == instrument.name {
+//                    return item
+//                }
+//            }
+//            let indexPath = IndexPath(row: index!, section: 0)
+//            print(indexPath)
+//        }
     }
 }
 

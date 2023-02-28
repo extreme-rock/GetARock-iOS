@@ -11,7 +11,17 @@ final class ModifyPositionViewController: UIViewController {
     
     //MARK: - Property
     
-    private var positions: [Item] = []
+    private var positions: [Item] = [
+        .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
+        .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
+        .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
+        .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
+        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
+        .plusPosition
+    ]
+    
+    private var selectedPositions: [InstrumentList] = []
+    
     
     //MARK: - View
     
@@ -24,8 +34,16 @@ final class ModifyPositionViewController: UIViewController {
     
     //MARK: - Init
     
-    init(positions: [Item]) {
-        self.positions = positions
+    init(positions: [InstrumentList]) {
+        self.selectedPositions = positions
+        let selectedInstrument: [InstrumentList] = positions.filter {
+            !["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
+        }
+        let selectedETCItem: [Item] = selectedInstrument.map {
+            Item.position(Position(instrumentName: $0.name,
+                                     instrumentImageName: .etc, isETC: true))
+        }
+        self.positions.insert(contentsOf: selectedETCItem, at: self.positions.count - 1)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,6 +64,7 @@ final class ModifyPositionViewController: UIViewController {
         attribute()
         configureDelegate()
         addAllObserver()
+        configureSelectState()
     }
 
     //MARK: - Method
@@ -125,6 +144,9 @@ final class ModifyPositionViewController: UIViewController {
     }
     
     //TODO: 원래 선택된 친구들 세팅해주는 함수
+    private func configureSelectState() {
+        self.positionCollectionView.selectItems(with: self.selectedPositions)
+    }
 }
 
 extension ModifyPositionViewController: PositionCollectionViewDelegate {
