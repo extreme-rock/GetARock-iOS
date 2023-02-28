@@ -17,8 +17,15 @@ final class BandCreationDecisionViewController: BaseViewController {
     
     // MARK: - View
     
+    private lazy var titleStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 5
+        $0.setCustomSpacing(10, after: titleLabel)
+        return $0
+    }(UIStackView(arrangedSubviews: [pageIndicatorLabel, titleLabel, subTitleLabel]))
+    
     private let pageIndicatorLabel = BasicLabel(contentText: "3/3",
-                                                fontStyle: .subTitle,
+                                                fontStyle: .headline03,
                                                 textColorInfo: .gray02)
     
     private let titleLabel: UILabel = {
@@ -30,7 +37,7 @@ final class BandCreationDecisionViewController: BaseViewController {
     }(UILabel())
     
     private let subTitleLabel: UILabel = {
-        $0.font = .setFont(.subTitle)
+        $0.font = .setFont(.headline03)
         $0.text = "이미 가입하고 싶은 밴드가 모여락에 있다면\n밴드 리더로부터 초대를 받아 가입할 수 있어요!"
         $0.textColor = .gray02
         $0.numberOfLines = 2
@@ -42,11 +49,16 @@ final class BandCreationDecisionViewController: BaseViewController {
         return $0
     }(UIButton())
     
+    private lazy var makeBandLabelStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 14
+        return $0
+    }(UIStackView(arrangedSubviews: [makeBandTitleLabel, makeBandContentLabel]))
+    
+    
     private let makeBandTitleLabel = BasicLabel(contentText: "내 밴드 만들기",
                                                 fontStyle: .subTitle2,
                                                 textColorInfo: .white)
-    
-    
     
     private let makeBandContentLabel: UILabel = {
         $0.font = .setFont(.contentLight)
@@ -56,7 +68,7 @@ final class BandCreationDecisionViewController: BaseViewController {
         return $0
     }(UILabel())
     
-    private let passMakingBandButton: UIButton = {
+    private let skipMakingBandButton: UIButton = {
         $0.setBackgroundColor(.dark02, for: .normal)
         $0.layer.borderColor = UIColor.gray02.cgColor
         $0.layer.borderWidth = 1
@@ -65,13 +77,17 @@ final class BandCreationDecisionViewController: BaseViewController {
         return $0
     }(UIButton())
     
-    private let passMakingBandTitleLabel = BasicLabel(contentText: "밴드 다음에 만들기",
+    private lazy var skipMakingLabelStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 14
+        return $0
+    }(UIStackView(arrangedSubviews: [skipMakingBandTitleLabel, skipMakingBandContentLabel]))
+    
+    private let skipMakingBandTitleLabel = BasicLabel(contentText: "밴드 다음에 만들기",
                                                       fontStyle: .subTitle2,
                                                       textColorInfo: .white)
     
-    
-    
-    private let passMakingBandContentLabel: UILabel = {
+    private let skipMakingBandContentLabel: UILabel = {
         $0.font = .setFont(.contentLight)
         $0.text = "밴드가 없으면 모여락 이벤트를 만들 수 없어요🥹\n하지만 이벤트 참여와 소통은 가능해요!"
         $0.textColor = .white
@@ -107,23 +123,11 @@ final class BandCreationDecisionViewController: BaseViewController {
     }
     
     private func setupLayout() {
-        self.view.addSubview(pageIndicatorLabel)
-        pageIndicatorLabel.constraint(top: self.view.safeAreaLayoutGuide.topAnchor,
-                                      leading: self.view.leadingAnchor,
-                                      trailing: self.view.trailingAnchor,
-                                      padding: UIEdgeInsets(top: 20, left: 17, bottom: 0, right: 0))
-        
-        self.view.addSubview(titleLabel)
-        titleLabel.constraint(top: pageIndicatorLabel.bottomAnchor,
-                              leading: self.view.leadingAnchor,
-                              trailing: self.view.trailingAnchor,
-                              padding: UIEdgeInsets(top: 6, left: 16, bottom: 0, right: 16))
-        
-        self.view.addSubview(subTitleLabel)
-        subTitleLabel.constraint(top: titleLabel.bottomAnchor,
-                                 leading: self.view.leadingAnchor,
-                                 trailing: self.view.trailingAnchor,
-                                 padding: UIEdgeInsets(top: 10, left: 16, bottom: 49, right: 16))
+        self.view.addSubview(titleStackView)
+        titleStackView.constraint(top: self.view.safeAreaLayoutGuide.topAnchor,
+                                  leading: self.view.leadingAnchor,
+                                  trailing: self.view.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
         
         self.view.addSubview(makeBandButton)
         makeBandButton.constraint(top: subTitleLabel.bottomAnchor,
@@ -132,32 +136,25 @@ final class BandCreationDecisionViewController: BaseViewController {
                                   padding: UIEdgeInsets(top: 43, left: 16, bottom: 0, right: 16))
         makeBandButton.constraint(.heightAnchor, constant: 160)
         
-        self.makeBandButton.addSubview(makeBandTitleLabel)
-        makeBandTitleLabel.constraint(top: makeBandButton.topAnchor,
-                                      leading: makeBandButton.leadingAnchor,
-                                      padding: UIEdgeInsets(top: 42, left: 37, bottom: 0, right: 0))
+        self.makeBandButton.addSubview(makeBandLabelStackView)
+        makeBandLabelStackView.constraint(leading: makeBandButton.leadingAnchor,
+                                          trailing: makeBandButton.trailingAnchor,
+                                          centerY: makeBandButton.centerYAnchor,
+                                          padding: UIEdgeInsets(top: 42, left: 30, bottom: 0, right: 30))
         
-        self.makeBandButton.addSubview(makeBandContentLabel)
-        makeBandContentLabel.constraint(top: makeBandTitleLabel.bottomAnchor,
-                                        leading: makeBandButton.leadingAnchor,
-                                        padding: UIEdgeInsets(top: 14, left: 37, bottom: 0, right: 0))
         
-        self.view.addSubview(passMakingBandButton)
-        passMakingBandButton.constraint(top: makeBandButton.bottomAnchor,
+        self.view.addSubview(skipMakingBandButton)
+        skipMakingBandButton.constraint(top: makeBandButton.bottomAnchor,
                                         leading: view.leadingAnchor,
                                         trailing: view.trailingAnchor,
                                         padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))
-        passMakingBandButton.constraint(.heightAnchor, constant: 160)
+        skipMakingBandButton.constraint(.heightAnchor, constant: 160)
         
-        self.passMakingBandButton.addSubview(passMakingBandTitleLabel)
-        passMakingBandTitleLabel.constraint(top: passMakingBandButton.topAnchor,
-                                            leading: passMakingBandButton.leadingAnchor,
-                                            padding: UIEdgeInsets(top: 42, left: 37, bottom: 0, right: 0))
-        
-        self.passMakingBandButton.addSubview(passMakingBandContentLabel)
-        passMakingBandContentLabel.constraint(top: passMakingBandTitleLabel.bottomAnchor,
-                                              leading: passMakingBandButton.leadingAnchor,
-                                              padding: UIEdgeInsets(top: 14, left: 37, bottom: 0, right: 0))
+        self.skipMakingBandButton.addSubview(skipMakingLabelStackView)
+        skipMakingLabelStackView.constraint(leading: skipMakingBandButton.leadingAnchor,
+                                            trailing: skipMakingBandButton.trailingAnchor,
+                                            centerY: skipMakingBandButton.centerYAnchor,
+                                            padding: UIEdgeInsets(top: 42, left: 30, bottom: 0, right: 30))
     }
     
     private func addActionToButtons() {
@@ -184,6 +181,6 @@ final class BandCreationDecisionViewController: BaseViewController {
             self?.isSkipMakingBandButtonTapped = true
         }
         self.makeBandButton.addAction(makeBandAction, for: .touchUpInside)
-        self.passMakingBandButton.addAction(passMakeBandAction, for: .touchUpInside)
+        self.skipMakingBandButton.addAction(passMakeBandAction, for: .touchUpInside)
     }
 }
