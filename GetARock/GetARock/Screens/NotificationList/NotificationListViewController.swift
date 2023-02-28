@@ -70,11 +70,11 @@ extension NotificationListViewController {
         let alertMessage = NSLocalizedString("밴드 ‘00 밴드’의 초대를 거절하시겠습니까?", comment: "Invitation reject message")
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
 
-        let okayAction = NSLocalizedString("확인", comment: "Alert OK button title")
-        let cancelAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
+        let rejectAction = NSLocalizedString("거절", comment: "Alert OK button title")
+        let okayAction = NSLocalizedString("확인", comment: "Alert Cancel button title")
 
-        alertController.addAction(UIAlertAction(title: cancelAction, style: .destructive))
-        alertController.addAction(UIAlertAction(title: okayAction, style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: okayAction, style: .default))
+        alertController.addAction(UIAlertAction(title: rejectAction, style: .destructive, handler: { _ in
             self.tableView.performBatchUpdates { self.reconfigureCellAfterRejectInvitation(cellIndexPath: cellIndexPath) }
         }))
         present(alertController, animated: true)
@@ -92,4 +92,3 @@ extension NotificationListViewController {
         cell.updateTextForInvitationRejectAlert(userName: "알로라", bandName: "00밴드")
     }
 }
-
