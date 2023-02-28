@@ -36,7 +36,6 @@ final class PracticePlaceSearchViewController: BaseViewController {
         return $0
     }(UITableView())
     
-    //MARK: Google Map으로 현재 위치 바꿔야하나?
     private lazy var currentLocationButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.scopeSymbol
@@ -48,7 +47,10 @@ final class PracticePlaceSearchViewController: BaseViewController {
         button.tintColor = .white
         button.constraint(.widthAnchor, constant: 118)
         button.constraint(.heightAnchor, constant: 45)
-        let action = UIAction { [weak self] _ in self?.locationManager.requestWhenInUseAuthorization() }
+        let action = UIAction { [weak self] _ in
+            self?.locationManager.requestWhenInUseAuthorization()
+            self?.getCurrentLocation()
+        }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
@@ -90,9 +92,13 @@ final class PracticePlaceSearchViewController: BaseViewController {
 
     private func configureSearchCompleter() {
         searchCompleter.delegate = self
-        //TODO: 이게 뭔지 조사필요
         searchCompleter.resultTypes = .query
     }
+    
+    private func setLocationManager() {
+          self.locationManager.delegate = self
+          self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+      }
 }
 
 extension PracticePlaceSearchViewController {
@@ -104,11 +110,6 @@ extension PracticePlaceSearchViewController {
       // 사용자가 search bar 에 입력한 text를 자동완성 대상에 넣는다
         searchCompleter.queryFragment = searchBar.textField.text ?? ""
         }
-    
-    private func setLocationManager() {
-          self.locationManager.delegate = self
-          self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-      }
 }
 
 extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
@@ -123,9 +124,15 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let currentLocation = locations.first else { return }
-        print("current location is this \(currentLocation)")
+    func getCurrentLocation() {
+        if let location = locationManager.location {
+            let userLocation = CLLocation(latitude: location.coordinate.latitude,
+                                          longitude: location.coordinate.longitude)
+            print("==============")
+            print(userLocation)
+            searchCompleter.region = MKCoordinateRegion(center: userLocation.coordinate,
+                                                        span: MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 100))
+        }
     }
 }
 
@@ -150,7 +157,8 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.classIdentifier, for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.classIdentifier,
+                                                       for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell()}
 
         let searchResult = searchResults[indexPath.row]
         cell.configure(mapSearchResult: searchResult)

@@ -10,21 +10,9 @@ import MapKit
 
 final class PracticePlaceSearchTableViewCell: UITableViewCell {
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.setFont(.headline01)
-        label.textColor = .white
-        
-        return label
-    }()
+    private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
     
-    private let subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.setFont(.content)
-        label.textColor = .gray02
-        
-        return label
-    }()
+    private let subTitleLabel: UILabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .gray02)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -61,26 +49,6 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     
     //TODO: 불필요한 코드 체크 필요
     func configure(mapSearchResult: MKLocalSearchCompletion){
-        // titleAttribute
-        let titleString = mapSearchResult.title
-        let attributedTitleString = NSMutableAttributedString(string: titleString)
-        attributedTitleString.addAttribute(.foregroundColor, value: UIColor.gray, range: (titleString as NSString).range(of: titleString))
-        
-        // subTitleAttribute
-        let subTitleString = mapSearchResult.subtitle
-        let attribtuedSubTitleString = NSMutableAttributedString(string: subTitleString)
-        attribtuedSubTitleString.addAttribute(.foregroundColor, value: UIColor.gray, range: (subTitleString as NSString).range(of: subTitleString))
-        //
-        let titleRange = mapSearchResult.titleHighlightRanges
-        titleRange.forEach{
-            attributedTitleString.addAttribute(.foregroundColor, value: UIColor.black, range: $0.rangeValue)
-        }
-        
-        let subTitleRange = mapSearchResult.subtitleHighlightRanges
-        subTitleRange.forEach{
-            attribtuedSubTitleString.addAttribute(.foregroundColor, value: UIColor.black, range: $0.rangeValue)
-        }
-        
         self.titleLabel.text = mapSearchResult.title
         self.subTitleLabel.text = mapSearchResult.subtitle
     }

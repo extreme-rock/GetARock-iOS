@@ -19,6 +19,7 @@ final class AddPracticeSongViewController: BaseViewController {
             addPracticeSongButton.configuration?.attributedTitle?.font = UIFont.setFont(.contentBold)
             if numberOfSong == 3 {
                 addPracticeSongButton.isEnabled = false
+                addPracticeSongButton.backgroundColor = .dark04
             }
         }
     }
@@ -52,7 +53,7 @@ final class AddPracticeSongViewController: BaseViewController {
         configuration.imagePadding = 10
         
         let button = DefaultButton(configuration: configuration)
-        button.setBackgroundColor(.dark02, for: .normal)
+        button.setBackgroundColor(.dark04, for: .disabled)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
         button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
