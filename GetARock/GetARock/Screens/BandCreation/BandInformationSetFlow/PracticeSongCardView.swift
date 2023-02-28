@@ -10,12 +10,8 @@ import UIKit
 final class PracticeSongCardView: UIStackView {
 
     lazy var deleteButton: UIButton = {
-        let deleteAction: UIAction = UIAction { _ in
-            self.removeFromSuperview()
-        }
         $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         $0.tintColor = .white
-        $0.addAction(deleteAction, for: .touchUpInside)
         return $0
     }(UIButton())
     

@@ -13,12 +13,27 @@ final class AddPracticeSongViewController: BaseViewController {
     
     var completion: (_ songs: [PracticeSongCardView]) -> Void = { songs in }
     
-    lazy var firstPracticeSongCard: PracticeSongCardView = PracticeSongCardView()
+    private var numberOfSong: Int = 1 {
+        didSet {
+            addPracticeSongButton.configuration?.title = "합주곡 추가\(numberOfSong)/3"
+            addPracticeSongButton.configuration?.attributedTitle?.font = UIFont.setFont(.contentBold)
+            if numberOfSong == 3 {
+                addPracticeSongButton.isEnabled = false
+            }
+        }
+    }
+    
+    private let firstPracticeSongCard: PracticeSongCardView = PracticeSongCardView()
     
     private lazy var contentView: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         $0.spacing = 40
+        let deleteAction: UIAction = UIAction { [weak self]_ in
+            self?.firstPracticeSongCard.removeFromSuperview()
+            self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
+        }
+        firstPracticeSongCard.deleteButton.addAction(deleteAction, for: .touchUpInside)
         return $0
     }(UIStackView(arrangedSubviews: [firstPracticeSongCard]))
     
@@ -32,7 +47,7 @@ final class AddPracticeSongViewController: BaseViewController {
     private lazy var addPracticeSongButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.plusSymbol
-        configuration.title = "합주곡 추가"
+        configuration.title = "합주곡 추가 \(numberOfSong)/3"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 10
         
@@ -138,10 +153,16 @@ extension AddPracticeSongViewController: UIScrollViewDelegate {
 extension AddPracticeSongViewController {
     @objc
     func didTapAddPracticeSong() {
+        guard contentView.arrangedSubviews.count < 3 else { return }
         let newCard = PracticeSongCardView()
         newCard.setTextFieldDelegate(controller: self)
-        guard contentView.arrangedSubviews.count < 3 else { return }
+        let deleteAction: UIAction = UIAction { [weak self]_ in
+            newCard.removeFromSuperview()
+            self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
+        }
+        newCard.deleteButton.addAction(deleteAction, for: .touchUpInside)
         contentView.insertArrangedSubview(newCard, at: contentView.arrangedSubviews.endIndex)
+        numberOfSong = contentView.arrangedSubviews.count
         updateDeleteButtonState()
     }
     
