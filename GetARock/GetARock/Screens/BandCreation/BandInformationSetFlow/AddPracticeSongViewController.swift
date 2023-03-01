@@ -42,7 +42,6 @@ final class AddPracticeSongViewController: BaseViewController {
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
-//        $0.delegate = self
         return $0
     }(UIScrollView())
     
@@ -142,15 +141,6 @@ final class AddPracticeSongViewController: BaseViewController {
         )
     }
 }
-
-//// ScrollView 가로 스크롤 막기
-//extension AddPracticeSongViewController: UIScrollViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.x != 0 {
-//            scrollView.contentOffset.x = 0
-//        }
-//    }
-//}
 
 extension AddPracticeSongViewController {
     @objc
