@@ -19,7 +19,8 @@ final class AddPracticeSongViewController: BaseViewController {
             addPracticeSongButton.configuration?.attributedTitle?.font = UIFont.setFont(.contentBold)
             if numberOfSong == 3 {
                 addPracticeSongButton.isEnabled = false
-                addPracticeSongButton.backgroundColor = .dark04
+            } else {
+                addPracticeSongButton.isEnabled = true
             }
         }
     }
@@ -97,12 +98,12 @@ final class AddPracticeSongViewController: BaseViewController {
                                   trailing: view.trailingAnchor)
         
         mainScrollView.addSubview(contentView)
-        
+
+        // contentView는 stackView라서 높이정보가 자동으로 세팅됨
+        // 따라서 스크롤범위를 맞추기위해 contentView의 하단 constraint가 필요함
         contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor,
-                               leading: mainScrollView.contentLayoutGuide.leadingAnchor,
-                               bottom: mainScrollView.contentLayoutGuide.bottomAnchor,
-                               trailing: mainScrollView.contentLayoutGuide.trailingAnchor,
-                               padding: UIEdgeInsets(top: 20, left: 10, bottom: 160, right: 20))
+                               bottom: mainScrollView.contentLayoutGuide.bottomAnchor, centerX: mainScrollView.centerXAnchor,
+                               padding: UIEdgeInsets(top: 20, left: 0, bottom: 160, right: 0))
         
         mainScrollView.addSubview(addPracticeSongButton)
         

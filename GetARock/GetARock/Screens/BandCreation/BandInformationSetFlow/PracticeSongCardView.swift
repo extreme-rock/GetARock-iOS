@@ -17,7 +17,11 @@ final class PracticeSongCardView: UIStackView {
     
     private let practiceSongName: InformationGuideLabel = InformationGuideLabel(guideText: "합주곡 제목", type: .required)
     
-    private let practiceSongTextField: BasicTextField = BasicTextField(placeholder: "합주곡 제목을 입력해주세요")
+    private let practiceSongTextField: BasicTextField = {
+        $0.constraint(.widthAnchor,
+                      constant: BasicComponentSize.width - 40)
+        return $0
+    }(BasicTextField(placeholder: "합주곡 제목을 입력해주세요"))
     
     private lazy var practiceSongNameVstack: UIStackView = {
         $0.axis = .vertical
@@ -27,7 +31,11 @@ final class PracticeSongCardView: UIStackView {
     
     private let artistName: InformationGuideLabel = InformationGuideLabel(guideText: "아티스트", type: .required)
     
-    private let artistNameTextField: BasicTextField = BasicTextField(placeholder: "아티스트를 입력해주세요")
+    private let artistNameTextField: BasicTextField = {
+        $0.constraint(.widthAnchor,
+                      constant: BasicComponentSize.width - 20)
+        return $0
+    }(BasicTextField(placeholder: "아티스트를 입력해주세요"))
     
     private lazy var artistNameVstack: UIStackView = {
         $0.axis = .vertical
@@ -38,11 +46,15 @@ final class PracticeSongCardView: UIStackView {
     private let linkLabel: InformationGuideLabel = InformationGuideLabel(guideText: "링크", type: .optional)
     
     private let linkDescription: BasicLabel = BasicLabel(
-        contentText: "* 우리밴드가 해당 곡을 합주한 작업물 링크를 입력해주세요",
+        contentText: "* 해당 곡을 합주한 작업물 링크를 입력해주세요",
         fontStyle: .content,
         textColorInfo: .gray02)
     
-    private let linkTextField: BasicTextField = BasicTextField(placeholder: "합주 영상이나 녹음파일 링크를 입력해주세요")
+    private let linkTextField: BasicTextField = {
+        $0.constraint(.widthAnchor,
+                      constant: BasicComponentSize.width - 20)
+        return $0
+    }(BasicTextField(placeholder: "합주 영상이나 녹음파일 링크를 입력해주세요"))
     
     private lazy var linkVstack: UIStackView = {
         $0.axis = .vertical
@@ -75,7 +87,7 @@ final class PracticeSongCardView: UIStackView {
         self.axis = .vertical
         self.spacing = 40
         self.isLayoutMarginsRelativeArrangement = true
-        self.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
+        self.layoutMargins = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
         deleteButton.isHidden = true
     }
     
