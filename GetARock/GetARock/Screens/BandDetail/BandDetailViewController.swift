@@ -41,7 +41,7 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - View
     
-    lazy var bandTopInfoView = BandTopInfoView()
+    lazy var bandTopInfoView: BandTopInfoView? = nil
     lazy var bandDetailContentView: DetailContentView? = nil
     
     // MARK: - LifeCycle
@@ -53,11 +53,12 @@ final class BandDetailViewController: BaseViewController {
         Task {
             await getBandData()
             
+            bandTopInfoView = BandTopInfoView(name: bandData.name, address: bandData.address)
             bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
             
             //MARK: 데이터를 넣어준 다음에 뷰를 그리는 순서를 잡아주기 위해 레이아웃 코드를 여기 넣어야함.(Task 안에 코드는 순서대로 진행됨)
-            view.addSubview(bandTopInfoView)
-            bandTopInfoView.constraint(
+            view.addSubview(bandTopInfoView ?? UIView(frame: .zero))
+            bandTopInfoView?.constraint(
                 top: self.view.topAnchor,
                 leading: self.view.leadingAnchor,
                 trailing: self.view.trailingAnchor
@@ -65,7 +66,7 @@ final class BandDetailViewController: BaseViewController {
             
             view.addSubview(bandDetailContentView ?? UIView(frame: .zero))
             bandDetailContentView?.constraint(
-                top: bandTopInfoView.bottomAnchor,
+                top: bandTopInfoView?.bottomAnchor,
                 leading: self.view.leadingAnchor,
                 bottom: self.view.bottomAnchor,
                 trailing: self.view.trailingAnchor
