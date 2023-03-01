@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken
                      deviceToken: Data) {
+        // TODO: 로그인이 된 상태 && 알림 권한 허용인 경우에만 서버에 토큰을 보내도록 수정
         self.sendDeviceTokenToServer(token: deviceToken)
     }
     
@@ -48,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate {
+    // TODO: 알림 권한 받는 기능 삭제 후 머지 (현재는 테스트를 위해 추가해둔 상태)
     private func registerForRemoteNotifications() {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
