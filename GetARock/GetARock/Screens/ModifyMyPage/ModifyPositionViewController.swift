@@ -93,6 +93,11 @@ final class ModifyPositionViewController: UIViewController {
     func instrumentList() -> [InstrumentList] {
         return self.positionCollectionView.getSelectedInstruments()
     }
+    
+    func checkCompleteButtonEnabledState() -> Bool {
+        let isSelectedPosition = !self.selectedPositions.isEmpty
+        return isSelectedPosition
+    }
 }
 
 // MARK: - Observer 관련 Method

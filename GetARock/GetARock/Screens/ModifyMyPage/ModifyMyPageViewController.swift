@@ -123,15 +123,29 @@ final class ModifyMyPageViewController: UIViewController {
     }
     
     private func completeButtonTapped() {
-        //TODO: 개인정보 UPDATE 함수
         guard let modifyPositionViewController = self.pageViewControllers.first as? ModifyPositionViewController,
               let modifyUserProfileViewController = self.pageViewControllers.last as? ModifyUserProfileViewController else { return }
         
-        guard var userInfo = modifyUserProfileViewController.userInfoWithoutInstrumentList() else { return }
-        userInfo.instrumentList = modifyPositionViewController.instrumentList()
+        var modiFiedUserInfo = self.userInfo
+        // ModifyUserProfileViewController가 열리지 않으면 상태를 체크할 수 없어서 viewDidLoad를 체크하여, load되지 않았으면 기존 userInfo를 입력하고, load되었다면 현재 입력된 info값을 가져옴
         
-        Task {
-            try await SignUpNetworkManager.putUserInformation(user: userInfo)
+        let isModifyUserProfileAllFilled = !modifyUserProfileViewController.isViewDidLoad
+        || modifyUserProfileViewController.checkCompleteButtonEnabledState()
+        let isPositionInfoFilled = modifyPositionViewController.checkCompleteButtonEnabledState()
+        let isAllUserInfoFilled = isModifyUserProfileAllFilled && isPositionInfoFilled
+        
+        if isAllUserInfoFilled {
+            if !modifyUserProfileViewController.isViewDidLoad {
+                modiFiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()
+            } else {
+                guard var userInfo = modifyUserProfileViewController.userInfoWithoutInstrumentList() else { return }
+                modiFiedUserInfo = userInfo
+                modiFiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()
+            }
+            
+            Task {
+                try await SignUpNetworkManager.putUserInformation(user: userInfo)
+            }
         }
     }
     

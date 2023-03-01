@@ -12,6 +12,7 @@ final class ModifyUserProfileViewController: UIViewController {
     // MARK: - Property
     
     private var userInfo: User
+    var isViewDidLoad = false
     
     // MARK: - View
     
@@ -190,6 +191,8 @@ final class ModifyUserProfileViewController: UIViewController {
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
         self.configure(with: self.userInfo)
+        self.isViewDidLoad = true
+        print("viewDidLoad")
     }
 
     private func attribute() {
@@ -227,8 +230,9 @@ final class ModifyUserProfileViewController: UIViewController {
     func configure(with userInfo: User) {
         guard let age = Age.CodingKeys(rawValue: userInfo.age)?.inKorean,
               let gender = Gender.CodingKeys(rawValue: userInfo.gender)?.inKorean else { return }
-
+        
         self.userNamingTextField.writeText(with: userInfo.name)
+        self.userNamingTextField.setupAvailableName(name: userInfo.name)
         self.userIntroTextView.writeText(with: userInfo.introduction)
         self.ageSelectCollectionView.selectItem(with: age)
         self.genderSelectCollectionView.selectItem(with: gender)
@@ -261,5 +265,18 @@ final class ModifyUserProfileViewController: UIViewController {
                         instrumentList: [],
                         snsList: snsList)
         return user
+    }
+    
+    func checkCompleteButtonEnabledState() -> Bool {
+        let isAgeSelected = ageSelectCollectionView.isSelected()
+        let isGenderSelected = genderSelectCollectionView.isSelected()
+        let isAvailableName = userNamingTextField.isAvailableName()
+        
+        print(isAgeSelected, isGenderSelected, isAvailableName)
+        if isAgeSelected && isGenderSelected && isAvailableName {
+            return true
+        } else {
+            return false
+        }
     }
 }
