@@ -92,7 +92,7 @@ struct InstrumentListVO: Codable {
 
 struct SnsListVO: Codable {
     let snsID: Int
-    let snsType: String
+    let snsType: SnsType
     let link: String?
 
     enum CodingKeys: String, CodingKey {
@@ -103,9 +103,9 @@ struct SnsListVO: Codable {
 
 // MARK: - SongList
 struct SongListVO: Codable {
-    let songID: Int
-    let name, artist: String?
-    let link: String?
+    let songID: Int? //입력시 선택항목
+    let name, artist: String? //입력시 선택항목
+    let link: String? //입력시 선택항목
 
     enum CodingKeys: String, CodingKey {
         case songID = "songId"
