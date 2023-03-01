@@ -62,7 +62,7 @@ final class PracticePlaceSearchViewController: BaseViewController {
         super.viewDidLoad()
         setupLayout()
         attribute()
-        configureSearchCompleter()
+        setSearchCompleter()
         setLocationManager()
     }
 
@@ -94,7 +94,7 @@ final class PracticePlaceSearchViewController: BaseViewController {
                                      padding: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
     }
     
-    private func configureSearchCompleter() {
+    private func setSearchCompleter() {
         searchCompleter.delegate = self
         searchCompleter.resultTypes = .query
     }
