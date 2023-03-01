@@ -70,22 +70,23 @@ extension AppDelegate {
         
         do {
             let headers = ["content-type": "application/json"]
-            let request = NSMutableURLRequest(url: NSURL(string: "https://api.ryomyom.com/apns/device-token")! as URL,
-                                              cachePolicy: .useProtocolCachePolicy,
-                                              timeoutInterval: 10.0)
+            guard let url = URL(string: "https://api.ryomyom.com/apns/device-token") else { return }
+            var request = URLRequest(url: url,
+                                     cachePolicy: .useProtocolCachePolicy,
+                                     timeoutInterval: 10)
             var encodedData = Data()
-           
+            
             do {
                 let data = try JSONEncoder().encode(deviceToken)
                 encodedData = data
             } catch let error as NSError{
                 print("An error has occurred while encoding JSONObject: \(error.localizedDescription)")
             }
-
+            
             request.httpMethod = "POST"
             request.httpBody = encodedData
             request.allHTTPHeaderFields = headers
-
+            
             let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
                 if (error != nil) {
                     print("An error has occurred : \(error?.localizedDescription ?? "")")
