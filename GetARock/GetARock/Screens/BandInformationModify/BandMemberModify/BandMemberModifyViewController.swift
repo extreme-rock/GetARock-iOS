@@ -115,29 +115,32 @@ extension BandMemberModifyViewController {
             cell.configure(data: cellData)
             cell.selectionStyle = .none
 
-            let changeLeaderAction = UIAction { _ in
+            let changeLeaderAction = UIAction { [weak self] _ in
                 cell.leaderButton.tintColor = .systemPurple
-                
+                self?.showAlertForChangingLeader(newLeader: cell.getNameText()) {
+                    // 일단 section1의 모든 셀의 색상은 gray로 다 바꾼다
+                    // 선택된 셀의 색상만 보라색으로 바뀌고, 객체의 멤버정보를 업데이트 시킨다
+                }
             }
 
             cell.leaderButton.addAction(changeLeaderAction, for: .touchUpInside)
-
             return cell
         }
     }
     
-    func showAlertForChangingLeader(newLeader: String) {
+    //MARK: escaping closure 이유는?
+    func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
         let alertTitle = "리더 권한 양도"
         let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
 
-        let changeAction = NSLocalizedString("양도", comment: "Alert OK button title")
-        let okayAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
+        let changeActionTitle = "양도"
+        let okayActionTitle = "취소"
 
-        alertController.addAction(UIAlertAction(title: okayAction, style: .default))
-        alertController.addAction(UIAlertAction(title: changeAction, style: .destructive, handler: { _ in
-            //Change Action
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
+            completion()
         }))
         present(alertController, animated: true)
     }

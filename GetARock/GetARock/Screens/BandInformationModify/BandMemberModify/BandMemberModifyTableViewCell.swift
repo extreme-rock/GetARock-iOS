@@ -132,4 +132,8 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
             self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
         }
     }
+    
+    func getNameText() -> String {
+        return userNameLabel.text ?? ""
+    }
 }
