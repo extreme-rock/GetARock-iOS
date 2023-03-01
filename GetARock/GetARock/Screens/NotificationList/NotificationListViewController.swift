@@ -45,7 +45,7 @@ final class NotificationListViewController: UITableViewController {
         }
 
         let acceptAction = UIAction { _ in
-            //TODO: 초대 수락시 navigation Flow
+            self.navigationController?.pushViewController(PositionSelectForInvitationViewController(), animated: true)
         }
         cell.rejectButton.addAction(rejectAction, for: .touchUpInside)
         cell.acceptButton.addAction(acceptAction, for: .touchUpInside)
