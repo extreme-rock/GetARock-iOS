@@ -43,7 +43,7 @@ final class BandInformationSetViewController: BaseViewController {
                                      contentViewTitleLabel,
                                      contentViewSubTitleLabel]))
 
-    private let bandNamingGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 이름", type: .optional)
+    private let bandNamingGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 이름", type: .required)
     
     private let bandNamingGuideSubLabel: BasicLabel = BasicLabel(
         contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",

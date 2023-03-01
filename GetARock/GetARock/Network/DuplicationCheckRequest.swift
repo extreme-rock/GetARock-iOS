@@ -13,8 +13,8 @@ final class DuplicationCheckRequest {
         var result = false
         var baseURL = ""
         switch checkCase {
-        case .userName: baseURL = "http://43.201.55.66:8080/member/validate"
-        case .bandName: baseURL = "http://43.201.55.66:8080/band/validate"
+        case .userName: baseURL = "https://api.ryomyom.com/member/validate"
+        case .bandName: baseURL = "https://api.ryomyom.com/band/validate"
         case .none: return false
         }
         
