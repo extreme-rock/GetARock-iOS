@@ -9,10 +9,14 @@ import UIKit
 import MapKit
 
 final class PracticePlaceSearchTableViewCell: UITableViewCell {
+
+    //MARK: View
     
     private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
     
     private let subTitleLabel: UILabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white)
+
+    //MARK: init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,8 +27,10 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    //MARK: Methods
     
-    //MARK: Cell 재사용 전 텍스트 정보 초기화
+    //Cell 재사용 전 텍스트 정보 초기화
     override func prepareForReuse() {
         self.titleLabel.text = nil
         self.subTitleLabel.text = nil
