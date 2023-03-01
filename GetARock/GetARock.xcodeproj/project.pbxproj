@@ -66,6 +66,11 @@
 		9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */; };
 		9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */; };
 		9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E9297E233900D4A433 /* BasicTextField.swift */; };
+		9A350B1B29AF85B600A5314E /* BandInformationVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B1A29AF85B600A5314E /* BandInformationVO.swift */; };
+		9A350B1D29AF8CC700A5314E /* BandInformationModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B1C29AF8CC700A5314E /* BandInformationModifyViewController.swift */; };
+		9A350B2029AF8D3100A5314E /* BandMemberModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B1F29AF8D3100A5314E /* BandMemberModifyViewController.swift */; };
+		9A350B2329AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B2229AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift */; };
+		9A350B2529AF901E00A5314E /* BandMemberModifyTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B2429AF901E00A5314E /* BandMemberModifyTableViewHeader.swift */; };
 		9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */; };
 		9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE2298A9CD900953E4B /* NetworkError.swift */; };
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
@@ -199,6 +204,11 @@
 		9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentSize.swift; sourceTree = "<group>"; };
 		9A29E6E9297E233900D4A433 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
+		9A350B1A29AF85B600A5314E /* BandInformationVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationVO.swift; sourceTree = "<group>"; };
+		9A350B1C29AF8CC700A5314E /* BandInformationModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationModifyViewController.swift; sourceTree = "<group>"; };
+		9A350B1F29AF8D3100A5314E /* BandMemberModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyViewController.swift; sourceTree = "<group>"; };
+		9A350B2229AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyTableViewCell.swift; sourceTree = "<group>"; };
+		9A350B2429AF901E00A5314E /* BandMemberModifyTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyTableViewHeader.swift; sourceTree = "<group>"; };
 		9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimitTextField.swift; sourceTree = "<group>"; };
 		9A78BFE2298A9CD900953E4B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
@@ -383,6 +393,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9A350B1E29AF8CCF00A5314E /* BandInformationModify */ = {
+			isa = PBXGroup;
+			children = (
+				9A350B1C29AF8CC700A5314E /* BandInformationModifyViewController.swift */,
+				9A350B2129AF8D3800A5314E /* BandMemberModify */,
+			);
+			path = BandInformationModify;
+			sourceTree = "<group>";
+		};
+		9A350B2129AF8D3800A5314E /* BandMemberModify */ = {
+			isa = PBXGroup;
+			children = (
+				9A350B1F29AF8D3100A5314E /* BandMemberModifyViewController.swift */,
+				9A350B2229AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift */,
+				9A350B2429AF901E00A5314E /* BandMemberModifyTableViewHeader.swift */,
+			);
+			path = BandMemberModify;
+			sourceTree = "<group>";
+		};
 		9AFE014329990705004B0BCF /* BandCreation */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,6 +540,7 @@
 				B8468F62297A94B900A9E77E /* Maps */,
 				B88E1BE22977AE1D006072B7 /* Landing */,
 				9AFE014329990705004B0BCF /* BandCreation */,
+				9A350B1E29AF8CCF00A5314E /* BandInformationModify */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -632,11 +662,11 @@
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
-				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
 				7BEB09D9299CFEC20076A82F /* Comment.swift */,
-				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
+				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				A96F368F299E301700376620 /* SearchedUserListDTO.swift */,
+				9A350B1A29AF85B600A5314E /* BandInformationVO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -886,17 +916,15 @@
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
 				A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
-
 				A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */,
-
 				4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */,
-
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */,
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
+				9A350B2329AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift in Sources */,
 				7B6D3354299A2F76001FD630 /* BandDetailViewController.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
@@ -927,8 +955,10 @@
 				4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */,
 				4A63BE5629A604BC00A30CA8 /* UILabel+Extension.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
+				9A350B2029AF8D3100A5314E /* BandMemberModifyViewController.swift in Sources */,
 				9ACA5858299B6CEE00C6C2BC /* SNSBoxView.swift in Sources */,
 				7B236A8529854196006AE385 /* IconImageView.swift in Sources */,
+				9A350B2529AF901E00A5314E /* BandMemberModifyTableViewHeader.swift in Sources */,
 				7B56DC3E29A36F2F00672EDD /* UIView+Extension.swift in Sources */,
 				7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */,
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
@@ -938,6 +968,7 @@
 				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
 				4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */,
 				4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */,
+				9A350B1D29AF8CC700A5314E /* BandInformationModifyViewController.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
 				4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */,
 				A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */,
@@ -951,11 +982,8 @@
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
 				4A6A9A3C299DC2AD0039C0F7 /* Notification.Name+Extension.swift in Sources */,
 				4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */,
-
 				A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */,
-
 				7BEB09D6299CEEA70076A82F /* CommentListView.swift in Sources */,
-
 				A9D72540299B2D4400404E22 /* InformationGuideLabel.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
 				9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */,
@@ -971,6 +999,7 @@
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
 				4A43E6EB29A33B4F00EC4BA5 /* AgreeTermsViewController.swift in Sources */,
 				B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */,
+				9A350B1B29AF85B600A5314E /* BandInformationVO.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
 				7B7598AD29893A1E00FA6B78 /* SNSButtonView.swift in Sources */,
 				7BEB09D8299CF12E0076A82F /* CommentTableViewCell.swift in Sources */,
@@ -1159,7 +1188,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarock;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryomyomyom.getarock--";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1195,7 +1224,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarock;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ryomyomyom.getarock-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
