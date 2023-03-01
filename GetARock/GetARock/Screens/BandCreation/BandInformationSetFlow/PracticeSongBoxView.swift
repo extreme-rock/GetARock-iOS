@@ -42,7 +42,13 @@ final class PracticeSongBoxView: UIView {
         )
         $0.contentMode = .scaleAspectFit
         $0.tintColor = .gray02
-        let action = UIAction { _ in self.removeFromSuperview() }
+        let action = UIAction { [weak self] _ in
+            UIView.animate(withDuration: 0.3, animations: {
+                self?.alpha = 0
+            }, completion: { [weak self] _ in
+                self?.removeFromSuperview()
+            })
+        }
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())

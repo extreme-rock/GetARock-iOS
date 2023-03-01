@@ -32,8 +32,15 @@ final class AddPracticeSongViewController: BaseViewController {
         $0.distribution = .equalSpacing
         $0.spacing = 40
         let deleteAction: UIAction = UIAction { [weak self]_ in
-            self?.firstPracticeSongCard.removeFromSuperview()
-            self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
+            UIView.animate(withDuration: 0.4, animations: {
+                self?.firstPracticeSongCard.alpha = 0 // fade out 애니메이션
+            }, completion: { [weak self] _ in
+                self?.firstPracticeSongCard.removeFromSuperview()
+                self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
+                UIView.animate(withDuration: 0.2) {
+                    self?.contentView.layoutIfNeeded() // StackView 레이아웃 재조정 애니메이션
+                }
+            })
         }
         firstPracticeSongCard.deleteButton.addAction(deleteAction, for: .touchUpInside)
         return $0
@@ -149,8 +156,15 @@ extension AddPracticeSongViewController {
         let newCard = PracticeSongCardView()
         newCard.setTextFieldDelegate(controller: self)
         let deleteAction: UIAction = UIAction { [weak self]_ in
-            newCard.removeFromSuperview()
-            self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
+            UIView.animate(withDuration: 0.4, animations: {
+                newCard.alpha = 0 // fade out 애니메이션
+            }, completion: { [weak self] _ in
+                newCard.removeFromSuperview()
+                self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
+                UIView.animate(withDuration: 0.3) { // StackView 레이아웃 재조정 애니메이션
+                    self?.contentView.layoutIfNeeded()
+                }
+            })
         }
         newCard.deleteButton.addAction(deleteAction, for: .touchUpInside)
         contentView.insertArrangedSubview(newCard, at: contentView.arrangedSubviews.endIndex)
