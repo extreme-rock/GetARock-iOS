@@ -97,8 +97,6 @@ final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Life Cycle
     
-    // init 시에 유저에 대한 정보가 들어와야함
-    
     init(userInfo: User) {
         self.userInfo = userInfo
         super.init(nibName: nil, bundle: nil)
@@ -126,6 +124,15 @@ final class ModifyMyPageViewController: UIViewController {
     
     private func completeButtonTapped() {
         //TODO: 개인정보 UPDATE 함수
+        guard let modifyPositionViewController = self.pageViewControllers.first as? ModifyPositionViewController,
+              let modifyUserProfileViewController = self.pageViewControllers.last as? ModifyUserProfileViewController else { return }
+        
+        guard var userInfo = modifyUserProfileViewController.userInfoWithoutInstrumentList() else { return }
+        userInfo.instrumentList = modifyPositionViewController.instrumentList()
+        
+        Task {
+            try await SignUpNetworkManager.putUserInformation(user: userInfo)
+        }
     }
     
     private func setupLayout() {

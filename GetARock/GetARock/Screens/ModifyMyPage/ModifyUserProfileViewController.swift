@@ -243,4 +243,23 @@ final class ModifyUserProfileViewController: UIViewController {
             }
         }
     }
+    
+    func userInfoWithoutInstrumentList() -> User? {
+        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.inEnglish,
+              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.inEnglish
+              else { return nil }
+        
+        let snsList = [youtubeTextField.inputText(),
+                       instagramTextField.inputText(),
+                       soundCloudTextField.inputText()]
+        
+        let user = User(memberId: 15,
+                        name: self.userNamingTextField.inputText(),
+                        age: age,
+                        gender: gender,
+                        introduction: self.userIntroTextView.inputText(),
+                        instrumentList: [],
+                        snsList: snsList)
+        return user
+    }
 }

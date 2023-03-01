@@ -89,6 +89,10 @@ final class ModifyPositionViewController: UIViewController {
     private func configureUserPosition() {
         self.positionCollectionView.selectItems(with: self.selectedPositions)
     }
+    
+    func instrumentList() -> [InstrumentList] {
+        return self.positionCollectionView.getSelectedInstruments()
+    }
 }
 
 // MARK: - Observer 관련 Method
