@@ -48,7 +48,8 @@ struct EventList: Codable {
 }
 
 // MARK: - MemberList
-struct MemberListVO: Codable {
+struct MemberListVO: Codable, Hashable, Identifiable {
+    let id: String = UUID().uuidString
     let memberBandID: Int?
     let memberID: Int?
     let name: String
@@ -63,7 +64,7 @@ struct MemberListVO: Codable {
 }
 
 // MARK: - InstrumentList
-struct InstrumentListVO: Codable {
+struct InstrumentListVO: Codable, Hashable {
     let instrumentID: Int?
     let isMain: Bool?
     let name: String

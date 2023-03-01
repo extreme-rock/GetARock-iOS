@@ -10,7 +10,7 @@ import UIKit
 
 final class BandMemberModifyViewController: BaseViewController {
 
-    private var addedMembers: [SearchedUserInfo] = [] {
+    private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData() {
         didSet {
             guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberModifyTableViewHeader else { return }
             headerView.sectionTitle.text = "밴드 멤버 \(addedMembers.count)인"
@@ -46,6 +46,7 @@ final class BandMemberModifyViewController: BaseViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
+        updateSnapShot(with: addedMembers)
     }
 
     //MARK: - Method
@@ -74,22 +75,25 @@ final class BandMemberModifyViewController: BaseViewController {
 
     private func attribute() {
         view.backgroundColor = .dark01
-        configureAdminCell()
     }
-
-    private func configureAdminCell() {
-        guard let admin: MemberList = BasicDataModel.bandCreationData.memberList.first else { return }
-        let transformedInstruments: [SearchedUserInstrumentList] = admin.instrumentList.map { SearchedUserInstrumentList(instrumentId: 0, isMain: false, name: $0.name)
+    
+    private func getTransformedVOData() -> [SearchedUserInfo] {
+        var resultData: [SearchedUserInfo] = []
+        //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
+        for data in BasicDataModel.dummyBandInfo.memberList {
+            let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
+                SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
+            }
+            let transformedData: SearchedUserInfo = SearchedUserInfo(
+                memberId: data.memberID ?? 0,
+                name: data.name,
+                memberState: data.memberState,
+                instrumentList: instrumentListInfo,
+                gender: "",
+                age: "")
+            resultData.append(transformedData)
         }
-        //MARK: 성별과 나이 정보는 추후 개인 유저 정보를 바탕으로 업데이트 해야함
-        let bandAdminData: SearchedUserInfo = SearchedUserInfo(
-            memberId: admin.memberId ?? -1,
-            name: admin.name,
-            memberState: admin.memberState,
-            instrumentList: transformedInstruments,
-            gender: "MEN", age: "20대")
-        addedMembers.append(bandAdminData)
-        updateSnapShot(with: addedMembers)
+        return resultData
     }
 }
 
@@ -110,19 +114,32 @@ extension BandMemberModifyViewController {
 
             cell.configure(data: cellData)
             cell.selectionStyle = .none
-            if cellData.memberState == .admin {
-                cell.leaderButton.isHidden = true
+
+            let changeLeaderAction = UIAction { _ in
+                cell.leaderButton.tintColor = .systemPurple
+                
             }
 
-            let deleteAction = UIAction { _ in
-                self.addedMembers.removeAll { $0.id == cell.id }
-                self.updateSnapShot(with: self.addedMembers)
-            }
-
-            cell.leaderButton.addAction(deleteAction, for: .touchUpInside)
+            cell.leaderButton.addAction(changeLeaderAction, for: .touchUpInside)
 
             return cell
         }
+    }
+    
+    func showAlertForChangingLeader(newLeader: String) {
+        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
+        let alertTitle = "리더 권한 양도"
+        let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let changeAction = NSLocalizedString("양도", comment: "Alert OK button title")
+        let okayAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
+
+        alertController.addAction(UIAlertAction(title: okayAction, style: .default))
+        alertController.addAction(UIAlertAction(title: changeAction, style: .destructive, handler: { _ in
+            //Change Action
+        }))
+        present(alertController, animated: true)
     }
 }
 
