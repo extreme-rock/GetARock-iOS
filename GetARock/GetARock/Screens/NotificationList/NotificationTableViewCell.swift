@@ -95,10 +95,10 @@ extension NotificationTableViewCell {
 
         //TODO: 추후 밴드 알람인지 모여락 알람인지 어떻게 구분할지 논의 필요
         if data.bandID > 0 {
-            self.cellImage.image = ImageLiteral.bandNotificationIcon
+            self.cellImage.image = ImageLiteral.bandIcon
         }
         if data.eventID > 0 {
-            self.cellImage.image = ImageLiteral.eventNotificationIcon
+            self.cellImage.image = ImageLiteral.eventIcon
         }
     }
     
