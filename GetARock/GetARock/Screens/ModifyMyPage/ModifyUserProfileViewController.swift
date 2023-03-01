@@ -192,7 +192,6 @@ final class ModifyUserProfileViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         self.configure(with: self.userInfo)
         self.isViewDidLoad = true
-        print("viewDidLoad")
     }
 
     private func attribute() {
@@ -272,7 +271,6 @@ final class ModifyUserProfileViewController: UIViewController {
         let isGenderSelected = genderSelectCollectionView.isSelected()
         let isAvailableName = userNamingTextField.isAvailableName()
         
-        print(isAgeSelected, isGenderSelected, isAvailableName)
         if isAgeSelected && isGenderSelected && isAvailableName {
             return true
         } else {

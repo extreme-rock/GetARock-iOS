@@ -145,6 +145,7 @@ final class ModifyMyPageViewController: UIViewController {
             
             Task {
                 try await SignUpNetworkManager.putUserInformation(user: userInfo)
+                self.dismiss(animated: true)
             }
         }
     }
@@ -218,3 +219,4 @@ final class ModifyMyPageViewController: UIViewController {
          self.segmentedController.selectedSegmentIndex = index
      }
  }
+
