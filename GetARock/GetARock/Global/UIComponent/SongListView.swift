@@ -17,6 +17,7 @@ final class SongListView: UIView {
     // MARK: - Property
     
     private var songListType: SongListType
+    private var songData: [SongListVO]?
     
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.width * 0.9)
@@ -44,8 +45,9 @@ final class SongListView: UIView {
     
     // MARK: - Init
     
-    init(songListType: SongListType) {
+    init(songListType: SongListType, data: [SongListVO]?) {
         self.songListType = songListType
+        self.songData = data
         super.init(frame: .zero)
         setupLayout()
     }
@@ -68,7 +70,7 @@ extension SongListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return BandDummyData.testBands.first?.song?.count ?? -1
+        return songData?.count ?? -1
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -79,9 +81,9 @@ extension SongListView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        cell.delegate = self
+//        cell.delegate = self
         cell.configure(
-            data: BandDummyData.testBands.first?.song?[indexPath.item] ?? nil,
+            data: songData?[indexPath.item] ?? nil,
             songListType: songListType,
             index: indexPath.item
         )

@@ -18,10 +18,10 @@ class BandInfomationView: UIView {
     
     // MARK: - View
     
-    lazy var scrollView: UIScrollView = {
+    let scrollView: UIScrollView = {
         $0.backgroundColor = .yellow
         return $0
-    }(UIScrollView(frame: self.bounds))
+    }(UIScrollView())
     
     let contentView: UIView = {
         $0.backgroundColor = .purple
@@ -58,9 +58,10 @@ class BandInfomationView: UIView {
         textColorInfo: .white
     )
     
-    private let bandSongListView: SongListView = {
+    private lazy var bandSongListView: SongListView = {
+        $0.backgroundColor = .blue
         return $0
-    }(SongListView(songListType: .detail))
+    }(SongListView(songListType: .detail, data: bandSong))
     
     private lazy var bandSongStackView: UIStackView = {
         $0.backgroundColor = .orange
@@ -112,9 +113,10 @@ class BandInfomationView: UIView {
     
     private lazy var bandInfoStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = 200
+        $0.spacing = 40
+        $0.distribution = .fill
         return $0
-    }(UIStackView(arrangedSubviews: [bandMembeStackView, bandSongStackView, bandIntroStackView, bandSNSStackView]))
+    }(UIStackView(arrangedSubviews: [bandMembeStackView, bandSongStackView]))
     
     
     // MARK: - Init
@@ -140,31 +142,38 @@ class BandInfomationView: UIView {
     }
     
     private func setupLayout() {
+//
+//        self.addSubview(scrollView)
+//        scrollView.constraint(
+//            top: self.topAnchor,
+//            leading: self.leadingAnchor,
+//            bottom: self.bottomAnchor,
+//            trailing: self.trailingAnchor
+//        )
+//
+//        scrollView.addSubview(contentView)
+//        contentView.constraint(
+//            top: scrollView.topAnchor,
+//            leading: scrollView.leadingAnchor,
+//            bottom: scrollView.bottomAnchor,
+//            trailing: scrollView.trailingAnchor
+//        )
         
-        self.addSubview(scrollView)
-        scrollView.constraint(
+        self.addSubview(bandInfoStackView)
+        bandInfoStackView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
-            trailing: self.trailingAnchor
-        )
+            trailing: self.trailingAnchor)
         
-        scrollView.addSubview(contentView)
-        contentView.constraint(
-            top: scrollView.topAnchor,
-            leading: scrollView.leadingAnchor,
-            bottom: scrollView.bottomAnchor,
-            trailing: scrollView.trailingAnchor
-        )
-        
-        contentView.addSubview(bandInfoStackView)
-        bandInfoStackView.constraint(
-            top: contentView.topAnchor,
-            leading: contentView.leadingAnchor,
-            bottom: contentView.bottomAnchor,
-            trailing: contentView.trailingAnchor)
-        
-        scrollView.contentSize = CGSize(width: self.bounds.width, height: contentView.bounds.height)
+//        contentView.addSubview(bandInfoStackView)
+//        bandInfoStackView.constraint(
+//            top: contentView.topAnchor,
+//            leading: contentView.leadingAnchor,
+//            bottom: contentView.bottomAnchor,
+//            trailing: contentView.trailingAnchor)
+//
+//        scrollView.contentSize = CGSize(width: self.bounds.width, height: contentView.bounds.height)
     }
     
     
