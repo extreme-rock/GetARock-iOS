@@ -12,7 +12,7 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     
     private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
     
-    private let subTitleLabel: UILabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .gray02)
+    private let subTitleLabel: UILabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
