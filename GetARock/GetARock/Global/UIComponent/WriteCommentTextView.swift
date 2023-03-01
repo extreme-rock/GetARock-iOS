@@ -6,26 +6,21 @@
 //
 
 import UIKit
-//
-//protocol CommentListUpdateDelegate: AnyObject {
-//    func refreshCommentList()
-//}
 
 final class WriteCommentTextView: UIView {
     
     // MARK: - Property
     
-//    weak var delegate: CommentListUpdateDelegate?
     private let maxHeight: CGFloat = 116
     private var textViewHeightConstraint: NSLayoutConstraint?
     private var keyboardHeightPaddingConstraint: NSLayoutConstraint?
     private var keyboardHeight: CGFloat = 30
     
-    //TODO: 멤버아이디랑 밴드ID는 로그인한 사용자 정보를 가져와서 사용해야함
-    private var memberId = "10"
-    private var bandId = "1"
+    //TODO: - 추후 로그인한 사용자 ID로 변경 해야함
+    private var memberId = "36"
+    //TODO: - 추후 사용자가 들어간 밴드의 ID로 변경해야함
+    private var bandId = "22"
     private var contentText = ""
-//    private lazy var postcomment = CommentListDTO(memberId: memberId, bandId:  bandId, content: "댓글 포스트 성공")
     
     // MARK: - View
     
@@ -40,13 +35,9 @@ final class WriteCommentTextView: UIView {
     
     private lazy var addCommentButton: DefaultButton = {
         $0.setTitle("등록", for: .normal)
-        $0.addTarget(self, action:  #selector(TapAddCommentButton), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(TapAddCommentButton), for: .touchUpInside)
         return $0
     }(DefaultButton())
-    
-    private let contentView: UIView = {
-        return $0
-    }(UIView())
     
     private let placeholderLabel: UILabel = BasicLabel(
         contentText: "댓글을 입력하세요",
@@ -54,9 +45,8 @@ final class WriteCommentTextView: UIView {
         textColorInfo: .gray02
     )
     
-    private let keyboardHeightPaddingView: UIView = {
-        return $0
-    }(UIView())
+    private let contentView = UIView()
+    private let keyboardHeightPaddingView = UIView()
     
     // MARK: - Init
     
@@ -79,7 +69,6 @@ final class WriteCommentTextView: UIView {
     }
     
     private func setupLayout() {
-        
         self.addSubview(contentView)
         contentView.constraint(
             top: self.topAnchor,
@@ -124,7 +113,7 @@ final class WriteCommentTextView: UIView {
     private func setTextViewHeightConstraint() {
         textViewHeightConstraint = commentTextView.heightAnchor.constraint(
             equalToConstant: 35
-    )
+        )
         textViewHeightConstraint?.isActive = true
     }
     
@@ -159,14 +148,14 @@ final class WriteCommentTextView: UIView {
         }
     }
     
+    // MARK: - @objc
+    
     @objc func TapAddCommentButton() {
-        print("🔥버튼눌림🔥")
         if self.commentTextView.text.isEmpty == false {
             self.contentText = commentTextView.text
             postComment()
             self.commentTextView.text.removeAll()
         }
-        
     }
 }
 
@@ -254,7 +243,7 @@ extension WriteCommentTextView {
             Task {
                 await BandDetailViewController().getBandData()
             }
-
+            
             let dataTask = URLSession.shared.dataTask(with: request as URLRequest,
                                                       completionHandler: { (data, response, error) -> Void in
                 if (error != nil) {

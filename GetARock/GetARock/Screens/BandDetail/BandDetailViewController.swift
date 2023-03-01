@@ -7,22 +7,12 @@
 
 import UIKit
 
-// MARK: - CommentListUpdateDelegate
-
-protocol CommentListUpdateDelegate: AnyObject {
-    func refreshCommentList(data: [CommentList]?)
-}
-
-// MARK: - Get BandData
-
 final class BandDetailViewController: BaseViewController {
     
     // MARK: - Property
     
-    weak var delegate: CommentListUpdateDelegate?
-    
-    //TODO: 사용자가 선택한 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "1"
+    //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
+    private var bandID = "22"
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
@@ -40,9 +30,12 @@ final class BandDetailViewController: BaseViewController {
         commentList: []
     ){
         didSet{
-            // 그냥 bandData.commentList 를 넘기려고 했으나... userInfo에는 딕셔너리 타입이 들어가야 한다고 해서 딕셔너리 변수 만들어서 넘겼습니당
             let bandDataDict: [String: [CommentList]?] = ["data": bandData.commentList]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil, userInfo: bandDataDict as [AnyHashable : Any])
+            NotificationCenter.default.post(
+                name: NSNotification.Name(rawValue: "load"),
+                object: nil,
+               userInfo: bandDataDict as [AnyHashable : Any]
+            )
         }
     }
     
@@ -62,13 +55,12 @@ final class BandDetailViewController: BaseViewController {
             
             bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
             
-            //MARK: 데이터를 넣어준다음에 뷰를 그리는 순서를 잡아주기 위해 레이아웃 코드를 여기 넣어야함.(Task 안에 코드는 순서대로 진행됨)
+            //MARK: 데이터를 넣어준 다음에 뷰를 그리는 순서를 잡아주기 위해 레이아웃 코드를 여기 넣어야함.(Task 안에 코드는 순서대로 진행됨)
             view.addSubview(bandTopInfoView)
             bandTopInfoView.constraint(
                 top: self.view.topAnchor,
                 leading: self.view.leadingAnchor,
-                trailing: self.view.trailingAnchor,
-                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                trailing: self.view.trailingAnchor
             )
             
             view.addSubview(bandDetailContentView ?? UIView(frame: .zero))
@@ -76,8 +68,7 @@ final class BandDetailViewController: BaseViewController {
                 top: bandTopInfoView.bottomAnchor,
                 leading: self.view.leadingAnchor,
                 bottom: self.view.bottomAnchor,
-                trailing: self.view.trailingAnchor,
-                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                trailing: self.view.trailingAnchor
             )
         }
     }
@@ -94,14 +85,13 @@ extension BandDetailViewController {
         guard let url = queryURLComponent?.url else { return }
         
         do {
-            //MARK: 데이터 받아오기
             let (data, response) = try await URLSession.shared.data(from: url)
-            //MARK: 데이터 디코딩
             let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
 //            print("❤️ Response data raw : \(data)")
 //            print("응답 내용 : \(response)")
             self.bandData = decodedData
         } catch {
+            print(error)
             print("bad news! decoding error occuerd")
         }
     }

@@ -7,36 +7,16 @@
 
 import UIKit
 
-
-// MARK: - CommentListView
-
 final class CommentListView: UIView {
     
-    var commentData: [CommentList]? {
-        didSet {
-            
-           
-//            DispatchQueue.main.async {
-//                //                let vc = BandDetailViewController()
-//                //                vc.delegate = self
-//                self.tableView.reloadData()
-//                self.setupTotalListNumberLabel()
-//            }
-            
-            // 추가하면 commentData에 댓글은 박히는데 테이블뷰 리로드가 안됨..ㅠㅠ
-            DispatchQueue.main.async(execute: {
-                print("🔥🚨🔥🚨테이블뷰 데이터🔥🚨🔥🚨: \(self.commentData)")
-                print("🔥🚨🔥🚨테이블뷰 데이터🔥🚨🔥🚨: \(self.commentData?.count)")
-                self.tableView.reloadData()
-            })
-        }
-    }
+    // MARK: - Property
+    
+    private var commentData: [CommentList]?
     private var totalCommentNumber: Int = 0
     private let tableviewRefreshControl = UIRefreshControl()
     
     // MARK: - View
     
-    //TODO: - 댓글 작성 POST 연동 후 didSet 처리 추가해야함!
     private let totalCommentNumberLabel = BasicLabel(
         contentText: "총 0개",
         fontStyle: .content,
@@ -49,7 +29,6 @@ final class CommentListView: UIView {
         $0.separatorColor = .clear
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = UITableView.automaticDimension
-        
         return $0
     }(UITableView(frame: .zero, style: .grouped))
     
@@ -71,12 +50,13 @@ final class CommentListView: UIView {
         super.init(frame: .zero)
         attribute()
         setupLayout()
-        setTableView()
-        initRefresh()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(loadList),
-                                               name: NSNotification.Name(rawValue: "load"),
-                                               object: nil)
+        setTableviewRefresh()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(loadList),
+            name: NSNotification.Name(rawValue: "load"),
+            object: nil
+        )
     }
     
     required init?(coder: NSCoder) {
@@ -92,7 +72,7 @@ final class CommentListView: UIView {
     private func attribute() {
         self.backgroundColor = .dark01
         setupTotalListNumberLabel()
-//        setTableView()
+        setTableView()
     }
     
     private func setupLayout() {
@@ -100,8 +80,7 @@ final class CommentListView: UIView {
         commentStackView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            trailing: self.trailingAnchor
         )
         
         self.addSubview(commentWriteTextView)
@@ -109,8 +88,7 @@ final class CommentListView: UIView {
             top: commentStackView.bottomAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom:0, right: 0))
+            trailing: self.trailingAnchor)
     }
     
     private func setTableView() {
@@ -132,33 +110,29 @@ final class CommentListView: UIView {
         totalCommentNumberLabel.text = "총 \(totalCommentNumber)개"
     }
     
-    func initRefresh() {
+    private func setTableviewRefresh() {
         tableviewRefreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
         tableviewRefreshControl.tintColor = .gray02
         self.tableView.refreshControl = tableviewRefreshControl
     }
     
+    // MARK: - @objc
+    
     @objc func refreshTable(refresh: UIRefreshControl) {
-        print("새로고침 시작")
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.tableView.reloadData()
-            refresh.endRefreshing()
             self.setupTotalListNumberLabel()
+            refresh.endRefreshing()
         }
-        print("새로고침 완료")
     }
     
     @objc func loadList(notification: NSNotification){
-        print("만약 이 친구가 잘 돌아가고 있다는 것을 확인하고 싶다면 나를 출력하게나")
-            // BandDetailViewController 에서 넘긴 bandDataDict 를 key 값으로 이렇게 찾아서 쓰나봐요
-        // 신기방구
         if let data = notification.userInfo?["data"] as? [CommentList]? {
             self.commentData = data
         }
         self.tableView.reloadData()
         self.setupTotalListNumberLabel()
     }
-    
 }
 
 // MARK: - UITableViewDelegate
@@ -176,7 +150,7 @@ extension CommentListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
         if totalCommentNumber <= 0 {
-            return 50.0
+            return 40.0
         } else {
             return 0.0
         }
@@ -190,13 +164,11 @@ extension CommentListView: UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         tableView.indexPath(for: UITableViewCell())
-        
         return commentData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CommentTableViewCell.classIdentifier,
             for: indexPath ) as? CommentTableViewCell
@@ -208,19 +180,5 @@ extension CommentListView: UITableViewDataSource {
         cell.selectionStyle = .none
         
         return cell
-    }
-}
-
-// MARK: - CommentListUpdateDelegate
-//
-extension CommentListView: CommentListUpdateDelegate {
-    func refreshCommentList(data: [CommentList]?) {
-//        self.commentData = data
-//        print("🔥🚨🔥🚨델리게이트 일하고 있습니다~🔥🚨🔥🚨 \(self.commentData)")
-        //        DispatchQueue.main.async { [weak self] in
-        //            print("🔥🚨🔥🚨델리게이트 일하고 있습니다~🔥🚨🔥🚨")
-        //            self?.tableView.reloadData()
-        //            self?.setupTotalListNumberLabel()
-        //        }
     }
 }
