@@ -107,7 +107,10 @@ final class UserInfoInputViewController: UIViewController {
     }(UIStackView(arrangedSubviews: [genderTitleLabel,
                                      genderSelectCollectionView]))
     
-    private let userIntroGuideTitleLabel = InformationGuideLabel(guideText: "자기 소개", type: .optional)
+    private let userIntroGuideTitleLabel = InformationGuideLabel(
+        guideText: "자기 소개",
+        type: .optional
+    )
 
     private let userIntroTextView: BasicTextView = BasicTextView(
         placeholder: "나를 더 잘 보여줄 수 있는 소개를 간단하게 적어주세요.\n(ex. 좋아하는 밴드, 밴드 경력 등)",
@@ -121,7 +124,10 @@ final class UserInfoInputViewController: UIViewController {
     }(UIStackView(arrangedSubviews: [userIntroGuideTitleLabel,
                                      userIntroTextView]))
 
-    private let snsTitleLabel = InformationGuideLabel(guideText: "SNS", type: .optional)
+    private let snsTitleLabel = InformationGuideLabel(
+        guideText: "SNS",
+        type: .optional
+    )
 
     private let snsFirstSubTitleLabel = BasicLabel(
         contentText: "* 본인의 SNS 계정을 입력해주세요.",
@@ -260,8 +266,8 @@ final class UserInfoInputViewController: UIViewController {
     }
     
     private func showBandCreationDecisionViewController() {
-        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.codingKey,
-              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.codingKey,
+        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.inEnglish,
+              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.inEnglish,
               let instrumentList else { return }
         
         let snsList = [youtubeTextField.inputText(),

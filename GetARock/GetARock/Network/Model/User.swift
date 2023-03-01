@@ -25,22 +25,22 @@ enum Gender: String, CaseIterable, Codable {
         case man = "MAN"
         case woman = "WOMAN"
         
-        var rawGenderValue: String {
+        var inKorean: String {
             switch self {
-            case .woman:
-                return "여자"
             case .man:
                 return "남자"
+            case .woman:
+                return "여자"
             }
         }
     }
     
-    var codingKey: String {
+    var inEnglish: String {
         switch self {
-        case .woman:
-            return "WOMAN"
         case .man:
             return "MAN"
+        case .woman:
+            return "WOMAN"
         }
     }
 }
@@ -61,7 +61,7 @@ enum Age: String, CaseIterable, Codable {
         case fifties = "FIFTIES"
         case oversixties = "OVERSIXTIES"
         
-        var rawAgeValue: String {
+        var inKorean: String {
             switch self {
             case .undertwenties:
                 return "20대 미만"
@@ -79,7 +79,7 @@ enum Age: String, CaseIterable, Codable {
         }
     }
     
-    var codingKey: String {
+    var inEnglish: String {
         switch self {
         case .undertwenties:
             return "UNDERTWENDTIES"
@@ -96,4 +96,3 @@ enum Age: String, CaseIterable, Codable {
         }
     }
 }
-

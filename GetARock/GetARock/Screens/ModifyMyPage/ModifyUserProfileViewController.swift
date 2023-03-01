@@ -33,15 +33,17 @@ final class ModifyUserProfileViewController: UIViewController {
         return $0
     }(UIStackView(arrangedSubviews: [contentViewTitleLabel,
                                      contentViewSubTitleLabel]))
-
-    private let userNamingGuideTitleLabel = InformationGuideLabel(guideText: "닉네임",
-                                                                  type: .required)
+    
+    private let userNamingGuideTitleLabel = InformationGuideLabel(
+        guideText: "닉네임",
+        type: .required
+    )
     
     private let userNamingGuideSubLabel = BasicLabel(
         contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",
         fontStyle: .caption,
         textColorInfo: .gray02)
-
+    
     private lazy var userNamingTextField: TextLimitTextField = TextLimitTextField(
         placeholer: "닉네임을 입력해주세요.",
         maxCount: 20,
@@ -56,7 +58,10 @@ final class ModifyUserProfileViewController: UIViewController {
                                      userNamingGuideSubLabel,
                                      userNamingTextField]))
     
-    private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
+    private let ageTitleLabel = InformationGuideLabel(
+        guideText: "연령대",
+        type: .required
+    )
 
     private let ageSelectCollectionView: SelectCollectionView = {
         $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
@@ -64,7 +69,7 @@ final class ModifyUserProfileViewController: UIViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .flexable,
-        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
+        items: Age.allCases.map { $0.rawValue },
         widthSize: 25,
         itemSpacing: 5,
         cellBackgroundColor: .dark02
@@ -85,7 +90,7 @@ final class ModifyUserProfileViewController: UIViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .fixed,
-        items: ["남자", "여자"],
+        items: Gender.allCases.map { $0.rawValue },
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
         itemSpacing: 8,
         cellBackgroundColor: .dark02
@@ -220,8 +225,8 @@ final class ModifyUserProfileViewController: UIViewController {
     }
     
     func configure(with userInfo: User) {
-        guard let age = Age(rawValue: Age.CodingKeys(rawValue: userInfo.age)?.rawAgeValue ?? "")?.rawValue,
-              let gender = Gender(rawValue: Gender.CodingKeys(rawValue: userInfo.gender)?.rawGenderValue ?? "")?.rawValue  else { return }
+        guard let age = Age.CodingKeys(rawValue: userInfo.age)?.inKorean,
+              let gender = Gender.CodingKeys(rawValue: userInfo.gender)?.inKorean else { return }
 
         self.userNamingTextField.writeText(with: userInfo.name)
         self.userIntroTextView.writeText(with: userInfo.introduction)
@@ -238,14 +243,4 @@ final class ModifyUserProfileViewController: UIViewController {
             }
         }
     }
-}
-
-struct User1: Codable {
-    let memberId: Int?
-    let name: String
-    let age: String
-    let gender: String
-    let introduction: String?
-    let instrumentList: [InstrumentList]
-    let snsList: [SnsList]
 }
