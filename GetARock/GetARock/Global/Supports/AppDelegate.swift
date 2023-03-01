@@ -89,7 +89,7 @@ extension AppDelegate {
             request.httpBody = encodedData
             request.allHTTPHeaderFields = headers
             
-            let dataTask = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            let dataTask = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
                 if (error != nil) {
                     print("An error has occurred : \(error?.localizedDescription ?? "")")
                 } else {
