@@ -40,7 +40,9 @@ final class NotificationListViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.backgroundColor = .dark01
 
-        let rejectAction = UIAction { _ in self.rejectInvitation(cellIndexPath: indexPath) }
+        let rejectAction = UIAction { _ in
+            self.rejectInvitation(cellIndexPath: indexPath)
+        }
 
         let acceptAction = UIAction { _ in
             //TODO: 초대 수락시 navigation Flow
@@ -84,6 +86,7 @@ extension NotificationListViewController {
         alertController.addAction(UIAlertAction(title: okayAction, style: .default))
         alertController.addAction(UIAlertAction(title: rejectAction, style: .destructive, handler: { _ in
             self.tableView.performBatchUpdates { self.reconfigureCellAfterRejectInvitation(cellIndexPath: cellIndexPath) }
+            NotificationNetworkManager.shared.rejectInvitation(alertId: 44, bandId: 32, memberId: 11)
         }))
         present(alertController, animated: true)
     }
