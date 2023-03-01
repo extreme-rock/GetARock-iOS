@@ -87,7 +87,9 @@ final class ModifyPositionViewController: UIViewController {
     }
     
     private func configureUserPosition() {
-        self.positionCollectionView.selectItems(with: self.selectedPositions)
+        DispatchQueue.main.async {
+            self.positionCollectionView.selectItems(with: self.selectedPositions)
+        }
     }
     
     func instrumentList() -> [InstrumentList] {

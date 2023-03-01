@@ -174,6 +174,7 @@ final class PositionCollectionView: UIView {
         guard let mainInstrumentIndexPath = self.selectedCellIndexPaths.first?.indexPath else { return }
         
         // makrMainLabel 함수가 실행되는 시점을 늦추기 위해 main queue에서 async로 실행(?) 이렇게 사용하는게 맞나..
+        
         DispatchQueue.main.async {
             self.markMainLabel(indexPath: mainInstrumentIndexPath)
             self.postDeselectAllPositionButtonHiddenToggle()

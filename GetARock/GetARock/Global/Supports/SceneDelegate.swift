@@ -19,17 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ModifyMyPageViewController(
-            userInfo: User(memberId: 15,
-                           name: "Dake",
-                           age: "TWENTIES",
-                           gender: "MAN",
-                           introduction: "안녕하십니가 데이크입니다용",
-                           instrumentList: [InstrumentList(name: "기타"), InstrumentList(name: "캐스터네츠")],
-                           snsList: [SnsList(type: .instagram, link: "dake"),
-                                     SnsList(type: .youtube, link: "dake"),
-                                     SnsList(type: .soundcloud, link: "dake")])
-        )
+        window.rootViewController = LandingViewController()
         window.makeKeyAndVisible()
         self.window = window
     }
