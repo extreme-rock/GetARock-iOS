@@ -50,7 +50,7 @@ final class NotificationTableViewCell: UITableViewCell {
         return $0
     }(UIStackView(arrangedSubviews: [titleLabel,
                                      subtitleLabel,
-                                     uploadTime,]))
+                                     uploadTime]))
     
     private lazy var contentInformationVstack: UIStackView = {
         $0.axis = .vertical
