@@ -20,7 +20,7 @@ final class DetailContentView: UIView {
     private lazy var segmentTitle: [String] = {
         switch detailTopInfoType {
         case .band:
-            return ["밴드상세", "타임라인", "방명록"]
+            return ["밴드상세", "방명록"]
         case .event:
             return ["모여락상세", "댓글"]
         case .myPage:
@@ -105,20 +105,21 @@ final class DetailContentView: UIView {
     
     private func setDetailViewController() {
         switch detailTopInfoType {
-        case .band:
             
+        case .band:
             // TODO: 임시 View들입니다. 추후 변경 예정
-            let vc1: UIViewController = {
+            let bandInfoVC: UIViewController = {
                 $0.view.backgroundColor = .red
                 return $0
             }(UIViewController())
             
-            let vc2: UIViewController = {
-                $0.view.backgroundColor = .orange
-                return $0
-            }(UIViewController())
+            // TODO: - 2차에서 밴드 타임라인 추가 예정
+//            let bandTimelineVC: UIViewController = {
+//                $0.view.backgroundColor = .orange
+//                return $0
+//            }(UIViewController())
             
-            let vc3: UIViewController = {
+            let bandCommentListVC: UIViewController = {
                 let bandCommentList = CommentListView(data: bandData.commentList)
                 $0.view.addSubview(bandCommentList)
                 bandCommentList.constraint(
@@ -130,10 +131,9 @@ final class DetailContentView: UIView {
                 return $0
             }(UIViewController())
             
-            detailContentViewControllers = [vc1, vc2, vc3]
+            detailContentViewControllers = [bandInfoVC, bandCommentListVC]
             
         case .event:
-            
             // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
                 $0.view.backgroundColor = .green
@@ -148,7 +148,6 @@ final class DetailContentView: UIView {
             detailContentViewControllers = [vc1, vc2]
             
         case .myPage:
-            
             // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
                 $0.view.backgroundColor = .purple
