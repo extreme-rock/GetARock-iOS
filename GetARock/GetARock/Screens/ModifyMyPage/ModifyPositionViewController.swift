@@ -22,7 +22,6 @@ final class ModifyPositionViewController: UIViewController {
     
     private var selectedPositions: [InstrumentList] = []
     
-    
     //MARK: - View
     
     private lazy var positionCollectionView = PositionCollectionView(
@@ -34,12 +33,12 @@ final class ModifyPositionViewController: UIViewController {
     
     //MARK: - Init
     
-    init(positions: [InstrumentList]) {
-        self.selectedPositions = positions
-        let selectedInstrument: [InstrumentList] = positions.filter {
+    init(selectedPositions: [InstrumentList]) {
+        self.selectedPositions = selectedPositions
+        let selectedETCInstrumentList: [InstrumentList] = selectedPositions.filter {
             !["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
         }
-        let selectedETCItem: [Item] = selectedInstrument.map {
+        let selectedETCItem: [Item] = selectedETCInstrumentList.map {
             Item.position(Position(instrumentName: $0.name,
                                      instrumentImageName: .etc, isETC: true))
         }
@@ -64,7 +63,7 @@ final class ModifyPositionViewController: UIViewController {
         attribute()
         configureDelegate()
         addAllObserver()
-        configureSelectState()
+        configureUserPosition()
     }
 
     //MARK: - Method
@@ -77,6 +76,24 @@ final class ModifyPositionViewController: UIViewController {
         positionCollectionView.delegate = self
     }
     
+    private func setupLayout() {
+        self.view.addSubview(positionCollectionView)
+        
+        positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                          leading: view.leadingAnchor,
+                                          bottom: view.bottomAnchor,
+                                          trailing: view.trailingAnchor,
+                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+    }
+    
+    private func configureUserPosition() {
+        self.positionCollectionView.selectItems(with: self.selectedPositions)
+    }
+}
+
+// MARK: - Observer 관련 Method
+
+extension ModifyPositionViewController {
     private func addAllObserver() {
         addObservePositionPlusButtonTapped()
         addObservePositionDeleteButtonTapped()
@@ -133,21 +150,9 @@ final class ModifyPositionViewController: UIViewController {
         }
     }
     
-    private func setupLayout() {
-        self.view.addSubview(positionCollectionView)
-        
-        positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
-                                          leading: view.leadingAnchor,
-                                          bottom: view.bottomAnchor,
-                                          trailing: view.trailingAnchor,
-                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-    }
-    
-    //TODO: 원래 선택된 친구들 세팅해주는 함수
-    private func configureSelectState() {
-        self.positionCollectionView.selectItems(with: self.selectedPositions)
-    }
 }
+
+// MARK: - Delegate
 
 extension ModifyPositionViewController: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {

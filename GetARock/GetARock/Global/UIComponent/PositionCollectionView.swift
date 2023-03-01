@@ -161,16 +161,19 @@ final class PositionCollectionView: UIView {
     }
     
     func selectItems(with instrumentList: [InstrumentList]) {
-        
         for instrument in instrumentList {
             guard let index = self.items.firstIndex(where: { $0.name() == instrument.name }) else { return }
             let indexPath = IndexPath(row: index, section: 0)
-            self.selectedCellIndexPaths.append((indexPath: indexPath, isMain: true))
+            self.selectedCellIndexPaths.append((indexPath: indexPath, isMain: false))
             self.collectionView.selectItem(at: indexPath,
                                            animated: true,
                                            scrollPosition: .top)
         }
+        self.selectedCellIndexPaths[0].isMain = true
+        
         guard let mainInstrumentIndexPath = self.selectedCellIndexPaths.first?.indexPath else { return }
+        
+        // makrMainLabel 함수가 실행되는 시점을 늦추기 위해 main queue에서 async로 실행(?) 이렇게 사용하는게 맞나..
         DispatchQueue.main.async {
             self.markMainLabel(indexPath: mainInstrumentIndexPath)
             self.postDeselectAllPositionButtonHiddenToggle()
@@ -178,7 +181,7 @@ final class PositionCollectionView: UIView {
     }
 }
 
-// MARK: - diffable
+// MARK: - DiffableDataSource
 
 extension PositionCollectionView {
     private func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Item> {
@@ -222,6 +225,8 @@ extension PositionCollectionView {
         self.dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
+
+// MARK: - UICollectionViewDelegate
 
 extension PositionCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -282,6 +287,15 @@ extension PositionCollectionView {
             guard let cell =  self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return [] }
             selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
         }
+        
         return selectedInstruments
+        
+        // 리팩토링 제안
+//        let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
+//        let selectedInstruments2: [InstrumentList] = selectedIndexPaths.map {
+//            guard let name = self.items[$0.item].name() else { return }
+//            InstrumentList(name: name)
+//        }
+//        return selectedInstruments2
     }
 }

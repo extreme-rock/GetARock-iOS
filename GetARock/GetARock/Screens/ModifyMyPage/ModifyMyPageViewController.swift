@@ -10,19 +10,11 @@ import UIKit
 final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Property
+    
     private var userInfo: User
-    
-    private lazy var selectedInstrument: [Item] = self.userInfo.instrumentList.map {
-        ["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
-        ? Item.position(Position(instrumentName: $0.name,
-                                 instrumentImageName: Instrument(rawValue: $0.name) ?? .vocal, isETC: false))
-        : Item.position(Position(instrumentName: $0.name,
-                                 instrumentImageName: .etc, isETC: true))
-        
-    }
-    
+
     private lazy var pageViewControllers: [UIViewController] = [
-        ModifyPositionViewController(positions: self.userInfo.instrumentList),
+        ModifyPositionViewController(selectedPositions: self.userInfo.instrumentList),
         ModifyUserProfileViewController(userInfo: self.userInfo)
         ]
     
