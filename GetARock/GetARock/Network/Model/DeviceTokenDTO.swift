@@ -8,6 +8,6 @@
 import Foundation
 
 struct DeviceTokenDTO: Codable {
-    let memberID: Int
+    let memberId: Int
     let deviceToken: String
 }

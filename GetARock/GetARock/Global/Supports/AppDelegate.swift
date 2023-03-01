@@ -66,7 +66,7 @@ extension AppDelegate {
     
     private func sendDeviceTokenToServer(token: Data) {
         let deviceTokenString = token.map { String(format: "%02x", $0) }.joined()
-        let deviceToken = DeviceTokenDTO(memberID: 1, deviceToken: deviceTokenString)
+        let deviceToken = DeviceTokenDTO(memberId: 1, deviceToken: deviceTokenString)
         
         do {
             let headers = ["content-type": "application/json"]
