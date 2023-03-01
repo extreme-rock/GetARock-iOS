@@ -9,6 +9,8 @@ import CoreLocation
 import MapKit
 
 final class PracticePlaceSearchViewController: BaseViewController {
+
+    // MARK: Property
     
     var completion: (_ locationInfo: String) -> Void = { locationInfo in }
     
@@ -17,6 +19,8 @@ final class PracticePlaceSearchViewController: BaseViewController {
     private var searchCompleter = MKLocalSearchCompleter()
     
     private var searchResults = [MKLocalSearchCompletion]()
+
+    // MARK: View
     
     private lazy var searchBar: SearchTextField = {
         $0.textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
@@ -51,7 +55,9 @@ final class PracticePlaceSearchViewController: BaseViewController {
         button.addAction(action, for: .touchUpInside)
         return button
     }()
-    
+
+    // MARK: Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -59,6 +65,8 @@ final class PracticePlaceSearchViewController: BaseViewController {
         configureSearchCompleter()
         setLocationManager()
     }
+
+    // MARK: Method
     
     private func attribute() {
         self.view.backgroundColor = .dark01
@@ -84,7 +92,6 @@ final class PracticePlaceSearchViewController: BaseViewController {
                                      bottom: view.bottomAnchor,
                                      trailing: view.trailingAnchor,
                                      padding: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
-        
     }
     
     private func configureSearchCompleter() {
@@ -109,7 +116,9 @@ extension PracticePlaceSearchViewController {
     }
 }
 
+// MARK: CLLocationManager delegate
 extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
+    // 위치 정보 권한 설정에 관계된 함수
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -120,11 +129,11 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
             print("위치 서비스를 허용하지 않음")
         }
     }
-    
+
+    // 현재 위치를 좌표로 받고, 그 좌표를 이용해서 주소를 찾아 텍스트 필드에 업로드하는 함수
     func getCurrentAddressInfo() {
         guard let userLocation = locationManager.location else { return }
         let location = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        print(userLocation.coordinate)
         CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
             
             if let placemark = placemarks?.first {
@@ -151,8 +160,9 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
     }
 }
 
+// MARK: SearchCompleter delegate
 extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
-    // 자동완성 완료시 결과를 받는 method
+    // 자동완성 완료시 결과를 받는 함수
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = completer.results
         searchResultTable.reloadData()
@@ -162,10 +172,8 @@ extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
     }
 }
 
+// MARK: TableView datasource
 extension PracticePlaceSearchViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
@@ -177,11 +185,11 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
         
         let searchResult = searchResults[indexPath.row]
         cell.configure(mapSearchResult: searchResult)
-        
         return cell
     }
 }
 
+// MARK: TableView delegate
 extension PracticePlaceSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85

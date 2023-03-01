@@ -24,7 +24,7 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Cell 재사용 전 값 초기화
+    //MARK: Cell 재사용 전 텍스트 정보 초기화
     override func prepareForReuse() {
         self.titleLabel.text = nil
         self.subTitleLabel.text = nil
