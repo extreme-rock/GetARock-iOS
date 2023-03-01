@@ -113,12 +113,8 @@ final class DetailContentView: UIView {
                 return $0
             }(UIViewController())
             
-            // TODO: - 2차에서 밴드 타임라인 추가 예정
-//            let bandTimelineVC: UIViewController = {
-//                $0.view.backgroundColor = .orange
-//                return $0
-//            }(UIViewController())
-            
+            // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
+
             let bandCommentListVC: UIViewController = {
                 let bandCommentList = CommentListView(data: bandData.commentList)
                 $0.view.addSubview(bandCommentList)
