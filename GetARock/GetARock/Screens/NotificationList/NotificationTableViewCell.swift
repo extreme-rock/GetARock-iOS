@@ -9,7 +9,11 @@ import UIKit
 
 final class NotificationTableViewCell: UITableViewCell {
 
+    //MARK: Property
+
     private var isInvitation: Bool = false
+
+    //MARK: View
 
     private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline02, textColorInfo: .white)
 
@@ -70,6 +74,8 @@ final class NotificationTableViewCell: UITableViewCell {
         return $0
     }(UIStackView(arrangedSubviews: [cellImage, contentInformationVstack]))
 
+    //MARK: init
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -82,6 +88,8 @@ final class NotificationTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+//MARK: Extension
 
 extension NotificationTableViewCell {
     func configure(with data: NotificationInfo) {

@@ -8,14 +8,20 @@
 import UIKit
 
 final class NotificationListViewController: UITableViewController {
+
+    //MARK: Property
     
     private var notificationList: [NotificationInfo] = []
+
+    //MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //TODO: 추후에 API를 통해 데이터 업데이트 과정이 필요함
         attribute()
     }
+
+    //MARK: Method
     
     private func attribute() {
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.classIdentifier)
@@ -49,6 +55,8 @@ final class NotificationListViewController: UITableViewController {
         NotificationListVO.testData.count
     }
 }
+
+//MARK: Extension
 
 extension NotificationListViewController {
     //TODO: 추후 테스트 API는 삭제하고 다른 API로 대체해야함, viewDidload 과정에서 초기 데이터 세팅 과정 필요
