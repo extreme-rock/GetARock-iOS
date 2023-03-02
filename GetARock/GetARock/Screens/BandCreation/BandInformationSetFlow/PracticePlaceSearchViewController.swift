@@ -184,6 +184,7 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
                                                        for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell() }
         let searchResult = searchResults[indexPath.row]
         cell.configure(mapSearchResult: searchResult)
+        cell.selectionStyle = .none
         return cell
     }
 }
