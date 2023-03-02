@@ -51,12 +51,7 @@ final class CommentListView: UIView {
         attribute()
         setupLayout()
         setTableviewRefresh()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(loadList),
-            name: NSNotification.Name(rawValue: "load"),
-            object: nil
-        )
+        setCommentListLoadObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -116,6 +111,14 @@ final class CommentListView: UIView {
         self.tableView.refreshControl = tableviewRefreshControl
     }
     
+    private func setCommentListLoadObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(loadList),
+            name: NSNotification.Name(rawValue: "load"),
+            object: nil
+        )
+    }
     // MARK: - @objc
     
     @objc func refreshTable(refresh: UIRefreshControl) {
