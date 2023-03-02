@@ -7,7 +7,18 @@
 
 import UIKit
 
-class GetARockInfoPopUpView: UIView {
+protocol GetARockInfoPopUpViewDelegate: AnyObject {
+    func dismissButtonTapped()
+    func makeBandButtonTapped()
+}
+
+final class GetARockInfoPopUpView: UIView {
+    
+    // MARK: - Property
+    
+    weak var delegate: GetARockInfoPopUpViewDelegate?
+    
+    // MARK: - View
     
     private let containerView: UIView = {
         $0.backgroundColor = .dark03
@@ -15,9 +26,13 @@ class GetARockInfoPopUpView: UIView {
         return $0
     }(UIView())
     
-    private let dismissButton: UIButton = {
+    private lazy var dismissButton: UIButton = {
         $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
         $0.tintColor = .white
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.dismissButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
       return $0
     }(UIButton())
     
@@ -133,11 +148,17 @@ class GetARockInfoPopUpView: UIView {
         return $0
     }(UIStackView())
     
-    private let makeBandButton: BottomButton = {
+    private lazy var makeBandButton: BottomButton = {
         $0.setTitle("밴드 만들러가기", for: .normal)
         $0.titleLabel?.font = .setFont(.headline02)
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.makeBandButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
        return $0
     }(BottomButton())
+    
+    // MARK: - Init
     
     init() {
         super.init(frame: .zero)
@@ -147,6 +168,8 @@ class GetARockInfoPopUpView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Method
     
     private func setupLayout() {
         self.addSubview(containerView)
@@ -161,7 +184,7 @@ class GetARockInfoPopUpView: UIView {
         titleStackView.constraint(top: containerView.topAnchor,
                                   leading: containerView.leadingAnchor,
                                   trailing: containerView.trailingAnchor,
-        padding: UIEdgeInsets(top: 30, left: 26, bottom: 0, right: 26))
+                                  padding: UIEdgeInsets(top: 30, left: 26, bottom: 0, right: 26))
         
         containerView.addSubview(infoStackView)
         infoStackView.constraint(top: titleStackView.bottomAnchor,
@@ -176,5 +199,4 @@ class GetARockInfoPopUpView: UIView {
                                   trailing: containerView.trailingAnchor,
                                   padding: UIEdgeInsets(top: 45, left: 18, bottom: 20, right: 18))
     }
-    
 }

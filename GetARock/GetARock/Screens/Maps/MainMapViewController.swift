@@ -74,7 +74,10 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let alertView = GetARockInfoPopUpView()
+    private lazy var alertView: GetARockInfoPopUpView = {
+        $0.delegate = self
+        return $0
+    }(GetARockInfoPopUpView())
     
     // MARK: - Life Cycle
     
@@ -131,12 +134,14 @@ final class MainMapViewController: UIViewController {
             trailing: self.view.trailingAnchor,
             padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 25)
         )
-        
+    }
+    
+    private func setupAlertViewLayout() {
         self.view.addSubview(alertView)
         alertView.constraint(leading: view.leadingAnchor,
                              trailing: view.trailingAnchor,
                              centerY: view.centerYAnchor,
-        padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))   
+        padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))
     }
     
     private func setLocationManager() {
@@ -150,9 +155,15 @@ final class MainMapViewController: UIViewController {
             .requestAuthorization(options: [.alert, .sound, .badge]) { isGranted, error in
                 if isGranted {
                     //TODO: 동의 시 뷰 연결
+                    DispatchQueue.main.async { [weak self] in
+                        self?.setupAlertViewLayout()
+                    }
                     print(isGranted)
                 } else {
                     //TODO: 비동의 시 뷰 연결
+                    DispatchQueue.main.async { [weak self] in
+                        self?.setupAlertViewLayout()
+                    }
                     print(isGranted)
                 }
             }
@@ -266,5 +277,17 @@ extension MainMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+
+extension MainMapViewController: GetARockInfoPopUpViewDelegate {
+    func makeBandButtonTapped() {
+        print("make")
+        self.alertView.removeFromSuperview()
+    }
+    
+    func dismissButtonTapped() {
+        print("dismiss")
+        self.alertView.removeFromSuperview()
     }
 }
