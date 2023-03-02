@@ -14,7 +14,18 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     
     private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
     
-    private let subTitleLabel: UILabel = BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white)
+    private let subTitleLabel: UILabel = {
+        $0.numberOfLines = 2
+        return $0
+    }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white))
+
+    private lazy var contentStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = -7
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        return $0
+    }(UIStackView(arrangedSubviews: [titleLabel, subTitleLabel]))
 
     //MARK: init
     
@@ -41,16 +52,10 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
     }
     
     private func setupLayout() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(subTitleLabel)
-        
-        titleLabel.constraint(top: contentView.topAnchor,
-                              leading: contentView.leadingAnchor,
-                              padding: UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 20))
-        
-        subTitleLabel.constraint(top: titleLabel.bottomAnchor,
-                                 leading: titleLabel.leadingAnchor,
-                                 padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
+        contentView.addSubview(contentStackView)
+        contentStackView.constraint(to: contentView)
+
+        subTitleLabel.constraint(.widthAnchor, constant: contentStackView.bounds.size.width)
     }
     
     func configure(mapSearchResult: MKLocalSearchCompletion){

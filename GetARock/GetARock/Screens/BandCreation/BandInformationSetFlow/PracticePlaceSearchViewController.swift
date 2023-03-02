@@ -91,7 +91,7 @@ final class PracticePlaceSearchViewController: BaseViewController {
                                      leading: view.leadingAnchor,
                                      bottom: view.bottomAnchor,
                                      trailing: view.trailingAnchor,
-                                     padding: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
+                                     padding: UIEdgeInsets(top: 20, left: 16, bottom: 10, right: 16))
     }
     
     private func setSearchCompleter() {
