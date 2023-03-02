@@ -7,15 +7,21 @@
 
 import UIKit
 
+enum BandMemberModifyTableViewSection: String {
+    case confirmedMembers
+    case invitingMembers
+}
 
 final class BandMemberModifyViewController: BaseViewController {
 
-    private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData() {
+    private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState != .inviting } {
         didSet {
             guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberModifyTableViewHeader else { return }
             headerView.sectionTitle.text = "밴드 멤버 \(addedMembers.count)인"
         }
     }
+    
+    private lazy var invitingMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState == .inviting }
 
     //MARK: - View
     private lazy var bandMemberTableView: UITableView = {
@@ -23,14 +29,17 @@ final class BandMemberModifyViewController: BaseViewController {
                     forCellReuseIdentifier: BandMemberModifyTableViewCell.classIdentifier)
         $0.register(BandMemberModifyTableViewHeader.self,
                     forHeaderFooterViewReuseIdentifier: BandMemberModifyTableViewHeader.classIdentifier)
-        $0.sectionHeaderHeight = 310
         $0.separatorStyle = .none
         $0.backgroundColor = .dark01
         $0.delegate = self
         return $0
     }(UITableView())
+    
+    private var indexPathOfLeaderCell: IndexPath = IndexPath(row: 0, section: 0)
 
-    private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> = self.makeDataSource()
+    private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
+    
+    private var dataSourceSnapShot: NSDiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<BandMemberModifyTableViewSection, SearchedUserInfo>()
 
     private lazy var nextButton: BottomButton = {
         let action = UIAction { _ in
@@ -46,7 +55,8 @@ final class BandMemberModifyViewController: BaseViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
-        updateSnapShot(with: addedMembers)
+        updateSnapShotOfaddedMemberSection(with: addedMembers)
+        updateSnapShotOfInvitingMemberSection(with: invitingMembers)
     }
 
     //MARK: - Method
@@ -95,31 +105,46 @@ final class BandMemberModifyViewController: BaseViewController {
         }
         return resultData
     }
+    
+    private func updateLeaderPositionIndexPath(indexPath: IndexPath) {
+        indexPathOfLeaderCell = indexPath
+    }
 }
 
 //MARK: DiffableDataSource 관련 메소드
 extension BandMemberModifyViewController {
 
-    func updateSnapShot(with items: [SearchedUserInfo]) {
-        var snapShot = NSDiffableDataSourceSnapshot<BandMemberAddTableViewSection, SearchedUserInfo>()
-        snapShot.appendSections([.main])
-        snapShot.appendItems(items, toSection: .main)
-        self.dataSource.apply(snapShot, animatingDifferences: true)
+    func updateSnapShotOfaddedMemberSection(with items: [SearchedUserInfo]) {
+        dataSourceSnapShot.appendSections([.confirmedMembers])
+        dataSourceSnapShot.appendItems(items, toSection: .confirmedMembers)
+        self.dataSource.apply(dataSourceSnapShot, animatingDifferences: true)
+    }
+    
+    func updateSnapShotOfInvitingMemberSection(with items: [SearchedUserInfo]) {
+        dataSourceSnapShot.appendSections([.invitingMembers])
+        dataSourceSnapShot.appendItems(items, toSection: .invitingMembers)
+        self.dataSource.apply(dataSourceSnapShot, animatingDifferences: true)
     }
 
-    func makeDataSource() -> UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> {
-        return UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in
+    func makeDataSource() -> UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> {
+        return UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in
 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberModifyTableViewCell.classIdentifier, for: indexPath) as? BandMemberModifyTableViewCell else { return UITableViewCell() }
 
             cell.configure(data: cellData)
+            if cellData.memberState == .admin {
+                self.updateLeaderPositionIndexPath(indexPath: indexPath)
+                cell.getLeaderPositionState()
+            }
             cell.selectionStyle = .none
 
             let changeLeaderAction = UIAction { [weak self] _ in
-                cell.leaderButton.tintColor = .systemPurple
-                self?.showAlertForChangingLeader(newLeader: cell.getNameText()) {
-                    // 일단 section1의 모든 셀의 색상은 gray로 다 바꾼다
-                    // 선택된 셀의 색상만 보라색으로 바뀌고, 객체의 멤버정보를 업데이트 시킨다
+                self?.showAlertForChangingLeader(newLeader: cell.nameText()) {
+                    cell.getLeaderPositionState()
+                    guard let previousLeaderCell = self?.bandMemberTableView.cellForRow(at: self?.indexPathOfLeaderCell ?? IndexPath(row: 0, section: 0)) as? BandMemberModifyTableViewCell else { return }
+                    previousLeaderCell.abandonLeaderPositionState()
+                    self?.updateLeaderPositionIndexPath(indexPath: indexPath)
+                    // 객체의 멤버정보를 업데이트 시킨다
                 }
             }
 
@@ -128,7 +153,9 @@ extension BandMemberModifyViewController {
         }
     }
     
-    //MARK: escaping closure 이유는?
+    //MARK: escaping 클로저는 함수가 리턴된 이후에 실행된 클로저임
+    //그런데 일반 클로저는 함수의 수행 구문 내에 종속되기 때문에 (함수가 리턴되면 클로저는 없어짐) 이스케이핑 클로저는 이스케이핑 클로저만 참조할 수 잇다
+    //그래서 작성하게 됨
     func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
         let alertTitle = "리더 권한 양도"
@@ -153,23 +180,36 @@ extension BandMemberModifyViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(
-            withIdentifier: BandMemberModifyTableViewHeader.classIdentifier) as? BandMemberModifyTableViewHeader else { return UIView() }
+        var headerView: UIView = UIView()
+        
+        let sectionIdentifier = dataSource.snapshot().sectionIdentifiers[section]
+        
+        if sectionIdentifier == .confirmedMembers {
+            guard let confirmedMemberTableHeader = tableView.dequeueReusableHeaderFooterView(
+                withIdentifier: BandMemberModifyTableViewHeader.classIdentifier) as? BandMemberModifyTableViewHeader else { return UIView() }
 
-        //MARK: 회원 검색 뷰로 이동
-        let inviteMemberButtonAction = UIAction { [weak self] _ in
-            let nextViewController = UserSearchViewController()
-            nextViewController.completion = { selectedUsers in
-                for data in selectedUsers {
-                    if self?.addedMembers.contains(where: { $0.id == data.id }) == false {
-                        self?.addedMembers.append(data)
+            //MARK: 회원 검색 뷰로 이동
+            let inviteMemberButtonAction = UIAction { [weak self] _ in
+                let nextViewController = UserSearchViewController()
+                nextViewController.completion = { selectedUsers in
+                    for data in selectedUsers {
+                        if self?.addedMembers.contains(where: { $0.id == data.id }) == false {
+                            self?.addedMembers.append(data)
+                        }
                     }
+                    self?.updateSnapShotOfaddedMemberSection(with: self?.addedMembers ?? [])
                 }
-                self?.updateSnapShot(with: self?.addedMembers ?? [])
+                self?.navigationController?.pushViewController(nextViewController, animated: true)
             }
-            self?.navigationController?.pushViewController(nextViewController, animated: true)
+            confirmedMemberTableHeader.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
+            headerView = confirmedMemberTableHeader
+            
+        } else if sectionIdentifier == .invitingMembers {
+            let sectionTitle: BasicLabel = BasicLabel(contentText: "밴드 멤버 1인",
+                                          fontStyle: .content,
+                                          textColorInfo: .white)
+            headerView = sectionTitle
         }
-        headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
         //TODO: 미가입 회원추가 관련 코드 작성 예정
       return headerView
     }

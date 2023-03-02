@@ -68,6 +68,7 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
+        $0.spacing = 20
         return $0
     }(UIStackView(arrangedSubviews: [pageIndicatorLabel,
                                      titleLabel,
@@ -87,11 +88,7 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
 
     private func setupLayout() {
         contentView.addSubview(titleVstack)
-        titleVstack.constraint(top: contentView.safeAreaLayoutGuide.topAnchor,
-                               leading: contentView.safeAreaLayoutGuide.leadingAnchor,
-                               bottom: contentView.safeAreaLayoutGuide.bottomAnchor,
-                               trailing: contentView.safeAreaLayoutGuide.trailingAnchor,
-                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
+        titleVstack.constraint(to: contentView)
     }
 
     private func attribute() {

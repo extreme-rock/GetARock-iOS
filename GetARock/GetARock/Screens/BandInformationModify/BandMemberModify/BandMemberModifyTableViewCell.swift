@@ -117,8 +117,13 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         case .admin:
             leftView.image = ImageLiteral.leaderIcon
             leaderButton.tintColor = .systemPurple
-        case .none: leftView.image = ImageLiteral.memberIcon
-        case .annonymous: leftView.image = ImageLiteral.unRegisteredMemberIcon
+        case .none:
+            leftView.image = ImageLiteral.memberIcon
+        case .annonymous:
+            leftView.image = ImageLiteral.unRegisteredMemberIcon
+            leaderButton.removeFromSuperview()
+        case .inviting:
+            leaderButton.removeFromSuperview()
         default: return
         }
         
@@ -133,7 +138,15 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         }
     }
     
-    func getNameText() -> String {
+    func nameText() -> String {
         return userNameLabel.text ?? ""
+    }
+    
+    func abandonLeaderPositionState() {
+        self.leaderButton.tintColor = .gray01
+    }
+    
+    func getLeaderPositionState() {
+        self.leaderButton.tintColor = .systemPurple
     }
 }
