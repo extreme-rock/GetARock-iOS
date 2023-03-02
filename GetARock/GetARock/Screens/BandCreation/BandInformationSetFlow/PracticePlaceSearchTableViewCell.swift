@@ -21,9 +21,9 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
 
     private lazy var contentStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = -7
+        $0.spacing = 8
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        $0.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 40, right: 5)
         return $0
     }(UIStackView(arrangedSubviews: [titleLabel, subTitleLabel]))
 

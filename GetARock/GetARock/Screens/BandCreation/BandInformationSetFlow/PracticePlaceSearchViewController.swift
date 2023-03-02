@@ -191,9 +191,6 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
 
 // MARK: TableView delegate
 extension PracticePlaceSearchViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedResult = searchResults[indexPath.row]
