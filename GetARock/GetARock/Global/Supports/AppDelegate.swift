@@ -72,7 +72,10 @@ extension AppDelegate {
         
         do {
             let headers = ["content-type": "application/json"]
-            guard let url = URL(string: "https://api.ryomyom.com/apns/device-token") else { return }
+            guard let url = URL(string: "https://api.ryomyom.com/apns/device-token") else {
+                print("An error has occurred while creating URL")
+                return
+            }
             var request = URLRequest(url: url,
                                      cachePolicy: .useProtocolCachePolicy,
                                      timeoutInterval: 10)
@@ -81,7 +84,7 @@ extension AppDelegate {
             do {
                 let data = try JSONEncoder().encode(deviceToken)
                 encodedData = data
-            } catch let error as NSError{
+            } catch {
                 print("An error has occurred while encoding JSONObject: \(error.localizedDescription)")
             }
             
@@ -90,8 +93,8 @@ extension AppDelegate {
             request.allHTTPHeaderFields = headers
             
             let dataTask = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
-                if (error != nil) {
-                    print("An error has occurred : \(error?.localizedDescription ?? "")")
+                if let error {
+                    print("An error has occurred : \(error.localizedDescription)")
                 } else {
                     print(String(data: data!, encoding: String.Encoding.utf8) ?? "no responce")
                 }
