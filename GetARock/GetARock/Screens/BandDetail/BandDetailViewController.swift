@@ -54,6 +54,10 @@ final class BandDetailViewController: BaseViewController {
         setupLayout()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Method
     
     private func attribute() {

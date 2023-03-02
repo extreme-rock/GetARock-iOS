@@ -61,6 +61,10 @@ final class WriteCommentTextView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Method
     
     private func attribute() {
