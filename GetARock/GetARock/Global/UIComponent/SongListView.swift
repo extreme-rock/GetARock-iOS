@@ -37,6 +37,7 @@ final class SongListView: UIView {
             SongListCollectionViewCell.self,
             forCellWithReuseIdentifier: "SongListCollectionViewCell"
         )
+        $0.isScrollEnabled = false
         $0.showsVerticalScrollIndicator = false
         $0.dataSource = self
         $0.backgroundColor = .clear
@@ -81,7 +82,6 @@ extension SongListView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-//        cell.delegate = self
         cell.configure(
             data: songData?[indexPath.item] ?? nil,
             songListType: songListType,
