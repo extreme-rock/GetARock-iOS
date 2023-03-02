@@ -115,7 +115,7 @@ final class CommentListView: UIView {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(loadList),
-            name: NSNotification.Name(rawValue: "load"),
+            name: NSNotification.Name.loadBandData,
             object: nil
         )
     }

@@ -32,7 +32,7 @@ final class BandDetailViewController: BaseViewController {
         didSet{
             let bandDataDict: [String: [CommentList]?] = ["data": bandData.commentList]
             NotificationCenter.default.post(
-                name: NSNotification.Name(rawValue: "load"),
+                name: NSNotification.Name.loadBandData,
                 object: nil,
                userInfo: bandDataDict as [AnyHashable : Any]
             )
