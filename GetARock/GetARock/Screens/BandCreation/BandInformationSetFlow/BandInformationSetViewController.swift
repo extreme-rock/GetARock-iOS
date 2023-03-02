@@ -78,7 +78,13 @@ final class BandInformationSetViewController: BaseViewController {
         return $0
     }(BasicBoxView(text: "주소 검색"))
 
-    private let detailPracticePlaceTextField: BasicTextField = BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)")
+    private let detailPracticePlaceTextField: BasicTextField = {
+        let rightPaddingView = TextFieldRightPaddingView()
+        rightPaddingView.constraint(.widthAnchor, constant: 20)
+        $0.textField.rightView = rightPaddingView
+        $0.textField.rightViewMode = .always
+        return $0
+    }(BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)"))
 
     private lazy var practicePlaceVstack: UIStackView = {
         $0.axis = .vertical
@@ -266,6 +272,7 @@ extension BandInformationSetViewController {
         nextViewController.completion = { [weak self] locationInformation in
             self?.practicePlaceSearchButton.configureText(with: locationInformation)
             self?.practicePlaceSearchButton.hideRightView()
+            self?.practicePlaceSearchButton.setTextColor(with: .white)
         }
         navigationController?.pushViewController(nextViewController, animated: true)
     }

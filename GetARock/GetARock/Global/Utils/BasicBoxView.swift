@@ -66,4 +66,8 @@ final class BasicBoxView: UIStackView {
     func configureText(with text: String) {
         self.basicLabel.text = text
     }
+
+    func setTextColor(with color: UIColor) {
+        self.basicLabel.textColor = color
+    }
 }
