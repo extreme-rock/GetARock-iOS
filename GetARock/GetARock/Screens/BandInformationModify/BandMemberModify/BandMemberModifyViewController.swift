@@ -17,7 +17,7 @@ final class BandMemberModifyViewController: BaseViewController {
     private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState != .inviting } {
         didSet {
             guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberModifyTableViewHeader else { return }
-            headerView.sectionTitle.text = "밴드 멤버 \(addedMembers.count)인"
+            headerView.sectionTitle.text = "밴드 멤버 (\(addedMembers.count)인)"
         }
     }
     
@@ -38,8 +38,6 @@ final class BandMemberModifyViewController: BaseViewController {
     private var indexPathOfLeaderCell: IndexPath = IndexPath(row: 0, section: 0)
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
-    
-    private var dataSourceSnapShot: NSDiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<BandMemberModifyTableViewSection, SearchedUserInfo>()
 
     private lazy var nextButton: BottomButton = {
         let action = UIAction { _ in
@@ -55,8 +53,7 @@ final class BandMemberModifyViewController: BaseViewController {
         super.viewDidLoad()
         attribute()
         setupLayout()
-        updateSnapShotOfaddedMemberSection(with: addedMembers)
-        updateSnapShotOfInvitingMemberSection(with: invitingMembers)
+        updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
     }
 
     //MARK: - Method
@@ -86,6 +83,8 @@ final class BandMemberModifyViewController: BaseViewController {
     private func attribute() {
         view.backgroundColor = .dark01
     }
+}
+extension BandMemberModifyViewController {
     
     private func getTransformedVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
@@ -123,20 +122,35 @@ final class BandMemberModifyViewController: BaseViewController {
     private func updateLeaderPositionIndexPath(indexPath: IndexPath) {
         indexPathOfLeaderCell = indexPath
     }
+    
+    //MARK: escaping 클로저는 함수가 리턴된 이후에 실행된 클로저임
+    //그런데 일반 클로저는 함수의 수행 구문 내에 종속되기 때문에 (함수가 리턴되면 클로저는 없어짐) 이스케이핑 클로저는 이스케이핑 클로저만 참조할 수 잇다
+    //그래서 작성하게 됨
+    private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
+        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
+        let alertTitle = "리더 권한 양도"
+        let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let changeActionTitle = "양도"
+        let okayActionTitle = "취소"
+
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
+            completion()
+        }))
+        present(alertController, animated: true)
+    }
 }
 
 //MARK: DiffableDataSource 관련 메소드
 extension BandMemberModifyViewController {
 
-    func updateSnapShotOfaddedMemberSection(with items: [SearchedUserInfo]) {
-        dataSourceSnapShot.appendSections([.confirmedMembers])
-        dataSourceSnapShot.appendItems(items, toSection: .confirmedMembers)
-        self.dataSource.apply(dataSourceSnapShot, animatingDifferences: true)
-    }
-    
-    func updateSnapShotOfInvitingMemberSection(with items: [SearchedUserInfo]) {
-        dataSourceSnapShot.appendSections([.invitingMembers])
-        dataSourceSnapShot.appendItems(items, toSection: .invitingMembers)
+    func updateSnapShot(addedMembers: [SearchedUserInfo], invitingMembers: [SearchedUserInfo]) {
+        var dataSourceSnapShot: NSDiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<BandMemberModifyTableViewSection, SearchedUserInfo>()
+        dataSourceSnapShot.appendSections([.confirmedMembers, .invitingMembers])
+        dataSourceSnapShot.appendItems(addedMembers, toSection: .confirmedMembers)
+        dataSourceSnapShot.appendItems(invitingMembers, toSection: .invitingMembers)
         self.dataSource.apply(dataSourceSnapShot, animatingDifferences: true)
     }
 
@@ -158,32 +172,13 @@ extension BandMemberModifyViewController {
                     guard let previousLeaderCell = self?.bandMemberTableView.cellForRow(at: self?.indexPathOfLeaderCell ?? IndexPath(row: 0, section: 0)) as? BandMemberModifyTableViewCell else { return }
                     previousLeaderCell.abandonLeaderPositionState()
                     self?.updateLeaderPositionIndexPath(indexPath: indexPath)
-                    // 객체의 멤버정보를 업데이트 시킨다
+                    //TODO: Post할 정보에서 리더 정보 바꾸기 필요
                 }
             }
 
             cell.leaderButton.addAction(changeLeaderAction, for: .touchUpInside)
             return cell
         }
-    }
-    
-    //MARK: escaping 클로저는 함수가 리턴된 이후에 실행된 클로저임
-    //그런데 일반 클로저는 함수의 수행 구문 내에 종속되기 때문에 (함수가 리턴되면 클로저는 없어짐) 이스케이핑 클로저는 이스케이핑 클로저만 참조할 수 잇다
-    //그래서 작성하게 됨
-    func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
-        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
-        let alertTitle = "리더 권한 양도"
-        let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
-        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-
-        let changeActionTitle = "양도"
-        let okayActionTitle = "취소"
-
-        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
-        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
-            completion()
-        }))
-        present(alertController, animated: true)
     }
 }
 
@@ -199,8 +194,9 @@ extension BandMemberModifyViewController: UITableViewDelegate {
         let sectionIdentifier = dataSource.snapshot().sectionIdentifiers[section]
         
         if sectionIdentifier == .confirmedMembers {
-            guard let confirmedMemberTableHeader = tableView.dequeueReusableHeaderFooterView(
+            guard let addedMemberTableHeader = tableView.dequeueReusableHeaderFooterView(
                 withIdentifier: BandMemberModifyTableViewHeader.classIdentifier) as? BandMemberModifyTableViewHeader else { return UIView() }
+            addedMemberTableHeader.sectionTitle.text = "밴드 멤버 (\(addedMembers.count)인)"
 
             //MARK: 회원 검색 뷰로 이동
             let inviteMemberButtonAction = UIAction { [weak self] _ in
@@ -211,15 +207,15 @@ extension BandMemberModifyViewController: UITableViewDelegate {
                             self?.addedMembers.append(data)
                         }
                     }
-                    self?.updateSnapShotOfaddedMemberSection(with: self?.addedMembers ?? [])
+                    self?.updateSnapShot(addedMembers: self?.addedMembers ?? [], invitingMembers: self?.invitingMembers ?? [])
                 }
                 self?.navigationController?.pushViewController(nextViewController, animated: true)
             }
-            confirmedMemberTableHeader.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
-            headerView = confirmedMemberTableHeader
+            addedMemberTableHeader.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
+            headerView = addedMemberTableHeader
             
         } else if sectionIdentifier == .invitingMembers {
-            let sectionTitle: BasicLabel = BasicLabel(contentText: "밴드 멤버 1인",
+            let sectionTitle: BasicLabel = BasicLabel(contentText: "초대중인 멤버 (\(invitingMembers.count)인)",
                                           fontStyle: .content,
                                           textColorInfo: .white)
             headerView = sectionTitle
