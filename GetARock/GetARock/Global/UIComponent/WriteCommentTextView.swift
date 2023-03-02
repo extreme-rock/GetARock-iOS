@@ -222,9 +222,7 @@ extension WriteCommentTextView {
     func postComment() {
         do {
             let headers = [
-                "Authorization": "Bearer " + "token",
                 "accept": "application/json",
-                "Notion-Version": "2022-06-28",
                 "content-type": "application/json"
             ]
             
