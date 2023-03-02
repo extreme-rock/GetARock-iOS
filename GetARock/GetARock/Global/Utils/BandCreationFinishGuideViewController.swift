@@ -11,14 +11,14 @@ final class BandCreationFinishGuideViewController: UIViewController {
     
     // MARK: View
     
-    let titleLabel: BasicLabel = {
+    private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
     }(BasicLabel(contentText: "밴드 가입이 완료되었어요!\n모여락에 오신걸 환영합니다! 🥳",
                  fontStyle: .headline01,
                  textColorInfo: .white))
     
-    let subTitleLabel: BasicLabel = {
+    private let subTitleLabel: BasicLabel = {
         $0.numberOfLines = 3
         return $0
     }(BasicLabel(contentText: "주위 밴드와 소통하며 멤버들과 즐거운 밴드 생활의\n추억을 남길 준비 되셨나요?\n즐거운 모여락 이용을 위해 아래 내용을 확인해주세요!",

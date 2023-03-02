@@ -93,8 +93,7 @@ extension PositionSelectForInvitationViewController {
             memberInstrument: getSelectedInstrumentList())
         
         let nextVC = BandCreationFinishGuideViewController()
-        self.navigationController?.pushViewController(nextVC, animated: true)
-        self.navigationController?.navigationBar.isHidden = false
+        present(nextVC, animated: true)
     }
 }
 
