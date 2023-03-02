@@ -74,6 +74,8 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private let alertView = GetARockInfoPopUpView()
+    
     // MARK: - Life Cycle
     
     override func loadView() {
@@ -130,12 +132,30 @@ final class MainMapViewController: UIViewController {
             padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 25)
         )
         
+        self.view.addSubview(alertView)
+        alertView.constraint(leading: view.leadingAnchor,
+                             trailing: view.trailingAnchor,
+                             centerY: view.centerYAnchor,
+        padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))   
     }
     
     private func setLocationManager() {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    private func requestNotificationAutorization() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) { isGranted, error in
+                if isGranted {
+                    //TODO: 동의 시 뷰 연결
+                    print(isGranted)
+                } else {
+                    //TODO: 비동의 시 뷰 연결
+                    print(isGranted)
+                }
+            }
     }
     
     private func setMarkers() {
@@ -221,6 +241,7 @@ extension MainMapViewController: CLLocationManagerDelegate {
         default:
             print("위치 서비스를 허용하지 않음")
         }
+        self.requestNotificationAutorization()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -182,7 +182,7 @@ final class SetAuthorizationViewController: UIViewController {
     private func setupLayout() {
         
         self.view.addSubview(titleStackView)
-        titleStackView.constraint(top: view.topAnchor,
+        titleStackView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.leadingAnchor,
                                   trailing: view.trailingAnchor,
                                   padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))

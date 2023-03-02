@@ -40,6 +40,7 @@
 		4AC4CE4B2980B41400BB823C /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4A2980B41400BB823C /* DefaultButton.swift */; };
 		4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4C2980BAE800BB823C /* SelectCollectionView.swift */; };
 		4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4E2980BD3700BB823C /* SelectCollectionViewCell.swift */; };
+		4AEEAA3F29B0DC3900316B0C /* GetARockInfoPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEEAA3E29B0DC3900316B0C /* GetARockInfoPopUpView.swift */; };
 		4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF584592978E497008F4068 /* UIView+Constraints.swift */; };
 		7B236A8529854196006AE385 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B236A8429854196006AE385 /* IconImageView.swift */; };
 		7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */; };
@@ -175,6 +176,7 @@
 		4AC4CE4A2980B41400BB823C /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		4AC4CE4C2980BAE800BB823C /* SelectCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCollectionView.swift; sourceTree = "<group>"; };
 		4AC4CE4E2980BD3700BB823C /* SelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AEEAA3E29B0DC3900316B0C /* GetARockInfoPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetARockInfoPopUpView.swift; sourceTree = "<group>"; };
 		4AF584592978E497008F4068 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		6CC3391D5CB01B869CFE1F20 /* Pods-GetARock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.release.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.release.xcconfig"; sourceTree = "<group>"; };
 		73E771CD1A9B64570FE2B572 /* Pods-GetARock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.debug.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 			children = (
 				B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */,
 				B808B6962982A85F00A1A9E2 /* CustomMarker.swift */,
+				4AEEAA3E29B0DC3900316B0C /* GetARockInfoPopUpView.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -570,11 +573,8 @@
 				A951F6522989EF6C00902CED /* String+Extension.swift */,
 				7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */,
 				4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */,
-
 				9AA0BB5529A4FD1800871A05 /* Date+Extension.swift */,
-
 				4A63BE5529A604BC00A30CA8 /* UILabel+Extension.swift */,
-
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -993,6 +993,7 @@
 				9AA0BB4F29A4E7FD00871A05 /* NotificationListViewController.swift in Sources */,
 				9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */,
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
+				4AEEAA3F29B0DC3900316B0C /* GetARockInfoPopUpView.swift in Sources */,
 				4A43E6EB29A33B4F00EC4BA5 /* AgreeTermsViewController.swift in Sources */,
 				B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
