@@ -155,7 +155,7 @@ final class WriteCommentTextView: UIView {
     // MARK: - @objc
     
     @objc func didTapAddCommentButton() {
-        if self.commentTextView.text.isEmpty == false {
+        if !self.commentTextView.text.isEmpty {
             self.contentText = commentTextView.text
             postComment()
             self.commentTextView.text.removeAll()
