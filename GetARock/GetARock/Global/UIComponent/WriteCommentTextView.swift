@@ -231,22 +231,26 @@ extension WriteCommentTextView {
             ]
             
             var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/comment/band")
+            
             let memberIdQuery = URLQueryItem(name: "memberId", value: memberId)
+            
             let bandIdQuery = URLQueryItem(name: "bandId", value: bandId)
+            
             let content = URLQueryItem(name: "content", value: contentText)
+            
             queryURLComponent?.queryItems = [memberIdQuery,bandIdQuery,content]
             
             guard let url = queryURLComponent?.url else { return }
-            let request = NSMutableURLRequest(url: url,
-                                              cachePolicy: .useProtocolCachePolicy,
-                                              timeoutInterval: 10.0)
+            var request = URLRequest(url: url,
+                                     cachePolicy: .useProtocolCachePolicy,
+                                     timeoutInterval: 10.0)
             request.httpMethod = "POST"
             request.allHTTPHeaderFields = headers
             Task {
                 await BandDetailViewController().getBandData()
             }
             
-            let dataTask = URLSession.shared.dataTask(with: request as URLRequest,
+            let dataTask = URLSession.shared.dataTask(with: request,
                                                       completionHandler: { (data, response, error) -> Void in
                 if (error != nil) {
                     print("통신 과정에서 에러가 났습니다.")
