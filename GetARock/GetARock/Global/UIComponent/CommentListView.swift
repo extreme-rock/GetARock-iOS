@@ -106,7 +106,7 @@ final class CommentListView: UIView {
     }
     
     private func setTableviewRefresh() {
-        tableviewRefreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
+        tableviewRefreshControl.addTarget(self, action: #selector(didScrollDownCommentTable(refresh:)), for: .valueChanged)
         tableviewRefreshControl.tintColor = .gray02
         self.tableView.refreshControl = tableviewRefreshControl
     }
@@ -121,7 +121,7 @@ final class CommentListView: UIView {
     }
     // MARK: - @objc
     
-    @objc func refreshTable(refresh: UIRefreshControl) {
+    @objc func didScrollDownCommentTable(refresh: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.tableView.reloadData()
             self.setupTotalListNumberLabel()

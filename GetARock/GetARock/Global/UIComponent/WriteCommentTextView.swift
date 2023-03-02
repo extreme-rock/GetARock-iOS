@@ -17,9 +17,9 @@ final class WriteCommentTextView: UIView {
     private var keyboardHeight: CGFloat = 30
     
     //TODO: - 추후 로그인한 사용자 ID로 변경 해야함
-    private var memberId = "36"
+    private var memberId = "10"
     //TODO: - 추후 사용자가 들어간 밴드의 ID로 변경해야함
-    private var bandId = "22"
+    private var bandId = "1"
     private var contentText = ""
     
     // MARK: - View
@@ -35,7 +35,7 @@ final class WriteCommentTextView: UIView {
     
     private lazy var addCommentButton: DefaultButton = {
         $0.setTitle("등록", for: .normal)
-        $0.addTarget(self, action: #selector(TapAddCommentButton), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(didTapAddCommentButton), for: .touchUpInside)
         return $0
     }(DefaultButton())
     
@@ -150,7 +150,7 @@ final class WriteCommentTextView: UIView {
     
     // MARK: - @objc
     
-    @objc func TapAddCommentButton() {
+    @objc func didTapAddCommentButton() {
         if self.commentTextView.text.isEmpty == false {
             self.contentText = commentTextView.text
             postComment()

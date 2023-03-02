@@ -12,7 +12,7 @@ final class BandDetailViewController: BaseViewController {
     // MARK: - Property
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "22"
+    private var bandID = "1"
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
@@ -87,8 +87,8 @@ extension BandDetailViewController {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
-//            print("❤️ Response data raw : \(data)")
-//            print("응답 내용 : \(response)")
+            print("❤️ Response data raw : \(data)")
+            print("응답 내용 : \(response)")
             self.bandData = decodedData
         } catch {
             print(error)
