@@ -17,7 +17,7 @@ final class UserInfoInputViewController: BaseViewController {
     
     private let pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.headline03)
-        $0.text = "3/3"
+        $0.text = "2/2"
         $0.textColor = .gray02
         return $0
     }(UILabel())

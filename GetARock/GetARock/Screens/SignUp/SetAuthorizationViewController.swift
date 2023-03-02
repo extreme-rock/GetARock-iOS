@@ -17,6 +17,20 @@ final class SetAuthorizationViewController: UIViewController {
     
     //MARK: - View
     
+    private lazy var titleStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 20
+        return $0
+    }(UIStackView(arrangedSubviews: [titleLabel, requestAuthorizationLabel]))
+    
+    private let titleLabel: UILabel = {
+        $0.font = UIFont.setFont(.largeTitle01)
+        $0.numberOfLines = 2
+        $0.textColor = .white
+        $0.text = "프로필을 완성했어요.\n축하합니다!"
+        return $0
+    }(UILabel())
+    
     private let requestAuthorizationLabel: UILabel = {
         $0.font = UIFont.setFont(.headline01)
         $0.numberOfLines = 2
@@ -131,9 +145,10 @@ final class SetAuthorizationViewController: UIViewController {
     }(UILabel())
     
     private lazy var approveButton: BottomButton = {
-        $0.setTitle("동의 후 시작하기", for: .normal)
+        $0.setTitle("확인", for: .normal)
         let action = UIAction { _ in
-            self.requestLocationAuthorization()
+//            self.requestLocationAuthorization()
+            self.view.window?.rootViewController = MainMapViewController()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -146,6 +161,11 @@ final class SetAuthorizationViewController: UIViewController {
         setupLayout()
         attribute()
         setLocationManager()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     //MARK: - Method
@@ -161,14 +181,14 @@ final class SetAuthorizationViewController: UIViewController {
     
     private func setupLayout() {
         
-        self.view.addSubview(requestAuthorizationLabel)
-        requestAuthorizationLabel.constraint(top: view.topAnchor,
-                                             leading: view.leadingAnchor,
-                                             trailing: view.trailingAnchor,
-                                             padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))
+        self.view.addSubview(titleStackView)
+        titleStackView.constraint(top: view.topAnchor,
+                                  leading: view.leadingAnchor,
+                                  trailing: view.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))
         
         self.view.addSubview(authorizationContainerView)
-        authorizationContainerView.constraint(top: requestAuthorizationLabel.bottomAnchor,
+        authorizationContainerView.constraint(top: titleStackView.bottomAnchor,
                                               leading: view.leadingAnchor,
                                               trailing: view.trailingAnchor,
                                               padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
