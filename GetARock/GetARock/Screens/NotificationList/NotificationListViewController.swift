@@ -9,11 +9,11 @@ import UIKit
 
 final class NotificationListViewController: UITableViewController {
 
-    //MARK: Property
+    //MARK: - Property
     
     private var notificationList: [NotificationInfo] = []
 
-    //MARK: Life Cycle
+    //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,7 @@ final class NotificationListViewController: UITableViewController {
         attribute()
     }
 
-    //MARK: Method
+    //MARK: - Method
     
     private func attribute() {
         self.tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.classIdentifier)
@@ -60,7 +60,7 @@ final class NotificationListViewController: UITableViewController {
     }
 }
 
-//MARK: Extension
+//MARK: - Extension
 
 extension NotificationListViewController {
     //TODO: 추후 테스트 API는 삭제하고 다른 API로 대체해야함, viewDidload 과정에서 초기 데이터 세팅 과정 필요
@@ -99,6 +99,7 @@ extension NotificationListViewController {
     private func reconfigureCellAfterRejectInvitation(cellIndexPath: IndexPath) {
         guard let cell = self.tableView.cellForRow(at: cellIndexPath) as? NotificationTableViewCell else { return }
         cell.buttonHstack.removeFromSuperview()
+        //TODO: 추후 밴드 이름 파라미터 스트링 변경 필요
         cell.updateTextAfterRejectInvitation(bandName: "00밴드")
     }
     

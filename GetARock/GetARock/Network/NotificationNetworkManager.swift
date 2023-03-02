@@ -7,6 +7,7 @@
 
 import UIKit
 
+//TODO: 추후 프린트문 error handling case 체크 필요
 final class NotificationNetworkManager {
     
     static let shared = NotificationNetworkManager()
