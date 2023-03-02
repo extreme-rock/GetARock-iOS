@@ -635,8 +635,6 @@
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
 				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
-				7BEB09D9299CFEC20076A82F /* Comment.swift */,
-				9AFE014629990FE0004B0BCF /* BandInformationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */,
 				7B80E5DD29A5F57F0050F010 /* BandInformationVO.swift */,
@@ -890,11 +888,8 @@
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
 				A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */,
 				B88E1BD92977ABD9006072B7 /* StringLiteral.swift in Sources */,
-
 				A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */,
-
 				4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */,
-
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
@@ -955,11 +950,8 @@
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
 				4A6A9A3C299DC2AD0039C0F7 /* Notification.Name+Extension.swift in Sources */,
 				4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */,
-
 				A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */,
-
 				7BEB09D6299CEEA70076A82F /* CommentListView.swift in Sources */,
-
 				A9D72540299B2D4400404E22 /* InformationGuideLabel.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
 				9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */,
@@ -1186,7 +1178,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KBPH295XX9;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetARock/Global/Supports/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
