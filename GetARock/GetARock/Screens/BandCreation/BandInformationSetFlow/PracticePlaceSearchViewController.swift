@@ -14,11 +14,11 @@ final class PracticePlaceSearchViewController: BaseViewController {
     
     var completion: (_ locationInfo: String) -> Void = { locationInfo in }
     
-    private let locationManager = CLLocationManager()
+    private let locationManager: CLLocationManager = CLLocationManager()
     
-    private var searchCompleter = MKLocalSearchCompleter()
+    private var searchCompleter: MKLocalSearchCompleter = MKLocalSearchCompleter()
     
-    private var searchResults = [MKLocalSearchCompletion]()
+    private var searchResults:[LocationInfo] = []
 
     // MARK: View
     
@@ -48,11 +48,7 @@ final class PracticePlaceSearchViewController: BaseViewController {
         button.tintColor = .white
         button.constraint(.widthAnchor, constant: 118)
         button.constraint(.heightAnchor, constant: 45)
-        let action = UIAction { [weak self] _ in
-            self?.locationManager.requestWhenInUseAuthorization()
-            self?.getCurrentAddressInfo()
-        }
-        button.addAction(action, for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapCurrentLocationButton), for: .touchUpInside)
         return button
     }()
 
@@ -138,7 +134,6 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
             
             if let placemark = placemarks?.first {
                 var address = ""
-                var queryString = ""
                 
                 if let administrativeArea = placemark.administrativeArea {
                     address = administrativeArea //ex.서울특별시
@@ -148,13 +143,12 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
                 }
                 if let thoroughfare = placemark.thoroughfare {
                     address += " "+thoroughfare //ex.중곡동
-                    queryString = address
                 }
                 if let subThoroughfare = placemark.subThoroughfare {
                     address += " "+subThoroughfare //ex.272-13
                 }
                 self.searchBar.textField.text = address
-                self.searchCompleter.queryFragment = queryString
+                self.searchCompleter.queryFragment = address
             }
         }
     }
@@ -164,7 +158,13 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
 extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
     // 자동완성 완료시 결과를 받는 함수
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        searchResults = completer.results
+        let locationInfoList: [LocationInfo] = completer.results.map { LocationInfo(title: $0.title, subtitle: $0.subtitle) }
+        searchResults = locationInfoList
+
+        if searchResults.isEmpty {
+            let singleLocationInfo = LocationInfo(title: searchBar.textField.text ?? "", subtitle: "")
+            searchResults = [singleLocationInfo]
+        }
         searchResultTable.reloadData()
     }
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
@@ -181,8 +181,7 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.classIdentifier,
-                                                       for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell()}
-        
+                                                       for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell() }
         let searchResult = searchResults[indexPath.row]
         cell.configure(mapSearchResult: searchResult)
         return cell
@@ -201,4 +200,17 @@ extension PracticePlaceSearchViewController: UITableViewDelegate {
         }
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+extension PracticePlaceSearchViewController {
+    @objc func didTapCurrentLocationButton() {
+        self.locationManager.requestWhenInUseAuthorization()
+        self.getCurrentAddressInfo()
+    }
+}
+
+//MARK: 위치 검색 결과에서 title과 subtitle을 처리하기위한 데이터 모델
+struct LocationInfo {
+    let title: String
+    let subtitle: String
 }

@@ -12,7 +12,10 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
 
     //MARK: View
     
-    private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white)
+    private let titleLabel: BasicLabel = {
+        $0.numberOfLines = 2
+        return $0
+    }(BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white))
     
     private let subTitleLabel: UILabel = {
         $0.numberOfLines = 2
@@ -58,7 +61,7 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
         subTitleLabel.constraint(.widthAnchor, constant: contentStackView.bounds.size.width)
     }
     
-    func configure(mapSearchResult: MKLocalSearchCompletion){
+    func configure(mapSearchResult: LocationInfo){
         self.titleLabel.text = mapSearchResult.title
         self.subTitleLabel.text = mapSearchResult.subtitle
     }

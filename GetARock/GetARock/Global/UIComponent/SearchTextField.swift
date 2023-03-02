@@ -27,6 +27,11 @@ final class SearchTextField: UIView {
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
+
+    private let rightPaddingView: TextFieldRightPaddingView = {
+        $0.constraint(.widthAnchor, constant: 20)
+        return $0
+    }(TextFieldRightPaddingView())
     
     //MARK: init
 
@@ -61,6 +66,8 @@ final class SearchTextField: UIView {
         self.layer.cornerRadius = 10
         self.layer.borderColor = UIColor.white.cgColor
         self.backgroundColor = .dark02
+        self.textField.rightView = rightPaddingView
+        self.textField.rightViewMode = .always
     }
 
     required init(coder: NSCoder) {
