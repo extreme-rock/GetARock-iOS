@@ -13,7 +13,7 @@ enum BandMemberModifyTableViewSection: String {
 }
 
 final class BandMemberModifyViewController: BaseViewController {
-
+    
     private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState != .inviting } {
         didSet {
             guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberModifyTableViewHeader else { return }
@@ -101,9 +101,23 @@ final class BandMemberModifyViewController: BaseViewController {
                 instrumentList: instrumentListInfo,
                 gender: "",
                 age: "")
+            
             resultData.append(transformedData)
         }
-        return resultData
+        return orderVOData(with: resultData)
+    }
+    
+    private func orderVOData(with data: [SearchedUserInfo]) -> [SearchedUserInfo] {
+        var resultList: [SearchedUserInfo] = []
+        let leader = data.filter { $0.memberState == .admin }
+        let members = data.filter { $0.memberState == .none }
+        let annonymous = data.filter({ $0.memberState == .annonymous })
+        let invitingMembers = data.filter { $0.memberState == .inviting }
+        resultList += leader
+        resultList += members
+        resultList += annonymous
+        resultList += invitingMembers
+        return resultList
     }
     
     private func updateLeaderPositionIndexPath(indexPath: IndexPath) {
