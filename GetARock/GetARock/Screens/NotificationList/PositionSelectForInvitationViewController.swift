@@ -45,10 +45,6 @@ final class PositionSelectForInvitationViewController: BaseViewController {
         configureDelegate()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
     //MARK: - Method
     
     private func attribute() {
@@ -89,15 +85,16 @@ extension PositionSelectForInvitationViewController {
     }
     
     private func navigateToNext() {
-        //MARK: 가입 환영 view로 바꾸기
-        let nextVC = BandMemberAddViewController()
+        //TODO: 추후 유저 정보에 따른 쿼리 컴포넌트 변경 필요
         NotificationNetworkManager.shared.acceptInvitation(
             alertId: 0,
             bandId: 0,
             memberId: 0,
             memberInstrument: getSelectedInstrumentList())
-//        self.navigationController?.pushViewController(nextVC, animated: true)
-//        self.navigationController?.navigationBar.isHidden = false
+        
+        let nextVC = BandCreationFinishGuideViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+        self.navigationController?.navigationBar.isHidden = false
     }
 }
 
