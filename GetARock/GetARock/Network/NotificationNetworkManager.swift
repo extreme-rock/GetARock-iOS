@@ -81,4 +81,47 @@ final class NotificationNetworkManager {
         }
         dataTask.resume()
     }
+    
+    func rejectInvitation(alertId: Int, bandId: Int, memberId: Int) {
+        let headers = [
+            "accept": "application/json",
+            "content-type": "application/json"
+        ]
+        
+        let baseURL = "https://api.ryomyom.com/alert/invitation/deny"
+        var queryURLComponent = URLComponents(string: baseURL)
+        let alertIdQuery = URLQueryItem(name: "alertId", value: String(alertId))
+        let bandIdQuery = URLQueryItem(name: "bandId", value: String(bandId))
+        let memberIdQuery = URLQueryItem(name: "memberId", value: String(memberId))
+        
+        queryURLComponent?.queryItems = [alertIdQuery, bandIdQuery, memberIdQuery]
+        guard let url = queryURLComponent?.url else {
+            print(NetworkError.badURL.errorDescription ?? "")
+            return
+        } // UIAction 클로저로 throw 형태를 받을 수 없어서 프린트문으로 대체함
+        
+        var request = URLRequest(url: url,
+                                 cachePolicy: .useProtocolCachePolicy,
+                                 timeoutInterval: 10)
+        
+        request.httpMethod = "PUT"
+        request.allHTTPHeaderFields = headers
+        
+        let dataTask = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+            if let error = error {
+                print(error)
+            } else if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case (200...299):
+                    print("success")
+                    print(httpResponse)
+                case (300...599):
+                    print(NetworkError.failedRequest(status: httpResponse.statusCode))
+                default:
+                    print("unknown")
+                }
+            }
+        }
+        dataTask.resume()
+    }
 }
