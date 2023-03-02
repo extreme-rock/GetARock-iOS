@@ -40,11 +40,15 @@ final class NotificationListViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.backgroundColor = .dark01
 
-        let rejectAction = UIAction { _ in self.rejectInvitation(cellIndexPath: indexPath) }
-
-        let acceptAction = UIAction { _ in
-            //TODO: 초대 수락시 navigation Flow
+        let rejectAction = UIAction { [weak self] _ in
+            self?.rejectInvitation(cellIndexPath: indexPath)
         }
+
+        let acceptAction = UIAction { [weak self] _ in
+            self?.navigationController?.pushViewController(PositionSelectForInvitationViewController(),
+                                                           animated: true)
+        }
+        
         cell.rejectButton.addAction(rejectAction, for: .touchUpInside)
         cell.acceptButton.addAction(acceptAction, for: .touchUpInside)
         return cell
@@ -82,8 +86,12 @@ extension NotificationListViewController {
         let okayAction = NSLocalizedString("확인", comment: "Alert Cancel button title")
 
         alertController.addAction(UIAlertAction(title: okayAction, style: .default))
-        alertController.addAction(UIAlertAction(title: rejectAction, style: .destructive, handler: { _ in
-            self.tableView.performBatchUpdates { self.reconfigureCellAfterRejectInvitation(cellIndexPath: cellIndexPath) }
+        alertController.addAction(UIAlertAction(title: rejectAction, style: .destructive, handler: { [weak self] _ in
+            self?.tableView.performBatchUpdates {
+                self?.reconfigureCellAfterRejectInvitation(cellIndexPath: cellIndexPath)
+                //TODO: 추후 유저 정보로 query parameter 변경 필요
+                NotificationNetworkManager.shared.rejectInvitation(alertId: 44, bandId: 32, memberId: 11)
+            }
         }))
         present(alertController, animated: true)
     }
@@ -94,7 +102,7 @@ extension NotificationListViewController {
         cell.updateTextAfterRejectInvitation(bandName: "00밴드")
     }
     
-    //TODO: 이 뷰를 들어온 사용자가, 자신이 초대한 사람이 거절을 했을 경우, 그에 맞게 UI 업데이트, 분기처리가 따로 필요함
+    //TODO: 이 뷰를 들어온 사용자가, 자신이 초대한 사람이 거절을 했을 경우, 그에 맞게 UI 업데이트, 분기처리가 따로 필요함 (백엔드와 문의)
     private func getInvitationRejectNotification(cellIndexPath: IndexPath) {
         guard let cell = self.tableView.cellForRow(at: cellIndexPath) as? NotificationTableViewCell else { return }
         cell.updateTextForInvitationRejectAlert(userName: "알로라", bandName: "00밴드")

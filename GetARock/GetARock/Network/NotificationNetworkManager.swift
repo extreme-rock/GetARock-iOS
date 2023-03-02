@@ -97,8 +97,7 @@ final class NotificationNetworkManager {
         queryURLComponent?.queryItems = [alertIdQuery, bandIdQuery, memberIdQuery]
         guard let url = queryURLComponent?.url else {
             print(NetworkError.badURL.errorDescription ?? "")
-            return
-        } // UIAction 클로저로 throw 형태를 받을 수 없어서 프린트문으로 대체함
+            return }
         
         var request = URLRequest(url: url,
                                  cachePolicy: .useProtocolCachePolicy,
