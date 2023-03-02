@@ -16,6 +16,26 @@ class BandInfomationView: UIView {
     private var bandIntro: String?
     private var bandSNS: [SnsListVO]?
     
+    //현재 컬랙션뷰에서 받는 데이터 모델
+    private var bandMemberDake: [Item] = [
+        .bandMember(BandMember(isUser: <#T##Bool#>,
+                               isLeader: <#T##Bool#>,
+                               userName: <#T##String#>,
+                               instrumentImageName: <#T##InstrumentImageName#>,
+                               instrumentNames: <#T##[String]#>))
+    ]
+    
+    // 밴드에서 GET해오는 데이터 모델
+    private var bandMemberVO: [MemberListVO] = [
+        MemberListVO(memberBandID: <#T##Int?#>,
+                     memberID: <#T##Int?#>,
+                     name: <#T##String#>,
+                     memberState: <#T##MemberState#>,
+                     instrumentList: [
+                        InstrumentListVO(instrumentID: <#T##Int?#>, isMain: <#T##Bool?#>, name: <#T##String#>)
+                     ])
+    ]
+    
     // MARK: - View
     
     let scrollView: UIScrollView = {
@@ -28,7 +48,7 @@ class BandInfomationView: UIView {
         return $0
     }(UIView())
     
-    //멤버
+    // ① 멤버
     private let bandMemberTitleLable = BasicLabel(
         contentText: "밴드 멤버 👩‍🎤👨‍🎤",
         fontStyle: .headline01,
@@ -41,17 +61,17 @@ class BandInfomationView: UIView {
         textColorInfo: .white
     )
     
-    //    private lazy var bandMemberInfoCollectView = PositionCollectionView(cellType: .band, items: [], isNeedHeader: true)
+    private lazy var bandMemberInfoCollectView = PositionCollectionView(cellType: .band, items: [], isNeedHeader: true)
     
     private lazy var bandMembeStackView: UIStackView = {
         $0.backgroundColor = .red
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandMemberTitleLable,bandMemberInfoLable]))
+    }(UIStackView(arrangedSubviews: [bandMemberTitleLable,bandMemberInfoLable, bandMemberInfoCollectView]))
     
     
-    //합주곡
+    // ② 합주곡
     private let bandSongTitleLable = BasicLabel(
         contentText: "합주곡 🎤",
         fontStyle: .headline01,
@@ -71,21 +91,26 @@ class BandInfomationView: UIView {
     }(UIStackView(arrangedSubviews: [bandSongTitleLable,bandSongListView]))
     
     
-    //밴드 소개
+    // ③ 밴드 소개
     private let bandIntroTitleLable = BasicLabel(
         contentText: "밴드 소개 📢",
         fontStyle: .headline01,
         textColorInfo: .white
     )
     
-    private let bandIntroLable: BasicLabel = {
+    private let bandIntroLable: PaddingLabel = {
+        $0.text = "잘나오나?"
+        $0.font = UIFont.setFont(.content)
+        $0.numberOfLines = 0
+        $0.textColor = .white
+        $0.clipsToBounds = false
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = .dark02
+        $0.layer.borderColor = UIColor.gray02.cgColor
+        $0.layer.borderWidth = 1
         $0.numberOfLines = 0
         return $0
-    }(BasicLabel(
-        contentText: "",
-        fontStyle: .headline01,
-        textColorInfo: .white
-    ))
+    }(PaddingLabel())
     
     private lazy var bandIntroStackView: UIStackView = {
         $0.backgroundColor = .green
@@ -95,14 +120,14 @@ class BandInfomationView: UIView {
     }(UIStackView(arrangedSubviews: [bandIntroTitleLable, bandIntroLable]))
     
     
-    //밴드 SNS
+    // ④ 밴드 SNS
     private let bandSNSTitleLable = BasicLabel(
         contentText: "밴드 SNS 🙌",
         fontStyle: .headline01,
         textColorInfo: .white
     )
     
-    //    private let bandSNSListView = SNSListStackView(data: )
+//    private lazy var bandSNSListView = SNSListStackView(data: bandSNS)
     
     private lazy var bandSNSStackView: UIStackView = {
         $0.backgroundColor = .blue
@@ -115,8 +140,11 @@ class BandInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 40
         $0.distribution = .fill
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: 30, left: 16, bottom: 30, right: 16)
+        
         return $0
-    }(UIStackView(arrangedSubviews: [bandMembeStackView, bandSongStackView]))
+    }(UIStackView(arrangedSubviews: [bandMembeStackView, bandSongStackView, bandIntroStackView, bandSNSStackView]))
     
     
     // MARK: - Init
@@ -139,6 +167,7 @@ class BandInfomationView: UIView {
     
     private func attribute() {
         self.backgroundColor = .dark01
+        setBandInfo()
     }
     
     private func setupLayout() {
@@ -174,6 +203,17 @@ class BandInfomationView: UIView {
 //            trailing: contentView.trailingAnchor)
 //
 //        scrollView.contentSize = CGSize(width: self.bounds.width, height: contentView.bounds.height)
+    }
+    
+    private func setBandInfo() {
+        if bandIntro == nil{
+            let emptyView = EmptyView(type: .noBand)
+            bandIntroStackView.removeArrangedSubview(bandIntroLable)
+            bandIntroStackView.addArrangedSubview(emptyView)
+            
+        } else {
+            bandIntroLable.text = bandIntro
+        }
     }
     
     
