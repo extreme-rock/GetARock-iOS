@@ -130,9 +130,8 @@ final class CommentListView: UIView {
     }
     
     @objc func loadList(notification: NSNotification){
-        if let data = notification.userInfo?["data"] as? [CommentList]? {
-            self.commentData = data
-        }
+        let data = notification.userInfo?["data"] as? [CommentList]
+        self.commentData = data
         self.tableView.reloadData()
         self.setupTotalListNumberLabel()
     }
