@@ -11,14 +11,14 @@ final class DetailContentView: UIView {
     
     // MARK: - Property
     
-    enum DetailTopInfoType {
+    enum DetailInfoType {
         case band
         case event
         case myPage
     }
     
     private lazy var segmentTitle: [String] = {
-        switch detailTopInfoType {
+        switch detailInfoType {
         case .band:
             return ["밴드상세", "방명록"]
         case .event:
@@ -28,7 +28,7 @@ final class DetailContentView: UIView {
         }
     }()
     
-    private var detailTopInfoType : DetailTopInfoType
+    private var detailInfoType : DetailInfoType
     
     private var currentPage: Int = 0 {
         didSet {
@@ -64,8 +64,8 @@ final class DetailContentView: UIView {
     
     // MARK: - Init
     
-    init(type: DetailTopInfoType, bandData: BandInformationVO ) {
-        self.detailTopInfoType = type
+    init(detailInfoType: DetailInfoType, bandData: BandInformationVO ) {
+        self.detailInfoType = detailInfoType
         self.bandData = bandData
         super.init(frame: .zero)
         setupLayout()
@@ -104,7 +104,7 @@ final class DetailContentView: UIView {
     }
     
     private func setDetailViewController() {
-        switch detailTopInfoType {
+        switch detailInfoType {
             
         case .band:
             // TODO: 임시 View들입니다. 추후 변경 예정

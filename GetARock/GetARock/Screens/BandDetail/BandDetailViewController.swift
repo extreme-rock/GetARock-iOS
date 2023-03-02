@@ -42,7 +42,7 @@ final class BandDetailViewController: BaseViewController {
     // MARK: - View
     
     lazy var bandTopInfoView = BandTopInfoView()
-    lazy var bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
+    lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     
     // MARK: - LifeCycle
     
