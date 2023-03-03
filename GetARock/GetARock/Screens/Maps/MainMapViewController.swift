@@ -14,6 +14,10 @@ final class MainMapViewController: UIViewController {
     
     // MARK: - Property
     
+    private var isFromSignUp: Bool
+    
+    // MARK: - Property
+    
     private lazy var camera = GMSCameraPosition.camera(withLatitude: currentCoordinate.latitude,
                                                        longitude: currentCoordinate.longitude,
                                                        zoom: zoomInRange)
@@ -81,6 +85,15 @@ final class MainMapViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(isFromSignUp: Bool) {
+        self.isFromSignUp = isFromSignUp
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
         
@@ -100,6 +113,7 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.attribute()
         self.setLocationManager()
+        self.requestLocationAuthorization()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,25 +162,6 @@ final class MainMapViewController: UIViewController {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
-    }
-    
-    private func requestNotificationAutorization() {
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge]) { isGranted, error in
-                if isGranted {
-                    //TODO: 동의 시 뷰 연결
-                    DispatchQueue.main.async { [weak self] in
-                        self?.setupAlertViewLayout()
-                    }
-                    print(isGranted)
-                } else {
-                    //TODO: 비동의 시 뷰 연결
-                    DispatchQueue.main.async { [weak self] in
-                        self?.setupAlertViewLayout()
-                    }
-                    print(isGranted)
-                }
-            }
     }
     
     private func setMarkers() {
@@ -253,7 +248,10 @@ extension MainMapViewController: CLLocationManagerDelegate {
             print("위치 서비스를 허용하지 않음")
         }
         // TODO: 첫방문일 때만 보여줘야함.
-        self.requestNotificationAutorization()
+        if self.isFromSignUp {
+            self.requestNotificationAutorization()
+            self.isFromSignUp = false
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -293,4 +291,54 @@ extension MainMapViewController: GetARockInfoPopUpViewDelegate {
         print("dismiss")
         self.alertView.removeFromSuperview()
     }
+}
+
+// MARK: - 권한 관련 함수
+extension MainMapViewController {
+    private func requestLocationAuthorization() {
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .denied:
+            self.showRequestLocationServiceAlert()
+        default:
+            return
+        }
+    }
+    
+    private func requestNotificationAutorization() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) { isGranted, error in
+                if isGranted {
+                    //TODO: 동의 시 뷰 연결
+                    DispatchQueue.main.async { [weak self] in
+                        self?.setupAlertViewLayout()
+                    }
+                    print(isGranted)
+                } else {
+                    //TODO: 비동의 시 뷰 연결
+                    DispatchQueue.main.async { [weak self] in
+                        self?.setupAlertViewLayout()
+                    }
+                    print(isGranted)
+                }
+            }
+    }
+    
+    func showRequestLocationServiceAlert() {
+        let requestLocationServiceAlert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n'설정 > 개인정보 보호 및 보안'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
+        let goSetting = UIAlertAction(title: "설정", style: .default) { _ in
+            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSetting)
+            }
+        }
+        let cancel = UIAlertAction(title: "취소", style: .default) { [weak self] _ in
+            self?.requestNotificationAutorization()
+        }
+        requestLocationServiceAlert.addAction(cancel)
+        requestLocationServiceAlert.addAction(goSetting)
+        
+        present(requestLocationServiceAlert, animated: true)
+    }
+    
 }

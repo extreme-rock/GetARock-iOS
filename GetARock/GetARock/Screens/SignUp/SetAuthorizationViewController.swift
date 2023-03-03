@@ -148,7 +148,7 @@ final class SetAuthorizationViewController: UIViewController {
         $0.setTitle("확인", for: .normal)
         let action = UIAction { _ in
 //            self.requestLocationAuthorization()
-            self.view.window?.rootViewController = MainMapViewController()
+            self.view.window?.rootViewController = MainMapViewController(isFromSignUp: true)
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
