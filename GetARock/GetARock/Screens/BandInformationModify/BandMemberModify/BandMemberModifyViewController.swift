@@ -46,6 +46,7 @@ final class BandMemberModifyViewController: BaseViewController {
                     forHeaderFooterViewReuseIdentifier: BandMemberModifyTableViewHeader.classIdentifier)
         $0.separatorStyle = .none
         $0.backgroundColor = .dark01
+        $0.allowsMultipleSelection = true
         $0.bounces = false
         $0.delegate = self
         return $0
@@ -87,6 +88,19 @@ final class BandMemberModifyViewController: BaseViewController {
             trailing: view.safeAreaLayoutGuide.trailingAnchor,
             padding: UIEdgeInsets(top: 20,
                                   left: 16,
+                                  bottom: 0,
+                                  right: 16))
+    }
+
+    private func showBottomButton() {
+
+        bandMemberTableView.constraint(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            leading: view.safeAreaLayoutGuide.leadingAnchor,
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            trailing: view.safeAreaLayoutGuide.trailingAnchor,
+            padding: UIEdgeInsets(top: 20,
+                                  left: 16,
                                   bottom: 80,
                                   right: 16))
 
@@ -98,6 +112,22 @@ final class BandMemberModifyViewController: BaseViewController {
                                   left: 0,
                                   bottom: 0,
                                   right: 0))
+    }
+
+    private func hideBottomButton() {
+        
+        nextButton.removeFromSuperview()
+
+        bandMemberTableView.constraint(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            leading: view.safeAreaLayoutGuide.leadingAnchor,
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            trailing: view.safeAreaLayoutGuide.trailingAnchor,
+            padding: UIEdgeInsets(top: 20,
+                                  left: 16,
+                                  bottom: 0,
+                                  right: 16))
+        self.bandMemberTableView.layoutIfNeeded()
     }
 
     private func attribute() {
@@ -246,17 +276,42 @@ extension BandMemberModifyViewController: UITableViewDelegate {
                 self.didTapInviteMemberButton()
             }
 
-            addedMemberTableHeader.setEditingAction {
-                // 모든 셀들을 configure UI
+            // edit 버튼 누르면 하는 액션 설정
+            addedMemberTableHeader.startEditingAction = {
+                for index in 0..<self.addedMembers.count {
+                    guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? BandMemberModifyTableViewCell else { return }
+                    cell.activateMemberEditingState()
+                    self.showBottomButton()
+                }
             }
-            addedMemberTableHeader.configureSectionTitle(with: "밴드 멤버 (\(addedMembers.count)인)")
-            headerView = addedMemberTableHeader
 
-        case .invitingMembers:
-            headerView = invitingMemberSectionTitle
-        }
-        return headerView
+            // 완료 버튼 누르면 하는 액션 설정
+            addedMemberTableHeader.finishEditingAction = {
+                for index in 0..<self.addedMembers.count {
+                    guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? BandMemberModifyTableViewCell else { return }
+                    cell.deActiveMemberEditingState()
+                    cell.isSelected = false
+                    self.hideBottomButton()
+                }
+                self.nextButton.setTitle("내보내기", for: .normal)
+            }
+            //initialize action
+            // didset에 따라서 편집중이면 액션이 바뀐다
+            // 그런데 초기에는 didset이 작동하지않아서 초기화가 필요
+            addedMemberTableHeader.editButton.addAction(UIAction{ _ in
+                addedMemberTableHeader.startEditingAction()
+                addedMemberTableHeader.isEditing = true
+                addedMemberTableHeader.editButton.setTitle("완료", for: .normal)
+            }, for: .touchUpInside)
+
+        addedMemberTableHeader.configureSectionTitle(with: "밴드 멤버 (\(addedMembers.count)인)")
+        headerView = addedMemberTableHeader
+
+    case .invitingMembers:
+        headerView = invitingMemberSectionTitle
     }
+    return headerView
+}
 }
 
 extension BandMemberModifyViewController {

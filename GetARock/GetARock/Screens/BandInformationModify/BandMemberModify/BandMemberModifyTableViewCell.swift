@@ -65,6 +65,19 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         attribute()
     }
 
+    private lazy var selectButton: UIImageView = {
+        $0.contentMode = .scaleAspectFit
+        $0.constraint(.widthAnchor, constant: 25)
+        $0.constraint(.heightAnchor, constant: 25)
+        return $0
+    }(UIImageView())
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+         super.setSelected(selected, animated: animated)
+        selectButton.image = selected ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol
+        selectButton.tintColor = selected ? .systemPurple : .gray02
+     }
+
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -72,6 +85,7 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
 
     private func attribute() {
         self.backgroundColor = .dark01
+        selectButton.isHidden = true
     }
 
     private func setupLayout() {
@@ -97,6 +111,11 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         leaderButton.constraint(.widthAnchor, constant: 25)
         leaderButton.constraint(.heightAnchor, constant: 25)
         leaderButton.constraint(trailing: contentView.trailingAnchor,
+                                centerY: contentView.centerYAnchor,
+                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
+
+        contentView.addSubview(selectButton)
+        selectButton.constraint(trailing: contentView.trailingAnchor,
                                 centerY: contentView.centerYAnchor,
                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
 
@@ -150,8 +169,18 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         self.leaderButton.tintColor = .systemPurple
     }
 
-    func setLeaderButtonAction(action: @escaping ()->Void) {
+    func setLeaderButtonAction(action: @escaping ()-> Void) {
         let action = UIAction { _ in action() }
         self.leaderButton.addAction(action, for: .touchUpInside)
+    }
+
+    func activateMemberEditingState() {
+        leaderButton.isHidden = true
+        selectButton.isHidden = false
+    }
+
+    func deActiveMemberEditingState() {
+        leaderButton.isHidden = false
+        selectButton.isHidden = true
     }
 }

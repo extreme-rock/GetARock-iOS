@@ -8,8 +8,33 @@
 import UIKit
 
 final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
+
+    lazy var isEditing: Bool = false {
+        didSet {
+            if isEditing == true {
+                let action = UIAction { [weak self]_ in
+                    self?.finishEditingAction()
+                    self?.editButton.setTitle("편집", for: .normal)
+                    self?.isEditing = false
+                }
+                editButton.addAction(action, for: .touchUpInside)
+            } else {
+                let action = UIAction { [weak self]_ in self?.startEditingAction()
+                    self?.editButton.setTitle("완료", for: .normal)
+                    self?.isEditing = true
+                }
+                editButton.addAction(action, for: .touchUpInside)
+            }
+        }
+    }
+
+    //MARK: - Property
+
+    var startEditingAction: () -> Void = { }
+
+    var finishEditingAction: () -> Void = { }
     
-    //MARK: View
+    //MARK: - View
 
     private let pageIndicatorLabel: BasicLabel = BasicLabel(contentText: "2/3",
                                                             fontStyle: .headline03,
@@ -54,10 +79,10 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
     }()
 
     private let sectionTitle: BasicLabel = BasicLabel(contentText: "밴드 멤버 1인",
-                                  fontStyle: .contentBold,
-                                  textColorInfo: .white)
+                                                      fontStyle: .contentBold,
+                                                      textColorInfo: .white)
 
-    private let editButton: UIButton = {
+    let editButton: UIButton = {
         $0.setTitle("편집", for: .normal)
         $0.setTitleColor(.blue01, for: .normal)
         $0.titleLabel?.font = UIFont.setFont(.headline04)
@@ -118,19 +143,8 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
         self.sectionTitle.text = text
     }
 
-    func configureButtonTitleWhenEditing() {
-        self.editButton.titleLabel?.text = "완료"
-    }
-
     func setInviteMemberButtonAction(action: @escaping ()-> Void ) {
         let action = UIAction { _ in action() }
         self.inviteMemberButton.addAction(action, for: .touchUpInside)
     }
-
-    func setEditingAction(action: @escaping ()-> Void) {
-        let action = UIAction { _ in action() }
-        self.editButton.addAction(action, for: .touchUpInside)
-    }
 }
-
-
