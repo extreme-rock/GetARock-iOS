@@ -56,14 +56,21 @@ final class BandMemberModifyViewController: BaseViewController {
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
-    private lazy var nextButton: BottomButton = {
+    private lazy var abandonMemberButton: BottomButton = {
         let action = UIAction { _ in
             self.confirmBandMemberList()
         }
-        $0.setTitle("추가", for: .normal)
+        $0.setTitle("내보내기", for: .normal)
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
+    
+    private lazy var contentVstack: UIStackView = {
+        $0.axis = .vertical
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16)
+        return $0
+    }(UIStackView(arrangedSubviews: [bandMemberTableView, abandonMemberButton]))
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -80,67 +87,21 @@ final class BandMemberModifyViewController: BaseViewController {
     //MARK: - Method
 
     private func setupLayout() {
-        view.addSubview(bandMemberTableView)
-        bandMemberTableView.constraint(
-            top: view.safeAreaLayoutGuide.topAnchor,
-            leading: view.safeAreaLayoutGuide.leadingAnchor,
-            bottom: view.safeAreaLayoutGuide.bottomAnchor,
-            trailing: view.safeAreaLayoutGuide.trailingAnchor,
-            padding: UIEdgeInsets(top: 20,
-                                  left: 16,
-                                  bottom: 0,
-                                  right: 16))
-
-        view.addSubview(nextButton)
-        nextButton.constraint(
-            bottom: view.safeAreaLayoutGuide.bottomAnchor,
-            centerX: view.centerXAnchor,
-            padding: UIEdgeInsets(top: 0,
-                                  left: 0,
-                                  bottom: 0,
-                                  right: 0))
+        view.addSubview(contentVstack)
+        contentVstack.constraint(to: view)
     }
 
     private func showBottomButton() {
-
-        bandMemberTableView.constraint(
-            top: view.safeAreaLayoutGuide.topAnchor,
-            leading: view.safeAreaLayoutGuide.leadingAnchor,
-            bottom: view.safeAreaLayoutGuide.bottomAnchor,
-            trailing: view.safeAreaLayoutGuide.trailingAnchor,
-            padding: UIEdgeInsets(top: 20,
-                                  left: 16,
-                                  bottom: 80,
-                                  right: 16))
-
-        view.addSubview(nextButton)
-        nextButton.constraint(
-            bottom: view.safeAreaLayoutGuide.bottomAnchor,
-            centerX: view.centerXAnchor,
-            padding: UIEdgeInsets(top: 0,
-                                  left: 0,
-                                  bottom: 0,
-                                  right: 0))
+        abandonMemberButton.isHidden = false
     }
 
     private func hideBottomButton() {
-        
-        nextButton.removeFromSuperview()
-
-        bandMemberTableView.constraint(
-            top: view.safeAreaLayoutGuide.topAnchor,
-            leading: view.safeAreaLayoutGuide.leadingAnchor,
-            bottom: view.safeAreaLayoutGuide.bottomAnchor,
-            trailing: view.safeAreaLayoutGuide.trailingAnchor,
-            padding: UIEdgeInsets(top: 20,
-                                  left: 16,
-                                  bottom: 0,
-                                  right: 16))
-        self.bandMemberTableView.setNeedsLayout()
+        abandonMemberButton.isHidden = true
     }
 
     private func attribute() {
         view.backgroundColor = .dark01
+        abandonMemberButton.isHidden = true
     }
 }
 extension BandMemberModifyViewController {
@@ -302,7 +263,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
                     cell.isSelected = false
                     self.hideBottomButton()
                 }
-                self.nextButton.setTitle("내보내기", for: .normal)
+                self.abandonMemberButton.setTitle("내보내기", for: .normal)
             }
             //initialize action
             // didset에 따라서 편집중이면 액션이 바뀐다

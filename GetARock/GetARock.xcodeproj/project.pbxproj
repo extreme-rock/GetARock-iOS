@@ -63,11 +63,12 @@
 		7BFE01A12982643E009608A2 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFE01A02982643E009608A2 /* Song.swift */; };
 		7BFE0DDF299E1B4E002D6574 /* WriteCommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFE0DDE299E1B4E002D6574 /* WriteCommentTextView.swift */; };
 		943928805D82F089F179FC19 /* Pods_GetARock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */; };
+		9A060B8929B2103800802833 /* MyBandModifyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A060B8829B2103800802833 /* MyBandModifyPageController.swift */; };
+		9A060B8B29B2105100802833 /* BandInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A060B8A29B2105100802833 /* BandInfoModifyViewController.swift */; };
 		9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */; };
 		9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */; };
 		9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29E6E9297E233900D4A433 /* BasicTextField.swift */; };
 		9A350B1B29AF85B600A5314E /* BandInformationVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B1A29AF85B600A5314E /* BandInformationVO.swift */; };
-		9A350B1D29AF8CC700A5314E /* BandInformationModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B1C29AF8CC700A5314E /* BandInformationModifyViewController.swift */; };
 		9A350B2029AF8D3100A5314E /* BandMemberModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B1F29AF8D3100A5314E /* BandMemberModifyViewController.swift */; };
 		9A350B2329AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B2229AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift */; };
 		9A350B2529AF901E00A5314E /* BandMemberModifyTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A350B2429AF901E00A5314E /* BandMemberModifyTableViewHeader.swift */; };
@@ -201,11 +202,12 @@
 		7BFE01A02982643E009608A2 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		7BFE0DDE299E1B4E002D6574 /* WriteCommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentTextView.swift; sourceTree = "<group>"; };
 		9519F0525025E6972410CA40 /* Pods-GetARock-GetARockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock-GetARockUITests.debug.xcconfig"; path = "Target Support Files/Pods-GetARock-GetARockUITests/Pods-GetARock-GetARockUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		9A060B8829B2103800802833 /* MyBandModifyPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyBandModifyPageController.swift; sourceTree = "<group>"; };
+		9A060B8A29B2105100802833 /* BandInfoModifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandInfoModifyViewController.swift; sourceTree = "<group>"; };
 		9A29E6E5297E21C500D4A433 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		9A29E6E7297E223A00D4A433 /* BasicComponentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicComponentSize.swift; sourceTree = "<group>"; };
 		9A29E6E9297E233900D4A433 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
 		9A350B1A29AF85B600A5314E /* BandInformationVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationVO.swift; sourceTree = "<group>"; };
-		9A350B1C29AF8CC700A5314E /* BandInformationModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationModifyViewController.swift; sourceTree = "<group>"; };
 		9A350B1F29AF8D3100A5314E /* BandMemberModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyViewController.swift; sourceTree = "<group>"; };
 		9A350B2229AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyTableViewCell.swift; sourceTree = "<group>"; };
 		9A350B2429AF901E00A5314E /* BandMemberModifyTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyTableViewHeader.swift; sourceTree = "<group>"; };
@@ -396,7 +398,7 @@
 		9A350B1E29AF8CCF00A5314E /* BandInformationModify */ = {
 			isa = PBXGroup;
 			children = (
-				9A350B1C29AF8CC700A5314E /* BandInformationModifyViewController.swift */,
+				9A060B8829B2103800802833 /* MyBandModifyPageController.swift */,
 				9A350B2129AF8D3800A5314E /* BandMemberModify */,
 			);
 			path = BandInformationModify;
@@ -405,6 +407,7 @@
 		9A350B2129AF8D3800A5314E /* BandMemberModify */ = {
 			isa = PBXGroup;
 			children = (
+				9A060B8A29B2105100802833 /* BandInfoModifyViewController.swift */,
 				9A350B1F29AF8D3100A5314E /* BandMemberModifyViewController.swift */,
 				9A350B2229AF8FCB00A5314E /* BandMemberModifyTableViewCell.swift */,
 				9A350B2429AF901E00A5314E /* BandMemberModifyTableViewHeader.swift */,
@@ -932,6 +935,7 @@
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
+				9A060B8B29B2105100802833 /* BandInfoModifyViewController.swift in Sources */,
 				B88ABF3729A3C1FA004C1793 /* SettingViewVersionCell.swift in Sources */,
 				B88E1BDF2977ACB6006072B7 /* SampleView.swift in Sources */,
 				9AFE014729990FE0004B0BCF /* BandCreationDTO.swift in Sources */,
@@ -945,6 +949,7 @@
 				4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */,
 				4AC4CE41297FB85B00BB823C /* Position.swift in Sources */,
 				7BEB09DA299CFEC20076A82F /* Comment.swift in Sources */,
+				9A060B8929B2103800802833 /* MyBandModifyPageController.swift in Sources */,
 				B8B17C522980B93300806899 /* Location.swift in Sources */,
 				7BFE0DDF299E1B4E002D6574 /* WriteCommentTextView.swift in Sources */,
 				A9D7253E299B2CF500404E22 /* BandInformationSetViewController.swift in Sources */,
@@ -968,7 +973,6 @@
 				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
 				4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */,
 				4ABFB63629881959004BF232 /* PlusPositionCollectionViewCell.swift in Sources */,
-				9A350B1D29AF8CC700A5314E /* BandInformationModifyViewController.swift in Sources */,
 				B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */,
 				4A2027162987627E0042EEFA /* PositionSelectViewController.swift in Sources */,
 				A96B8A0B2981706C00905BC9 /* BasicTextView.swift in Sources */,
@@ -1188,7 +1192,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ryomyomyom.getarock--";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
