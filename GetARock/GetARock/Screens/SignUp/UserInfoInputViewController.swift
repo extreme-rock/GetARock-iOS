@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class UserInfoInputViewController: BaseViewController {
+final class UserInfoInputViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -186,6 +186,7 @@ final class UserInfoInputViewController: BaseViewController {
                                      nextButton]))
     
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
