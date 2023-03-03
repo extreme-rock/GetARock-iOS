@@ -53,9 +53,24 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
         return button
     }()
 
-    let sectionTitle = BasicLabel(contentText: "밴드 멤버 1인",
-                                  fontStyle: .content,
+    private let sectionTitle: BasicLabel = BasicLabel(contentText: "밴드 멤버 1인",
+                                  fontStyle: .contentBold,
                                   textColorInfo: .white)
+
+    private let editButton: UIButton = {
+        $0.setTitle("편집", for: .normal)
+        $0.setTitleColor(.blue01, for: .normal)
+        $0.titleLabel?.font = UIFont.setFont(.headline04)
+        return $0
+    }(UIButton())
+
+    private lazy var sectionTitleHstack: UIStackView = {
+        $0.axis = .horizontal
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
+        return $0
+    }(UIStackView(arrangedSubviews: [sectionTitle,
+                                     editButton]))
 
     private lazy var buttonHstack: UIStackView = {
         $0.axis = .horizontal
@@ -74,7 +89,7 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
                                      titleLabel,
                                      subTitleLabel,
                                      buttonHstack,
-                                     sectionTitle]))
+                                     sectionTitleHstack]))
     
     //MARK: init
 
@@ -97,6 +112,24 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configureSectionTitle(with text: String) {
+        self.sectionTitle.text = text
+    }
+
+    func configureButtonTitleWhenEditing() {
+        self.editButton.titleLabel?.text = "완료"
+    }
+
+    func setInviteMemberButtonAction(action: @escaping ()-> Void ) {
+        let action = UIAction { _ in action() }
+        self.inviteMemberButton.addAction(action, for: .touchUpInside)
+    }
+
+    func setEditingAction(action: @escaping ()-> Void) {
+        let action = UIAction { _ in action() }
+        self.editButton.addAction(action, for: .touchUpInside)
     }
 }
 

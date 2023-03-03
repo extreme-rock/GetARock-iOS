@@ -137,7 +137,7 @@ extension UserSearchViewController: UITableViewDelegate {
         //TODO: 추후 백엔드 데이터 모델 확정 후 이대로 init시 이상없는지 체크 필요
         var data = SearchedUserInfo(memberId: 0,
                                     name: selectedCell.userNameLabel.text ?? "",
-                                    memberState: .none,
+                                    memberState: .inviting,
                                     instrumentList: [SearchedUserInstrumentList(
                                         instrumentId: 0,
                                         isMain: true,

@@ -149,4 +149,9 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     func getLeaderPositionState() {
         self.leaderButton.tintColor = .systemPurple
     }
+
+    func setLeaderButtonAction(action: @escaping ()->Void) {
+        let action = UIAction { _ in action() }
+        self.leaderButton.addAction(action, for: .touchUpInside)
+    }
 }

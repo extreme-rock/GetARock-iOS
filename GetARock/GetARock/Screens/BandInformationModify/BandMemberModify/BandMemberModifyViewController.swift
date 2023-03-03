@@ -7,23 +7,38 @@
 
 import UIKit
 
-enum BandMemberModifyTableViewSection: String {
+//MARK: - DiffableDatasouce section
+enum BandMemberModifyTableViewSection {
     case confirmedMembers
     case invitingMembers
 }
 
 final class BandMemberModifyViewController: BaseViewController {
+
+    //MARK: - Property
+
+    private var isNavigationButtonTapped: Bool = false
     
-    private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState != .inviting } {
+    private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState != .inviting }
+    
+    private lazy var invitingMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState == .inviting } {
         didSet {
-            guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberModifyTableViewHeader else { return }
-            headerView.sectionTitle.text = "밴드 멤버 (\(addedMembers.count)인)"
+            self.invitingMemberSectionTitle.text = "초대중인 멤버 (\(invitingMembers.count)인)"
         }
     }
-    
-    private lazy var invitingMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState == .inviting }
 
     //MARK: - View
+
+    private lazy var confirmedMemberSectionTitle: BasicLabel = BasicLabel(
+        contentText: "밴드 멤버 (\(self.addedMembers.count)인)",
+        fontStyle: .contentBold,
+        textColorInfo: .white)
+
+    private lazy var invitingMemberSectionTitle: BasicLabel = BasicLabel(
+        contentText: "초대중인 멤버 (\(self.invitingMembers.count)인)",
+        fontStyle: .contentBold,
+        textColorInfo: .white)
+
     private lazy var bandMemberTableView: UITableView = {
         $0.register(BandMemberModifyTableViewCell.self,
                     forCellReuseIdentifier: BandMemberModifyTableViewCell.classIdentifier)
@@ -31,6 +46,7 @@ final class BandMemberModifyViewController: BaseViewController {
                     forHeaderFooterViewReuseIdentifier: BandMemberModifyTableViewHeader.classIdentifier)
         $0.separatorStyle = .none
         $0.backgroundColor = .dark01
+        $0.bounces = false
         $0.delegate = self
         return $0
     }(UITableView())
@@ -56,6 +72,10 @@ final class BandMemberModifyViewController: BaseViewController {
         updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.isNavigationButtonTapped = false
+    }
+
     //MARK: - Method
 
     private func setupLayout() {
@@ -67,7 +87,7 @@ final class BandMemberModifyViewController: BaseViewController {
             trailing: view.safeAreaLayoutGuide.trailingAnchor,
             padding: UIEdgeInsets(top: 20,
                                   left: 16,
-                                  bottom: 100,
+                                  bottom: 80,
                                   right: 16))
 
         view.addSubview(nextButton)
@@ -76,7 +96,7 @@ final class BandMemberModifyViewController: BaseViewController {
             centerX: view.centerXAnchor,
             padding: UIEdgeInsets(top: 0,
                                   left: 0,
-                                  bottom: 16,
+                                  bottom: 0,
                                   right: 0))
     }
 
@@ -103,10 +123,10 @@ extension BandMemberModifyViewController {
             
             resultData.append(transformedData)
         }
-        return orderVOData(with: resultData)
+        return resetDataOrder(with: resultData)
     }
     
-    private func orderVOData(with data: [SearchedUserInfo]) -> [SearchedUserInfo] {
+    private func resetDataOrder(with data: [SearchedUserInfo]) -> [SearchedUserInfo] {
         var resultList: [SearchedUserInfo] = []
         let leader = data.filter { $0.memberState == .admin }
         let members = data.filter { $0.memberState == .none }
@@ -122,10 +142,7 @@ extension BandMemberModifyViewController {
     private func updateLeaderPositionIndexPath(indexPath: IndexPath) {
         indexPathOfLeaderCell = indexPath
     }
-    
-    //MARK: escaping 클로저는 함수가 리턴된 이후에 실행된 클로저임
-    //그런데 일반 클로저는 함수의 수행 구문 내에 종속되기 때문에 (함수가 리턴되면 클로저는 없어짐) 이스케이핑 클로저는 이스케이핑 클로저만 참조할 수 잇다
-    //그래서 작성하게 됨
+
     private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
         let alertTitle = "리더 권한 양도"
@@ -166,62 +183,79 @@ extension BandMemberModifyViewController {
             }
             cell.selectionStyle = .none
 
-            let changeLeaderAction = UIAction { [weak self] _ in
-                self?.showAlertForChangingLeader(newLeader: cell.nameText()) {
-                    cell.getLeaderPositionState()
-                    guard let previousLeaderCell = self?.bandMemberTableView.cellForRow(at: self?.indexPathOfLeaderCell ?? IndexPath(row: 0, section: 0)) as? BandMemberModifyTableViewCell else { return }
-                    previousLeaderCell.abandonLeaderPositionState()
-                    self?.updateLeaderPositionIndexPath(indexPath: indexPath)
-                    //TODO: Post할 정보에서 리더 정보 바꾸기 필요
+            cell.setLeaderButtonAction {
+                //TODO: Post할 정보에서 리더 정보 바꾸기 필요
+                self.showAlertForChangingLeader(newLeader: cell.nameText()) {
+                    self.changeLeader(newLeader: cell, newLeaderIndexPath: indexPath)
                 }
             }
-
-            cell.leaderButton.addAction(changeLeaderAction, for: .touchUpInside)
             return cell
         }
     }
 }
 
+extension BandMemberModifyViewController {
+
+    private func didTapInviteMemberButton() {
+        let nextViewController = UserSearchViewController()
+        // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
+        nextViewController.completion = { selectedUsers in
+            for data in selectedUsers {
+                if self.invitingMembers.contains(where: { $0.id == data.id }) == false {
+                    self.invitingMembers.append(data)
+                }
+            }
+            // 전달받는 데이터가 추가되면서 datasource 업데이트
+            self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
+        }
+
+        // 네비게이션 버튼을 여러번 탭하여 여러번 네비게이션 되는 것 방지
+        if !self.isNavigationButtonTapped {
+            self.navigationController?.pushViewController(nextViewController, animated: true)
+        }
+        self.isNavigationButtonTapped = true
+    }
+
+    private func changeLeader(newLeader: BandMemberModifyTableViewCell, newLeaderIndexPath: IndexPath) {
+        newLeader.getLeaderPositionState()
+        guard let previousLeaderCell = self.bandMemberTableView.cellForRow(at: self.indexPathOfLeaderCell) as? BandMemberModifyTableViewCell else { return }
+        previousLeaderCell.abandonLeaderPositionState()
+        self.updateLeaderPositionIndexPath(indexPath: newLeaderIndexPath)
+    }
+}
+
+//MARK: TableView Delegate
 extension BandMemberModifyViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
 
+    //MARK: Header Configuration
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var headerView: UIView = UIView()
         
         let sectionIdentifier = dataSource.snapshot().sectionIdentifiers[section]
-        
-        if sectionIdentifier == .confirmedMembers {
+
+        switch sectionIdentifier {
+        case .confirmedMembers:
             guard let addedMemberTableHeader = tableView.dequeueReusableHeaderFooterView(
                 withIdentifier: BandMemberModifyTableViewHeader.classIdentifier) as? BandMemberModifyTableViewHeader else { return UIView() }
-            addedMemberTableHeader.sectionTitle.text = "밴드 멤버 (\(addedMembers.count)인)"
 
-            //MARK: 회원 검색 뷰로 이동
-            let inviteMemberButtonAction = UIAction { [weak self] _ in
-                let nextViewController = UserSearchViewController()
-                nextViewController.completion = { selectedUsers in
-                    for data in selectedUsers {
-                        if self?.addedMembers.contains(where: { $0.id == data.id }) == false {
-                            self?.addedMembers.append(data)
-                        }
-                    }
-                    self?.updateSnapShot(addedMembers: self?.addedMembers ?? [], invitingMembers: self?.invitingMembers ?? [])
-                }
-                self?.navigationController?.pushViewController(nextViewController, animated: true)
+            addedMemberTableHeader.setInviteMemberButtonAction {
+                self.didTapInviteMemberButton()
             }
-            addedMemberTableHeader.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
+
+            addedMemberTableHeader.setEditingAction {
+                // 모든 셀들을 configure UI
+            }
+            addedMemberTableHeader.configureSectionTitle(with: "밴드 멤버 (\(addedMembers.count)인)")
             headerView = addedMemberTableHeader
-            
-        } else if sectionIdentifier == .invitingMembers {
-            let sectionTitle: BasicLabel = BasicLabel(contentText: "초대중인 멤버 (\(invitingMembers.count)인)",
-                                          fontStyle: .content,
-                                          textColorInfo: .white)
-            headerView = sectionTitle
+
+        case .invitingMembers:
+            headerView = invitingMemberSectionTitle
         }
-        //TODO: 미가입 회원추가 관련 코드 작성 예정
-      return headerView
+        return headerView
     }
 }
 
