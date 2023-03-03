@@ -234,7 +234,7 @@ final class BandInfoModifyViewController: BaseViewController {
         mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
                                   bottom: view.bottomAnchor,
-                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)
+                                  trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
 
         contentView.constraint(top: mainScrollView.topAnchor,
                                leading: mainScrollView.leadingAnchor,
