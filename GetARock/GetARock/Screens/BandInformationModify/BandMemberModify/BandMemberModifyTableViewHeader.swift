@@ -36,10 +36,6 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
     
     //MARK: - View
 
-    private let pageIndicatorLabel: BasicLabel = BasicLabel(contentText: "2/3",
-                                                            fontStyle: .headline03,
-                                                            textColorInfo: .gray02)
-
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
@@ -110,8 +106,7 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
         $0.distribution = .equalSpacing
         $0.spacing = 20
         return $0
-    }(UIStackView(arrangedSubviews: [pageIndicatorLabel,
-                                     titleLabel,
+    }(UIStackView(arrangedSubviews: [titleLabel,
                                      subTitleLabel,
                                      buttonHstack,
                                      sectionTitleHstack]))

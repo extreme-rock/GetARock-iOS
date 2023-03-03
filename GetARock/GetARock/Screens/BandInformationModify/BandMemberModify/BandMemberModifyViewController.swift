@@ -90,6 +90,15 @@ final class BandMemberModifyViewController: BaseViewController {
                                   left: 16,
                                   bottom: 0,
                                   right: 16))
+
+        view.addSubview(nextButton)
+        nextButton.constraint(
+            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            centerX: view.centerXAnchor,
+            padding: UIEdgeInsets(top: 0,
+                                  left: 0,
+                                  bottom: 0,
+                                  right: 0))
     }
 
     private func showBottomButton() {
@@ -127,7 +136,7 @@ final class BandMemberModifyViewController: BaseViewController {
                                   left: 16,
                                   bottom: 0,
                                   right: 16))
-        self.bandMemberTableView.layoutIfNeeded()
+        self.bandMemberTableView.setNeedsLayout()
     }
 
     private func attribute() {
