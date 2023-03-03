@@ -252,6 +252,7 @@ extension MainMapViewController: CLLocationManagerDelegate {
         default:
             print("위치 서비스를 허용하지 않음")
         }
+        // TODO: 첫방문일 때만 보여줘야함.
         self.requestNotificationAutorization()
     }
     
@@ -282,8 +283,10 @@ extension MainMapViewController: CLLocationManagerDelegate {
 
 extension MainMapViewController: GetARockInfoPopUpViewDelegate {
     func makeBandButtonTapped() {
-        print("make")
         self.alertView.removeFromSuperview()
+        let leaderPositionSelectViewController = LeaderPositionSelectViewController()
+        leaderPositionSelectViewController.modalPresentationStyle = .fullScreen
+        present(leaderPositionSelectViewController, animated: true)
     }
     
     func dismissButtonTapped() {

@@ -31,6 +31,8 @@ final class GetARockInfoPopUpView: UIView {
         $0.tintColor = .white
         let action = UIAction { [weak self] _ in
             self?.delegate?.dismissButtonTapped()
+            print(self?.delegate)
+            print("dissmissTapped")
         }
         $0.addAction(action, for: .touchUpInside)
       return $0
@@ -175,16 +177,16 @@ final class GetARockInfoPopUpView: UIView {
         self.addSubview(containerView)
         containerView.constraint(to: self)
         
-        containerView.addSubview(dismissButton)
-        dismissButton.constraint(top: containerView.topAnchor,
-                                 trailing: containerView.trailingAnchor,
-                                 padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 20))
-        
         containerView.addSubview(titleStackView)
         titleStackView.constraint(top: containerView.topAnchor,
                                   leading: containerView.leadingAnchor,
                                   trailing: containerView.trailingAnchor,
                                   padding: UIEdgeInsets(top: 30, left: 26, bottom: 0, right: 26))
+        
+        containerView.addSubview(dismissButton)
+        dismissButton.constraint(top: containerView.topAnchor,
+                                 trailing: containerView.trailingAnchor,
+                                 padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 20))
         
         containerView.addSubview(infoStackView)
         infoStackView.constraint(top: titleStackView.bottomAnchor,
