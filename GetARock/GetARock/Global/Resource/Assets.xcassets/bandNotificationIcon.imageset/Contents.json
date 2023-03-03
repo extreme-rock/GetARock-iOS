@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "bandNotificationIcon.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
