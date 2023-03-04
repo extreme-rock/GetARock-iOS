@@ -112,12 +112,12 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         leaderButton.constraint(.heightAnchor, constant: 25)
         leaderButton.constraint(trailing: contentView.trailingAnchor,
                                 centerY: contentView.centerYAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
+                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 26))
 
         contentView.addSubview(selectButton)
         selectButton.constraint(trailing: contentView.trailingAnchor,
                                 centerY: contentView.centerYAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
+                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 26))
 
         contentView.addSubview(userDetailInfoHstack)
         userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor,

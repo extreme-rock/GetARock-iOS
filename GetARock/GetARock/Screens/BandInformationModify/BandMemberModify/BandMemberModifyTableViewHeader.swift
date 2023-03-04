@@ -88,7 +88,7 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
     private lazy var sectionTitleHstack: UIStackView = {
         $0.axis = .horizontal
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 28)
         return $0
     }(UIStackView(arrangedSubviews: [sectionTitle,
                                      editButton]))

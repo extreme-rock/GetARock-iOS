@@ -68,7 +68,7 @@ final class BandMemberModifyViewController: BaseViewController {
     private lazy var contentVstack: UIStackView = {
         $0.axis = .vertical
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16)
+        $0.layoutMargins = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 0)
         return $0
     }(UIStackView(arrangedSubviews: [bandMemberTableView, abandonMemberButton]))
 
