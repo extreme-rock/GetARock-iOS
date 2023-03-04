@@ -47,6 +47,8 @@ final class BandMemberModifyViewController: BaseViewController {
         $0.separatorStyle = .none
         $0.backgroundColor = .dark01
         $0.allowsMultipleSelection = true
+        $0.isScrollEnabled = false
+//        $0.constraint(.heightAnchor, constant: 1000)
         $0.bounces = false
         $0.delegate = self
         return $0
@@ -64,6 +66,13 @@ final class BandMemberModifyViewController: BaseViewController {
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
+    
+    private lazy var mainScrollView: UIScrollView = {
+        $0.showsVerticalScrollIndicator = true
+        $0.alwaysBounceVertical = false
+        $0.backgroundColor = .dark01
+        return $0
+    }(UIScrollView())
     
     private lazy var contentVstack: UIStackView = {
         $0.axis = .vertical
@@ -87,8 +96,10 @@ final class BandMemberModifyViewController: BaseViewController {
     //MARK: - Method
 
     private func setupLayout() {
-        view.addSubview(contentVstack)
-        contentVstack.constraint(to: view)
+        view.addSubview(mainScrollView)
+        mainScrollView.constraint(to: view)
+        mainScrollView.addSubview(contentVstack)
+        contentVstack.constraint(to: mainScrollView)
     }
 
     private func showBottomButton() {
@@ -292,6 +303,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
 
         for index in 0..<self.invitingMembers.count {
             guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: invitingMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
+            print("This Func called")
             cell.activateMemberEditingState()
         }
     }
