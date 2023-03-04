@@ -13,13 +13,13 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
         didSet {
             if isEditing == true {
                 let action = UIAction { [weak self]_ in
-                    self?.finishEditingAction()
+                    self?.actionForTappingDoneButton()
                     self?.editButton.setTitle("편집", for: .normal)
                     self?.isEditing = false
                 }
                 editButton.addAction(action, for: .touchUpInside)
             } else {
-                let action = UIAction { [weak self]_ in self?.startEditingAction()
+                let action = UIAction { [weak self]_ in self?.actionForTappingEditButton()
                     self?.editButton.setTitle("완료", for: .normal)
                     self?.isEditing = true
                 }
@@ -30,9 +30,9 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
 
     //MARK: - Property
 
-    var startEditingAction: () -> Void = { }
+    var actionForTappingEditButton: () -> Void = { }
 
-    var finishEditingAction: () -> Void = { }
+    var actionForTappingDoneButton: () -> Void = { }
     
     //MARK: - View
 

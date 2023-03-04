@@ -247,41 +247,78 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             }
 
             // edit 버튼 누르면 하는 액션 설정
-            addedMemberTableHeader.startEditingAction = {
-                for index in 0..<self.addedMembers.count {
-                    guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? BandMemberModifyTableViewCell else { return }
-                    cell.activateMemberEditingState()
-                    self.showBottomButton()
-                }
+            addedMemberTableHeader.actionForTappingEditButton = {
+                self.changeCellForEditState()
+                self.showBottomButton()
             }
 
             // 완료 버튼 누르면 하는 액션 설정
-            addedMemberTableHeader.finishEditingAction = {
-                for index in 0..<self.addedMembers.count {
-                    guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: 0)) as? BandMemberModifyTableViewCell else { return }
-                    cell.deActiveMemberEditingState()
-                    cell.isSelected = false
-                    self.hideBottomButton()
-                }
-                self.abandonMemberButton.setTitle("내보내기", for: .normal)
+            addedMemberTableHeader.actionForTappingDoneButton = {
+                self.changeCellForNormalState()
+                self.hideBottomButton()
             }
             //initialize action
             // didset에 따라서 편집중이면 액션이 바뀐다
             // 그런데 초기에는 didset이 작동하지않아서 초기화가 필요
             addedMemberTableHeader.editButton.addAction(UIAction{ _ in
-                addedMemberTableHeader.startEditingAction()
+                addedMemberTableHeader.actionForTappingEditButton()
                 addedMemberTableHeader.isEditing = true
                 addedMemberTableHeader.editButton.setTitle("완료", for: .normal)
             }, for: .touchUpInside)
 
-        addedMemberTableHeader.configureSectionTitle(with: "밴드 멤버 (\(addedMembers.count)인)")
-        headerView = addedMemberTableHeader
+            addedMemberTableHeader.configureSectionTitle(with: "밴드 멤버 (\(addedMembers.count)인)")
+            headerView = addedMemberTableHeader
 
-    case .invitingMembers:
-        headerView = invitingMemberSectionTitle
+        case .invitingMembers:
+            headerView = invitingMemberSectionTitle
+        }
+        return headerView
     }
-    return headerView
-}
+
+    private func changeCellForEditState() {
+
+        guard let addedMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.first else { return }
+
+        guard let addedMemberSectionIndex = self.dataSource.snapshot().indexOfSection(addedMemberSectionId) else { return }
+
+        for index in 0..<self.addedMembers.count {
+            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: addedMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
+            cell.activateMemberEditingState()
+        }
+
+        guard let invitingMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.last else { return }
+
+        guard let invitingMemberSectionIndex = self.dataSource.snapshot().indexOfSection(invitingMemberSectionId) else { return }
+
+        for index in 0..<self.invitingMembers.count {
+            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: invitingMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
+            cell.activateMemberEditingState()
+        }
+    }
+
+    private func changeCellForNormalState() {
+
+        guard let addedMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.first else { return }
+
+        guard let addedMemberSectionIndex = self.dataSource.snapshot().indexOfSection(addedMemberSectionId) else { return }
+
+        for index in 0..<self.addedMembers.count {
+            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: addedMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
+            cell.deActiveMemberEditingState()
+            cell.isSelected = false
+        }
+
+        guard let invitingMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.last else { return }
+
+        guard let invitingMemberSectionIndex = self.dataSource.snapshot().indexOfSection(invitingMemberSectionId) else { return }
+
+        for index in 0..<self.invitingMembers.count {
+            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: invitingMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
+            cell.deActiveMemberEditingState()
+            cell.isSelected = false
+        }
+        self.hideBottomButton()
+    }
 }
 
 extension BandMemberModifyViewController {

@@ -285,4 +285,3 @@ extension BandInfoModifyViewController: UITextFieldDelegate {
         self.view.frame.origin.y += self.keyBoardHeight
     }
 }
-

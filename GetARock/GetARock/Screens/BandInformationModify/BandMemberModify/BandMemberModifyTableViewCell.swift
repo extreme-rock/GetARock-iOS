@@ -163,10 +163,12 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     
     func abandonLeaderPositionState() {
         self.leaderButton.tintColor = .gray01
+        self.leftView.image = ImageLiteral.memberIcon
     }
     
     func getLeaderPositionState() {
         self.leaderButton.tintColor = .systemPurple
+        self.leftView.image = ImageLiteral.leaderIcon
     }
 
     func setLeaderButtonAction(action: @escaping ()-> Void) {
