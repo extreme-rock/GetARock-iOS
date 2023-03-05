@@ -49,7 +49,7 @@ final class BandMemberModifyViewController: UIViewController {
         $0.bounces = false
         $0.delegate = self
         return $0
-    }(UITableView(frame: .zero, style: .grouped)) // headerview 전체로 같이 스크롤을 위해 설정
+    }(UITableView(frame: .zero, style: .grouped)) // headerview 자체도 같이 스크롤을 위해 설정
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
@@ -62,7 +62,7 @@ final class BandMemberModifyViewController: UIViewController {
     private lazy var contentVstack: UIStackView = {
         $0.axis = .vertical
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 0)
+        $0.layoutMargins = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 0) //scroll indicator를 우측으로 붙여놓기 위한 패딩조절
         return $0
     }(UIStackView(arrangedSubviews: [bandMemberTableView, abandonMemberButton]))
     
@@ -222,7 +222,7 @@ extension BandMemberModifyViewController {
                     self.invitingMembers.append(data)
                 }
             }
-            // 전달받는 데이터가 추가되면서 datasource 업데이트
+            // 전달받는 데이터가 추가되면서 datasource 업데이트 + 밴드 멤버 숫자를 나타내는 레이블 업데이트
             guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberModifyTableViewHeader else { return }
             headerView.configureSectionTitle(with: "밴드 멤버 (\(self.addedMembers.count)인)")
             self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
@@ -285,6 +285,7 @@ extension BandMemberModifyViewController {
 //MARK: TableView를 그리기 위한 데이터를 전처리하는 로직
 extension BandMemberModifyViewController {
     
+    // 데이터는 memberList 형태로 받아오지만, cell을 만들 때는 SearchedUserInfo 모델을 맞춰야하기 때문에 데이터를 변형시키는 메소드
     private func getTransformedVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
         //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
@@ -305,6 +306,7 @@ extension BandMemberModifyViewController {
         return resetDataOrder(with: resultData)
     }
     
+    // 리더 - 멤버 - 미가입 - 초대중 순으로 데이터를 배열하는 메소드
     private func resetDataOrder(with data: [SearchedUserInfo]) -> [SearchedUserInfo] {
         var resultList: [SearchedUserInfo] = []
         let leader = data.filter { $0.memberState == .admin }
