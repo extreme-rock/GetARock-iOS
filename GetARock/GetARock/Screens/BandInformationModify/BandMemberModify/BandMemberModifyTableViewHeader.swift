@@ -97,6 +97,8 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
         $0.spacing = 10
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16)
         return $0
     }(UIStackView(arrangedSubviews: [inviteMemberButton,
                                      inviteUnRegisteredMemberButton]))

@@ -90,7 +90,7 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
             deActiveMemberEditingState()
         }
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -195,6 +195,7 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     }
 
     func deActiveMemberEditingState() {
+        self.isSelectedState = false
         leaderButton.isHidden = false
         selectButton.isHidden = true
     }

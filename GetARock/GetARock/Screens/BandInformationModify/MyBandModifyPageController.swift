@@ -10,8 +10,8 @@ import UIKit
 final class MyBandInfoModifyPageController: UIViewController {
 
     //MARK: - Property
-    private let pageViewControllers: [UIViewController] = [
-        BandMemberModifyViewController(),
+    private lazy var pageViewControllers: [UIViewController] = [
+        BandMemberModifyViewController(navigateDelegate: self),
         BandInfoModifyViewController()
         ]
 
@@ -27,14 +27,6 @@ final class MyBandInfoModifyPageController: UIViewController {
     }
 
     //MARK: - View
-
-    private lazy var customNavigationBarStackView: UIStackView = {
-        $0.backgroundColor = .dark02
-        $0.axis = .horizontal
-        $0.distribution = .fill
-        $0.backgroundColor = .dark01
-        return $0
-    }(UIStackView(arrangedSubviews: [dismissButton, viewControllerTitleLabel, completeButton]))
 
     private lazy var dismissButton: UIButton = {
         $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
@@ -97,6 +89,7 @@ final class MyBandInfoModifyPageController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
+        setNavigationItem()
         setupLayout()
     }
 
@@ -104,6 +97,13 @@ final class MyBandInfoModifyPageController: UIViewController {
 
     private func attribute() {
         self.view.backgroundColor = .dark01
+    }
+    
+    private func setNavigationItem() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: dismissButton)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
+        //TODO: 추후 수정 필요
+        self.navigationItem.title = "밴드 수정"
     }
 
     private func dismissButtonTapped() {
@@ -115,15 +115,9 @@ final class MyBandInfoModifyPageController: UIViewController {
     }
 
     private func setupLayout() {
-        self.view.addSubview(customNavigationBarStackView)
-        customNavigationBarStackView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
-                                        leading: view.leadingAnchor,
-                                        trailing: view.trailingAnchor,
-                                        padding: UIEdgeInsets(top: 19, left: 16, bottom: 0, right: 16))
-        customNavigationBarStackView.constraint(.heightAnchor, constant: 20)
 
         self.view.addSubview(segmentedController)
-        segmentedController.constraint(top: customNavigationBarStackView.bottomAnchor,
+        segmentedController.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                        leading: view.leadingAnchor,
                                        trailing: view.trailingAnchor,
                                        padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))

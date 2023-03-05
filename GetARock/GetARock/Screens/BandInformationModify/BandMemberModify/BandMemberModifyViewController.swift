@@ -13,9 +13,11 @@ enum BandMemberModifyTableViewSection {
     case invitingMembers
 }
 
-final class BandMemberModifyViewController: BaseViewController {
+final class BandMemberModifyViewController: UIViewController {
 
     //MARK: - Property
+    
+    private let rootViewController: UIViewController
 
     private var isNavigationButtonTapped: Bool = false
     
@@ -46,15 +48,13 @@ final class BandMemberModifyViewController: BaseViewController {
     private lazy var bandMemberTableView: UITableView = {
         $0.register(BandMemberModifyTableViewCell.self,
                     forCellReuseIdentifier: BandMemberModifyTableViewCell.classIdentifier)
-        $0.register(BandMemberModifyTableViewHeader.self,
-                    forHeaderFooterViewReuseIdentifier: BandMemberModifyTableViewHeader.classIdentifier)
         $0.separatorStyle = .none
         $0.backgroundColor = .dark01
         $0.allowsSelectionDuringEditing = true
         $0.bounces = false
         $0.delegate = self
         return $0
-    }(UITableView())
+    }(UITableView(frame: .zero, style: .grouped)) // headerview 전체로 같이 스크롤을 위해 설정
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
@@ -73,7 +73,16 @@ final class BandMemberModifyViewController: BaseViewController {
         $0.layoutMargins = UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 0)
         return $0
     }(UIStackView(arrangedSubviews: [bandMemberTableView, abandonMemberButton]))
-
+    
+    init(navigateDelegate: UIViewController) {
+        self.rootViewController = navigateDelegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,19 +153,17 @@ extension BandMemberModifyViewController {
 //MARK: TableView Delegate
 extension BandMemberModifyViewController: UITableViewDelegate {
 
-    //MARK: Header Configuration
+    //MARK: ❗️TableView Header Configuration
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var headerView: UIView = UIView()
         
         let sectionIdentifier = dataSource.snapshot().sectionIdentifiers[section]
 
         switch sectionIdentifier {
         case .confirmedMembers:
-            guard let addedMemberTableHeader = tableView.dequeueReusableHeaderFooterView(
-                withIdentifier: BandMemberModifyTableViewHeader.classIdentifier) as? BandMemberModifyTableViewHeader else { return UIView() }
+            let addedMemberTableHeader = BandMemberModifyTableViewHeader()
 
             addedMemberTableHeader.setInviteMemberButtonAction {
-                self.setNavigationAttribute()
+                self.setNavigationAttribute(navigationRoot: self.rootViewController)
             }
 
             // 편집 버튼 누르면 하는 액션 설정
@@ -168,10 +175,9 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
                 self.bandMemberTableView.isEditing = false
-                self.indexPathOfSelectedCells = [] //선택된 셀 정보 초기화
+                self.indexPathOfSelectedCells = [] // initialize selected cell
                 self.hideBottomButton()
             }
-            //initialize action
             // didset에 따라서 편집중이면 액션이 바뀐다
             // 그런데 초기에는 didset이 작동하지않아서 초기화가 필요
             addedMemberTableHeader.editButton.addAction(UIAction{ _ in
@@ -181,12 +187,11 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             }, for: .touchUpInside)
 
             addedMemberTableHeader.configureSectionTitle(with: "밴드 멤버 (\(addedMembers.count)인)")
-            headerView = addedMemberTableHeader
+            return addedMemberTableHeader
 
         case .invitingMembers:
-            headerView = invitingMemberSectionTitle
+            return invitingMemberSectionTitle
         }
-        return headerView
     }
     
     // cellForRowAt은 스크린에서 보이지않는 Cell에 적용되지 않기 때문에 선택된 cell의 인덱스를 따로 관리하는 배열을 만듬
@@ -219,7 +224,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
 //MARK: 데이터 추가 삭제 관련 로직
 extension BandMemberModifyViewController {
 
-    private func setNavigationAttribute() {
+    private func setNavigationAttribute(navigationRoot: UIViewController) {
         let nextViewController = UserSearchViewController()
         // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
         nextViewController.completion = { selectedUsers in
@@ -232,8 +237,9 @@ extension BandMemberModifyViewController {
             self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
         }
         // 네비게이션 버튼을 여러번 탭하여 여러번 네비게이션 되는 것 방지
+        print("Button tapped")
         if !self.isNavigationButtonTapped {
-            self.navigationController?.pushViewController(nextViewController, animated: true)
+            navigationRoot.navigationController?.pushViewController(nextViewController, animated: true)
         }
         self.isNavigationButtonTapped = true
     }
