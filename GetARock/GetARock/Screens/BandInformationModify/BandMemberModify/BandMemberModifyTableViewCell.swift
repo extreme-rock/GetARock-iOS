@@ -77,6 +77,15 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         selectButton.image = selected ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol
         selectButton.tintColor = selected ? .systemPurple : .gray02
      }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        if editing {
+            activateMemberEditingState()
+        } else {
+            deActiveMemberEditingState()
+        }
+    }
 
 
     required init?(coder: NSCoder) {

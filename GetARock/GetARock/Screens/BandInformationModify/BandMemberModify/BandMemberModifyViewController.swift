@@ -182,6 +182,7 @@ extension BandMemberModifyViewController {
                 cell.getLeaderPositionState()
             }
             cell.selectionStyle = .none
+            cell.accessoryType = .none
 
             cell.setLeaderButtonAction {
                 //TODO: Post할 정보에서 리더 정보 바꾸기 필요
@@ -248,13 +249,15 @@ extension BandMemberModifyViewController: UITableViewDelegate {
 
             // edit 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingEditButton = {
-                self.changeCellForEditState()
+                self.bandMemberTableView.isEditing = true
+//                self.changeCellForEditState()
                 self.showBottomButton()
             }
 
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
-                self.changeCellForNormalState()
+                self.bandMemberTableView.isEditing = false
+//                self.changeCellForNormalState()
                 self.hideBottomButton()
             }
             //initialize action
@@ -273,51 +276,6 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             headerView = invitingMemberSectionTitle
         }
         return headerView
-    }
-
-    private func changeCellForEditState() {
-
-        guard let addedMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.first else { return }
-
-        guard let addedMemberSectionIndex = self.dataSource.snapshot().indexOfSection(addedMemberSectionId) else { return }
-
-        for index in 0..<self.addedMembers.count {
-            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: addedMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
-            cell.activateMemberEditingState()
-        }
-
-        guard let invitingMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.last else { return }
-
-        guard let invitingMemberSectionIndex = self.dataSource.snapshot().indexOfSection(invitingMemberSectionId) else { return }
-
-        for index in 0..<self.invitingMembers.count {
-            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: invitingMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
-            cell.activateMemberEditingState()
-        }
-    }
-
-    private func changeCellForNormalState() {
-
-        guard let addedMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.first else { return }
-
-        guard let addedMemberSectionIndex = self.dataSource.snapshot().indexOfSection(addedMemberSectionId) else { return }
-
-        for index in 0..<self.addedMembers.count {
-            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: addedMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
-            cell.deActiveMemberEditingState()
-            cell.isSelected = false
-        }
-
-        guard let invitingMemberSectionId = self.dataSource.snapshot().sectionIdentifiers.last else { return }
-
-        guard let invitingMemberSectionIndex = self.dataSource.snapshot().indexOfSection(invitingMemberSectionId) else { return }
-
-        for index in 0..<self.invitingMembers.count {
-            guard let cell = self.bandMemberTableView.cellForRow(at: IndexPath(row: index, section: invitingMemberSectionIndex)) as? BandMemberModifyTableViewCell else { return }
-            cell.deActiveMemberEditingState()
-            cell.isSelected = false
-        }
-        self.hideBottomButton()
     }
 }
 
