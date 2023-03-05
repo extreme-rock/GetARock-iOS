@@ -94,6 +94,16 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.isSelectedState = false
+        self.leftView.image = nil
+        self.userNameLabel.text = nil
+        self.userGenderLabel.text = nil
+        self.userAgeLabel.text = nil
+        self.instrumentListLabel.text = nil
+    }
 
     private func attribute() {
         self.backgroundColor = .dark01
