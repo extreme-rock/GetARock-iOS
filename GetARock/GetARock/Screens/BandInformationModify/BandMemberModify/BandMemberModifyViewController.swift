@@ -86,11 +86,16 @@ final class BandMemberModifyViewController: BaseViewController {
         self.isNavigationButtonTapped = false
     }
 
-    //MARK: - Method
+    //MARK: - Methods
 
     private func setupLayout() {
         view.addSubview(contentVstack)
         contentVstack.constraint(to: view)
+    }
+    
+    private func attribute() {
+        view.backgroundColor = .dark01
+        abandonMemberButton.isHidden = true
     }
 
     private func showBottomButton() {
@@ -99,66 +104,6 @@ final class BandMemberModifyViewController: BaseViewController {
 
     private func hideBottomButton() {
         abandonMemberButton.isHidden = true
-    }
-
-    private func attribute() {
-        view.backgroundColor = .dark01
-        abandonMemberButton.isHidden = true
-    }
-}
-extension BandMemberModifyViewController {
-    
-    private func getTransformedVOData() -> [SearchedUserInfo] {
-        var resultData: [SearchedUserInfo] = []
-        //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
-        for data in BasicDataModel.dummyBandInfo.memberList {
-            let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
-                SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
-            }
-            let transformedData: SearchedUserInfo = SearchedUserInfo(
-                memberId: data.memberID ?? 0,
-                name: data.name,
-                memberState: data.memberState,
-                instrumentList: instrumentListInfo,
-                gender: "",
-                age: "")
-            
-            resultData.append(transformedData)
-        }
-        return resetDataOrder(with: resultData)
-    }
-    
-    private func resetDataOrder(with data: [SearchedUserInfo]) -> [SearchedUserInfo] {
-        var resultList: [SearchedUserInfo] = []
-        let leader = data.filter { $0.memberState == .admin }
-        let members = data.filter { $0.memberState == .none }
-        let annonymous = data.filter({ $0.memberState == .annonymous })
-        let invitingMembers = data.filter { $0.memberState == .inviting }
-        resultList += leader
-        resultList += members
-        resultList += annonymous
-        resultList += invitingMembers
-        return resultList
-    }
-    
-    private func updateLeaderPositionIndexPath(indexPath: IndexPath) {
-        indexPathOfLeaderCell = indexPath
-    }
-
-    private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
-        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
-        let alertTitle = "리더 권한 양도"
-        let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
-        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-
-        let changeActionTitle = "양도"
-        let okayActionTitle = "취소"
-
-        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
-        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
-            completion()
-        }))
-        present(alertController, animated: true)
     }
 }
 
@@ -196,42 +141,8 @@ extension BandMemberModifyViewController {
     }
 }
 
-extension BandMemberModifyViewController {
-
-    private func didTapInviteMemberButton() {
-        let nextViewController = UserSearchViewController()
-        // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
-        nextViewController.completion = { selectedUsers in
-            for data in selectedUsers {
-                if self.invitingMembers.contains(where: { $0.id == data.id }) == false {
-                    self.invitingMembers.append(data)
-                }
-            }
-            // 전달받는 데이터가 추가되면서 datasource 업데이트
-            self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
-        }
-
-        // 네비게이션 버튼을 여러번 탭하여 여러번 네비게이션 되는 것 방지
-        if !self.isNavigationButtonTapped {
-            self.navigationController?.pushViewController(nextViewController, animated: true)
-        }
-        self.isNavigationButtonTapped = true
-    }
-
-    private func changeLeader(newLeader: BandMemberModifyTableViewCell, newLeaderIndexPath: IndexPath) {
-        newLeader.getLeaderPositionState()
-        guard let previousLeaderCell = self.bandMemberTableView.cellForRow(at: self.indexPathOfLeaderCell) as? BandMemberModifyTableViewCell else { return }
-        previousLeaderCell.abandonLeaderPositionState()
-        self.updateLeaderPositionIndexPath(indexPath: newLeaderIndexPath)
-    }
-}
-
 //MARK: TableView Delegate
 extension BandMemberModifyViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
 
     //MARK: Header Configuration
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -245,10 +156,10 @@ extension BandMemberModifyViewController: UITableViewDelegate {
                 withIdentifier: BandMemberModifyTableViewHeader.classIdentifier) as? BandMemberModifyTableViewHeader else { return UIView() }
 
             addedMemberTableHeader.setInviteMemberButtonAction {
-                self.didTapInviteMemberButton()
+                self.setNavigationAttribute()
             }
 
-            // edit 버튼 누르면 하는 액션 설정
+            // 편집 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingEditButton = {
                 self.bandMemberTableView.isEditing = true
                 self.showBottomButton()
@@ -257,6 +168,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
                 self.bandMemberTableView.isEditing = false
+                self.indexPathOfSelectedCells = [] //선택된 셀 정보 초기화
                 self.hideBottomButton()
             }
             //initialize action
@@ -277,15 +189,6 @@ extension BandMemberModifyViewController: UITableViewDelegate {
         return headerView
     }
     
-    // 테이블뷰의 편집모드시 셀 왼쪽의 indentation 삭제
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    // 테이블뷰의 편집모드시 셀 왼쪽의 기본 편집아이콘 삭제
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
-    }
-    
     // cellForRowAt은 스크린에서 보이지않는 Cell에 적용되지 않기 때문에 선택된 cell의 인덱스를 따로 관리하는 배열을 만듬
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? BandMemberModifyTableViewCell else { return }
@@ -297,25 +200,122 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             indexPathOfSelectedCells.append(indexPath)
         }
         self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
-        
+    }
+    
+    // 테이블뷰의 편집모드시 셀 왼쪽의 indentation 삭제
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    // 테이블뷰의 편집모드시 셀 왼쪽의 기본 편집아이콘 삭제
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 }
 
+//MARK: 데이터 추가 삭제 관련 로직
 extension BandMemberModifyViewController {
-    func confirmBandMemberList() {
+
+    private func setNavigationAttribute() {
+        let nextViewController = UserSearchViewController()
+        // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
+        nextViewController.completion = { selectedUsers in
+            for data in selectedUsers {
+                if self.invitingMembers.contains(where: { $0.id == data.id }) == false {
+                    self.invitingMembers.append(data)
+                }
+            }
+            // 전달받는 데이터가 추가되면서 datasource 업데이트
+            self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
+        }
+        // 네비게이션 버튼을 여러번 탭하여 여러번 네비게이션 되는 것 방지
+        if !self.isNavigationButtonTapped {
+            self.navigationController?.pushViewController(nextViewController, animated: true)
+        }
+        self.isNavigationButtonTapped = true
+    }
+    
+    private func confirmBandMemberList() {
         var confirmedMembers: [MemberList] = []
         self.addedMembers.forEach {
-
             let instrumentList: [InstrumentList] = $0.instrumentList.map { InstrumentList(name: $0.name) }
-
             let individualMember: MemberList = MemberList(memberId: $0.memberId,
                                                           name: $0.name,
                                                           memberState: $0.memberState,
                                                           instrumentList: instrumentList)
-
             confirmedMembers.append(individualMember)
         }
         BasicDataModel.bandCreationData.memberList = confirmedMembers
     }
 }
 
+//MARK: TableView를 그리기 위한 데이터를 전처리하는 로직
+extension BandMemberModifyViewController {
+    
+    private func getTransformedVOData() -> [SearchedUserInfo] {
+        var resultData: [SearchedUserInfo] = []
+        //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
+        for data in BasicDataModel.dummyBandInfo.memberList {
+            let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
+                SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
+            }
+            let transformedData: SearchedUserInfo = SearchedUserInfo(
+                memberId: data.memberID ?? 0,
+                name: data.name,
+                memberState: data.memberState,
+                instrumentList: instrumentListInfo,
+                gender: "",
+                age: "")
+            
+            resultData.append(transformedData)
+        }
+        return resetDataOrder(with: resultData)
+    }
+    
+    private func resetDataOrder(with data: [SearchedUserInfo]) -> [SearchedUserInfo] {
+        var resultList: [SearchedUserInfo] = []
+        let leader = data.filter { $0.memberState == .admin }
+        let members = data.filter { $0.memberState == .none }
+        let annonymous = data.filter({ $0.memberState == .annonymous })
+        let invitingMembers = data.filter { $0.memberState == .inviting }
+        resultList += leader
+        resultList += members
+        resultList += annonymous
+        resultList += invitingMembers
+        return resultList
+    }
+}
+
+//MARK: 리더포지션 변경 관련 로직
+extension BandMemberModifyViewController {
+    
+    private func changeLeader(newLeader: BandMemberModifyTableViewCell, newLeaderIndexPath: IndexPath) {
+        newLeader.getLeaderPositionState()
+        guard let previousLeaderCell = self.bandMemberTableView.cellForRow(at: self.indexPathOfLeaderCell) as? BandMemberModifyTableViewCell else { return }
+        previousLeaderCell.abandonLeaderPositionState()
+        self.updateLeaderPositionIndexPath(indexPath: newLeaderIndexPath)
+    }
+    
+    private func updateLeaderPositionIndexPath(indexPath: IndexPath) {
+        indexPathOfLeaderCell = indexPath
+    }
+
+    private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
+        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
+        let alertTitle = "리더 권한 양도"
+        let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let changeActionTitle = "양도"
+        let okayActionTitle = "취소"
+
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
+            completion()
+        }))
+        present(alertController, animated: true)
+    }
+}
