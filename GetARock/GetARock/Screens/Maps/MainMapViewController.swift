@@ -53,8 +53,12 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let myBandsButton: UIButton = {
+    private lazy var myBandsButton: UIButton = {
         $0.setImage(UIImage(named: "myBandsButton"), for: .normal)
+        let action = UIAction { _ in
+            self.mybandsButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -341,4 +345,13 @@ extension MainMapViewController {
         present(requestLocationServiceAlert, animated: true)
     }
     
+}
+
+// MARK: 맵 버튼 관련 함수
+extension MainMapViewController {
+    private func mybandsButtonTapped() {
+        // TODO: band가 없으면 alerview를 띄워줌 있으면 bandDetail로 연결
+        setupAlertViewLayout()
+        
+    }
 }
