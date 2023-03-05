@@ -12,6 +12,13 @@ import UIKit
 final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
 
     var id: String = "default"
+    
+    var isSelectedState: Bool = false {
+        didSet {
+            selectButton.image = isSelectedState ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol
+            selectButton.tintColor = isSelectedState ? .systemPurple : .gray02
+        }
+    }
 
     private let userNameLabel: BasicLabel = BasicLabel(
         contentText: "",
@@ -60,23 +67,19 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     }(UIButton(type: .custom))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
         setupLayout()
         attribute()
     }
 
-    private lazy var selectButton: UIImageView = {
+    lazy var selectButton: UIImageView = {
         $0.contentMode = .scaleAspectFit
+        $0.image = ImageLiteral.checkmarkCircleSymbol
+        $0.tintColor = .gray02
         $0.constraint(.widthAnchor, constant: 25)
         $0.constraint(.heightAnchor, constant: 25)
         return $0
     }(UIImageView())
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-         super.setSelected(selected, animated: animated)
-        selectButton.image = selected ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol
-        selectButton.tintColor = selected ? .systemPurple : .gray02
-     }
 
     //tableview의 edit 상태에 따라 모든 셀은 edit 프로퍼티가 달라짐
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -94,6 +97,7 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
 
     private func attribute() {
         self.backgroundColor = .dark01
+        self.indentationWidth = 0
         selectButton.isHidden = true
     }
 

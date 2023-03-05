@@ -26,6 +26,10 @@ final class BandMemberModifyViewController: BaseViewController {
             self.invitingMemberSectionTitle.text = "초대중인 멤버 (\(invitingMembers.count)인)"
         }
     }
+    
+    private var indexPathOfLeaderCell: IndexPath = IndexPath(row: 0, section: 0)
+    
+    private var indexPathOfSelectedCells: [IndexPath] = []
 
     //MARK: - View
 
@@ -46,13 +50,11 @@ final class BandMemberModifyViewController: BaseViewController {
                     forHeaderFooterViewReuseIdentifier: BandMemberModifyTableViewHeader.classIdentifier)
         $0.separatorStyle = .none
         $0.backgroundColor = .dark01
-        $0.allowsMultipleSelectionDuringEditing = true
+        $0.allowsSelectionDuringEditing = true
         $0.bounces = false
         $0.delegate = self
         return $0
     }(UITableView())
-    
-    private var indexPathOfLeaderCell: IndexPath = IndexPath(row: 0, section: 0)
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
@@ -182,10 +184,6 @@ extension BandMemberModifyViewController {
                 cell.getLeaderPositionState()
             }
             cell.selectionStyle = .none
-            if tableView.isEditing {
-                cell.accessoryType = .none
-                cell.accessoryView = nil
-            }
 
             cell.setLeaderButtonAction {
                 //TODO: Post할 정보에서 리더 정보 바꾸기 필요
@@ -278,9 +276,28 @@ extension BandMemberModifyViewController: UITableViewDelegate {
         }
         return headerView
     }
-    //테이블뷰의 편집모드시 셀 왼쪽의 기본 편집아이콘 삭제
+    
+    // 테이블뷰의 편집모드시 셀 왼쪽의 indentation 삭제
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    // 테이블뷰의 편집모드시 셀 왼쪽의 기본 편집아이콘 삭제
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
+    }
+    
+    // cellForRowAt은 스크린에서 보이지않는 Cell에 적용되지 않기 때문에 선택된 cell의 인덱스를 따로 관리하는 배열을 만듬
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let selectedCell = tableView.cellForRow(at: indexPath) as? BandMemberModifyTableViewCell else { return }
+        if indexPathOfSelectedCells.contains(indexPath) {
+            selectedCell.isSelectedState = false
+            indexPathOfSelectedCells.removeAll { $0 == indexPath }
+        } else {
+            selectedCell.isSelectedState = true
+            indexPathOfSelectedCells.append(indexPath)
+        }
+        self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
+        
     }
 }
 
