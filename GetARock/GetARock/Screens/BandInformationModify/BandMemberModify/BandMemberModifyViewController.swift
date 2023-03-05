@@ -34,12 +34,7 @@ final class BandMemberModifyViewController: UIViewController {
     private var selectedCellInformationList: [(indexPath: IndexPath, id: String)] = []
 
     //MARK: - View
-
-    private lazy var confirmedMemberSectionTitle: BasicLabel = BasicLabel(
-        contentText: "밴드 멤버 (\(self.addedMembers.count)인)",
-        fontStyle: .contentBold,
-        textColorInfo: .white)
-
+    
     private lazy var invitingMemberSectionTitle: BasicLabel = BasicLabel(
         contentText: "초대중인 멤버 (\(self.invitingMembers.count)인)",
         fontStyle: .contentBold,
@@ -162,21 +157,18 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             addedMemberTableHeader.setInviteMemberButtonAction {
                 self.setNavigationAttribute(navigationRoot: self.rootViewController)
             }
-
             // 편집 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingEditButton = {
                 self.bandMemberTableView.isEditing = true
                 self.showBottomButton()
             }
-
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
                 self.bandMemberTableView.isEditing = false
                 self.selectedCellInformationList = [] // initialize selected cell
                 self.hideBottomButton()
             }
-            // didset에 따라서 편집중이면 액션이 바뀐다
-            // 그런데 초기에는 didset이 작동하지않아서 초기화가 필요
+            // init후 초기 action 설정 필요
             addedMemberTableHeader.editButton.addAction(UIAction{ _ in
                 addedMemberTableHeader.actionForTappingEditButton()
                 addedMemberTableHeader.isEditing = true
@@ -231,6 +223,8 @@ extension BandMemberModifyViewController {
                 }
             }
             // 전달받는 데이터가 추가되면서 datasource 업데이트
+            guard let headerView = self.bandMemberTableView.headerView(forSection: 0) as? BandMemberModifyTableViewHeader else { return }
+            headerView.configureSectionTitle(with: "밴드 멤버 (\(self.addedMembers.count)인)")
             self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
         }
         // 네비게이션 버튼을 여러번 탭하여 여러번 네비게이션 되는 것 방지
