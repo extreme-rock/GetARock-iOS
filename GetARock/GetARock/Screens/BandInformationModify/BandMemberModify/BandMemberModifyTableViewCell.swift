@@ -77,7 +77,8 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         selectButton.image = selected ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol
         selectButton.tintColor = selected ? .systemPurple : .gray02
      }
-    
+
+    //tableview의 edit 상태에 따라 모든 셀은 edit 프로퍼티가 달라짐
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         if editing {
@@ -86,7 +87,6 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
             deActiveMemberEditingState()
         }
     }
-
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

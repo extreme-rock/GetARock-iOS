@@ -46,7 +46,7 @@ final class BandMemberModifyViewController: BaseViewController {
                     forHeaderFooterViewReuseIdentifier: BandMemberModifyTableViewHeader.classIdentifier)
         $0.separatorStyle = .none
         $0.backgroundColor = .dark01
-        $0.allowsMultipleSelection = true
+        $0.allowsMultipleSelectionDuringEditing = true
         $0.bounces = false
         $0.delegate = self
         return $0
@@ -182,7 +182,10 @@ extension BandMemberModifyViewController {
                 cell.getLeaderPositionState()
             }
             cell.selectionStyle = .none
-            cell.accessoryType = .none
+            if tableView.isEditing {
+                cell.accessoryType = .none
+                cell.accessoryView = nil
+            }
 
             cell.setLeaderButtonAction {
                 //TODO: Post할 정보에서 리더 정보 바꾸기 필요
@@ -250,14 +253,12 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             // edit 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingEditButton = {
                 self.bandMemberTableView.isEditing = true
-//                self.changeCellForEditState()
                 self.showBottomButton()
             }
 
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
                 self.bandMemberTableView.isEditing = false
-//                self.changeCellForNormalState()
                 self.hideBottomButton()
             }
             //initialize action
@@ -276,6 +277,10 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             headerView = invitingMemberSectionTitle
         }
         return headerView
+    }
+    //테이블뷰의 편집모드시 셀 왼쪽의 기본 편집아이콘 삭제
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
     }
 }
 
