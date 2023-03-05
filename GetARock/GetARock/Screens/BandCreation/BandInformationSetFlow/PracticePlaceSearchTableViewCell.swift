@@ -5,8 +5,8 @@
 //  Created by 장지수 on 2023/02/26.
 //
 
-import UIKit
 import MapKit
+import UIKit
 
 final class PracticePlaceSearchTableViewCell: UITableViewCell {
 
@@ -17,7 +17,7 @@ final class PracticePlaceSearchTableViewCell: UITableViewCell {
         return $0
     }(BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white))
     
-    private let subTitleLabel: UILabel = {
+    private let subTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
     }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white))

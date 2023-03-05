@@ -4,12 +4,13 @@
 //
 //  Created by 장지수 on 2023/02/26.
 //
-import UIKit
+
 import CoreLocation
 import MapKit
+import UIKit
 
 final class PracticePlaceSearchViewController: BaseViewController {
-
+    
     // MARK: Property
     
     var completion: (_ locationInfo: String) -> Void = { locationInfo in }
@@ -18,8 +19,8 @@ final class PracticePlaceSearchViewController: BaseViewController {
     
     private var searchCompleter: MKLocalSearchCompleter = MKLocalSearchCompleter()
     
-    private var searchResults:[LocationInfo] = []
-
+    private var searchResults: [LocationInfo] = []
+    
     // MARK: View
     
     private lazy var searchBar: SearchTextField = {
@@ -51,9 +52,9 @@ final class PracticePlaceSearchViewController: BaseViewController {
         button.addTarget(self, action: #selector(didTapCurrentLocationButton), for: .touchUpInside)
         return button
     }()
-
+    
     // MARK: Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -61,7 +62,7 @@ final class PracticePlaceSearchViewController: BaseViewController {
         setSearchCompleter()
         setLocationManager()
     }
-
+    
     // MARK: Method
     
     private func attribute() {
@@ -125,31 +126,31 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
             print("위치 서비스를 허용하지 않음")
         }
     }
-
+    
     // 현재 위치를 좌표로 받고, 그 좌표를 이용해서 주소를 찾아 텍스트 필드에 업로드하는 함수
     func getCurrentAddressInfo() {
         guard let userLocation = locationManager.location else { return }
         let location = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
             
-            if let placemark = placemarks?.first {
-                var address = ""
-                
-                if let administrativeArea = placemark.administrativeArea {
-                    address = administrativeArea //ex.서울특별시
-                }
-                if let locality = placemark.locality {
-                    address += " "+locality //ex.광진구
-                }
-                if let thoroughfare = placemark.thoroughfare {
-                    address += " "+thoroughfare //ex.중곡동
-                }
-                if let subThoroughfare = placemark.subThoroughfare {
-                    address += " "+subThoroughfare //ex.272-13
-                }
-                self.searchBar.textField.text = address
-                self.searchCompleter.queryFragment = address
+            guard let placemark = placemarks?.first else { return }
+            
+            var address = ""
+            
+            if let administrativeArea = placemark.administrativeArea {
+                address = administrativeArea //ex.서울특별시
             }
+            if let locality = placemark.locality {
+                address += " "+locality //ex.광진구
+            }
+            if let thoroughfare = placemark.thoroughfare {
+                address += " "+thoroughfare //ex.중곡동
+            }
+            if let subThoroughfare = placemark.subThoroughfare {
+                address += " "+subThoroughfare //ex.272-13
+            }
+            self.searchBar.textField.text = address
+            self.searchCompleter.queryFragment = address
         }
     }
 }
@@ -160,7 +161,7 @@ extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         let locationInfoList: [LocationInfo] = completer.results.map { LocationInfo(title: $0.title, subtitle: $0.subtitle) }
         searchResults = locationInfoList
-
+        
         if searchResults.isEmpty {
             let singleLocationInfo = LocationInfo(title: searchBar.textField.text ?? "", subtitle: "")
             searchResults = [singleLocationInfo]
