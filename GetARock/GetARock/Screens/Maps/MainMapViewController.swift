@@ -282,7 +282,7 @@ extension MainMapViewController: CLLocationManagerDelegate {
 extension MainMapViewController: GetARockInfoPopUpViewDelegate {
     func makeBandButtonTapped() {
         self.alertView.removeFromSuperview()
-        let viewController = BandCreatDecisionViewController()
+        let viewController = UINavigationController(rootViewController: LeaderPositionSelectViewController())
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }

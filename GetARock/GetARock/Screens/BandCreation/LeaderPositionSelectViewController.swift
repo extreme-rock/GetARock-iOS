@@ -7,15 +7,13 @@
 
 import UIKit
 
-final class LeaderPositionSelectViewController: BaseViewController {
+final class LeaderPositionSelectViewController: UIViewController {
     
     //MARK: - Property
     
     private var bandCreationData = BasicDataModel.bandCreationData
     
     private var memberList: [MemberList] = []
-    
-    //MARK: - View
     
     //TODO: 추후 유저 데이터에서 유저가 가능하다고 응답한 악기들로 대체되어야함.
     private var positions: [Item] = [
@@ -25,6 +23,8 @@ final class LeaderPositionSelectViewController: BaseViewController {
         .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
         .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false))
     ]
+    
+    //MARK: - View
     
     private lazy var positionCollectionView: PositionCollectionView = PositionCollectionView(
         cellType: .position,
@@ -50,16 +50,29 @@ final class LeaderPositionSelectViewController: BaseViewController {
         setupLayout()
         attribute()
         configureDelegate()
+        fixNavigationBarColorWhenScrollDown()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = true
+//        self.navigationController?.navigationBar.isHidden = true
     }
     
     //MARK: - Method
     
     private func attribute() {
         self.view.backgroundColor = .dark01
+        
+        let dismissButton = UIBarButtonItem(image: ImageLiteral.xmarkSymbol,
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(dismissButtonTapped))
+        dismissButton.tintColor = .white
+        self.navigationItem.rightBarButtonItem = dismissButton
+    }
+    
+    @objc
+    private func dismissButtonTapped() {
+        self.dismiss(animated: true)
     }
     
     private func configureDelegate() {
@@ -75,7 +88,7 @@ final class LeaderPositionSelectViewController: BaseViewController {
     private func setupLayout() {
         self.view.addSubview(positionCollectionView)
         self.view.addSubview(nextButton)
-        
+
         positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                           leading: view.leadingAnchor,
                                           bottom: nextButton.topAnchor,
