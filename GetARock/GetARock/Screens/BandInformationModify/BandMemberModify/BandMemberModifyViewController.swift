@@ -31,7 +31,7 @@ final class BandMemberModifyViewController: UIViewController {
     
     private var indexPathOfLeaderCell: IndexPath = IndexPath(row: 0, section: 0)
     
-    private var indexPathOfSelectedCells: [IndexPath] = []
+    private var selectedCellInformationList: [(indexPath: IndexPath, id: String)] = []
 
     //MARK: - View
 
@@ -59,11 +59,8 @@ final class BandMemberModifyViewController: UIViewController {
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
     private lazy var abandonMemberButton: BottomButton = {
-        let action = UIAction { _ in
-            self.confirmBandMemberList()
-        }
         $0.setTitle("내보내기", for: .normal)
-        $0.addAction(action, for: .touchUpInside)
+        $0.addTarget(self, action: #selector(didTapAbandonButton), for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -175,7 +172,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
                 self.bandMemberTableView.isEditing = false
-                self.indexPathOfSelectedCells = [] // initialize selected cell
+                self.selectedCellInformationList = [] // initialize selected cell
                 self.hideBottomButton()
             }
             // didset에 따라서 편집중이면 액션이 바뀐다
@@ -197,12 +194,12 @@ extension BandMemberModifyViewController: UITableViewDelegate {
     // cellForRowAt은 스크린에서 보이지않는 Cell에 적용되지 않기 때문에 선택된 cell의 인덱스를 따로 관리하는 배열을 만듬
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? BandMemberModifyTableViewCell else { return }
-        if indexPathOfSelectedCells.contains(indexPath) {
+        if selectedCellInformationList.map({ $0.indexPath }).contains(indexPath) {
             selectedCell.isSelectedState = false
-            indexPathOfSelectedCells.removeAll { $0 == indexPath }
+            selectedCellInformationList.removeAll { $0.indexPath == indexPath }
         } else {
             selectedCell.isSelectedState = true
-            indexPathOfSelectedCells.append(indexPath)
+            selectedCellInformationList.append((indexPath: indexPath, id: selectedCell.id))
         }
         self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
     }
@@ -244,17 +241,50 @@ extension BandMemberModifyViewController {
         self.isNavigationButtonTapped = true
     }
     
-    private func confirmBandMemberList() {
-        var confirmedMembers: [MemberList] = []
-        self.addedMembers.forEach {
-            let instrumentList: [InstrumentList] = $0.instrumentList.map { InstrumentList(name: $0.name) }
-            let individualMember: MemberList = MemberList(memberId: $0.memberId,
-                                                          name: $0.name,
-                                                          memberState: $0.memberState,
-                                                          instrumentList: instrumentList)
-            confirmedMembers.append(individualMember)
+    private func abandonMembers() {
+        for cellInfo in selectedCellInformationList {
+            addedMembers.removeAll { $0.id == cellInfo.id }
+            invitingMembers.removeAll { $0.id == cellInfo.id }
         }
-        BasicDataModel.bandCreationData.memberList = confirmedMembers
+        updateSnapShot(addedMembers: addedMembers, invitingMembers: invitingMembers)
+    }
+    
+    private func showAlertForAbandoningMembers(completion: @escaping ()->Void ) {
+        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
+        let alertTitle = "멤버 내보내기"
+        let alertMessage = "선택하신 멤버를 내보내시겠습니까?\n더이상 밴드에서 해당 멤버를 확인할 수 없습니다."
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let okayActionTitle = "확인"
+        let cancleActionTitle = "취소"
+
+        alertController.addAction(UIAlertAction(title: cancleActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .destructive, handler: { _ in
+            completion()
+        }))
+        present(alertController, animated: true)
+    }
+    
+    private func showAlertForLeaderAbandon() {
+        let alertTitle = "리더는 내보낼 수 없어요!"
+        let alertMessage = "리더를 양도하신 후 내보내기를 진행해주세요"
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let okayActionTitle = "확인"
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        present(alertController, animated: true)
+    }
+    
+    @objc
+    private func didTapAbandonButton() {
+        let isLeaderIncluded: Bool = self.selectedCellInformationList.map({ $0.indexPath }).contains(self.indexPathOfLeaderCell)
+        
+        if isLeaderIncluded {
+            self.showAlertForLeaderAbandon()
+        } else {
+            self.showAlertForAbandoningMembers(completion: {
+                self.abandonMembers()
+            })
+        }
     }
 }
 
