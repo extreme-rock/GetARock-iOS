@@ -9,16 +9,9 @@ import UIKit
 
 final class PositionSelectCollectionViewHeader: UIView {
     
-    //MARK: - Property
-    
-    enum ViewType {
-        case withPageIndicator
-        case withoutPageIndicator
-    }
-    
     //MARK: - View
     
-    private lazy var pageIndicatorLabel: UILabel = {
+    private let pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.subTitle)
         $0.text = "1/3"
         $0.textColor = .gray02
@@ -46,8 +39,8 @@ final class PositionSelectCollectionViewHeader: UIView {
         $0.setTitleColor(.gray02, for: .normal)
         $0.titleLabel?.font = .setFont(.content)
         $0.isHidden = true
-        let action = UIAction { [weak self] _ in
-            self?.postDeselectAllPosition()
+        let action = UIAction { _ in
+            self.postDeselectAllPosition()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -55,15 +48,10 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     //MARK: - Life Cycle
     
-    init(viewType: ViewType) {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupLayout()
         addObserveHideDeselectAllPositionButton()
-        switch viewType {
-        case .withPageIndicator:
-            self.setupLayout()
-        case .withoutPageIndicator:
-            self.setupLayoutWithoutPageIndicator()
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -94,30 +82,10 @@ final class PositionSelectCollectionViewHeader: UIView {
         pageIndicatorLabel.constraint(top: self.topAnchor,
                                       leading: self.leadingAnchor,
                                       trailing: self.trailingAnchor,
-                                      padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+                                      padding: UIEdgeInsets(top: 20, left: 1, bottom: 0, right: 0))
         
         self.addSubview(titleLabel)
         titleLabel.constraint(top: pageIndicatorLabel.bottomAnchor,
-                              leading: self.leadingAnchor,
-                              trailing: self.trailingAnchor,
-                              padding: UIEdgeInsets(top: 6, left: 0, bottom: 0, right: 0))
-        
-        self.addSubview(subTitleLabel)
-        subTitleLabel.constraint(top: titleLabel.bottomAnchor,
-                                 leading: self.leadingAnchor,
-                                 trailing: self.trailingAnchor,
-                                 padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
-        
-        self.addSubview(deselectAllPositionButton)
-        deselectAllPositionButton.constraint(top: subTitleLabel.bottomAnchor,
-                                             bottom: self.bottomAnchor,
-                                             trailing: self.trailingAnchor,
-                                             padding: UIEdgeInsets(top: 15, left: 0, bottom: 11, right: 0))
-    }
-    
-    private func setupLayoutWithoutPageIndicator() {
-        self.addSubview(titleLabel)
-        titleLabel.constraint(top: self.topAnchor,
                               leading: self.leadingAnchor,
                               trailing: self.trailingAnchor,
                               padding: UIEdgeInsets(top: 6, left: 0, bottom: 0, right: 0))

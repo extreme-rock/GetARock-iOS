@@ -22,7 +22,7 @@ final class PositionSelectViewController: UIViewController {
         cellType: .position,
         items: positions,
         isNeedHeader: true,
-        headerView: PositionSelectCollectionViewHeader(viewType: .withPageIndicator)
+        headerView: PositionSelectCollectionViewHeader()
     )
     
     private let nextButton: BottomButton = {

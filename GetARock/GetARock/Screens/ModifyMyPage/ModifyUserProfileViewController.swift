@@ -9,10 +9,15 @@ import UIKit
 
 final class ModifyUserProfileViewController: UIViewController {
     
-    // MARK: - Property
-    
     // MARK: - View
     
+    private let pageIndicatorLabel: UILabel = {
+        $0.font = .setFont(.headline03)
+        $0.text = "3/3"
+        $0.textColor = .gray02
+        return $0
+    }(UILabel())
+
     private let contentViewTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
@@ -29,7 +34,8 @@ final class ModifyUserProfileViewController: UIViewController {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [contentViewTitleLabel,
+    }(UIStackView(arrangedSubviews: [pageIndicatorLabel,
+                                     contentViewTitleLabel,
                                      contentViewSubTitleLabel]))
 
     private let userNamingGuideTitleLabel = InformationGuideLabel(guideText: "닉네임",
@@ -55,18 +61,15 @@ final class ModifyUserProfileViewController: UIViewController {
                                      userNamingTextField]))
     
     private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
-
-    private let ageSelectCollectionView: SelectCollectionView = {
-        $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
-        $0.constraint(.heightAnchor, constant: 102)
-        return $0
-    }(SelectCollectionView(
+    
+    private let ageSelectCollectionView = SelectCollectionView(
         widthOption: .flexable,
         items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
-        widthSize: 25,
+        widthSize: 23,
         itemSpacing: 5,
         cellBackgroundColor: .dark02
-    ))
+    )
+    
     private lazy var ageInputStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
@@ -77,17 +80,13 @@ final class ModifyUserProfileViewController: UIViewController {
     private let genderTitleLabel = InformationGuideLabel(guideText: "성별",
                                                          type: .required)
     
-    private let genderSelectCollectionView: SelectCollectionView = {
-        $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
-        $0.constraint(.heightAnchor, constant: 46)
-        return $0
-    }(SelectCollectionView(
+    private let genderSelectCollectionView = SelectCollectionView(
         widthOption: .fixed,
         items: ["남자", "여자"],
-        widthSize: (UIScreen.main.bounds.width - 41) / 2,
+        widthSize: UIScreen.main.bounds.width - 40,
         itemSpacing: 8,
         cellBackgroundColor: .dark02
-    ))
+    )
     
     private lazy var genderInputStackView: UIStackView = {
         $0.axis = .vertical
@@ -145,6 +144,12 @@ final class ModifyUserProfileViewController: UIViewController {
                                      youtubeTextField,
                                      instagramTextField,
                                      soundCloudTextField]))
+
+    private let informationFillCompleteButton: BottomButton = {
+        //TODO: 개인 정보 POST action 추가 필요
+        $0.setTitle("다음", for: .normal)
+        return $0
+    }(BottomButton())
     
     private lazy var scrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
@@ -153,6 +158,7 @@ final class ModifyUserProfileViewController: UIViewController {
     }(UIScrollView())
     
     private let contentView = UIView()
+    
     
     private lazy var contentStackView: UIStackView = {
         $0.axis = .vertical
@@ -165,14 +171,12 @@ final class ModifyUserProfileViewController: UIViewController {
                                      ageInputStackView,
                                      genderInputStackView,
                                      userIntroStackView,
-                                     snsInformationStackView]))
+                                     snsInformationStackView,
+                                     informationFillCompleteButton]))
     
     // MARK: - Life Cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupLayout()
-        self.hideKeyboardWhenTappedAround()
     }
     
     private func attribute() {
@@ -180,12 +184,13 @@ final class ModifyUserProfileViewController: UIViewController {
     }
     
     private func setupLayout() {
+        
         //MARK: - scrollView
         
         view.addSubview(scrollView)
         scrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                               leading: view.safeAreaLayoutGuide.leadingAnchor,
-                              bottom: view.bottomAnchor,
+                              bottom: view.keyboardLayoutGuide.topAnchor,
                               trailing: view.safeAreaLayoutGuide.trailingAnchor)
         
         scrollView.addSubview(contentView)
@@ -202,8 +207,8 @@ final class ModifyUserProfileViewController: UIViewController {
         contentStackView.constraint(top: contentView.topAnchor,
                                     leading: contentView.leadingAnchor,
                                     bottom: contentView.bottomAnchor,
-                                    trailing: contentView.trailingAnchor,
-                                    padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
+                                    trailing: contentView.trailingAnchor)
         
     }
+    
 }
