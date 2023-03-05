@@ -240,7 +240,7 @@ final class BandInfoModifyViewController: BaseViewController {
                                leading: mainScrollView.leadingAnchor,
                                bottom: mainScrollView.bottomAnchor,
                                trailing: mainScrollView.trailingAnchor,
-                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 25, right: 16))
+                               padding: UIEdgeInsets(top: 15, left: 16, bottom: 25, right: 16))
     }
 
     private func setTextFieldDelegate() {

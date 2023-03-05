@@ -19,7 +19,8 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
                 }
                 editButton.addAction(action, for: .touchUpInside)
             } else {
-                let action = UIAction { [weak self]_ in self?.actionForTappingEditButton()
+                let action = UIAction { [weak self]_ in
+                    self?.actionForTappingEditButton()
                     self?.editButton.setTitle("완료", for: .normal)
                     self?.isEditing = true
                 }
