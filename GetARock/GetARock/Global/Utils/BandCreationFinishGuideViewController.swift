@@ -25,7 +25,7 @@ final class BandCreationFinishGuideViewController: UIViewController {
                  fontStyle: .content,
                  textColorInfo: .white))
     
-    private lazy var labelStackView: UIStackView = {
+    private lazy var titleStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 20
         return $0
@@ -164,7 +164,6 @@ final class BandCreationFinishGuideViewController: UIViewController {
         super.viewDidLoad()
         self.attribute()
         self.setupLayout()
-        self.navigationController?.navigationBar.isHidden = true
     }
     
     // MARK: - Method
@@ -174,14 +173,14 @@ final class BandCreationFinishGuideViewController: UIViewController {
     }
     
     private func setupLayout() {
-        self.view.addSubview(labelStackView)
-        labelStackView.constraint(top: view.topAnchor,
+        self.view.addSubview(titleStackView)
+        titleStackView.constraint(top: view.topAnchor,
                                   leading: view.leadingAnchor,
                                   trailing: view.trailingAnchor,
                                   padding: UIEdgeInsets(top: 64, left: 16, bottom: 0, right: 16))
         
         self.view.addSubview(containerStackView)
-        containerStackView.constraint(top: labelStackView.bottomAnchor,
+        containerStackView.constraint(top: titleStackView.bottomAnchor,
                                  leading: view.leadingAnchor,
                                  trailing: view.trailingAnchor,
                                  padding: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16))

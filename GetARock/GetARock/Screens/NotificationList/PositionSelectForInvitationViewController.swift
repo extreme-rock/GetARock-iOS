@@ -12,7 +12,7 @@ final class PositionSelectForInvitationViewController: BaseViewController {
     //MARK: - Property
     
     //TODO: 추후 유저 데이터에서 유저가 가능하다고 응답한 악기들로 대체되어야함.
-    private var positions: [Item] = [
+    private let positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
         .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
         .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
