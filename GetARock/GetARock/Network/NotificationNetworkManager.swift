@@ -39,7 +39,7 @@ final class NotificationNetworkManager {
         return returnData
     }
     
-    func acceptInvitation(alertId: Int, bandId: Int, memberId: Int, memberInstrument: [String]) {
+    func acceptInvitation(alertId: Int, bandId: Int, memberId: Int, memberInstrument: [String], completion: @escaping ()->Void) {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"
@@ -73,6 +73,7 @@ final class NotificationNetworkManager {
                 case (200...299):
                     print("success")
                     print(httpResponse)
+                    DispatchQueue.main.async { completion() } // completion 클로저가 UI 관련 코드를 포함함
                 case (300...599):
                     print(NetworkError.failedRequest(status: httpResponse.statusCode))
                 default:

@@ -90,10 +90,10 @@ extension PositionSelectForInvitationViewController {
             alertId: 0,
             bandId: 0,
             memberId: 0,
-            memberInstrument: getSelectedInstrumentList())
-        
-        let nextVC = BandCreationFinishGuideViewController()
-        present(nextVC, animated: true)
+            memberInstrument: getSelectedInstrumentList(),
+            completion: {
+                self.present(BandCreationFinishGuideViewController(), animated: true)
+            })
     }
 }
 
