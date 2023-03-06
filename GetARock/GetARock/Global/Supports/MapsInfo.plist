@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>MAPS_API_KEY</key>
-	<string>Google Maps API Key를 입력해주세요.</string>
+	<string>AIzaSyBIBfDT9HzlKPAv47Onh_h5zlOV4UnSffE</string>
+	<key>GMS_MAP_ID</key>
+	<string>ba0b3335424ff2f4</string>
 </dict>
 </plist>

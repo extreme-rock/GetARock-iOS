@@ -156,10 +156,7 @@ final class MainMapViewController: UIViewController {
     
     private func setupAlertViewLayout() {
         self.view.addSubview(alertView)
-        alertView.constraint(leading: view.leadingAnchor,
-                             trailing: view.trailingAnchor,
-                             centerY: view.centerYAnchor,
-        padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))
+        alertView.constraint(to: self.view)
     }
     
     private func setLocationManager() {

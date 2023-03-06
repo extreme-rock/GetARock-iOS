@@ -35,7 +35,7 @@ final class GetARockInfoPopUpView: UIView {
             print("dissmissTapped")
         }
         $0.addAction(action, for: .touchUpInside)
-      return $0
+        return $0
     }(UIButton())
     
     private lazy var titleStackView: UIStackView = {
@@ -157,7 +157,7 @@ final class GetARockInfoPopUpView: UIView {
             self?.delegate?.makeBandButtonTapped()
         }
         $0.addAction(action, for: .touchUpInside)
-       return $0
+        return $0
     }(BottomButton())
     
     // MARK: - Init
@@ -165,6 +165,7 @@ final class GetARockInfoPopUpView: UIView {
     init() {
         super.init(frame: .zero)
         setupLayout()
+        attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -173,9 +174,16 @@ final class GetARockInfoPopUpView: UIView {
     
     // MARK: - Method
     
+    private func attribute() {
+        self.backgroundColor = .black.withAlphaComponent(0.4)
+    }
+    
     private func setupLayout() {
         self.addSubview(containerView)
-        containerView.constraint(to: self)
+        containerView.constraint(leading: self.leadingAnchor,
+                                 trailing: self.trailingAnchor,
+                                 centerY: self.centerYAnchor,
+                                 padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))
         
         containerView.addSubview(titleStackView)
         titleStackView.constraint(top: containerView.topAnchor,
