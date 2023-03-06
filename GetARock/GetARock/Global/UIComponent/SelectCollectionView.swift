@@ -82,9 +82,9 @@ final class SelectCollectionView: UIView {
         collectionView.constraint(to: self)
     }
     
-    func selectedItem() -> String? {
-        let selectedIndex = collectionView.indexPathsForSelectedItems?.first
-        return items[selectedIndex?.item ?? 0]
+    func selectedItem() -> String {
+        guard let selectedIndexPaths = collectionView.indexPathsForSelectedItems?.first else { return "" }
+        return items[selectedIndexPaths.item]
     }
     
     func isSelected() -> Bool {

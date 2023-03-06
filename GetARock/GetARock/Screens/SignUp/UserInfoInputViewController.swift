@@ -9,8 +9,9 @@ import UIKit
 
 final class UserInfoInputViewController: BaseViewController {
     
-    // MARK: - Properties
+    // MARK: - Property
     
+    private let instrumentList: [InstrumentList]?
     private var keyBoardHeight: CGFloat = 280
     
     // MARK: - View
@@ -72,7 +73,7 @@ final class UserInfoInputViewController: BaseViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .flexable,
-        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
+        items: Age.allCases.map { $0.rawValue },
         widthSize: 25,
         itemSpacing: 5,
         cellBackgroundColor: .dark02
@@ -93,7 +94,7 @@ final class UserInfoInputViewController: BaseViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .fixed,
-        items: ["남자", "여자"],
+        items: Gender.allCases.map { $0.rawValue },
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
         itemSpacing: 8,
         cellBackgroundColor: .dark02
@@ -158,10 +159,14 @@ final class UserInfoInputViewController: BaseViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let nextButton: BottomButton = {
+    private lazy var nextButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("다음", for: .normal)
         $0.isEnabled = false
+        let action = UIAction { _ in
+            self.showBandCreationDecisionViewController()
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -186,6 +191,16 @@ final class UserInfoInputViewController: BaseViewController {
                                      nextButton]))
     
     // MARK: - Life Cycle
+
+    init(instrumentList: [InstrumentList]? = nil) {
+        self.instrumentList = instrumentList
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
@@ -242,6 +257,27 @@ final class UserInfoInputViewController: BaseViewController {
         } else {
             self.nextButton.isEnabled = false
         }
+    }
+    
+    private func showBandCreationDecisionViewController() {
+        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.codingKey,
+              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.codingKey,
+              let instrumentList else { return }
+        
+        let snsList = [youtubeTextField.inputText(),
+                       instagramTextField.inputText(),
+                       soundCloudTextField.inputText()]
+        
+        let user = User(memberId: nil,
+                        name: self.userNamingTextField.inputText(),
+                        age: age,
+                        gender: gender,
+                        introduction: self.userIntroTextView.inputText(),
+                        instrumentList: instrumentList,
+                        snsList: snsList)
+        
+        let viewcontroller = BandCreationDecisionViewController(user: user)
+        self.navigationController?.pushViewController(viewcontroller, animated: true)
     }
 }
 

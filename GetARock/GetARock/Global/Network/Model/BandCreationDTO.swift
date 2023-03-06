@@ -43,7 +43,7 @@ struct InstrumentList: Codable {
 
 struct SnsList: Codable {
     let type: SnsType
-    let link: String
+    let link: String?
 }
 
 struct SongList: Codable {
