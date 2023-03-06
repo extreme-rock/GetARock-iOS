@@ -31,7 +31,7 @@ final class SignUpNetworkManager {
         request.httpBody = encodedData
         request.allHTTPHeaderFields = headers
         
-        let dataTask = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 print(error)
             } else if let httpResponse = response as? HTTPURLResponse {
