@@ -12,15 +12,19 @@ final class SNSListStackView: UIStackView {
     // MARK: - VIew
     
     private let snsData: SNS
+//    private var youtubeURL: String?
+//    private var instagramURL: String?
+//    private var soundCloudURL: String?
     private lazy var youtubeButton = SNSButtonView(type: .youtube, data: snsData.youtube)
-    private lazy var instagramButton = SNSButtonView(type: .instagram, data: snsData.instagram)
-    private lazy var soundCloudButton = SNSButtonView(type: .soundCloud, data: snsData.soundCloud)
+    private lazy var instagramButton = SNSButtonView(type: .instagram, data: snsData.youtube)
+    private lazy var soundCloudButton = SNSButtonView(type: .soundCloud, data: snsData.youtube)
 
     
     // MARK: - Init
     
     init(data: SNS) {
         self.snsData = data
+        
         super.init(frame: .zero)
         attribute()
         setupLayout()
@@ -44,5 +48,10 @@ final class SNSListStackView: UIStackView {
         self.addArrangedSubview(instagramButton)
         self.addArrangedSubview(soundCloudButton)
 
+    }
+    
+    private func makeSNSURL() {
+        guard snsData != nil else {return}
+//        var youtubeURL = snsData.filter{ $0.snsType == "YOUTUBE"}
     }
 }

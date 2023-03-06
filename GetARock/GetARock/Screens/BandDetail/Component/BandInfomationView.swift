@@ -8,6 +8,8 @@
 import UIKit
 
 class BandInfomationView: UIView {
+
+    
     
     // MARK: - Property
     
@@ -15,26 +17,11 @@ class BandInfomationView: UIView {
     private var bandSong: [SongListVO]?
     private var bandIntro: String?
     private var bandSNS: [SnsListVO]?
-    
-    //현재 컬랙션뷰에서 받는 데이터 모델
-    private var bandMemberDake: [Item] = [
-        .bandMember(BandMember(isUser: <#T##Bool#>,
-                               isLeader: <#T##Bool#>,
-                               userName: <#T##String#>,
-                               instrumentImageName: <#T##InstrumentImageName#>,
-                               instrumentNames: <#T##[String]#>))
+    private var transformedMemberData: [BandMember] = []
+    private var bandMemberCollectionViewItem: [Item] = [
+        .bandMember(BandMember(isUser: true, isLeader: true, userName: "노엘", instrumentImageName: .guitar, instrumentNames: ["기타", "드럼"]))
     ]
-    
-    // 밴드에서 GET해오는 데이터 모델
-    private var bandMemberVO: [MemberListVO] = [
-        MemberListVO(memberBandID: <#T##Int?#>,
-                     memberID: <#T##Int?#>,
-                     name: <#T##String#>,
-                     memberState: <#T##MemberState#>,
-                     instrumentList: [
-                        InstrumentListVO(instrumentID: <#T##Int?#>, isMain: <#T##Bool?#>, name: <#T##String#>)
-                     ])
-    ]
+    private var checkState: Bool = false
     
     // MARK: - View
     
@@ -61,14 +48,19 @@ class BandInfomationView: UIView {
         textColorInfo: .white
     )
     
-    private lazy var bandMemberInfoCollectView = PositionCollectionView(cellType: .band, items: [], isNeedHeader: true)
+    private lazy var bandMemberInfoCollectView = PositionCollectionView(
+        cellType: .band,
+        items: [.bandMember(BandMember(isUser: true, isLeader: true, userName: "노엘", instrumentImageName: .guitar, instrumentNames: ["기타", "드럼"]))
+        ],
+        isNeedHeader: true
+    )
     
     private lazy var bandMembeStackView: UIStackView = {
         $0.backgroundColor = .red
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandMemberTitleLable,bandMemberInfoLable, bandMemberInfoCollectView]))
+    }(UIStackView(arrangedSubviews: [bandMemberTitleLable,bandMemberInfoLable]))
     
     
     // ② 합주곡
@@ -146,15 +138,17 @@ class BandInfomationView: UIView {
         return $0
     }(UIStackView(arrangedSubviews: [bandMembeStackView, bandSongStackView, bandIntroStackView, bandSNSStackView]))
     
-    
     // MARK: - Init
     
     init(member: [MemberListVO], song: [SongListVO]?, intro: String?,sns: [SnsListVO]?) {
         self.bandMember = member
+        print("밴드 멤버 : \(bandMember)")
         self.bandSong = song
         self.bandIntro = intro
         self.bandSNS = sns
         super.init(frame: .zero)
+        bandMemberInfoCollectView.delegate = self
+//        makebandMemberData()
         setupLayout()
         attribute()
     }
@@ -187,7 +181,7 @@ class BandInfomationView: UIView {
 //            bottom: scrollView.bottomAnchor,
 //            trailing: scrollView.trailingAnchor
 //        )
-        
+        bandMembeStackView.addArrangedSubview(bandMemberInfoCollectView)
         self.addSubview(bandInfoStackView)
         bandInfoStackView.constraint(
             top: self.topAnchor,
@@ -216,7 +210,71 @@ class BandInfomationView: UIView {
         }
     }
     
+    private func makebandMemberData() {
+        transformedMemberData = bandMember.map {
+            BandMember(isUser: checkState,
+                       isLeader: false,
+                       userName: $0.name,
+                       instrumentImageName: .guitar,
+                       instrumentNames: $0.instrumentList.map{ $0.name })
+
+        }
+        checkMemberState()
+        checkinstrumentImage()
+        
+        for i in 0..<transformedMemberData.count {
+            bandMemberCollectionViewItem.append(.bandMember(transformedMemberData[i]))
+        }
+        
+        print(bandMemberCollectionViewItem)
+    }
     
+    func checkMemberState() {
+        let transformedMemberState = bandMember.map{ $0.memberState }
+        for i in 0..<transformedMemberState.count {
+            if transformedMemberState[i] == .admin {
+                transformedMemberData[i].isUser = true
+                transformedMemberData[i].isLeader = true
+            } else if transformedMemberState[i] == .member {
+                transformedMemberData[i].isUser = true
+            }
+        }
+    }
+    
+    func checkinstrumentImage() {
+        let transformedMemberInstrument = bandMember.map{ $0.instrumentList.map{ $0.name } }
+
+        for i in 0..<transformedMemberInstrument.count {
+
+            if let mainInstrument = transformedMemberInstrument[i].first{
+
+            if mainInstrument == "guitar" {
+                transformedMemberData[i].instrumentImageName = .guitar
+            }
+            else if mainInstrument == "bass" {
+                transformedMemberData[i].instrumentImageName = .bass
+            }
+            else if mainInstrument == "keyboard" {
+                transformedMemberData[i].instrumentImageName = .keyboard
+            }
+            else if mainInstrument == "drum" {
+                transformedMemberData[i].instrumentImageName = .drum
+            }
+            else if mainInstrument == "vocal" {
+                transformedMemberData[i].instrumentImageName = .vocal
+            }
+                else {
+                    transformedMemberData[i].instrumentImageName = .etc
+                }
+            }
+        }
+    }
+}
+
+extension  BandInfomationView: PositionCollectionViewDelegate {
+    func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
+        return true
+    }
 }
 
 

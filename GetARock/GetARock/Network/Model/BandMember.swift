@@ -9,9 +9,10 @@ import Foundation
 
 struct BandMember: Hashable {
     let id = UUID()
-    let isUser: Bool
-    let isLeader: Bool
+//    let MemberState : MemberState
+    var isUser: Bool
+    var isLeader: Bool
     let userName: String
-    let instrumentImageName: InstrumentImageName
-    let instrumentNames: [String]
+    var instrumentImageName: InstrumentImageName
+    var instrumentNames: [String]
 }

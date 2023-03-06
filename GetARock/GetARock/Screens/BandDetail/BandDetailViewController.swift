@@ -12,7 +12,7 @@ final class BandDetailViewController: BaseViewController {
     // MARK: - Property
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "22"
+    private var bandID = "72"
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
@@ -49,10 +49,12 @@ final class BandDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         //MARK: 비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
         Task {
             await getBandData()
             
+            print(bandData.memberList)
             bandTopInfoView = BandTopInfoView(name: bandData.name, address: bandData.address)
             bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
             
