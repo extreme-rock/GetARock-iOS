@@ -22,7 +22,7 @@ final class PositionSelectViewController: BaseViewController {
         cellType: .position,
         items: positions,
         isNeedHeader: true,
-        headerView: PositionSelectCollectionViewHeader()
+        headerView: PositionSelectCollectionViewHeader(viewType: .withPageIndicator)
     )
     
     private lazy var nextButton: BottomButton = {
