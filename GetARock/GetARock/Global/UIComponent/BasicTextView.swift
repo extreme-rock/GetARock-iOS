@@ -90,6 +90,10 @@ final class BasicTextView: UIView {
             padding: UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 0)
         )
     }
+    
+    func inputText() -> String? {
+        return self.textView.text == placeholder ? nil : self.textView.text
+    }
 }
 
 extension BasicTextView: UITextViewDelegate {
