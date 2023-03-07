@@ -10,22 +10,77 @@ import UIKit
 final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Property
+
+    private let pageViewControllers: [UIViewController] = [
+        ModifyPositionViewController(positions: [
+            .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
+            .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
+            .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
+            .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
+            .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
+            .plusPosition
+        ]),
+        ModifyUserProfileViewController()
+        ]
     
-    private let pageViewControllers: [UIViewController] = [ModifyPositionViewController(),
-                                                           ModifyUserProfileViewController()]
     private var currentPageNumber: Int = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPageNumber ? .forward : .reverse
             self.pageViewController.setViewControllers(
                 [pageViewControllers[self.currentPageNumber]],
                 direction: direction,
-                animated: false
+                animated: true
             )
         }
     }
     
     //MARK: - View
     
+    private lazy var customNavigationBarStackView: UIStackView = {
+        $0.backgroundColor = .dark02
+        $0.axis = .horizontal
+        $0.distribution = .fill
+        $0.backgroundColor = .dark01
+        return $0
+    }(UIStackView(arrangedSubviews: [dismissButton, viewControllerTitleLabel, completeButton]))
+    
+    private lazy var dismissButton: UIButton = {
+        $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
+        $0.tintColor = .white
+        let action = UIAction { [weak self] _ in
+            self?.dismissButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
+        $0.addAction(action, for: .touchUpInside)
+        $0.setContentHuggingPriority(
+            .defaultHigh,
+            for: .horizontal
+        )
+        return $0
+    }(UIButton())
+    
+    private lazy var completeButton: UIButton = {
+        $0.setTitle("완료", for: .normal)
+        $0.setTitleColor(.blue01, for: .normal)
+        $0.titleLabel?.font = .setFont(.headline04)
+        let action = UIAction { [weak self] _ in
+            self?.completeButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
+        $0.setContentHuggingPriority(
+            .defaultHigh,
+            for: .horizontal
+        )
+        return $0
+    }(UIButton())
+    
+    private let viewControllerTitleLabel: BasicLabel = {
+        $0.textAlignment = .center
+        return $0
+    }(BasicLabel(contentText: "프로필 수정",
+        fontStyle: .headline02,
+        textColorInfo: .white))
+        
     private lazy var segmentedController: ModifyPageSegmentedControl = {
         $0.addTarget(self,
                      action: #selector(segmentedControlValueChanged(_:)),
@@ -39,11 +94,14 @@ final class ModifyMyPageViewController: UIViewController {
                                   direction: .forward,
                                   animated: true)
         }
-       return $0
+        $0.dataSource = self
+        $0.delegate = self
+        return $0
     }(UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal))
     
     //MARK: - Life Cycle
     
+    // init 시에 유저에 대한 정보가 들어와야함
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -56,14 +114,29 @@ final class ModifyMyPageViewController: UIViewController {
         self.view.backgroundColor = .dark01
     }
     
+    private func dismissButtonTapped() {
+        self.dismiss(animated: true)
+    }
+    
+    private func completeButtonTapped() {
+        //TODO: 개인정보 UPDATE 함수
+    }
+    
     private func setupLayout() {
+        self.view.addSubview(customNavigationBarStackView)
+        customNavigationBarStackView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                        leading: view.leadingAnchor,
+                                        trailing: view.trailingAnchor,
+                                        padding: UIEdgeInsets(top: 19, left: 16, bottom: 0, right: 16))
+        customNavigationBarStackView.constraint(.heightAnchor, constant: 20)
+        
         self.view.addSubview(segmentedController)
-        segmentedController.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+        segmentedController.constraint(top: customNavigationBarStackView.bottomAnchor,
                                        leading: view.leadingAnchor,
                                        trailing: view.trailingAnchor,
                                        padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
         segmentedController.constraint(.heightAnchor, constant: 50)
-        
+
         self.view.addSubview(pageViewController.view)
         pageViewController.view.constraint(top: segmentedController.bottomAnchor,
                                            leading: view.leadingAnchor,
@@ -78,3 +151,43 @@ final class ModifyMyPageViewController: UIViewController {
         currentPageNumber = self.segmentedController.selectedSegmentIndex
     }
 }
+
+// MARK: - UIPageViewControllerDataSource
+
+ extension ModifyMyPageViewController: UIPageViewControllerDataSource {
+
+     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore
+                             viewController: UIViewController) -> UIViewController? {
+
+         guard let index = self.pageViewControllers.firstIndex(of: viewController),
+               index - 1 >= 0
+         else { return nil }
+         return self.pageViewControllers[index - 1]
+     }
+
+     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter
+                             viewController: UIViewController) -> UIViewController? {
+
+         guard let index = self.pageViewControllers.firstIndex(of: viewController),
+               index + 1 < self.pageViewControllers.count
+         else { return nil }
+         return self.pageViewControllers[index + 1]
+     }
+ }
+
+ // MARK: - UIPageViewControllerDelegate
+
+ extension ModifyMyPageViewController: UIPageViewControllerDelegate {
+
+     func pageViewController(_ pageViewController: UIPageViewController,
+                             didFinishAnimating finished: Bool,
+                             previousViewControllers: [UIViewController],
+                             transitionCompleted completed: Bool) {
+
+         guard let viewController = pageViewController.viewControllers?[0],
+               let index = self.pageViewControllers.firstIndex(of: viewController)
+         else { return }
+         self.currentPageNumber = index
+         self.segmentedController.selectedSegmentIndex = index
+     }
+ }
