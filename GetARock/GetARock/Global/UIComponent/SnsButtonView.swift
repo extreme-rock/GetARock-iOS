@@ -50,7 +50,7 @@ final class SNSButtonView: UIView {
         return $0
     }(UIImageView())
     
-    private let snsLebel: BasicLabel = {
+    private let snsLabel: BasicLabel = {
         return $0
     }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white))
     
@@ -71,7 +71,7 @@ final class SNSButtonView: UIView {
     // MARK: - Layout
     
     private func attribute() {
-        snsLebel.text = snsType.rawValue
+        snsLabel.text = snsType.rawValue
         snsIcon.image = snsType.snsIconImage
         if self.snsURL != nil { activateSNSButton() }
     }
@@ -87,8 +87,8 @@ final class SNSButtonView: UIView {
                                 leading: containerView.leadingAnchor,
                                 padding: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0))
         
-        self.containerView.addSubview(snsLebel)
-        self.snsLebel.constraint(leading: containerView.leadingAnchor,
+        self.containerView.addSubview(snsLabel)
+        self.snsLabel.constraint(leading: containerView.leadingAnchor,
                                  bottom: containerView.bottomAnchor,
                                  padding: UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 0))
     }
@@ -115,8 +115,11 @@ final class SNSButtonView: UIView {
     @objc
     func moveSnsLink(_ gesture: UITapGestureRecognizer) {
         //TO-DO: 링크로 연결 액션 필요
-        print(self.snsURL)
+        guard let snsURL else { return }
+
+        NotificationCenter.default.post(name: Notification.Name.presentSNSSafariViewController,
+                                        object: nil,
+                                        userInfo: ["snsURL": snsURL])
     }
-    
 }
 
