@@ -17,9 +17,9 @@ final class WriteCommentTextView: UIView {
     private var keyboardHeight: CGFloat = 30
     
     //TODO: - 추후 로그인한 사용자 ID로 변경 해야함
-    private var memberId = "36"
+    private var memberId = "10"
     //TODO: - 추후 사용자가 들어간 밴드의 ID로 변경해야함
-    private var bandId = "22"
+    private var bandId = "1"
     private var contentText = ""
     
     // MARK: - View
@@ -35,7 +35,7 @@ final class WriteCommentTextView: UIView {
     
     private lazy var addCommentButton: DefaultButton = {
         $0.setTitle("등록", for: .normal)
-        $0.addTarget(self, action: #selector(TapAddCommentButton), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(didTapAddCommentButton), for: .touchUpInside)
         return $0
     }(DefaultButton())
     
@@ -59,6 +59,10 @@ final class WriteCommentTextView: UIView {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Method
@@ -150,8 +154,8 @@ final class WriteCommentTextView: UIView {
     
     // MARK: - @objc
     
-    @objc func TapAddCommentButton() {
-        if self.commentTextView.text.isEmpty == false {
+    @objc func didTapAddCommentButton() {
+        if !self.commentTextView.text.isEmpty {
             self.contentText = commentTextView.text
             postComment()
             self.commentTextView.text.removeAll()
@@ -222,29 +226,31 @@ extension WriteCommentTextView {
     func postComment() {
         do {
             let headers = [
-                "Authorization": "Bearer " + "token",
                 "accept": "application/json",
-                "Notion-Version": "2022-06-28",
                 "content-type": "application/json"
             ]
             
             var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/comment/band")
+            
             let memberIdQuery = URLQueryItem(name: "memberId", value: memberId)
+            
             let bandIdQuery = URLQueryItem(name: "bandId", value: bandId)
+            
             let content = URLQueryItem(name: "content", value: contentText)
+            
             queryURLComponent?.queryItems = [memberIdQuery,bandIdQuery,content]
             
             guard let url = queryURLComponent?.url else { return }
-            let request = NSMutableURLRequest(url: url,
-                                              cachePolicy: .useProtocolCachePolicy,
-                                              timeoutInterval: 10.0)
+            var request = URLRequest(url: url,
+                                     cachePolicy: .useProtocolCachePolicy,
+                                     timeoutInterval: 10.0)
             request.httpMethod = "POST"
             request.allHTTPHeaderFields = headers
             Task {
-                await BandDetailViewController().getBandData()
+                await BandDetailViewController().fetchBandData()
             }
             
-            let dataTask = URLSession.shared.dataTask(with: request as URLRequest,
+            let dataTask = URLSession.shared.dataTask(with: request,
                                                       completionHandler: { (data, response, error) -> Void in
                 if (error != nil) {
                     print("통신 과정에서 에러가 났습니다.")

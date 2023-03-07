@@ -125,6 +125,11 @@ final class TextLimitTextField: UIView {
         guard let availableName else { return false }
         return self.textField.text == availableName
     }
+    
+    func inputText() -> String {
+        guard let text = self.textField.text else { return ""}
+        return text
+    }
 }
 
 //MARK: 글자수 제한 로직

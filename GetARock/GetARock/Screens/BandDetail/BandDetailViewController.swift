@@ -32,7 +32,7 @@ final class BandDetailViewController: BaseViewController {
         didSet{
             let bandDataDict: [String: [CommentList]?] = ["data": bandData.commentList]
             NotificationCenter.default.post(
-                name: NSNotification.Name(rawValue: "load"),
+                name: NSNotification.Name.loadBandData,
                 object: nil,
                userInfo: bandDataDict as [AnyHashable : Any]
             )
@@ -41,8 +41,8 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - View
     
-    lazy var bandTopInfoView: BandTopInfoView? = nil
-    lazy var bandDetailContentView: DetailContentView? = nil
+    lazy var bandTopInfoView = BandTopInfoView()
+    lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     
     // MARK: - LifeCycle
     
@@ -52,36 +52,41 @@ final class BandDetailViewController: BaseViewController {
         
         //MARK: 비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
         Task {
-            await getBandData()
-            
-            print(bandData.memberList)
-            bandTopInfoView = BandTopInfoView(name: bandData.name, address: bandData.address)
-            bandDetailContentView = DetailContentView(type: .band, bandData: bandData)
-            
-            //MARK: 데이터를 넣어준 다음에 뷰를 그리는 순서를 잡아주기 위해 레이아웃 코드를 여기 넣어야함.(Task 안에 코드는 순서대로 진행됨)
-            view.addSubview(bandTopInfoView ?? UIView(frame: .zero))
-            bandTopInfoView?.constraint(
-                top: self.view.topAnchor,
-                leading: self.view.leadingAnchor,
-                trailing: self.view.trailingAnchor
-            )
-            
-            view.addSubview(bandDetailContentView ?? UIView(frame: .zero))
-            bandDetailContentView?.constraint(
-                top: bandTopInfoView?.bottomAnchor,
-                leading: self.view.leadingAnchor,
-                bottom: self.view.bottomAnchor,
-                trailing: self.view.trailingAnchor
-            )
+            await fetchBandData()
         }
+        setupLayout()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Method
+    
+    private func setupLayout() {
+        view.addSubview(bandTopInfoView)
+        bandTopInfoView.constraint(
+            top: self.view.topAnchor,
+            leading: self.view.leadingAnchor,
+            trailing: self.view.trailingAnchor
+        )
+        
+        view.addSubview(bandDetailContentView)
+        bandDetailContentView.constraint(
+            top: bandTopInfoView.bottomAnchor,
+            leading: self.view.leadingAnchor,
+            bottom: self.view.bottomAnchor,
+            trailing: self.view.trailingAnchor
+        )
     }
 }
+
 
 // MARK: - Get BandData
 
 extension BandDetailViewController {
     
-    func getBandData() async {
+    func fetchBandData() async {
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
         let idQuery = URLQueryItem(name: "id", value: bandID)
         queryURLComponent?.queryItems = [idQuery]
@@ -90,8 +95,8 @@ extension BandDetailViewController {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
-//            print("❤️ Response data raw : \(data)")
-//            print("응답 내용 : \(response)")
+            print("Response data raw : \(data)")
+            print("응답 내용 : \(response)")
             self.bandData = decodedData
         } catch {
             print(error)

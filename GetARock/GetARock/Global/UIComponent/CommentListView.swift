@@ -51,12 +51,7 @@ final class CommentListView: UIView {
         attribute()
         setupLayout()
         setTableviewRefresh()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(loadList),
-            name: NSNotification.Name(rawValue: "load"),
-            object: nil
-        )
+        setCommentListLoadObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -111,14 +106,22 @@ final class CommentListView: UIView {
     }
     
     private func setTableviewRefresh() {
-        tableviewRefreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
+        tableviewRefreshControl.addTarget(self, action: #selector(didScrollDownCommentTable(refresh:)), for: .valueChanged)
         tableviewRefreshControl.tintColor = .gray02
         self.tableView.refreshControl = tableviewRefreshControl
     }
     
+    private func setCommentListLoadObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(loadList),
+            name: NSNotification.Name.loadBandData,
+            object: nil
+        )
+    }
     // MARK: - @objc
     
-    @objc func refreshTable(refresh: UIRefreshControl) {
+    @objc func didScrollDownCommentTable(refresh: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.tableView.reloadData()
             self.setupTotalListNumberLabel()
@@ -127,9 +130,8 @@ final class CommentListView: UIView {
     }
     
     @objc func loadList(notification: NSNotification){
-        if let data = notification.userInfo?["data"] as? [CommentList]? {
-            self.commentData = data
-        }
+        let data = notification.userInfo?["data"] as? [CommentList]
+        self.commentData = data
         self.tableView.reloadData()
         self.setupTotalListNumberLabel()
     }
