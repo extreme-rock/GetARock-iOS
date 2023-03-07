@@ -114,12 +114,12 @@ final class SNSButtonView: UIView {
     
     @objc
     func moveSnsLink(_ gesture: UITapGestureRecognizer) {
-        //TO-DO: 링크로 연결 액션 필요
         guard let snsURL else { return }
-
-        NotificationCenter.default.post(name: Notification.Name.presentSNSSafariViewController,
-                                        object: nil,
-                                        userInfo: ["snsURL": snsURL])
+        
+        NotificationCenter.default.post(
+            name: Notification.Name.presentSNSSafariViewController,
+            object: nil,
+            userInfo: ["snsURL": snsURL])
     }
 }
 
