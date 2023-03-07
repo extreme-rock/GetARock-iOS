@@ -95,7 +95,7 @@ extension BandDetailViewController {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
-            print("❤️ Response data raw : \(data)")
+            print("Response data raw : \(data)")
             print("응답 내용 : \(response)")
             self.bandData = decodedData
         } catch {
