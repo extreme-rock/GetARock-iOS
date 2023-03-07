@@ -49,7 +49,7 @@ final class BandDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            await getBandData()
+            await fetchBandData()
         }
         setupLayout()
     }
@@ -86,7 +86,7 @@ final class BandDetailViewController: BaseViewController {
 
 extension BandDetailViewController {
     
-    func getBandData() async {
+    func fetchBandData() async {
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
         let idQuery = URLQueryItem(name: "id", value: bandID)
         queryURLComponent?.queryItems = [idQuery]

@@ -247,7 +247,7 @@ extension WriteCommentTextView {
             request.httpMethod = "POST"
             request.allHTTPHeaderFields = headers
             Task {
-                await BandDetailViewController().getBandData()
+                await BandDetailViewController().fetchBandData()
             }
             
             let dataTask = URLSession.shared.dataTask(with: request,
