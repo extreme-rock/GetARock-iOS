@@ -271,6 +271,7 @@ extension BandInformationSetViewController {
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 
+//MARK: PR 추가
     @objc func didTapAddPracticeSong() {
         let nextViewController = AddPracticeSongViewController()
         nextViewController.completion = { [weak self] songs in
@@ -307,6 +308,7 @@ extension BandInformationSetViewController: UITextFieldDelegate {
     }
 }
 
+//MARK: PR 추가
 extension BandInformationSetViewController {
     func makePracticeSongBoxes(with data: [PracticeSongCardView]) -> [PracticeSongBoxView] {
         var result: [PracticeSongBoxView] = []

@@ -31,16 +31,8 @@ final class AddPracticeSongViewController: BaseViewController {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         $0.spacing = 40
-        let deleteAction: UIAction = UIAction { [weak self]_ in
-            UIView.animate(withDuration: 0.4, animations: {
-                self?.firstPracticeSongCard.alpha = 0 // fade out 애니메이션
-            }, completion: { [weak self] _ in
-                self?.firstPracticeSongCard.removeFromSuperview()
-                self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
-                UIView.animate(withDuration: 0.2) {
-                    self?.contentView.layoutIfNeeded() // StackView 레이아웃 재조정 애니메이션
-                }
-            })
+        let deleteAction: UIAction = UIAction { [weak self] _ in
+            self?.deletefirstPracticeSongCard()
         }
         firstPracticeSongCard.deleteButton.addAction(deleteAction, for: .touchUpInside)
         return $0
@@ -150,6 +142,19 @@ final class AddPracticeSongViewController: BaseViewController {
 }
 
 extension AddPracticeSongViewController {
+    
+    private func deletefirstPracticeSongCard() {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.firstPracticeSongCard.alpha = 0 // fade out 애니메이션
+        }, completion: { [weak self] _ in
+            self?.firstPracticeSongCard.removeFromSuperview()
+            self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
+            UIView.animate(withDuration: 0.2) {
+                self?.contentView.layoutIfNeeded() // StackView 레이아웃 재조정 애니메이션
+            }
+        })
+    }
+    
     @objc
     func didTapAddPracticeSong() {
         guard contentView.arrangedSubviews.count < 3 else { return }
