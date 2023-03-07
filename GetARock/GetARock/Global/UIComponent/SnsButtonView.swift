@@ -12,7 +12,7 @@ final class SNSButtonView: UIView {
     // MARK: - Property
     
     private var snsType: SNSType
-    private let snsURL: String?
+    private let snsURI: String?
     
     enum SNSType: String {
         case youtube = "Youtube"
@@ -24,6 +24,14 @@ final class SNSButtonView: UIView {
             case .youtube: return ImageLiteral.youtubeIcon
             case .instagram: return ImageLiteral.instagramIcon
             case .soundCloud: return ImageLiteral.soundCloudIcon
+            }
+        }
+        
+        var snsDefaultURL: String {
+            switch self {
+            case .youtube: return "https://www.youtube.com/channel/"
+            case .instagram: return "https://www.instagram.com/"
+            case .soundCloud: return "https://soundcloud.com/"
             }
         }
     }
@@ -57,7 +65,7 @@ final class SNSButtonView: UIView {
     // MARK: - Init
     
     init(type: SNSType, data: String?) {
-        self.snsURL = data
+        self.snsURI = data
         self.snsType = type
         super.init(frame: .zero)
         setupLayout()
@@ -73,7 +81,7 @@ final class SNSButtonView: UIView {
     private func attribute() {
         snsLabel.text = snsType.rawValue
         snsIcon.image = snsType.snsIconImage
-        if self.snsURL != nil { activateSNSButton() }
+        if self.snsURI != nil { activateSNSButton() }
     }
     
     private func setupLayout() {
@@ -114,8 +122,9 @@ final class SNSButtonView: UIView {
     
     @objc
     func moveSnsLink(_ gesture: UITapGestureRecognizer) {
-        guard let snsURL else { return }
-        
+        guard let snsURI else { return }
+        let snsURL = self.snsType.snsDefaultURL + snsURI
+        print(snsURL)
         NotificationCenter.default.post(
             name: Notification.Name.presentSNSSafariViewController,
             object: nil,
