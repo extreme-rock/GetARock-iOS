@@ -41,7 +41,7 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - View
     
-    lazy var bandTopInfoView = BandTopInfoView()
+    lazy var bandTopInfoView = BandTopInfoView(name: bandData.name, address: bandData.address)
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     
     // MARK: - LifeCycle
@@ -49,10 +49,10 @@ final class BandDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         //MARK: 비동기 테스크가 만들어짐 -> 비동기함수가 아닌거에 비동기함수를 넣어야할때
         Task {
             await fetchBandData()
+            setupLayout()
         }
     }
     
