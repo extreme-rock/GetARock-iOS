@@ -162,12 +162,9 @@ extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
         let locationInfoList: [LocationInfo] = completer.results.map { LocationInfo(title: $0.title, subtitle: $0.subtitle) }
         searchResults = locationInfoList
 
-        if searchResults.isEmpty {
-            let singleLocationInfo = LocationInfo(title: searchBar.textField.text ?? "", subtitle: "")
-            searchResults = [singleLocationInfo]
-        }
         searchResultTable.reloadData()
     }
+
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
         print(error)
     }
