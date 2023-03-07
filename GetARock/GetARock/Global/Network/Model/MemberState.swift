@@ -8,6 +8,7 @@
 enum MemberState: String, Codable {
     case admin = "ADMIN"
     case inviting = "INVITING"
+    case member = "MEMBER"
     case approved = "APPROVE"
     case denied = "DENY"
     case annonymous = "ANNONYMOUS"

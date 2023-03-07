@@ -12,5 +12,6 @@ extension Notification.Name {
     static let showPositionPlusModal = Notification.Name("showPositionPlusModal")
     static let deselectAllPosition = Notification.Name("deselectAllPosition")
     static let hideDeselectAllPositionButton = Notification.Name("hideDeselectAllPositionButton")
+    static let loadBandData = NSNotification.Name("LoadBandData")
     static let presentSNSSafariViewController = Notification.Name("presentSNSSafariViewController")
 }

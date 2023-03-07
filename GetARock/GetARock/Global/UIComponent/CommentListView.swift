@@ -7,16 +7,16 @@
 
 import UIKit
 
-// MARK: - CommentListView
-
 final class CommentListView: UIView {
+    
+    // MARK: - Property
     
     private var commentData: [CommentList]?
     private var totalCommentNumber: Int = 0
+    private let tableviewRefreshControl = UIRefreshControl()
     
     // MARK: - View
     
-    //TODO: - 댓글 작성 POST 연동 후 didSet 처리 추가해야함!
     private let totalCommentNumberLabel = BasicLabel(
         contentText: "총 0개",
         fontStyle: .content,
@@ -50,6 +50,8 @@ final class CommentListView: UIView {
         super.init(frame: .zero)
         attribute()
         setupLayout()
+        setTableviewRefresh()
+        setCommentListLoadObserver()
     }
     
     required init?(coder: NSCoder) {
@@ -73,8 +75,7 @@ final class CommentListView: UIView {
         commentStackView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            trailing: self.trailingAnchor
         )
         
         self.addSubview(commentWriteTextView)
@@ -82,8 +83,7 @@ final class CommentListView: UIView {
             top: commentStackView.bottomAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 0, bottom:0, right: 0))
+            trailing: self.trailingAnchor)
     }
     
     private func setTableView() {
@@ -104,12 +104,43 @@ final class CommentListView: UIView {
         self.totalCommentNumber = count
         totalCommentNumberLabel.text = "총 \(totalCommentNumber)개"
     }
+    
+    private func setTableviewRefresh() {
+        tableviewRefreshControl.addTarget(self, action: #selector(didScrollDownCommentTable(refresh:)), for: .valueChanged)
+        tableviewRefreshControl.tintColor = .gray02
+        self.tableView.refreshControl = tableviewRefreshControl
+    }
+    
+    private func setCommentListLoadObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(loadList),
+            name: NSNotification.Name.loadBandData,
+            object: nil
+        )
+    }
+    // MARK: - @objc
+    
+    @objc func didScrollDownCommentTable(refresh: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.tableView.reloadData()
+            self.setupTotalListNumberLabel()
+            refresh.endRefreshing()
+        }
+    }
+    
+    @objc func loadList(notification: NSNotification){
+        let data = notification.userInfo?["data"] as? [CommentList]
+        self.commentData = data
+        self.tableView.reloadData()
+        self.setupTotalListNumberLabel()
+    }
 }
 
 // MARK: - UITableViewDelegate
 
 extension CommentListView: UITableViewDelegate {
-
+    
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(
@@ -121,7 +152,7 @@ extension CommentListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
         if totalCommentNumber <= 0 {
-            return 50.0
+            return 40.0
         } else {
             return 0.0
         }
@@ -140,7 +171,6 @@ extension CommentListView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CommentTableViewCell.classIdentifier,
             for: indexPath ) as? CommentTableViewCell
