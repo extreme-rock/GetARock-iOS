@@ -18,7 +18,6 @@ class BandInfomationView: UIView {
     private var bandSNS: [SnsListVO]?
     private var transformedMemberData: [BandMember] = []
     private var bandMemberCollectionViewItem: [Item] = []
-    private var checkState: Bool = false
     
     // MARK: - View
     
@@ -202,7 +201,7 @@ class BandInfomationView: UIView {
     
     private func makebandMemberData() {
         transformedMemberData = bandMember.map {
-            BandMember(isUser: checkState,
+            BandMember(isUser: false,
                        isLeader: false,
                        userName: $0.name,
                        instrumentImageName: .guitar,
