@@ -93,8 +93,8 @@
 		A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */; };
 		A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */; };
 		A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368F299E301700376620 /* SearchedUserListDTO.swift */; };
+		A97D579829B6D96400FEA49F /* BandInformationSetFlow in Resources */ = {isa = PBXBuildFile; fileRef = A97D579729B6D96400FEA49F /* BandInformationSetFlow */; };
 		A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */; };
-		A9D7253E299B2CF500404E22 /* BandInformationSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */; };
 		A9D72540299B2D4400404E22 /* InformationGuideLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7253F299B2D4400404E22 /* InformationGuideLabel.swift */; };
 		A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DBADB429A4650C00584198 /* UIViewController+Extension.swift */; };
 		A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDD38D299A3114003F5392 /* BasicDataModel.swift */; };
@@ -233,8 +233,8 @@
 		A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddTableHeader.swift; sourceTree = "<group>"; };
 		A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedBandMemberCell.swift; sourceTree = "<group>"; };
 		A96F368F299E301700376620 /* SearchedUserListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUserListDTO.swift; sourceTree = "<group>"; };
+		A97D579729B6D96400FEA49F /* BandInformationSetFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BandInformationSetFlow; sourceTree = "<group>"; };
 		A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
-		A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationSetViewController.swift; sourceTree = "<group>"; };
 		A9D7253F299B2D4400404E22 /* InformationGuideLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationGuideLabel.swift; sourceTree = "<group>"; };
 		A9DBADB429A4650C00584198 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A9EDD38D299A3114003F5392 /* BasicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDataModel.swift; sourceTree = "<group>"; };
@@ -322,7 +322,6 @@
 				4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */,
 				4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */,
 				4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */,
-				4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */,
 				4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */,
 				4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */,
 			);
@@ -416,9 +415,9 @@
 		9AFE014329990705004B0BCF /* BandCreation */ = {
 			isa = PBXGroup;
 			children = (
+				A97D579729B6D96400FEA49F /* BandInformationSetFlow */,
 				9AFE0141299906E0004B0BCF /* LeaderPositionSelectViewController.swift */,
 				9AFE014429990754004B0BCF /* LeaderPositionSelectHeaderView.swift */,
-				A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */,
 				A96F3682299E2D2700376620 /* BandMemberAddFlow */,
 			);
 			path = BandCreation;
@@ -580,11 +579,8 @@
 				A951F6522989EF6C00902CED /* String+Extension.swift */,
 				7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */,
 				4A6A9A3B299DC2AC0039C0F7 /* Notification.Name+Extension.swift */,
-
 				9AA0BB5529A4FD1800871A05 /* Date+Extension.swift */,
-
 				4A63BE5529A604BC00A30CA8 /* UILabel+Extension.swift */,
-
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -787,6 +783,7 @@
 			files = (
 				B88E1BA82977A70F006072B7 /* Assets.xcassets in Resources */,
 				B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */,
+				A97D579829B6D96400FEA49F /* BandInformationSetFlow in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,7 +952,6 @@
 				7BEB09DA299CFEC20076A82F /* Comment.swift in Sources */,
 				B8B17C522980B93300806899 /* Location.swift in Sources */,
 				7BFE0DDF299E1B4E002D6574 /* WriteCommentTextView.swift in Sources */,
-				A9D7253E299B2CF500404E22 /* BandInformationSetViewController.swift in Sources */,
 				7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */,
 				9AA4E29529A4975F00CED0AE /* BandMemberAddViewController.swift in Sources */,
 				4A268C65299A187B0068F200 /* ModifyPositionViewController.swift in Sources */,
