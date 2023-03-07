@@ -114,7 +114,8 @@ final class DetailContentView: UIView {
                     member: bandData.memberList,
                     song: bandData.songList,
                     intro: bandData.introduction,
-                    sns: bandData.snsList
+                    sns: bandData.snsList,
+                    age: bandData.age
                 )
                 $0.view.addSubview(bandInfo)
                 bandInfo.constraint(

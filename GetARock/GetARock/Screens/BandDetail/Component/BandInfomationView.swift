@@ -8,62 +8,58 @@
 import UIKit
 
 class BandInfomationView: UIView {
-
-    
     
     // MARK: - Property
     
     private var bandMember: [MemberListVO]
     private var bandSong: [SongListVO]?
     private var bandIntro: String?
+    private var bandAge: String
     private var bandSNS: [SnsListVO]?
     private var transformedMemberData: [BandMember] = []
-    private var bandMemberCollectionViewItem: [Item] = [
-        .bandMember(BandMember(isUser: true, isLeader: true, userName: "노엘", instrumentImageName: .guitar, instrumentNames: ["기타", "드럼"]))
-    ]
+    private var bandMemberCollectionViewItem: [Item] = []
     private var checkState: Bool = false
     
     // MARK: - View
     
-    let scrollView: UIScrollView = {
-        $0.backgroundColor = .yellow
+    private let scrollView: UIScrollView = {
+        $0.backgroundColor = .dark01
         return $0
     }(UIScrollView())
     
-    let contentView: UIView = {
-        $0.backgroundColor = .purple
-        return $0
-    }(UIView())
-    
-    // ① 멤버
     private let bandMemberTitleLable = BasicLabel(
         contentText: "밴드 멤버 👩‍🎤👨‍🎤",
         fontStyle: .headline01,
         textColorInfo: .white
     )
     
-    private let bandMemberInfoLable = BasicLabel(
-        contentText: "멤버는 총 5명이고 20~30대로 구성되어있어요.",
-        fontStyle: .content,
-        textColorInfo: .white
-    )
-    
-    private lazy var bandMemberInfoCollectView = PositionCollectionView(
-        cellType: .band,
-        items: [.bandMember(BandMember(isUser: true, isLeader: true, userName: "노엘", instrumentImageName: .guitar, instrumentNames: ["기타", "드럼"]))
-        ],
-        isNeedHeader: true
-    )
-    
+    private lazy var bandMemberInfoLableStack: UIStackView = {
+        $0.axis = .horizontal
+        $0.alignment = .leading
+        $0.distribution = .fill
+        let memberIntroStartLable = BasicLabel(contentText: "멤버는 총 ",
+                                              fontStyle: .contentLight,
+                                              textColorInfo: .white)
+        var memberCountAgeLable = BasicLabel(contentText: "\(bandMember.count)명, \(bandAge)",
+                                             fontStyle: .contentBold,
+                                             textColorInfo: .white)
+        let memberIntroLastLable = BasicLabel(contentText: "로 구성되어 있어요.",
+                                             fontStyle: .contentLight,
+                                             textColorInfo: .white)
+        let spaicingView = UIView()
+        $0.addArrangedSubview(memberIntroStartLable)
+        $0.addArrangedSubview(memberCountAgeLable)
+        $0.addArrangedSubview(memberIntroLastLable)
+        $0.addArrangedSubview(spaicingView)
+        return $0
+    }(UIStackView())
+
     private lazy var bandMembeStackView: UIStackView = {
-        $0.backgroundColor = .red
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandMemberTitleLable,bandMemberInfoLable]))
+    }(UIStackView(arrangedSubviews: [bandMemberTitleLable,bandMemberInfoLableStack]))
     
-    
-    // ② 합주곡
     private let bandSongTitleLable = BasicLabel(
         contentText: "합주곡 🎤",
         fontStyle: .headline01,
@@ -71,19 +67,16 @@ class BandInfomationView: UIView {
     )
     
     private lazy var bandSongListView: SongListView = {
-        $0.backgroundColor = .blue
+        $0.constraint(.heightAnchor, constant: CGFloat((bandSong?.count ?? 0) * 80))
         return $0
     }(SongListView(songListType: .detail, data: bandSong))
     
     private lazy var bandSongStackView: UIStackView = {
-        $0.backgroundColor = .orange
         $0.axis = .vertical
         $0.spacing = 15
         return $0
     }(UIStackView(arrangedSubviews: [bandSongTitleLable,bandSongListView]))
     
-    
-    // ③ 밴드 소개
     private let bandIntroTitleLable = BasicLabel(
         contentText: "밴드 소개 📢",
         fontStyle: .headline01,
@@ -91,7 +84,6 @@ class BandInfomationView: UIView {
     )
     
     private let bandIntroLable: PaddingLabel = {
-        $0.text = "잘나오나?"
         $0.font = UIFont.setFont(.content)
         $0.numberOfLines = 0
         $0.textColor = .white
@@ -105,50 +97,42 @@ class BandInfomationView: UIView {
     }(PaddingLabel())
     
     private lazy var bandIntroStackView: UIStackView = {
-        $0.backgroundColor = .green
         $0.axis = .vertical
         $0.spacing = 15
         return $0
     }(UIStackView(arrangedSubviews: [bandIntroTitleLable, bandIntroLable]))
     
-    
-    // ④ 밴드 SNS
     private let bandSNSTitleLable = BasicLabel(
         contentText: "밴드 SNS 🙌",
         fontStyle: .headline01,
         textColorInfo: .white
     )
     
-//    private lazy var bandSNSListView = SNSListStackView(data: bandSNS)
+    //TODO - : SNS의 데이터 구조 수정이 끝나면 전달 데이터 반영 필요
+    private lazy var bandSNSListView = SNSListStackView(data: SNS(youtube: nil, instagram: nil, soundCloud: nil))
     
     private lazy var bandSNSStackView: UIStackView = {
-        $0.backgroundColor = .blue
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandSNSTitleLable]))
+    }(UIStackView(arrangedSubviews: [bandSNSTitleLable, bandSNSListView]))
     
     private lazy var bandInfoStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = 40
+        $0.spacing = 60
         $0.distribution = .fill
-        $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = UIEdgeInsets(top: 30, left: 16, bottom: 30, right: 16)
-        
         return $0
     }(UIStackView(arrangedSubviews: [bandMembeStackView, bandSongStackView, bandIntroStackView, bandSNSStackView]))
     
     // MARK: - Init
     
-    init(member: [MemberListVO], song: [SongListVO]?, intro: String?,sns: [SnsListVO]?) {
+    init(member: [MemberListVO], song: [SongListVO]?, intro: String?,sns: [SnsListVO]?, age:String) {
         self.bandMember = member
-        print("밴드 멤버 : \(bandMember)")
         self.bandSong = song
         self.bandIntro = intro
         self.bandSNS = sns
+        self.bandAge = age
         super.init(frame: .zero)
-        bandMemberInfoCollectView.delegate = self
-//        makebandMemberData()
         setupLayout()
         attribute()
     }
@@ -161,42 +145,29 @@ class BandInfomationView: UIView {
     
     private func attribute() {
         self.backgroundColor = .dark01
-        setBandInfo()
     }
     
     private func setupLayout() {
-//
-//        self.addSubview(scrollView)
-//        scrollView.constraint(
-//            top: self.topAnchor,
-//            leading: self.leadingAnchor,
-//            bottom: self.bottomAnchor,
-//            trailing: self.trailingAnchor
-//        )
-//
-//        scrollView.addSubview(contentView)
-//        contentView.constraint(
-//            top: scrollView.topAnchor,
-//            leading: scrollView.leadingAnchor,
-//            bottom: scrollView.bottomAnchor,
-//            trailing: scrollView.trailingAnchor
-//        )
-        bandMembeStackView.addArrangedSubview(bandMemberInfoCollectView)
-        self.addSubview(bandInfoStackView)
-        bandInfoStackView.constraint(
+        
+        self.addSubview(scrollView)
+        
+        scrollView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
             bottom: self.bottomAnchor,
-            trailing: self.trailingAnchor)
+            trailing: self.trailingAnchor
+        )
         
-//        contentView.addSubview(bandInfoStackView)
-//        bandInfoStackView.constraint(
-//            top: contentView.topAnchor,
-//            leading: contentView.leadingAnchor,
-//            bottom: contentView.bottomAnchor,
-//            trailing: contentView.trailingAnchor)
-//
-//        scrollView.contentSize = CGSize(width: self.bounds.width, height: contentView.bounds.height)
+        setBandMemberCollectionView()
+        setBandInfo()
+        scrollView.addSubview(bandInfoStackView)
+        bandInfoStackView.constraint(
+            top: scrollView.topAnchor,
+            leading: scrollView.leadingAnchor,
+            bottom: scrollView.bottomAnchor,
+            trailing: scrollView.trailingAnchor,
+            padding: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16)
+        )
     }
     
     private func setBandInfo() {
@@ -210,6 +181,25 @@ class BandInfomationView: UIView {
         }
     }
     
+    private func setBandMemberCollectionView() {
+        makebandMemberData()
+        lazy var bandMemberInfoCollectView = PositionCollectionView(
+            cellType: .band,
+            items: bandMemberCollectionViewItem,
+            isNeedHeader: false
+        )
+        bandMembeStackView.addArrangedSubview(bandMemberInfoCollectView)
+        bandMemberInfoCollectView.delegate = self
+        bandMemberInfoCollectView.constraint(
+            .widthAnchor,
+           constant: UIScreen.main.bounds.width - 32
+        )
+        bandMemberInfoCollectView.constraint(
+            .heightAnchor,
+            constant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
+        )
+    }
+    
     private func makebandMemberData() {
         transformedMemberData = bandMember.map {
             BandMember(isUser: checkState,
@@ -217,7 +207,7 @@ class BandInfomationView: UIView {
                        userName: $0.name,
                        instrumentImageName: .guitar,
                        instrumentNames: $0.instrumentList.map{ $0.name })
-
+            
         }
         checkMemberState()
         checkinstrumentImage()
@@ -225,8 +215,6 @@ class BandInfomationView: UIView {
         for i in 0..<transformedMemberData.count {
             bandMemberCollectionViewItem.append(.bandMember(transformedMemberData[i]))
         }
-        
-        print(bandMemberCollectionViewItem)
     }
     
     func checkMemberState() {
@@ -243,26 +231,24 @@ class BandInfomationView: UIView {
     
     func checkinstrumentImage() {
         let transformedMemberInstrument = bandMember.map{ $0.instrumentList.map{ $0.name } }
-
+        
         for i in 0..<transformedMemberInstrument.count {
-
             if let mainInstrument = transformedMemberInstrument[i].first{
-
-            if mainInstrument == "guitar" {
-                transformedMemberData[i].instrumentImageName = .guitar
-            }
-            else if mainInstrument == "bass" {
-                transformedMemberData[i].instrumentImageName = .bass
-            }
-            else if mainInstrument == "keyboard" {
-                transformedMemberData[i].instrumentImageName = .keyboard
-            }
-            else if mainInstrument == "drum" {
-                transformedMemberData[i].instrumentImageName = .drum
-            }
-            else if mainInstrument == "vocal" {
-                transformedMemberData[i].instrumentImageName = .vocal
-            }
+                if mainInstrument == "guitar" {
+                    transformedMemberData[i].instrumentImageName = .guitar
+                }
+                else if mainInstrument == "bass" {
+                    transformedMemberData[i].instrumentImageName = .bass
+                }
+                else if mainInstrument == "keyboard" {
+                    transformedMemberData[i].instrumentImageName = .keyboard
+                }
+                else if mainInstrument == "drum" {
+                    transformedMemberData[i].instrumentImageName = .drum
+                }
+                else if mainInstrument == "vocal" {
+                    transformedMemberData[i].instrumentImageName = .vocal
+                }
                 else {
                     transformedMemberData[i].instrumentImageName = .etc
                 }
@@ -271,9 +257,12 @@ class BandInfomationView: UIView {
     }
 }
 
+// MARK: - PositionCollectionViewDelegate
+
+// TODO - : 추후 멤버 선택 시 헤당 멤버 상세 페이지로 보내기 구현 필요
 extension  BandInfomationView: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
-        return true
+        return false
     }
 }
 
