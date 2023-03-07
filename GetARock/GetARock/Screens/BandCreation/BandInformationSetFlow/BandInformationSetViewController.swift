@@ -8,13 +8,13 @@
 import UIKit
 
 final class BandInformationSetViewController: BaseViewController {
-    
+
     // MARK: - Properties
-    
+
     private var keyBoardHeight: CGFloat = 280
 
     // MARK: - View
-    
+
     private let pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.headline03)
         $0.text = "3/3"
@@ -34,7 +34,7 @@ final class BandInformationSetViewController: BaseViewController {
         contentText: "작성 정보는 프로필로 만들어집니다.\n밴드를 잘 어필할 수 있도록 작성해보세요! 😎",
         fontStyle: .headline03,
         textColorInfo: .gray02))
-    
+
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
@@ -44,7 +44,7 @@ final class BandInformationSetViewController: BaseViewController {
                                      contentViewSubTitleLabel]))
 
     private let bandNamingGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 이름", type: .required)
-    
+
     private let bandNamingGuideSubLabel: BasicLabel = BasicLabel(
         contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",
         fontStyle: .content,
@@ -55,7 +55,7 @@ final class BandInformationSetViewController: BaseViewController {
         maxCount: 20,
         duplicationCheckType: .bandName,
         textExpressionCheck: true)
-    
+
     private lazy var textFieldVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
@@ -63,7 +63,7 @@ final class BandInformationSetViewController: BaseViewController {
     }(UIStackView(arrangedSubviews: [bandNamingGuideTitleLabel,
                                      bandNamingGuideSubLabel,
                                      bandNamingTextField]))
-    
+
     private let practicePlaceTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "합주실 위치", type: .required)
 
     private let practicePlaceSubTitleLabel: BasicLabel = BasicLabel(
@@ -71,15 +71,20 @@ final class BandInformationSetViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
-    private lazy var practicePlaceSearchButton = {
+    private lazy var practicePlaceSearchButton: BasicBoxView = {
         $0.showRightView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchViewController))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPracticePlaceSearchButton))
         $0.addGestureRecognizer(tapGesture)
         return $0
     }(BasicBoxView(text: "주소 검색"))
 
-    private let detailPracticePlaceTextField: BasicTextField = BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)")
+    private let detailPracticePlaceTextField: BasicTextField = {
+        let rightPaddingView = TextFieldRightPaddingView()
+        rightPaddingView.constraint(.widthAnchor, constant: 20)
+        $0.textField.rightView = rightPaddingView
+        $0.textField.rightViewMode = .always
+        return $0
+    }(BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)"))
 
     private lazy var practicePlaceVstack: UIStackView = {
         $0.axis = .vertical
@@ -89,7 +94,7 @@ final class BandInformationSetViewController: BaseViewController {
                                      practicePlaceSubTitleLabel,
                                      practicePlaceSearchButton,
                                      detailPracticePlaceTextField]))
-    
+
     private let bandIntroGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
 
     private let bandIntroTextView: BasicTextView = BasicTextView(
@@ -109,7 +114,6 @@ final class BandInformationSetViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    //TODO: 추후에 합주곡 삽입 action 추가 필요
     private lazy var addPracticeSongButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.plusSymbol
@@ -119,13 +123,14 @@ final class BandInformationSetViewController: BaseViewController {
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
+        button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
         return button
     }()
 
     private lazy var practiceSongList: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
-        $0.spacing = 20
+        $0.spacing = 10
         return $0
     }(UIStackView(arrangedSubviews: [addPracticeSongButton]))
 
@@ -148,7 +153,7 @@ final class BandInformationSetViewController: BaseViewController {
         contentText: "* 본인계정이 아닌 계정 등록 시 책임은 본인에게 있습니다.",
         fontStyle: .content,
         textColorInfo: .gray02)
-    
+
     private lazy var snsGuideLabelVstack: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
@@ -178,7 +183,7 @@ final class BandInformationSetViewController: BaseViewController {
         $0.setTitle("추가", for: .normal)
         return $0
     }(BottomButton())
-    
+
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
@@ -198,7 +203,7 @@ final class BandInformationSetViewController: BaseViewController {
                                      textViewVstack,
                                      snsInformationVstack,
                                     informationFillCompleteButton]))
-    
+
     private let keyBoardHeightPaddingView: UIView = UIView(frame: .zero)
 
     // MARK: - Life Cycle
@@ -210,7 +215,7 @@ final class BandInformationSetViewController: BaseViewController {
         setKeyboardDismiss()
         setNotification()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(
             self,
@@ -218,14 +223,14 @@ final class BandInformationSetViewController: BaseViewController {
             object: nil
         )
     }
-    
+
     // MARK: - Method
-    
+
     private func setKeyboardDismiss() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
         mainScrollView.addGestureRecognizer(recognizer)
     }
-    
+
     private func setNotification() {
         NotificationCenter.default.addObserver(
             self,
@@ -235,10 +240,10 @@ final class BandInformationSetViewController: BaseViewController {
     }
 
     private func setupLayout() {
-        
+
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
-        
+
         mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
                                   bottom: view.bottomAnchor,
@@ -250,7 +255,7 @@ final class BandInformationSetViewController: BaseViewController {
                                trailing: mainScrollView.trailingAnchor,
                                padding: UIEdgeInsets(top: 20, left: 16, bottom: 25, right: 16))
     }
-    
+
     private func setTextFieldDelegate() {
         youtubeTextField.textField.delegate = self
         instagramTextField.textField.delegate = self
@@ -262,18 +267,24 @@ final class BandInformationSetViewController: BaseViewController {
 
 extension BandInformationSetViewController {
 
-    // TODO: - 추후 합주실 위치 검색 VC로 넘어가는 코드 추가
-    @objc func presentLocationSearchViewController() {
+    @objc func didTapPracticePlaceSearchButton() {
+        let nextViewController = PracticePlaceSearchViewController()
+        nextViewController.completion = { [weak self] locationInformation in
+            self?.practicePlaceSearchButton.configureText(with: locationInformation)
+            self?.practicePlaceSearchButton.hideRightView()
+            self?.practicePlaceSearchButton.setTextColor(with: .white)
+        }
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 
-    // TODO: - 추후 합주곡 등록 VC로 넘어가는 코드 추가
+    //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
     }
-    
+
     @objc func didTouchScreen() {
         self.view.endEditing(true)
     }
-    
+
     @objc func getKeyboardHeight(notification: Notification) {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
     }
@@ -288,7 +299,7 @@ extension BandInformationSetViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.view.frame.origin.y -= self.keyBoardHeight
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y += self.keyBoardHeight
     }
