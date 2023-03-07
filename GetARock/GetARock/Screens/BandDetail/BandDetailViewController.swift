@@ -60,9 +60,6 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - Method
     
-    private func attribute() {
-    }
-    
     private func setupLayout() {
         view.addSubview(bandTopInfoView)
         bandTopInfoView.constraint(
