@@ -10,7 +10,7 @@ import UIKit
 final class PositionSelectForInvitationViewController: BaseViewController {
     
     //MARK: - Property
-    
+
     //TODO: 추후 유저 데이터에서 유저가 가능하다고 응답한 악기들로 대체되어야함.
     private let positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
@@ -31,7 +31,8 @@ final class PositionSelectForInvitationViewController: BaseViewController {
     
     private lazy var confirmSignUpButton: BottomButton = {
         $0.setTitle("가입하기", for: .normal)
-        let action = UIAction { _ in self.navigateToNext() }
+        $0.isEnabled = false
+        let action = UIAction { [weak self] _ in self?.navigateToNext() }
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
