@@ -170,7 +170,7 @@ final class BandInfomationView: UIView {
     }
     
     private func setBandInfo() {
-        if bandIntro == nil{
+        if bandIntro == nil {
             let emptyView = EmptyView(type: .noBand)
             bandIntroStackView.removeArrangedSubview(bandIntroLabel)
             bandIntroStackView.addArrangedSubview(emptyView)
@@ -181,7 +181,7 @@ final class BandInfomationView: UIView {
     }
     
     private func setBandMemberCollectionView() {
-        makebandMemberData()
+        makeBandMemberData()
         lazy var bandMemberInfoCollectView = PositionCollectionView(
             cellType: .band,
             items: bandMemberCollectionViewItem,
@@ -199,7 +199,7 @@ final class BandInfomationView: UIView {
         )
     }
     
-    private func makebandMemberData() {
+    private func makeBandMemberData() {
         transformedMemberData = bandMember.map {
             BandMember(isUser: false,
                        isLeader: false,
