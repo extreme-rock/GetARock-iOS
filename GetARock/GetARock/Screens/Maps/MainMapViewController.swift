@@ -85,7 +85,7 @@ final class MainMapViewController: UIViewController {
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
         
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
-                                                   longitude: currentCoordinate.longitude)
+                                                           longitude: currentCoordinate.longitude)
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
         myLocationMarker.map = mapView
         
@@ -96,9 +96,8 @@ final class MainMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setupLayout()
-        self.attribute()
         self.setLocationManager()
     }
     
@@ -106,12 +105,8 @@ final class MainMapViewController: UIViewController {
         super.viewDidAppear(animated)
         moveMap(to: currentCoordinate)
     }
-
-    // MARK: - Method
     
-    private func attribute() {
-        self.setMarkers()
-    }
+    // MARK: - Method
     
     private func setupLayout() {
         self.view.addSubview(self.currentLocationLabel)
@@ -146,19 +141,20 @@ final class MainMapViewController: UIViewController {
     private func setMarkers() {
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
         
-        for band in BandDummyData.testBands {
+        Task {
+            await fetchMarkers()
+        }
+        
+        mapView.clear()
+        for band in markers.bandList {
+            print("❗❗❗❗❗❗❗❗❗❗❗")
+            print("add band")
             let marker = CustomMarker(bandName: band.name,
-                                      coordinate: band.location.coordinate.toCLLocationCoordinate2D(),
+                                      coordinate: band.toCLLocationCoordinate2D(),
                                       category: .band)
             marker.map = mapView
         }
-        for event in EventDummyData.testEvents {
-            // TODO: 이벤트 이름 -> 밴드 이름으로 변경
-            let marker = CustomMarker(bandName: event.name,
-                                      coordinate: event.location.coordinate.toCLLocationCoordinate2D(),
-                                      category: .event)
-            marker.map = mapView
-        }
+    
     }
     
     private func moveMap(to coordinate: CLLocationCoordinate2D?) {
@@ -192,7 +188,7 @@ extension MainMapViewController: GMSMapViewDelegate {
                 previousSelectedMarker.changeBandMarkerImageWhenDeselected()
             }
         }
-
+        
         let selectedMarker = marker as! CustomMarker
         if selectedMarker.category == .band {
             selectedMarker.changeBandMarkerImageWhenSelected()
