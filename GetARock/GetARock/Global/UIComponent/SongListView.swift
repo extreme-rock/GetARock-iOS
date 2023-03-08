@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SongListViewDelegate: AnyObject {
+    func presentSongLink(with link: String)
+}
+
 enum SongListType {
     case create
     case detail
@@ -16,6 +20,8 @@ final class SongListView: UIView {
     
     // MARK: - Property
     
+    weak var delegate: SongListViewDelegate?
+    private var songList: [Song]?
     private var songListType: SongListType
     
     private enum Size {
@@ -38,14 +44,20 @@ final class SongListView: UIView {
         )
         $0.showsVerticalScrollIndicator = false
         $0.dataSource = self
+        $0.delegate = self
         $0.backgroundColor = .clear
         return $0
     }(UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout))
     
     // MARK: - Init
     
-    init(songListType: SongListType) {
+    init(songListType: SongListType, songList: [SongListVO]? = nil) {
         self.songListType = songListType
+        if let songList {
+            self.songList = songList.map {
+                Song(title: $0.name, artist: $0.artist, link: $0.link)
+            }
+        }
         super.init(frame: .zero)
         setupLayout()
     }
@@ -68,7 +80,7 @@ extension SongListView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return BandDummyData.testBands.first?.song?.count ?? -1
+        return self.songList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -81,11 +93,23 @@ extension SongListView: UICollectionViewDataSource {
         }
         cell.delegate = self
         cell.configure(
-            data: BandDummyData.testBands.first?.song?[indexPath.item] ?? nil,
+            data: songList?[indexPath.item],
             songListType: songListType,
             index: indexPath.item
         )
         return cell
+    }
+}
+
+extension SongListView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch songListType {
+        case .create:
+            return
+        case .detail:
+            guard let link = self.songList?[indexPath.item].link else { return }
+            self.delegate?.presentSongLink(with: link)
+        }
     }
 }
 
