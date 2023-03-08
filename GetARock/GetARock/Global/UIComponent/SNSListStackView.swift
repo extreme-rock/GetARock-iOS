@@ -47,9 +47,9 @@ final class SNSListStackView: UIStackView {
     private func toSNS(with snsList: [SnsListVO]) -> SNS? {
         let links = Dictionary(uniqueKeysWithValues: snsList.map { ($0.snsType, $0.link)})
         
-        guard let youtubeLink = links[SnsType.youtube],
-              let instagramLink = links[SnsType.instagram],
-              let soundCloudLink = links[SnsType.instagram] else { return nil }
+        guard let youtubeLink = links[.youtube],
+              let instagramLink = links[.instagram],
+              let soundCloudLink = links[.soundcloud] else { return nil }
         
         let sns = SNS(youtube: youtubeLink,
                       instagram: instagramLink,
