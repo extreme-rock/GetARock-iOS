@@ -12,7 +12,7 @@ final class BasicBoxView: UIStackView {
     private var text: String = ""
 
     private lazy var basicLabel = {
-        $0.numberOfLines = 3
+        $0.numberOfLines = 0
         return $0
     }(BasicLabel(contentText: text, fontStyle: .content, textColorInfo: .gray02))
 

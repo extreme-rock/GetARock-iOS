@@ -64,21 +64,21 @@ final class BandInformationSetViewController: BaseViewController {
                                      bandNamingGuideSubLabel,
                                      bandNamingTextField]))
 
-    private let practicePlaceTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "합주실 위치", type: .required)
+    private let practiceRoomTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "합주실 위치", type: .required)
 
-    private let practicePlaceSubTitleLabel: BasicLabel = BasicLabel(
+    private let practiceRoomSubTitleLabel: BasicLabel = BasicLabel(
         contentText: "* 지도에서 우리밴드가 보여질 위치입니다.",
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    private lazy var practicePlaceSearchButton: BasicBoxView = {
+    private lazy var practiceRoomSearchButton: BasicBoxView = {
         $0.showRightView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPracticePlaceSearchButton))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappracticeRoomSearchButton))
         $0.addGestureRecognizer(tapGesture)
         return $0
     }(BasicBoxView(text: "주소 검색"))
 
-    private let detailPracticePlaceTextField: BasicTextField = {
+    private let detailpracticeRoomTextField: BasicTextField = {
         let rightPaddingView = TextFieldRightPaddingView()
         rightPaddingView.constraint(.widthAnchor, constant: 20)
         $0.textField.rightView = rightPaddingView
@@ -86,14 +86,14 @@ final class BandInformationSetViewController: BaseViewController {
         return $0
     }(BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)"))
 
-    private lazy var practicePlaceVstack: UIStackView = {
+    private lazy var practiceRoomVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [practicePlaceTitleLabel,
-                                     practicePlaceSubTitleLabel,
-                                     practicePlaceSearchButton,
-                                     detailPracticePlaceTextField]))
+    }(UIStackView(arrangedSubviews: [practiceRoomTitleLabel,
+                                     practiceRoomSubTitleLabel,
+                                     practiceRoomSearchButton,
+                                     detailpracticeRoomTextField]))
 
     private let bandIntroGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
 
@@ -198,7 +198,7 @@ final class BandInformationSetViewController: BaseViewController {
         return $0
     }(UIStackView(arrangedSubviews: [titleVstack,
                                      textFieldVstack,
-                                     practicePlaceVstack,
+                                     practiceRoomVstack,
                                      practiceSongVstack,
                                      textViewVstack,
                                      snsInformationVstack,
@@ -267,12 +267,12 @@ final class BandInformationSetViewController: BaseViewController {
 
 extension BandInformationSetViewController {
 
-    @objc func didTapPracticePlaceSearchButton() {
-        let nextViewController = PracticePlaceSearchViewController()
+    @objc func didTappracticeRoomSearchButton() {
+        let nextViewController = PracticeRoomSearchViewController()
         nextViewController.completion = { [weak self] locationInformation in
-            self?.practicePlaceSearchButton.configureText(with: locationInformation)
-            self?.practicePlaceSearchButton.hideRightView()
-            self?.practicePlaceSearchButton.setTextColor(with: .white)
+            self?.practiceRoomSearchButton.configureText(with: locationInformation)
+            self?.practiceRoomSearchButton.hideRightView()
+            self?.practiceRoomSearchButton.setTextColor(with: .white)
         }
         navigationController?.pushViewController(nextViewController, animated: true)
     }

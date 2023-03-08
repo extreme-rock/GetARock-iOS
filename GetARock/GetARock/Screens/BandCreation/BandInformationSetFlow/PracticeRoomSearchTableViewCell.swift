@@ -8,17 +8,17 @@
 import MapKit
 import UIKit
 
-final class PracticePlaceSearchTableViewCell: UITableViewCell {
+final class PracticeRoomSearchTableViewCell: UITableViewCell {
 
     //MARK: View
 
     private let titleLabel: BasicLabel = {
-        $0.numberOfLines = 2
+        $0.numberOfLines = 0
         return $0
     }(BasicLabel(contentText: "", fontStyle: .headline01, textColorInfo: .white))
 
     private let subTitleLabel: BasicLabel = {
-        $0.numberOfLines = 2
+        $0.numberOfLines = 0
         return $0
     }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white))
 

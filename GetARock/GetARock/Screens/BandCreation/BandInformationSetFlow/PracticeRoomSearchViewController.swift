@@ -9,7 +9,7 @@ import CoreLocation
 import MapKit
 import UIKit
 
-final class PracticePlaceSearchViewController: BaseViewController {
+final class PracticeRoomSearchViewController: BaseViewController {
 
     // MARK: Property
 
@@ -33,8 +33,8 @@ final class PracticePlaceSearchViewController: BaseViewController {
         $0.dataSource = self
         $0.backgroundColor = .dark01
         $0.separatorStyle = .none
-        $0.register(PracticePlaceSearchTableViewCell.self,
-                    forCellReuseIdentifier: PracticePlaceSearchTableViewCell.classIdentifier)
+        $0.register(PracticeRoomSearchTableViewCell.self,
+                    forCellReuseIdentifier: PracticeRoomSearchTableViewCell.classIdentifier)
         return $0
     }(UITableView())
 
@@ -102,7 +102,7 @@ final class PracticePlaceSearchViewController: BaseViewController {
     }
 }
 
-extension PracticePlaceSearchViewController {
+extension PracticeRoomSearchViewController {
     @objc func textFieldDidChange(_ sender: Any?) {
         if searchBar.textField.text == "" {
             searchResults.removeAll()
@@ -114,7 +114,7 @@ extension PracticePlaceSearchViewController {
 }
 
 // MARK: CLLocationManager delegate
-extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
+extension PracticeRoomSearchViewController: CLLocationManagerDelegate {
     // 위치 정보 권한 설정에 관계된 함수
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
@@ -156,7 +156,7 @@ extension PracticePlaceSearchViewController: CLLocationManagerDelegate {
 }
 
 // MARK: SearchCompleter delegate
-extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
+extension PracticeRoomSearchViewController: MKLocalSearchCompleterDelegate {
     // 자동완성 완료시 결과를 받는 함수
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         let locationInfoList: [LocationInfo] = completer.results.map { LocationInfo(title: $0.title, subtitle: $0.subtitle) }
@@ -171,15 +171,15 @@ extension PracticePlaceSearchViewController: MKLocalSearchCompleterDelegate {
 }
 
 // MARK: TableView datasource
-extension PracticePlaceSearchViewController: UITableViewDataSource {
+extension PracticeRoomSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticePlaceSearchTableViewCell.classIdentifier,
-                                                       for: indexPath) as? PracticePlaceSearchTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticeRoomSearchTableViewCell.classIdentifier,
+                                                       for: indexPath) as? PracticeRoomSearchTableViewCell else { return UITableViewCell() }
         let searchResult = searchResults[indexPath.row]
         cell.configure(mapSearchResult: searchResult)
         cell.selectionStyle = .none
@@ -188,7 +188,7 @@ extension PracticePlaceSearchViewController: UITableViewDataSource {
 }
 
 // MARK: TableView delegate
-extension PracticePlaceSearchViewController: UITableViewDelegate {
+extension PracticeRoomSearchViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedResult = searchResults[indexPath.row]
@@ -201,7 +201,7 @@ extension PracticePlaceSearchViewController: UITableViewDelegate {
     }
 }
 
-extension PracticePlaceSearchViewController {
+extension PracticeRoomSearchViewController {
     @objc func didTapCurrentLocationButton() {
         self.locationManager.requestWhenInUseAuthorization()
         self.getCurrentAddressInfo()

@@ -93,8 +93,8 @@
 		A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */; };
 		A96F368C299E2F1000376620 /* AddedBandMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */; };
 		A96F3690299E301700376620 /* SearchedUserListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96F368F299E301700376620 /* SearchedUserListDTO.swift */; };
-		A97D579B29B6F08E00FEA49F /* PracticePlaceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97D579A29B6F08E00FEA49F /* PracticePlaceSearchViewController.swift */; };
-		A97D579D29B6F0A200FEA49F /* PracticePlaceSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97D579C29B6F0A200FEA49F /* PracticePlaceSearchTableViewCell.swift */; };
+		A97D579B29B6F08E00FEA49F /* PracticeRoomSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97D579A29B6F08E00FEA49F /* PracticeRoomSearchViewController.swift */; };
+		A97D579D29B6F0A200FEA49F /* PracticeRoomSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97D579C29B6F0A200FEA49F /* PracticeRoomSearchTableViewCell.swift */; };
 		A9ABD8F6299E35930036D9E7 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */; };
 		A9D7253E299B2CF500404E22 /* BandInformationSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */; };
 		A9D72540299B2D4400404E22 /* InformationGuideLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7253F299B2D4400404E22 /* InformationGuideLabel.swift */; };
@@ -235,8 +235,8 @@
 		A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberAddTableHeader.swift; sourceTree = "<group>"; };
 		A96F368B299E2F1000376620 /* AddedBandMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedBandMemberCell.swift; sourceTree = "<group>"; };
 		A96F368F299E301700376620 /* SearchedUserListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedUserListDTO.swift; sourceTree = "<group>"; };
-		A97D579A29B6F08E00FEA49F /* PracticePlaceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePlaceSearchViewController.swift; sourceTree = "<group>"; };
-		A97D579C29B6F0A200FEA49F /* PracticePlaceSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePlaceSearchTableViewCell.swift; sourceTree = "<group>"; };
+		A97D579A29B6F08E00FEA49F /* PracticeRoomSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeRoomSearchViewController.swift; sourceTree = "<group>"; };
+		A97D579C29B6F0A200FEA49F /* PracticeRoomSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeRoomSearchTableViewCell.swift; sourceTree = "<group>"; };
 		A9ABD8F5299E35930036D9E7 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationSetViewController.swift; sourceTree = "<group>"; };
 		A9D7253F299B2D4400404E22 /* InformationGuideLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationGuideLabel.swift; sourceTree = "<group>"; };
@@ -442,8 +442,8 @@
 			isa = PBXGroup;
 			children = (
 				A9D7253D299B2CF500404E22 /* BandInformationSetViewController.swift */,
-				A97D579A29B6F08E00FEA49F /* PracticePlaceSearchViewController.swift */,
-				A97D579C29B6F0A200FEA49F /* PracticePlaceSearchTableViewCell.swift */,
+				A97D579A29B6F08E00FEA49F /* PracticeRoomSearchViewController.swift */,
+				A97D579C29B6F0A200FEA49F /* PracticeRoomSearchTableViewCell.swift */,
 			);
 			path = BandInformationSetFlow;
 			sourceTree = "<group>";
@@ -1004,7 +1004,7 @@
 				A9D72540299B2D4400404E22 /* InformationGuideLabel.swift in Sources */,
 				4AC4CE47297FDFB500BB823C /* BottomButton.swift in Sources */,
 				9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */,
-				A97D579D29B6F0A200FEA49F /* PracticePlaceSearchTableViewCell.swift in Sources */,
+				A97D579D29B6F0A200FEA49F /* PracticeRoomSearchTableViewCell.swift in Sources */,
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
 				7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */,
@@ -1031,7 +1031,7 @@
 				4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */,
 				B8B17C542980B99900806899 /* Coordinate.swift in Sources */,
 				4A8355E3299F78AD00D82AF3 /* UserInfoInputViewController.swift in Sources */,
-				A97D579B29B6F08E00FEA49F /* PracticePlaceSearchViewController.swift in Sources */,
+				A97D579B29B6F08E00FEA49F /* PracticeRoomSearchViewController.swift in Sources */,
 				4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */,
 				4A4A6E9429A8F58B005CF076 /* User.swift in Sources */,
 			);
