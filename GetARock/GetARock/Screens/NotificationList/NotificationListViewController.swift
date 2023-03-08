@@ -83,7 +83,7 @@ extension NotificationListViewController {
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
 
         let rejectAction = NSLocalizedString("거절", comment: "Alert OK button title")
-        let okayAction = NSLocalizedString("확인", comment: "Alert Cancel button title")
+        let okayAction = NSLocalizedString("취소", comment: "Alert Cancel button title")
 
         alertController.addAction(UIAlertAction(title: okayAction, style: .default))
         alertController.addAction(UIAlertAction(title: rejectAction, style: .destructive, handler: { [weak self] _ in
