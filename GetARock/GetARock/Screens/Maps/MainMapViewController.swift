@@ -23,8 +23,13 @@ final class MainMapViewController: UIViewController {
     private var previousSelectedMarker: GMSMarker?
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
-
-
+    private var markers = MapMarkerVO(bandList: [], eventList: [])
+    
+    private var minLatitude: Double = 0.0
+    private var maxLatitude: Double = 0.0
+    private var minLongitude: Double = 0.0
+    private var maxLongitude: Double = 0.0
+    
     private let zoomInRange: Float = 15
     
     private var currentLocationLabel: UILabel = {
@@ -245,5 +250,33 @@ extension MainMapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+
+extension MainMapViewController {
+    private func fetchMarkers() async {
+        var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/map")
+        queryURLComponent?.queryItems = [
+            URLQueryItem(name: "minLatitude", value: "\(minLatitude)"),
+            URLQueryItem(name: "maxLatitude", value: "\(maxLatitude)"),
+            URLQueryItem(name: "minLongitude", value: "\(minLongitude)"),
+            URLQueryItem(name: "maxLongitude", value: "\(maxLongitude)")
+        ]
+        
+        guard let url = queryURLComponent?.url else {
+            print("An error has occurred while creating URL")
+            return
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            let decodedData = try JSONDecoder().decode(MapMarkerVO.self, from: data)
+            print("❗❗❗❗❗❗❗❗❗❗❗")
+            print(String(data: data, encoding: String.Encoding.utf8) ?? "no responce")
+            print("응답 내용 : \(response)")
+            self.markers = decodedData
+        } catch {
+            print("An error has occurred while decoding JSONObject: \(error.localizedDescription)")
+        }
     }
 }
