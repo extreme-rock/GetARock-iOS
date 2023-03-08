@@ -31,6 +31,12 @@ final class BandInfomationView: UIView {
         textColorInfo: .white
     )
     
+    private lazy var bandMemberInfoCollectView = PositionCollectionView(
+        cellType: .band,
+        items: bandMemberCollectionViewItem,
+        isNeedHeader: false
+    )
+    
     private lazy var bandMemberInfoLabelStack: UIStackView = {
         $0.axis = .horizontal
         $0.alignment = .leading
@@ -56,7 +62,7 @@ final class BandInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandMemberTitleLabel,bandMemberInfoLabelStack]))
+    }(UIStackView(arrangedSubviews: [bandMemberTitleLabel,bandMemberInfoLabelStack,bandMemberInfoCollectView]))
     
     private let bandSongTitleLabel = BasicLabel(
         contentText: "합주곡 🎤",
@@ -131,6 +137,7 @@ final class BandInfomationView: UIView {
         self.bandSNS = sns
         self.bandAge = age
         super.init(frame: .zero)
+        makeBandMemberData()
         setupLayout()
         attribute()
     }
@@ -180,13 +187,6 @@ final class BandInfomationView: UIView {
     }
     
     private func setBandMemberCollectionView() {
-        makeBandMemberData()
-        lazy var bandMemberInfoCollectView = PositionCollectionView(
-            cellType: .band,
-            items: bandMemberCollectionViewItem,
-            isNeedHeader: false
-        )
-        bandMemberStackView.addArrangedSubview(bandMemberInfoCollectView)
         bandMemberInfoCollectView.constraint(
             .widthAnchor,
            constant: UIScreen.main.bounds.width - 32
