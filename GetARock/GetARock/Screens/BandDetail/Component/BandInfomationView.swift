@@ -16,7 +16,6 @@ final class BandInfomationView: UIView {
     private var bandIntro: String?
     private var bandAge: String
     private var bandSNS: [SnsListVO]?
-    private var transformedMemberData: [BandMember] = []
     private var bandMemberCollectionViewItem: [Item] = []
     
     // MARK: - View
@@ -200,60 +199,51 @@ final class BandInfomationView: UIView {
     }
     
     private func makeBandMemberData() {
-        transformedMemberData = bandMember.map {
-            BandMember(isUser: false,
-                       isLeader: false,
-                       userName: $0.name,
-                       instrumentImageName: .guitar,
-                       instrumentNames: $0.instrumentList.map{ $0.name })
-            
-        }
-        checkMemberState()
-        checkinstrumentImage()
-        
-        for i in 0..<transformedMemberData.count {
-            bandMemberCollectionViewItem.append(.bandMember(transformedMemberData[i]))
-        }
-    }
-    
-    func checkMemberState() {
-        let transformedMemberState = bandMember.map{ $0.memberState }
-        for i in 0..<transformedMemberState.count {
-            if transformedMemberState[i] == .admin {
-                transformedMemberData[i].isUser = true
-                transformedMemberData[i].isLeader = true
-            } else if transformedMemberState[i] == .member {
-                transformedMemberData[i].isUser = true
-            }
-        }
-    }
-    
-    func checkinstrumentImage() {
-        let transformedMemberInstrument = bandMember.map{ $0.instrumentList.map{ $0.name } }
-        
-        for i in 0..<transformedMemberInstrument.count {
-            if let mainInstrument = transformedMemberInstrument[i].first{
-                if mainInstrument == "guitar" {
-                    transformedMemberData[i].instrumentImageName = .guitar
-                }
-                else if mainInstrument == "bass" {
-                    transformedMemberData[i].instrumentImageName = .bass
-                }
-                else if mainInstrument == "keyboard" {
-                    transformedMemberData[i].instrumentImageName = .keyboard
-                }
-                else if mainInstrument == "drum" {
-                    transformedMemberData[i].instrumentImageName = .drum
-                }
-                else if mainInstrument == "vocal" {
-                    transformedMemberData[i].instrumentImageName = .vocal
-                }
-                else {
-                    transformedMemberData[i].instrumentImageName = .etc
-                }
-            }
-        }
-    }
+           let transformedMemberData = bandMember.map {
+               BandMember(
+                   isUser: checkIsUserState(memberState: $0.memberState),
+                   isLeader: checkIsLeaderState(memberState: $0.memberState),
+                   userName: $0.name,
+                   instrumentImageName: checkInstrumentImage(instrumentList: $0.instrumentList),
+                   instrumentNames: $0.instrumentList.map{ $0.name }
+               )
+               
+           }
+           transformedMemberData.forEach {
+               bandMemberCollectionViewItem.append(.bandMember($0))
+           }
+       }
+       
+       private func checkIsUserState(memberState: MemberState) -> Bool {
+           switch memberState {
+           case .admin:
+               return true
+           case .member:
+               return true
+           default:
+               return false
+           }
+       }
+       
+       private func checkIsLeaderState(memberState: MemberState) -> Bool {
+           switch memberState {
+           case .admin:
+               return true
+           case .member:
+               return false
+           default:
+               return false
+           }
+       }
+       
+       private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> InstrumentImageName {
+           let transformedMemberInstrument = instrumentList.map{ $0.name }
+           
+           if let mainInstrument = transformedMemberInstrument.first {
+               return InstrumentImageName(rawValue: mainInstrument) ?? .etc
+           }
+           return .etc
+       }
 }
 
 // MARK: - PositionCollectionViewDelegate
