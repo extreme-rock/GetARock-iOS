@@ -98,6 +98,7 @@ final class ModifyPositionViewController: UIViewController {
     
     func checkCompleteButtonEnabledState() -> Bool {
         let isSelectedPosition = !self.selectedPositions.isEmpty
+        print(self.selectedPositions, self.selectedPositions.isEmpty, "isEmpty")
         return isSelectedPosition
     }
 }

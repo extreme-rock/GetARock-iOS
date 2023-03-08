@@ -95,7 +95,7 @@ final class BasicTextView: UIView {
         return self.textView.text == placeholder ? nil : self.textView.text
     }
     
-    func configure(with text: String?) {
+    func configureText(with text: String?) {
         guard let text else { return }
         self.textView.text = text
         self.placeholderLabel.isHidden = true

@@ -133,7 +133,7 @@ final class ModifyMyPageViewController: UIViewController {
         || modifyUserProfileViewController.checkCompleteButtonEnabledState()
         let isPositionInfoFilled = modifyPositionViewController.checkCompleteButtonEnabledState()
         let isAllUserInfoFilled = isModifyUserProfileAllFilled && isPositionInfoFilled
-        
+        print(isAllUserInfoFilled)
         if isAllUserInfoFilled {
             if !modifyUserProfileViewController.isViewLoaded {
                 modiFiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()

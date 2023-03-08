@@ -12,7 +12,6 @@ final class ModifyUserProfileViewController: UIViewController {
     // MARK: - Property
     
     private var userInfo: User
-    var isViewDidLoad = false
     
     // MARK: - View
     
@@ -191,7 +190,6 @@ final class ModifyUserProfileViewController: UIViewController {
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
         self.configure(with: self.userInfo)
-        self.isViewDidLoad = true
     }
 
     private func attribute() {
@@ -230,19 +228,19 @@ final class ModifyUserProfileViewController: UIViewController {
         guard let age = Age.CodingKeys(rawValue: userInfo.age)?.inKorean,
               let gender = Gender.CodingKeys(rawValue: userInfo.gender)?.inKorean else { return }
         
-        self.userNamingTextField.configure(with: userInfo.name)
+        self.userNamingTextField.configureText(with: userInfo.name)
         self.userNamingTextField.setupAvailableName(name: userInfo.name)
-        self.userIntroTextView.configure(with: userInfo.introduction)
+        self.userIntroTextView.configureText(with: userInfo.introduction)
         self.ageSelectCollectionView.selectItem(with: age)
         self.genderSelectCollectionView.selectItem(with: gender)
         userInfo.snsList.forEach { sns in
             switch sns.type {
             case .youtube:
-                self.youtubeTextField.configure(with: sns.link)
+                self.youtubeTextField.configureText(with: sns.link)
             case .instagram:
-                self.instagramTextField.configure(with: sns.link)
+                self.instagramTextField.configureText(with: sns.link)
             case .soundcloud:
-                self.soundCloudTextField.configure(with: sns.link)
+                self.soundCloudTextField.configureText(with: sns.link)
             }
         }
     }
