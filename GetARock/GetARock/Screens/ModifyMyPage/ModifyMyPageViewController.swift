@@ -133,7 +133,7 @@ final class ModifyMyPageViewController: UIViewController {
         || modifyUserProfileViewController.checkCompleteButtonEnabledState()
         let isPositionInfoFilled = modifyPositionViewController.checkCompleteButtonEnabledState()
         let isAllUserInfoFilled = isModifyUserProfileAllFilled && isPositionInfoFilled
-        print(isAllUserInfoFilled)
+        
         if isAllUserInfoFilled {
             if !modifyUserProfileViewController.isViewLoaded {
                 modiFiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()
@@ -147,13 +147,18 @@ final class ModifyMyPageViewController: UIViewController {
                 try await SignUpNetworkManager.putUserInformation(user: userInfo, completion: { result in
                     switch result {
                     case .success(_):
-                        self.dismiss(animated: true)
+                        // TODO: 성공했을 때 dismiss말고 다른 indicator가 필요할지?
+                        DispatchQueue.main.async { [weak self] in
+                            self?.dismiss(animated: true)
+                        }
                     case .failure(let error):
                         // TODO: error에 따른 대응
                         print(error)
                     }
                 })
             }
+        } else {
+            // TODO: 필수사항을 모두 입력하지 않은경우에 대한 대처
         }
     }
     
