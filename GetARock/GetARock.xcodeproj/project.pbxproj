@@ -62,7 +62,7 @@
 		7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA83299B708C00C44184 /* EventStateLabel.swift */; };
 		7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */; };
 		7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755D2987DF54008F4B9F /* BandButtonView.swift */; };
-		7BC275602987EA10008F4B9F /* emptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755F2987EA10008F4B9F /* emptyView.swift */; };
+		7BC275602987EA10008F4B9F /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2755F2987EA10008F4B9F /* EmptyView.swift */; };
 		7BC8E09D297C0BE6008FD5FE /* UIView+Gradation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */; };
 		7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEA1874297AA10800A40488 /* UIFont+Extension.swift */; };
 		7BEB09D6299CEEA70076A82F /* CommentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEB09D5299CEEA70076A82F /* CommentListView.swift */; };
@@ -208,7 +208,7 @@
 		7BB4FA83299B708C00C44184 /* EventStateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabel.swift; sourceTree = "<group>"; };
 		7BB4FA87299B9AEF00C44184 /* EventStateLabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStateLabelStackView.swift; sourceTree = "<group>"; };
 		7BC2755D2987DF54008F4B9F /* BandButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandButtonView.swift; sourceTree = "<group>"; };
-		7BC2755F2987EA10008F4B9F /* emptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emptyView.swift; sourceTree = "<group>"; };
+		7BC2755F2987EA10008F4B9F /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		7BC8E09C297C0BE6008FD5FE /* UIView+Gradation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Gradation.swift"; sourceTree = "<group>"; };
 		7BEA1874297AA10800A40488 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		7BEB09D5299CEEA70076A82F /* CommentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListView.swift; sourceTree = "<group>"; };
@@ -655,7 +655,7 @@
 				7B7598AC29893A1E00FA6B78 /* SNSButtonView.swift */,
 				7BC2755D2987DF54008F4B9F /* BandButtonView.swift */,
 				9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */,
-				7BC2755F2987EA10008F4B9F /* emptyView.swift */,
+				7BC2755F2987EA10008F4B9F /* EmptyView.swift */,
 				4ABFB63529881959004BF232 /* PlusPositionCollectionViewCell.swift */,
 				7BEB09D5299CEEA70076A82F /* CommentListView.swift */,
 				7BEB09D7299CF12E0076A82F /* CommentTableViewCell.swift */,
@@ -1010,7 +1010,7 @@
 				9A29E6E8297E223A00D4A433 /* BasicComponentSize.swift in Sources */,
 				4A63BE5429A601F900A30CA8 /* InstructionViewController.swift in Sources */,
 				A951F6532989EF6C00902CED /* String+Extension.swift in Sources */,
-				7BC275602987EA10008F4B9F /* emptyView.swift in Sources */,
+				7BC275602987EA10008F4B9F /* EmptyView.swift in Sources */,
 				A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */,
 				7B287CFA29B76A8E00439254 /* UserInformationVO.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
