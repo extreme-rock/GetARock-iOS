@@ -26,15 +26,11 @@ final class MypageTopInfoView: UIView {
         textColorInfo: .white)
     )
     
-    //TODO: 추후 밴드 데이터를 이용해 이름을 각 라벨 업데이트 필요
-    private lazy var userInfoLabel: BasicLabel = {
-        $0.numberOfLines = 2
-        return $0
-    }(BasicLabel(
+    //TODO: - 데이크 PR 반영되면 성별하고 나이 한국어로 변환할 예정!
+    private lazy var userInfoLabel = BasicLabel(
         contentText: "\(userGender) ⏐ \(userAge)",
         fontStyle: .content,
         textColorInfo: .white)
-    )
     
     private lazy var infoStackView: UIStackView = {
         $0.axis = .vertical
