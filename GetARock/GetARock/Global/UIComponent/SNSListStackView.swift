@@ -6,17 +6,7 @@
 //
 
 import UIKit
-struct SnsListVO33: Codable {
-    let snsID: Int
-    let snsType: SnsType
-    let link: String?
-
-    enum CodingKeys: String, CodingKey {
-        case snsID = "snsId"
-        case snsType, link
-    }
-}
-
+    
 final class SNSListStackView: UIStackView {
     
     // MARK: - View

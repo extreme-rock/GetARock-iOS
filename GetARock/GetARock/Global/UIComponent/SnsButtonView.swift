@@ -124,7 +124,6 @@ final class SNSButtonView: UIView {
     func moveSnsLink(_ gesture: UITapGestureRecognizer) {
         guard let snsURI else { return }
         let snsURL = self.snsType.snsDefaultURL + snsURI
-        print(snsURL)
         NotificationCenter.default.post(
             name: Notification.Name.presentSNSSafariViewController,
             object: nil,
