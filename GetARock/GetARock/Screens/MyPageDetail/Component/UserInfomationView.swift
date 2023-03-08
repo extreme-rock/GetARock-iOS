@@ -44,6 +44,24 @@ final class UserInfomationView: UIView {
         textColorInfo: .white
     )
     
+    //TODO: - 추후 본인의 계정에만 노출 되어야함
+    private let addBandButton: UIButton = {
+        let action = UIAction {_ in
+            print("밴드 추가 버튼 눌림!!")
+        }
+        $0.setImage(ImageLiteral.plusSymbol, for: .normal)
+        $0.tintColor = .white
+        $0.addAction(action, for: .touchUpInside)
+        $0.constraint(.widthAnchor, constant: 20)
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        return $0
+    }(UIButton())
+    
+    private lazy var bandTitleStackView: UIStackView = {
+        $0.axis = .horizontal
+        return $0
+    }(UIStackView(arrangedSubviews: [userBandTitleLabel,addBandButton]))
+    
     private let userBandButtonStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 5
@@ -54,7 +72,7 @@ final class UserInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [userBandTitleLabel, userBandButtonStackView]))
+    }(UIStackView(arrangedSubviews: [bandTitleStackView, userBandButtonStackView]))
     
     private let userIntroTitleLabel = BasicLabel(
         contentText: "자기 소개 📢",
