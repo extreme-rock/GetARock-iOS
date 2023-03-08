@@ -212,6 +212,39 @@ extension MainMapViewController: GMSMapViewDelegate {
             self.previousSelectedMarker = nil
         }
     }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        // 현재 보이는 지도의 경계를 구하기 위해 GMSVisibleRegion 객체를 가져옵니다.
+        let visibleRegion = mapView.projection.visibleRegion()
+        
+        // 경계를 구하기 위해 최소, 최대 위도와 경도를 가져옵니다.
+        let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+        
+        // 최소 위도와 최대 위도를 가져옵니다.
+        let updatedMinLatitude = bounds.southWest.latitude
+        let updatedMaxLatitude = bounds.northEast.latitude
+        
+        // 최소 경도와 최대 경도를 가져옵니다.
+        let updatedMinLongitude = bounds.southWest.longitude
+        let updatedMaxLongitude = bounds.northEast.longitude
+        
+        if (updatedMinLatitude < minLatitude) || (updatedMinLongitude < minLongitude) || (updatedMaxLatitude > maxLatitude) || (updatedMaxLongitude > maxLongitude) {
+            print("❗❗❗❗❗set marker❗❗❗❗❗❗")
+            setMarkers()
+        }
+        
+        // 최소 위도와 최대 위도를 저장합니다.
+        minLatitude = bounds.southWest.latitude - 0.1
+        maxLatitude = bounds.northEast.latitude + 0.3
+        
+        // 최소 경도와 최대 경도를 저장합니다.
+        minLongitude = bounds.southWest.longitude - 0.1
+        maxLongitude = bounds.northEast.longitude + 0.1
+        
+        // 경계를 출력합니다.
+        print("Min Lat: \(minLatitude), Max Lat: \(maxLatitude), Min Long: \(minLongitude), Max Long: \(maxLongitude)")
+        
+    }
 }
 
 // MARK: - CLLocationManagerDelegate
