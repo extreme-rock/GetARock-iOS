@@ -79,7 +79,7 @@ struct MemberListVO: Codable {
 
 struct InstrumentListVO: Codable {
     let instrumentID: Int?
-    let isMain: Bool?
+    let isMain: Bool
     let name: String
 
     enum CodingKeys: String, CodingKey {
