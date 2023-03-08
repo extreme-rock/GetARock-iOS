@@ -151,6 +151,7 @@ final class BandCreationFinishGuideViewController: UIViewController {
                                      bandTimelineHstack,
                                      commentHstack]))
     
+    //TODO: 지도 화면으로 navigation 추가 필요
     private let confirmButton: BottomButton = {
         $0.setTitle("확인 완료 😎", for: .normal)
         $0.titleLabel?.font = .setFont(.headline02)

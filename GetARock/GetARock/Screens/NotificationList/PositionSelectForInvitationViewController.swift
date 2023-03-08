@@ -85,7 +85,7 @@ extension PositionSelectForInvitationViewController {
     }
     
     private func navigateToNext() {
-        //TODO: 추후 유저 정보에 따른 쿼리 컴포넌트 변경 필요
+        //TODO: 추후 유저 정보에 따른 쿼리 컴포넌트 변경 필요 + 실패할경우 completion 처리 필요
         NotificationNetworkManager.shared.acceptInvitation(
             alertId: 0,
             bandId: 0,
