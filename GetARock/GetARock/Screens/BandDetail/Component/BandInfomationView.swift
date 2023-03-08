@@ -161,10 +161,10 @@ final class BandInfomationView: UIView {
         setBandInfo()
         scrollView.addSubview(bandInfoStackView)
         bandInfoStackView.constraint(
-            top: scrollView.topAnchor,
-            leading: scrollView.leadingAnchor,
-            bottom: scrollView.bottomAnchor,
-            trailing: scrollView.trailingAnchor,
+            top: scrollView.contentLayoutGuide.topAnchor,
+            leading: scrollView.contentLayoutGuide.leadingAnchor,
+            bottom: scrollView.contentLayoutGuide.bottomAnchor,
+            trailing: scrollView.contentLayoutGuide.trailingAnchor,
             padding: UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16)
         )
     }
