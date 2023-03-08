@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BandInfomationView: UIView {
+final class BandInfomationView: UIView {
     
     // MARK: - Property
     
@@ -26,40 +26,40 @@ class BandInfomationView: UIView {
         return $0
     }(UIScrollView())
     
-    private let bandMemberTitleLable = BasicLabel(
+    private let bandMemberTitleLabel = BasicLabel(
         contentText: "밴드 멤버 👩‍🎤👨‍🎤",
         fontStyle: .headline01,
         textColorInfo: .white
     )
     
-    private lazy var bandMemberInfoLableStack: UIStackView = {
+    private lazy var bandMemberInfoLabelStack: UIStackView = {
         $0.axis = .horizontal
         $0.alignment = .leading
         $0.distribution = .fill
-        let memberIntroStartLable = BasicLabel(contentText: "멤버는 총 ",
+        let memberIntroStartLabel = BasicLabel(contentText: "멤버는 총 ",
                                               fontStyle: .contentLight,
                                               textColorInfo: .white)
-        var memberCountAgeLable = BasicLabel(contentText: "\(bandMember.count)명, \(bandAge)",
+        var memberCountAgeLabel = BasicLabel(contentText: "\(bandMember.count)명, \(bandAge)",
                                              fontStyle: .contentBold,
                                              textColorInfo: .white)
-        let memberIntroLastLable = BasicLabel(contentText: "로 구성되어 있어요.",
+        let memberIntroLastLabel = BasicLabel(contentText: "로 구성되어 있어요.",
                                              fontStyle: .contentLight,
                                              textColorInfo: .white)
-        let spaicingView = UIView()
-        $0.addArrangedSubview(memberIntroStartLable)
-        $0.addArrangedSubview(memberCountAgeLable)
-        $0.addArrangedSubview(memberIntroLastLable)
-        $0.addArrangedSubview(spaicingView)
+        let spacingView = UIView()
+        $0.addArrangedSubview(memberIntroStartLabel)
+        $0.addArrangedSubview(memberCountAgeLabel)
+        $0.addArrangedSubview(memberIntroLastLabel)
+        $0.addArrangedSubview(spacingView)
         return $0
     }(UIStackView())
 
-    private lazy var bandMembeStackView: UIStackView = {
+    private lazy var bandMemberStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandMemberTitleLable,bandMemberInfoLableStack]))
+    }(UIStackView(arrangedSubviews: [bandMemberTitleLabel,bandMemberInfoLabelStack]))
     
-    private let bandSongTitleLable = BasicLabel(
+    private let bandSongTitleLabel = BasicLabel(
         contentText: "합주곡 🎤",
         fontStyle: .headline01,
         textColorInfo: .white
@@ -74,15 +74,15 @@ class BandInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandSongTitleLable,bandSongListView]))
+    }(UIStackView(arrangedSubviews: [bandSongTitleLabel,bandSongListView]))
     
-    private let bandIntroTitleLable = BasicLabel(
+    private let bandIntroTitleLabel = BasicLabel(
         contentText: "밴드 소개 📢",
         fontStyle: .headline01,
         textColorInfo: .white
     )
     
-    private let bandIntroLable: PaddingLabel = {
+    private let bandIntroLabel: PaddingLabel = {
         $0.font = UIFont.setFont(.content)
         $0.numberOfLines = 0
         $0.textColor = .white
@@ -99,9 +99,9 @@ class BandInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandIntroTitleLable, bandIntroLable]))
+    }(UIStackView(arrangedSubviews: [bandIntroTitleLabel, bandIntroLabel]))
     
-    private let bandSNSTitleLable = BasicLabel(
+    private let bandSNSTitleLabel = BasicLabel(
         contentText: "밴드 SNS 🙌",
         fontStyle: .headline01,
         textColorInfo: .white
@@ -114,14 +114,14 @@ class BandInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandSNSTitleLable, bandSNSListView]))
+    }(UIStackView(arrangedSubviews: [bandSNSTitleLabel, bandSNSListView]))
     
     private lazy var bandInfoStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 60
         $0.distribution = .fill
         return $0
-    }(UIStackView(arrangedSubviews: [bandMembeStackView, bandSongStackView, bandIntroStackView, bandSNSStackView]))
+    }(UIStackView(arrangedSubviews: [bandMemberStackView, bandSongStackView, bandIntroStackView, bandSNSStackView]))
     
     // MARK: - Init
     
@@ -172,11 +172,11 @@ class BandInfomationView: UIView {
     private func setBandInfo() {
         if bandIntro == nil{
             let emptyView = EmptyView(type: .noBand)
-            bandIntroStackView.removeArrangedSubview(bandIntroLable)
+            bandIntroStackView.removeArrangedSubview(bandIntroLabel)
             bandIntroStackView.addArrangedSubview(emptyView)
             
         } else {
-            bandIntroLable.text = bandIntro
+            bandIntroLabel.text = bandIntro
         }
     }
     
@@ -187,7 +187,7 @@ class BandInfomationView: UIView {
             items: bandMemberCollectionViewItem,
             isNeedHeader: false
         )
-        bandMembeStackView.addArrangedSubview(bandMemberInfoCollectView)
+        bandMemberStackView.addArrangedSubview(bandMemberInfoCollectView)
         bandMemberInfoCollectView.delegate = self
         bandMemberInfoCollectView.constraint(
             .widthAnchor,
