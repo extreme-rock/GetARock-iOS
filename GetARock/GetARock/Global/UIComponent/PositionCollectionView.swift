@@ -20,14 +20,14 @@ enum Item: Hashable {
     case position(Position)
     case plusPosition
     
-    func name() -> String? {
+    func name() -> String {
         switch self {
         case .bandMember(let bandMember):
             return bandMember.userName
         case .position(let position):
             return position.instrumentName
         case .plusPosition:
-            return nil
+            return ""
         }
     }
 }
@@ -282,21 +282,10 @@ extension PositionCollectionView: UICollectionViewDelegate {
 
 extension PositionCollectionView {
     func getSelectedInstruments() -> [InstrumentList] {
-        var selectedInstruments: [InstrumentList] = []
         let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
-        for indexPath in selectedIndexPaths {
-            guard let cell =  self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return [] }
-            selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
+        let selectedInstruments2: [InstrumentList] = selectedIndexPaths.map {
+            InstrumentList(name: self.items[$0.item].name())
         }
-        
-        return selectedInstruments
-        
-        // 리팩토링 제안
-//        let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
-//        let selectedInstruments2: [InstrumentList] = selectedIndexPaths.map {
-//            guard let name = self.items[$0.item].name() else { return }
-//            InstrumentList(name: name)
-//        }
-//        return selectedInstruments2
+        return selectedInstruments2
     }
 }
