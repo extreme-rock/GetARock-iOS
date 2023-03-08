@@ -26,6 +26,29 @@ final class MypageTopInfoView: UIView {
         textColorInfo: .white)
     )
     
+    //TODO: - 추후 본인의 계정에만 노출 되어야함
+    private let modifyButton: UIButton = {
+        let action = UIAction {_ in
+            print("수정버튼 눌림 ^^")
+        }
+        $0.setTitle("수정", for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        $0.setTitleColor(.blue02, for: .normal)
+        $0.addAction(action, for: .touchUpInside)
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
+                                                   for: .horizontal)
+        return $0
+    }(UIButton())
+    
+    private lazy var userNameStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.alignment = .top
+        return $0
+    }(UIStackView(arrangedSubviews: [userNameLabel, modifyButton]))
+    
+    
     //TODO: - 데이크 PR 반영되면 성별하고 나이 한국어로 변환할 예정!
     private lazy var userInfoLabel = BasicLabel(
         contentText: "\(userGender) ⏐ \(userAge)",
@@ -36,7 +59,7 @@ final class MypageTopInfoView: UIView {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [userNameLabel,userInfoLabel]))
+    }(UIStackView(arrangedSubviews: [userNameStackView,userInfoLabel]))
     
     private let divider: UIView = {
         $0.backgroundColor = .dark02
