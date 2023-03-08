@@ -48,7 +48,7 @@ final class SignUpNetworkManager {
         dataTask.resume()
     }
     
-    static func putUserInformation(user: User) async throws {
+    static func putUserInformation(user: User, completion: @escaping((Result<Bool, Error>) -> Void)) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"
@@ -75,11 +75,11 @@ final class SignUpNetworkManager {
             } else if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case (200...299):
-                    print("success")
+                    completion(.success(true))
                 case (300...599):
-                    print(NetworkError.failedRequest(status: httpResponse.statusCode))
+                    completion(.failure(NetworkError.failedRequest(status: httpResponse.statusCode)))
                 default:
-                    print("unknown")
+                    completion(.failure(NetworkError.unknown))
                 }
             }
         }

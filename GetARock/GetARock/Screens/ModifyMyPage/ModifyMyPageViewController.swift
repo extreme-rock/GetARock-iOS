@@ -144,8 +144,15 @@ final class ModifyMyPageViewController: UIViewController {
             }
             
             Task {
-                try await SignUpNetworkManager.putUserInformation(user: userInfo)
-                self.dismiss(animated: true)
+                try await SignUpNetworkManager.putUserInformation(user: userInfo, completion: { result in
+                    switch result {
+                    case .success(_):
+                        self.dismiss(animated: true)
+                    case .failure(let error):
+                        // TODO: error에 따른 대응
+                        print(error)
+                    }
+                })
             }
         }
     }
