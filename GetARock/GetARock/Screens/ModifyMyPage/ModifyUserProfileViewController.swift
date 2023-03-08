@@ -230,19 +230,19 @@ final class ModifyUserProfileViewController: UIViewController {
         guard let age = Age.CodingKeys(rawValue: userInfo.age)?.inKorean,
               let gender = Gender.CodingKeys(rawValue: userInfo.gender)?.inKorean else { return }
         
-        self.userNamingTextField.writeText(with: userInfo.name)
+        self.userNamingTextField.configure(with: userInfo.name)
         self.userNamingTextField.setupAvailableName(name: userInfo.name)
-        self.userIntroTextView.writeText(with: userInfo.introduction)
+        self.userIntroTextView.configure(with: userInfo.introduction)
         self.ageSelectCollectionView.selectItem(with: age)
         self.genderSelectCollectionView.selectItem(with: gender)
         userInfo.snsList.forEach { sns in
             switch sns.type {
             case .youtube:
-                self.youtubeTextField.writeText(with: sns.link)
+                self.youtubeTextField.configure(with: sns.link)
             case .instagram:
-                self.instagramTextField.writeText(with: sns.link)
+                self.instagramTextField.configure(with: sns.link)
             case .soundcloud:
-                self.soundCloudTextField.writeText(with: sns.link)
+                self.soundCloudTextField.configure(with: sns.link)
             }
         }
     }

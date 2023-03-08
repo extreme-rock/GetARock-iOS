@@ -131,7 +131,7 @@ final class TextLimitTextField: UIView {
         return text
     }
     
-    func writeText(with text: String) {
+    func configure(with text: String) {
         self.textField.text = text
     }
     

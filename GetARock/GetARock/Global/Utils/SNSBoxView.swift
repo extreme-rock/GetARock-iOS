@@ -128,7 +128,7 @@ final class SNSBoxView: UIView {
         }
     }
     
-    func writeText(with text: String?) {
+    func configure(with text: String?) {
         guard let text else { return }
         self.textField.text = text
     }
