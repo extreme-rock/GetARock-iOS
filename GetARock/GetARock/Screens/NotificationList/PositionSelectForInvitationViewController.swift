@@ -56,12 +56,6 @@ final class PositionSelectForInvitationViewController: BaseViewController {
         positionCollectionView.delegate = self
     }
     
-    private func updateDataSourceIndex(from startIndex: Int, endIndex: Int) {
-        for index in startIndex..<endIndex {
-            positionCollectionView.updateCellIndex(at: IndexPath(item: index, section: 0))
-        }
-    }
-    
     private func setupLayout() {
         self.view.addSubview(positionCollectionView)
         self.view.addSubview(confirmSignUpButton)
