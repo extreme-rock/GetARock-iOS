@@ -50,8 +50,8 @@ final class BandDetailViewController: BaseViewController {
         super.viewDidLoad()
         Task {
             await fetchBandData()
+            setupLayout()
         }
-        setupLayout()
     }
     
     deinit {
