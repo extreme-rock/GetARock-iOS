@@ -11,6 +11,8 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - Property
     
+    private var tableViewHeight: NSLayoutConstraint? = nil
+    
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
     private var bandID = "71"
     private var bandData = BandInformationVO(
@@ -43,7 +45,8 @@ final class BandDetailViewController: BaseViewController {
     
     lazy var bandTopInfoView = BandTopInfoView(name: bandData.name, address: bandData.address)
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
-    
+    private lazy var bandSelectToggleTableView = BandSelectToggleTableView(bandNames: ["모여락", "락락"])
+
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -75,6 +78,26 @@ final class BandDetailViewController: BaseViewController {
             bottom: self.view.bottomAnchor,
             trailing: self.view.trailingAnchor
         )
+        
+        view.addSubview(bandSelectToggleTableView)
+        bandSelectToggleTableView.constraint(
+            top: self.view.topAnchor,
+            leading: self.view.leadingAnchor,
+            padding: UIEdgeInsets(top: 84, left: 17, bottom: 0, right: 0)
+        )
+        
+        self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: 88)
+        self.tableViewHeight?.isActive = true
+        bandSelectToggleTableView.constraint(.widthAnchor, constant: 250)
+        print(self.bandSelectToggleTableView.contentSize)
+        DispatchQueue.main.async {
+            print(self.bandSelectToggleTableView.contentSize)
+            let size = self.bandSelectToggleTableView.contentSize
+            self.tableViewHeight?.isActive = false
+            self.bandSelectToggleTableView.constraint(.heightAnchor, constant: size.height)
+            self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: size.height)
+            self.tableViewHeight?.isActive = true
+        }
     }
 }
 
@@ -102,3 +125,4 @@ extension BandDetailViewController {
     }
     
 }
+

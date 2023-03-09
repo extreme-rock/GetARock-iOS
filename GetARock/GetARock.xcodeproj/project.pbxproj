@@ -13,6 +13,7 @@
 		4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */; };
 		4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */; };
 		4A18E49429B9A53F00617524 /* BandSelectToggleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A18E49329B9A53F00617524 /* BandSelectToggleTableView.swift */; };
+		4A18E49629B9BACC00617524 /* BandSelectToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A18E49529B9BACC00617524 /* BandSelectToggleTableViewCell.swift */; };
 		4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */; };
 		4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20271029863D800042EEFA /* ModifyPageSegmentedControl.swift */; };
 		4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20271229865BEB0042EEFA /* InformationPageSegmentedControl.swift */; };
@@ -155,6 +156,7 @@
 		4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
 		4A18E49329B9A53F00617524 /* BandSelectToggleTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandSelectToggleTableView.swift; sourceTree = "<group>"; };
+		4A18E49529B9BACC00617524 /* BandSelectToggleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandSelectToggleTableViewCell.swift; sourceTree = "<group>"; };
 		4A20270C2983FF410042EEFA /* NegativeDefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NegativeDefaultButton.swift; sourceTree = "<group>"; };
 		4A20271029863D800042EEFA /* ModifyPageSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPageSegmentedControl.swift; sourceTree = "<group>"; };
 		4A20271229865BEB0042EEFA /* InformationPageSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationPageSegmentedControl.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */,
 				7B1F6D2529AF82FF00FC00D5 /* BandInfomationView.swift */,
 				4A18E49329B9A53F00617524 /* BandSelectToggleTableView.swift */,
+				4A18E49529B9BACC00617524 /* BandSelectToggleTableViewCell.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -960,6 +963,7 @@
 				B887184A29AC5379000026ED /* DeviceTokenDTO.swift in Sources */,
 				4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */,
 				A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */,
+				4A18E49629B9BACC00617524 /* BandSelectToggleTableViewCell.swift in Sources */,
 				4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */,
 				4AC4CE41297FB85B00BB823C /* Position.swift in Sources */,
 				B8B17C522980B93300806899 /* Location.swift in Sources */,

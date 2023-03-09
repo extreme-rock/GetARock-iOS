@@ -7,18 +7,28 @@
 
 import UIKit
 
-final class BandSelectToggleTableView: UIView {
-// 밴드 이름을 전달 받음,
-    // 해당 이름이 눌리면 delegate로 바로 넣으면 될듯 bandDetailView에
+final class BandSelectToggleTableView: UITableView {
+    
     // MARK: - Property
     private let bandNames: [String]
+    
     // MARK: - View
     
     // MARK: - Init
     
     init(bandNames: [String]) {
         self.bandNames = bandNames
-        super.init(frame: .zero)
+        super.init(frame: .zero, style: .plain)
+        self.setupLayout()
+        self.attribute()
+        delegate = self
+        dataSource = self
+        backgroundColor = .clear
+        layer.cornerRadius = 10
+        separatorInset = .init(top: 0, left: 15, bottom: 0, right: 15)
+        separatorColor = .dark04
+        isScrollEnabled = false
+        register(BandSelectToggleTableViewCell.self, forCellReuseIdentifier: BandSelectToggleTableViewCell.classIdentifier)
     }
     
     required init?(coder: NSCoder) {
@@ -26,4 +36,31 @@ final class BandSelectToggleTableView: UIView {
     }
     
     // MARK: - Method
+    
+    private func attribute() {
+        self.backgroundColor = .clear
+    }
+    
+    private func setupLayout() {
+        self.constraint(.widthAnchor, constant: 250)
+    }
+}
+
+extension BandSelectToggleTableView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.bandNames.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = self.dequeueReusableCell(withIdentifier: BandSelectToggleTableViewCell.classIdentifier, for: indexPath) as? BandSelectToggleTableViewCell else { return UITableViewCell() }
+        cell.configure(with: self.bandNames[indexPath.row])
+        cell.selectionStyle = .none
+        return cell
+    }
+}
+
+extension BandSelectToggleTableView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     print(indexPath)
+    }
 }
