@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import UIKit
 
 final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
@@ -24,11 +23,6 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         contentText: "",
         fontStyle: .headline01,
         textColorInfo: .white)
-
-    private let instrumentListLabel: BasicLabel = BasicLabel(
-        contentText: "",
-        fontStyle: .content,
-        textColorInfo: .gray02)
     
     private let userGenderLabel: BasicLabel = BasicLabel(
         contentText: "",
@@ -53,7 +47,20 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
                                      horizontalSeperator,
                                      userAgeLabel]))
 
-    private lazy var leftView: UIImageView = {
+    private let instrumentListLabel: BasicLabel = BasicLabel(
+        contentText: "",
+        fontStyle: .content,
+        textColorInfo: .gray02)
+
+    private lazy var userInfoVStack: UIStackView = {
+        $0.axis = .vertical
+        $0.distribution = .fillProportionally
+        $0.spacing = 10
+        return $0
+    }(UIStackView(arrangedSubviews: [userDetailInfoHstack,
+                                     instrumentListLabel]))
+
+    private lazy var memberStateIcon: UIImageView = {
         $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
@@ -76,10 +83,16 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         $0.contentMode = .scaleAspectFit
         $0.image = ImageLiteral.checkmarkCircleSymbol
         $0.tintColor = .gray02
-        $0.constraint(.widthAnchor, constant: 25)
-        $0.constraint(.heightAnchor, constant: 25)
         return $0
     }(UIImageView())
+
+    private lazy var contentStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = 20
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
+        return $0
+    }(UIStackView(arrangedSubviews: [memberStateIcon, userInfoVStack, leaderButton, selectButton]))
 
     //tableview의 edit 상태에 따라 모든 셀은 edit 프로퍼티가 달라짐
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -98,7 +111,7 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.isSelectedState = false
-        self.leftView.image = nil
+        self.memberStateIcon.image = nil
         self.userNameLabel.text = nil
         self.userGenderLabel.text = nil
         self.userAgeLabel.text = nil
@@ -112,42 +125,14 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     }
 
     private func setupLayout() {
+        contentView.addSubview(contentStackView)
+        contentStackView.constraint(to: contentView)
 
-        contentView.addSubview(leftView)
-        leftView.constraint(.widthAnchor, constant: 35)
-        leftView.constraint(.heightAnchor, constant: 35)
-        leftView.constraint(leading: contentView.leadingAnchor,
-                            centerY: contentView.centerYAnchor,
-                            padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        leaderButton.constraint(.widthAnchor, constant: 40)
+        leaderButton.constraint(.heightAnchor, constant: 40)
 
-        contentView.addSubview(userNameLabel)
-        userNameLabel.constraint(top: leftView.topAnchor,
-                                 leading: leftView.trailingAnchor,
-                                 padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0))
-
-        contentView.addSubview(instrumentListLabel)
-        instrumentListLabel.constraint(top: userNameLabel.bottomAnchor,
-                                       leading: userNameLabel.leadingAnchor,
-                                       padding: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20))
-
-        contentView.addSubview(leaderButton)
-        leaderButton.constraint(.widthAnchor, constant: 25)
-        leaderButton.constraint(.heightAnchor, constant: 25)
-        leaderButton.constraint(trailing: contentView.trailingAnchor,
-                                centerY: contentView.centerYAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 26))
-
-        contentView.addSubview(selectButton)
-        selectButton.constraint(trailing: contentView.trailingAnchor,
-                                centerY: contentView.centerYAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 26))
-
-        contentView.addSubview(userDetailInfoHstack)
-        userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor,
-                                        bottom: userNameLabel.bottomAnchor,
-                                        padding: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0))
-
-        
+        memberStateIcon.constraint(.widthAnchor, constant: 40)
+        memberStateIcon.constraint(.heightAnchor, constant: 40)
     }
 
     func configure(data: SearchedUserInfo) {
@@ -157,12 +142,12 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
 
         switch data.memberState {
         case .admin:
-            leftView.image = ImageLiteral.leaderIcon
+            memberStateIcon.image = ImageLiteral.leaderIcon
             leaderButton.tintColor = .systemPurple
         case .none:
-            leftView.image = ImageLiteral.memberIcon
+            memberStateIcon.image = ImageLiteral.memberIcon
         case .annonymous:
-            leftView.image = ImageLiteral.unRegisteredMemberIcon
+            memberStateIcon.image = ImageLiteral.unRegisteredMemberIcon
             leaderButton.removeFromSuperview()
         case .inviting:
             leaderButton.removeFromSuperview()
@@ -186,12 +171,12 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     
     func abandonLeaderPositionState() {
         self.leaderButton.tintColor = .gray01
-        self.leftView.image = ImageLiteral.memberIcon
+        self.memberStateIcon.image = ImageLiteral.memberIcon
     }
     
     func getLeaderPositionState() {
         self.leaderButton.tintColor = .systemPurple
-        self.leftView.image = ImageLiteral.leaderIcon
+        self.memberStateIcon.image = ImageLiteral.leaderIcon
     }
 
     func setLeaderButtonAction(action: @escaping ()-> Void) {
