@@ -30,6 +30,7 @@ enum ImageLiteral {
     static var checkMarkCircleFillSymbol: UIImage { .load(systemName: "checkmark.circle.fill") }
     static var chatBubbleSymbol: UIImage { .load(systemName: "bubble.left.and.bubble.right.fill") }
     static var clockArrowCirclePathSymbol: UIImage { .load(systemName: "clock.arrow.circlepath") }
+    static var scopeSymbol: UIImage { .load(systemName: "scope") }
 
     static var exclamationMarkCircleSymbol: UIImage { .load(systemName: "exclamationmark.circle") }
 

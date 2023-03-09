@@ -13,4 +13,5 @@ extension Notification.Name {
     static let deselectAllPosition = Notification.Name("deselectAllPosition")
     static let hideDeselectAllPositionButton = Notification.Name("hideDeselectAllPositionButton")
     static let didTapPositionItem = Notification.Name("didTapPositionItem")
+    static let loadBandData = NSNotification.Name("LoadBandData")
 }

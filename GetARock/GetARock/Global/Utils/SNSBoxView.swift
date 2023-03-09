@@ -13,6 +13,17 @@ final class SNSBoxView: UIView {
         case youTube = "youtube.com/channel/"
         case instagram = "instagram.com/"
         case soundCloud = "soundcloud.com/"
+        
+        var snsType: SnsType {
+            switch self {
+            case .youTube:
+                return .youtube
+            case .instagram:
+                return .instagram
+            case .soundCloud:
+                return .soundcloud
+            }
+        }
     }
 
     private let type: SNSType
@@ -105,5 +116,20 @@ final class SNSBoxView: UIView {
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func inputText() -> SnsList {
+        if let text = self.textField.text {
+            let link = self.type.rawValue + text
+            let snsList = SnsList(type: type.snsType, link: link)
+            return snsList
+        } else {
+            return SnsList(type: self.type.snsType, link: nil)
+        }
+    }
+    
+    func configureText(with text: String?) {
+        guard let text else { return }
+        self.textField.text = text
     }
 }
