@@ -109,7 +109,7 @@ extension PositionSelectForInvitationViewController {
             memberId: 0,
             memberInstrument: getSelectedInstrumentList(),
             completion: {
-                self.present(BandCreationFinishGuideViewController(), animated: true)
+                //TODO: 지도 View로 navigate하도록 바꿔야함
             })
     }
 }
