@@ -44,6 +44,11 @@ final class PositionSelectForInvitationViewController: BaseViewController {
         setupLayout()
         attribute()
         configureDelegate()
+        setObserver()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - Method
@@ -54,6 +59,23 @@ final class PositionSelectForInvitationViewController: BaseViewController {
     
     private func configureDelegate() {
         positionCollectionView.delegate = self
+    }
+    
+    private func setObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(setButtonEnableState),
+            name: Notification.Name.didTapPositionItem,
+            object: nil
+        )
+    }
+    
+    @objc private func setButtonEnableState() {
+        if positionCollectionView.getSelectedInstruments().count > 0 {
+            confirmSignUpButton.isEnabled = true
+        } else {
+            confirmSignUpButton.isEnabled = false
+        }
     }
     
     private func setupLayout() {

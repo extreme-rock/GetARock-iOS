@@ -148,6 +148,12 @@ final class PositionCollectionView: UIView {
             name: Notification.Name.hideDeselectAllPositionButton,
             object: nil)
     }
+    
+    private func postDidTapPositionItem() {
+        NotificationCenter.default.post(
+            name: Notification.Name.didTapPositionItem,
+            object: nil)
+    }
 }
 
 // MARK: - diffable
@@ -211,6 +217,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
             postDeselectAllPositionButtonHiddenToggle()
             markMainLabel(indexPath: indexPath)
         }
+        postDidTapPositionItem()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -231,6 +238,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
         if selectedCellCount == 0 {
             postDeselectAllPositionButtonHiddenToggle()
         }
+        postDidTapPositionItem()
     }
     
     private func markMainLabel(indexPath: IndexPath) {
