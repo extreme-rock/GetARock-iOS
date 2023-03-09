@@ -74,6 +74,7 @@
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
 		9A82AF2F29B9FCBA0056315D /* PracticeSongBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82AF2E29B9FCBA0056315D /* PracticeSongBoxView.swift */; };
 		9A82AF3229B9FD130056315D /* PracticeSongCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82AF3129B9FD130056315D /* PracticeSongCardView.swift */; };
+		9A82AF3429B9FDBA0056315D /* AddPracticeSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82AF3329B9FDBA0056315D /* AddPracticeSongViewController.swift */; };
 		9AA0BB4F29A4E7FD00871A05 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB4E29A4E7FD00871A05 /* NotificationListViewController.swift */; };
 		9AA0BB5129A4E81700871A05 /* NotificationListVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */; };
 		9AA0BB5329A4E83400871A05 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */; };
@@ -222,6 +223,7 @@
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
 		9A82AF2E29B9FCBA0056315D /* PracticeSongBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongBoxView.swift; sourceTree = "<group>"; };
 		9A82AF3129B9FD130056315D /* PracticeSongCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongCardView.swift; sourceTree = "<group>"; };
+		9A82AF3329B9FDBA0056315D /* AddPracticeSongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPracticeSongViewController.swift; sourceTree = "<group>"; };
 		9AA0BB4E29A4E7FD00871A05 /* NotificationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListViewController.swift; sourceTree = "<group>"; };
 		9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListVO.swift; sourceTree = "<group>"; };
 		9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 			children = (
 				9A82AF2E29B9FCBA0056315D /* PracticeSongBoxView.swift */,
 				9A82AF3129B9FD130056315D /* PracticeSongCardView.swift */,
+				9A82AF3329B9FDBA0056315D /* AddPracticeSongViewController.swift */,
 			);
 			path = PracticeSongAddFlow;
 			sourceTree = "<group>";
@@ -999,6 +1002,7 @@
 				9ABDA8CE29B0C03200DE710D /* PositionSelectForInvitationViewController.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				9ACA5858299B6CEE00C6C2BC /* SNSBoxView.swift in Sources */,
+				9A82AF3429B9FDBA0056315D /* AddPracticeSongViewController.swift in Sources */,
 				7B236A8529854196006AE385 /* IconImageView.swift in Sources */,
 				7B56DC3E29A36F2F00672EDD /* UIView+Extension.swift in Sources */,
 				7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */,
