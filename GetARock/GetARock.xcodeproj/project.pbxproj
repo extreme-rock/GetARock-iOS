@@ -685,11 +685,8 @@
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
-				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
-				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */,
 				7B80E5DD29A5F57F0050F010 /* BandInformationVO.swift */,
-				7BEB09D9299CFEC20076A82F /* Comment.swift */,
 				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */,
@@ -1210,7 +1207,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KBPH295XX9;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetARock/Global/Supports/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";

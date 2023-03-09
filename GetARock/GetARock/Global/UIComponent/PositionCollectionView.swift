@@ -164,7 +164,8 @@ final class PositionCollectionView: UIView {
         NotificationCenter.default.post(
             name: Notification.Name.didTapPositionItem,
             object: nil)
-            
+    }
+    
     func selectItems(with instrumentList: [InstrumentList]) {
         for instrument in instrumentList {
             guard let index = self.items.firstIndex(where: { $0.name() == instrument.name }) else { return }
@@ -243,7 +244,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedCellIndexPaths.append((indexPath: indexPath,
-                                       isMain: selectedCellIndexPaths.isEmpty ? true : false))
+                                            isMain: selectedCellIndexPaths.isEmpty ? true : false))
         
         let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
         if selectedCellCount == 1 {
@@ -276,12 +277,12 @@ extension PositionCollectionView: UICollectionViewDelegate {
     
     private func markMainLabel(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
-            cell.setupMainLabelLayout()
+        cell.setupMainLabelLayout()
     }
     
     private func removeMainLabel(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
-            cell.removeMainLabel()
+        cell.removeMainLabel()
     }
 }
 
