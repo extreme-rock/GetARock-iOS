@@ -29,7 +29,7 @@ final class SNSButtonView: UIView {
         
         var snsDefaultURL: String {
             switch self {
-            case .youtube: return "https://www.youtube.com/channel/"
+            case .youtube: return "https://www.youtube.com/"
             case .instagram: return "https://www.instagram.com/"
             case .soundCloud: return "https://soundcloud.com/"
             }

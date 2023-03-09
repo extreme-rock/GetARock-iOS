@@ -5,7 +5,6 @@
 //  Created by Mijoo Kim on 2023/01/18.
 //
 
-import SafariServices
 import UIKit
 
 class LandingViewController: UIViewController {
