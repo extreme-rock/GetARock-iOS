@@ -77,6 +77,8 @@
 		9AA0BB5329A4E83400871A05 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */; };
 		9AA0BB5629A4FD1800871A05 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5529A4FD1800871A05 /* Date+Extension.swift */; };
 		9AA4E29529A4975F00CED0AE /* BandMemberAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA4E29429A4975F00CED0AE /* BandMemberAddViewController.swift */; };
+		9ABDA8CE29B0C03200DE710D /* PositionSelectForInvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABDA8CD29B0C03200DE710D /* PositionSelectForInvitationViewController.swift */; };
+		9ABDA8D029B0C19800DE710D /* BandCreationFinishGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABDA8CF29B0C19800DE710D /* BandCreationFinishGuideViewController.swift */; };
 		9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */; };
 		9ACA5858299B6CEE00C6C2BC /* SNSBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA5857299B6CEE00C6C2BC /* SNSBoxView.swift */; };
 		9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA5859299B71DD00C6C2BC /* MemberState.swift */; };
@@ -221,6 +223,8 @@
 		9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		9AA0BB5529A4FD1800871A05 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		9AA4E29429A4975F00CED0AE /* BandMemberAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandMemberAddViewController.swift; sourceTree = "<group>"; };
+		9ABDA8CD29B0C03200DE710D /* PositionSelectForInvitationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectForInvitationViewController.swift; sourceTree = "<group>"; };
+		9ABDA8CF29B0C19800DE710D /* BandCreationFinishGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationFinishGuideViewController.swift; sourceTree = "<group>"; };
 		9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicBoxView.swift; sourceTree = "<group>"; };
 		9ACA5857299B6CEE00C6C2BC /* SNSBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSBoxView.swift; sourceTree = "<group>"; };
 		9ACA5859299B71DD00C6C2BC /* MemberState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberState.swift; sourceTree = "<group>"; };
@@ -378,6 +382,7 @@
 				9ACA5857299B6CEE00C6C2BC /* SNSBoxView.swift */,
 				A9EDD38D299A3114003F5392 /* BasicDataModel.swift */,
 				4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */,
+				9ABDA8CF29B0C19800DE710D /* BandCreationFinishGuideViewController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -414,6 +419,7 @@
 			children = (
 				9AA0BB4E29A4E7FD00871A05 /* NotificationListViewController.swift */,
 				9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */,
+				9ABDA8CD29B0C03200DE710D /* PositionSelectForInvitationViewController.swift */,
 			);
 			path = NotificationList;
 			sourceTree = "<group>";
@@ -679,11 +685,8 @@
 				B8B17C512980B93300806899 /* Location.swift */,
 				B8B17C532980B99900806899 /* Coordinate.swift */,
 				B8B17C5C29823AC900806899 /* Event.swift */,
-				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
-				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */,
 				7B80E5DD29A5F57F0050F010 /* BandInformationVO.swift */,
-				7BEB09D9299CFEC20076A82F /* Comment.swift */,
 				9AFE014629990FE0004B0BCF /* BandCreationDTO.swift */,
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */,
@@ -978,6 +981,7 @@
 				7B64C25B2983CFFE00E95911 /* SongListView.swift in Sources */,
 				4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */,
 				4A63BE5629A604BC00A30CA8 /* UILabel+Extension.swift in Sources */,
+				9ABDA8CE29B0C03200DE710D /* PositionSelectForInvitationViewController.swift in Sources */,
 				B88E1B9F2977A70E006072B7 /* AppDelegate.swift in Sources */,
 				9ACA5858299B6CEE00C6C2BC /* SNSBoxView.swift in Sources */,
 				7B236A8529854196006AE385 /* IconImageView.swift in Sources */,
@@ -987,6 +991,7 @@
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
 				9AA0BB5329A4E83400871A05 /* NotificationTableViewCell.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
+				9ABDA8D029B0C19800DE710D /* BandCreationFinishGuideViewController.swift in Sources */,
 				B8B17C5D29823AC900806899 /* Event.swift in Sources */,
 				A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */,
 				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
@@ -1202,7 +1207,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KBPH295XX9;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetARock/Global/Supports/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
