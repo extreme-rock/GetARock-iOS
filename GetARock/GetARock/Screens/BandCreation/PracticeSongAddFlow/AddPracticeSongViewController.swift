@@ -18,9 +18,9 @@ final class AddPracticeSongViewController: BaseViewController {
             addPracticeSongButton.configuration?.title = "합주곡 추가\(numberOfSong)/3"
             addPracticeSongButton.configuration?.attributedTitle?.font = UIFont.setFont(.contentBold)
             if numberOfSong == 3 {
-                addPracticeSongButton.isEnabled = false
+                addPracticeSongButton.isHidden = true
             } else {
-                addPracticeSongButton.isEnabled = true
+                addPracticeSongButton.isHidden = false
             }
         }
     }
@@ -44,38 +44,36 @@ final class AddPracticeSongViewController: BaseViewController {
         return $0
     }(UIScrollView())
     
-    private lazy var addPracticeSongButton: DefaultButton = {
+    private lazy var addPracticeSongButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.plusSymbol
         configuration.title = "합주곡 추가 \(numberOfSong)/3"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 10
-        
-        let button = DefaultButton(configuration: configuration)
-        button.setBackgroundColor(.dark04, for: .disabled)
+        let button = UIButton(configuration: configuration)
         button.tintColor = .white
-        button.constraint(.heightAnchor, constant: 55)
+        button.backgroundColor = .dark02
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.gray02.cgColor
+        button.constraint(.heightAnchor, constant: 50)
         button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
         return button
     }()
     
-    private lazy var completeButton: DefaultButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.title = "추가"
-        configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
-        let button = DefaultButton(configuration: configuration)
-        button.tintColor = .white
-        button.constraint(.heightAnchor, constant: 55)
-        button.addTarget(self, action: #selector(didTapCompleteButton), for: .touchUpInside)
-        return button
-    }()
+    private lazy var addCompleteButton: BottomButton = {
+        $0.setTitle("추가", for: .normal)
+        $0.isEnabled = false
+        $0.addTarget(self, action: #selector(didTapCompleteButton), for: .touchUpInside)
+        return $0
+    }(BottomButton())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
         attribute()
         setKeyboardDismiss()
-        setNotification()
+        setNotificationObserver()
     }
     
     override func viewDidLayoutSubviews() {
@@ -110,9 +108,9 @@ final class AddPracticeSongViewController: BaseViewController {
                                          trailing: contentView.trailingAnchor,
                                          padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20))
         
-        mainScrollView.addSubview(completeButton)
+        mainScrollView.addSubview(addCompleteButton)
         
-        completeButton.constraint(top: addPracticeSongButton.bottomAnchor,
+        addCompleteButton.constraint(top: addPracticeSongButton.bottomAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
                                   trailing: view.safeAreaLayoutGuide.trailingAnchor,
                                   padding: UIEdgeInsets(top: 40, left: 20, bottom: 10, right: 20))
@@ -132,7 +130,7 @@ final class AddPracticeSongViewController: BaseViewController {
         mainScrollView.addGestureRecognizer(recognizer)
     }
     
-    private func setNotification() {
+    private func setNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(getKeyboardHeight(notification: )),
@@ -160,7 +158,7 @@ extension AddPracticeSongViewController {
         guard contentView.arrangedSubviews.count < 3 else { return }
         let newCard = PracticeSongCardView()
         newCard.setTextFieldDelegate(controller: self)
-        let deleteAction: UIAction = UIAction { [weak self]_ in
+        let deleteAction: UIAction = UIAction { [weak self] _ in
             UIView.animate(withDuration: 0.4, animations: {
                 newCard.alpha = 0 // fade out 애니메이션
             }, completion: { [weak self] _ in
