@@ -81,6 +81,7 @@ final class AddPracticeSongViewController: BaseViewController {
         attribute()
         setKeyboardDismiss()
         setNotificationObserver()
+        setNavigationInlineTitle(title: "합주곡 추가")
     }
     
     override func viewDidLayoutSubviews() {
