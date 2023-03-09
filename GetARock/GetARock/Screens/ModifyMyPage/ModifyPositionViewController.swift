@@ -11,7 +11,16 @@ final class ModifyPositionViewController: UIViewController {
     
     //MARK: - Property
     
-    private var positions: [Item] = []
+    private var positions: [Item] = [
+        .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
+        .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
+        .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
+        .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
+        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
+        .plusPosition
+    ]
+    
+    private var selectedPositions: [InstrumentList] = []
     
     //MARK: - View
     
@@ -24,8 +33,16 @@ final class ModifyPositionViewController: UIViewController {
     
     //MARK: - Init
     
-    init(positions: [Item]) {
-        self.positions = positions
+    init(selectedPositions: [InstrumentList]) {
+        self.selectedPositions = selectedPositions
+        let selectedETCInstrumentList: [InstrumentList] = selectedPositions.filter {
+            !["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
+        }
+        let selectedETCItem: [Item] = selectedETCInstrumentList.map {
+            Item.position(Position(instrumentName: $0.name,
+                                     instrumentImageName: .etc, isETC: true))
+        }
+        self.positions.insert(contentsOf: selectedETCItem, at: self.positions.count - 1)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,6 +63,7 @@ final class ModifyPositionViewController: UIViewController {
         attribute()
         configureDelegate()
         addAllObserver()
+        configureUserPosition()
     }
 
     //MARK: - Method
@@ -58,6 +76,36 @@ final class ModifyPositionViewController: UIViewController {
         positionCollectionView.delegate = self
     }
     
+    private func setupLayout() {
+        self.view.addSubview(positionCollectionView)
+        
+        positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                          leading: view.leadingAnchor,
+                                          bottom: view.bottomAnchor,
+                                          trailing: view.trailingAnchor,
+                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+    }
+    
+    private func configureUserPosition() {
+        DispatchQueue.main.async {
+            self.positionCollectionView.selectItems(with: self.selectedPositions)
+        }
+    }
+    
+    func instrumentList() -> [InstrumentList] {
+        return self.positionCollectionView.getSelectedInstruments()
+    }
+    
+    func checkCompleteButtonEnabledState() -> Bool {
+        let selectedPosition = self.positionCollectionView.getSelectedInstruments()
+        let isSelectedPosition = !selectedPosition.isEmpty
+        return isSelectedPosition
+    }
+}
+
+// MARK: - Observer 관련 Method
+
+extension ModifyPositionViewController {
     private func addAllObserver() {
         addObservePositionPlusButtonTapped()
         addObservePositionDeleteButtonTapped()
@@ -114,18 +162,9 @@ final class ModifyPositionViewController: UIViewController {
         }
     }
     
-    private func setupLayout() {
-        self.view.addSubview(positionCollectionView)
-        
-        positionCollectionView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
-                                          leading: view.leadingAnchor,
-                                          bottom: view.bottomAnchor,
-                                          trailing: view.trailingAnchor,
-                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-    }
-    
-    //TODO: 원래 선택된 친구들 세팅해주는 함수
 }
+
+// MARK: - Delegate
 
 extension ModifyPositionViewController: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
