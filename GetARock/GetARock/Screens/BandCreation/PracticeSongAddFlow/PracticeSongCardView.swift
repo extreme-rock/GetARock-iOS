@@ -8,6 +8,8 @@
 import UIKit
 
 final class PracticeSongCardView: UIStackView {
+    
+    // MARK: - View
 
     lazy var deleteButton: UIButton = {
         $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
@@ -17,7 +19,8 @@ final class PracticeSongCardView: UIStackView {
     
     private let practiceSongName: InformationGuideLabel = InformationGuideLabel(guideText: "합주곡 제목", type: .required)
     
-    private let practiceSongTextField: BasicTextField = {
+    private lazy var practiceSongTextField: BasicTextField = {
+        $0.delegate = self
         $0.constraint(.widthAnchor,
                       constant: BasicComponentSize.width - 40)
         return $0
@@ -31,7 +34,8 @@ final class PracticeSongCardView: UIStackView {
     
     private let artistName: InformationGuideLabel = InformationGuideLabel(guideText: "아티스트", type: .required)
     
-    private let artistNameTextField: BasicTextField = {
+    private lazy var artistNameTextField: BasicTextField = {
+        $0.delegate = self
         $0.constraint(.widthAnchor,
                       constant: BasicComponentSize.width - 20)
         return $0
@@ -62,11 +66,19 @@ final class PracticeSongCardView: UIStackView {
         return $0
     }(UIStackView(arrangedSubviews: [linkLabel, linkDescription, linkTextField]))
     
+    // MARK: - init
+    
     init() {
         super.init(frame: .zero)
         setupLayout()
         attribute()
     }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Method
     
     private func setupLayout() {
         self.addArrangedSubview(practiceSongNameVstack)
@@ -91,10 +103,6 @@ final class PracticeSongCardView: UIStackView {
         deleteButton.isHidden = true
     }
     
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func getArtistName() -> String {
         return artistNameTextField.textField.text ?? ""
     }
@@ -110,3 +118,8 @@ final class PracticeSongCardView: UIStackView {
     }
 }
 
+extension PracticeSongCardView: BasicTextFieldDelegate {
+    func textFieldTextDidChange() {
+        NotificationCenter.default.post(name: Notification.Name.didPracticeCardViewTextFieldChange, object: nil)
+    }
+}
