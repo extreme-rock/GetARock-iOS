@@ -38,11 +38,6 @@ final class BasicTextField: UIView {
         self.addSubview(textField)
         textField.constraint(to: self)
     }
-    
-    func isTextFieldEmpty() -> Bool {
-        guard let isTextFieldEmpty = self.textField.text?.isEmpty else { return true }
-        return isTextFieldEmpty
-    }
 }
 
 extension BasicTextField {
