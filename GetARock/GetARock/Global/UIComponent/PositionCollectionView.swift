@@ -283,10 +283,10 @@ extension PositionCollectionView: UICollectionViewDelegate {
 extension PositionCollectionView {
     func getSelectedInstruments() -> [InstrumentList] {
         let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
-        let selectedInstruments2: [InstrumentList] = selectedIndexPaths.map {
+        let selectedInstruments: [InstrumentList] = selectedIndexPaths.map {
             let index = $0.item
             return InstrumentList(name: self.items[index].name())
         }
-        return selectedInstruments2
+        return selectedInstruments
     }
 }
