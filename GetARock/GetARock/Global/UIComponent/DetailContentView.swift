@@ -108,7 +108,7 @@ final class DetailContentView: UIView {
             
         case .band:
             let bandInfoVC: UIViewController = {
-                let bandInfo = BandInfomationView(
+                let bandInfo = BandInformationView(
                     member: bandData.memberList,
                     song: bandData.songList,
                     intro: bandData.introduction,

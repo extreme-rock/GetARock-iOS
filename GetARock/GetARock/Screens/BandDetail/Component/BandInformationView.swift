@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BandInfomationView: UIView {
+final class BandInformationView: UIView {
     
     // MARK: - Property
     
@@ -31,7 +31,7 @@ final class BandInfomationView: UIView {
         textColorInfo: .white
     )
     
-    private lazy var bandMemberInfoCollectView = PositionCollectionView(
+    private lazy var bandMemberInfoCollectionView = PositionCollectionView(
         cellType: .band,
         items: bandMemberCollectionViewItem,
         isNeedHeader: false
@@ -62,7 +62,7 @@ final class BandInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandMemberTitleLabel,bandMemberInfoLabelStack,bandMemberInfoCollectView]))
+    }(UIStackView(arrangedSubviews: [bandMemberTitleLabel,bandMemberInfoLabelStack,bandMemberInfoCollectionView]))
     
     private let bandSongTitleLabel = BasicLabel(
         contentText: "합주곡 🎤",
@@ -187,11 +187,11 @@ final class BandInfomationView: UIView {
     }
     
     private func setBandMemberCollectionView() {
-        bandMemberInfoCollectView.constraint(
+        bandMemberInfoCollectionView.constraint(
             .widthAnchor,
            constant: UIScreen.main.bounds.width - 32
         )
-        bandMemberInfoCollectView.constraint(
+        bandMemberInfoCollectionView.constraint(
             .heightAnchor,
             constant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
         )
