@@ -213,16 +213,14 @@ final class BandInfomationView: UIView {
            }
        }
        
-       private func checkIsUserState(memberState: MemberState) -> Bool {
-           switch memberState {
-           case .admin:
-               return true
-           case .member:
-               return true
-           default:
-               return false
-           }
-       }
+    private func checkIsUserState(memberState: MemberState) -> Bool {
+            switch memberState {
+            case .admin, .member:
+                return true
+            default:
+                return false
+            }
+        }
        
        private func checkIsLeaderState(memberState: MemberState) -> Bool {
            switch memberState {
