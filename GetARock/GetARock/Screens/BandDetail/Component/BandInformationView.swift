@@ -163,7 +163,7 @@ final class BandInformationView: UIView {
             trailing: self.trailingAnchor
         )
         
-        setBandMemberCollectionView()
+        setLayoutForBandMembeCollectionView()
         setBandInfo()
         scrollView.addSubview(bandInfoStackView)
         bandInfoStackView.constraint(
@@ -186,7 +186,7 @@ final class BandInformationView: UIView {
         }
     }
     
-    private func setBandMemberCollectionView() {
+    private func setLayoutForBandMembeCollectionView() {
         bandMemberInfoCollectionView.constraint(
             .widthAnchor,
            constant: UIScreen.main.bounds.width - 32
@@ -200,7 +200,7 @@ final class BandInformationView: UIView {
     private func makeBandMemberData() {
            let transformedMemberData = bandMember.map {
                BandMember(
-                   isUser: checkIsUserState(memberState: $0.memberState),
+                   isUser: checkMemberState(memberState: $0.memberState),
                    isLeader: checkIsLeaderState(memberState: $0.memberState),
                    userName: $0.name,
                    instrumentImageName: checkInstrumentImage(instrumentList: $0.instrumentList),
@@ -213,7 +213,7 @@ final class BandInformationView: UIView {
            }
        }
        
-    private func checkIsUserState(memberState: MemberState) -> Bool {
+    private func checkMemberState(memberState: MemberState) -> Bool {
             switch memberState {
             case .admin, .member:
                 return true
