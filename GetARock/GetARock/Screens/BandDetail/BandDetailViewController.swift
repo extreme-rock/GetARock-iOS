@@ -43,10 +43,13 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - View
     
-    lazy var bandTopInfoView = BandTopInfoView(name: bandData.name, address: bandData.address)
+    lazy var bandTopInfoView: BandTopInfoView = {
+        $0.delegate = self
+        return $0
+    }(BandTopInfoView(name: bandData.name, address: bandData.address))
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     private lazy var bandSelectToggleTableView = BandSelectToggleTableView(bandNames: ["모여락", "락락"])
-
+    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -54,6 +57,7 @@ final class BandDetailViewController: BaseViewController {
         Task {
             await fetchBandData()
             setupLayout()
+            attribute()
         }
     }
     
@@ -62,6 +66,10 @@ final class BandDetailViewController: BaseViewController {
     }
     
     // MARK: - Method
+    
+    private func attribute() {
+        self.bandSelectToggleTableView.isHidden = true
+    }
     
     private func setupLayout() {
         view.addSubview(bandTopInfoView)
@@ -83,7 +91,7 @@ final class BandDetailViewController: BaseViewController {
         bandSelectToggleTableView.constraint(
             top: self.view.topAnchor,
             leading: self.view.leadingAnchor,
-            padding: UIEdgeInsets(top: 84, left: 17, bottom: 0, right: 0)
+            padding: UIEdgeInsets(top: 54, left: 17, bottom: 0, right: 0)
         )
         
         // MARK: tableViewHeight 설정 플로우
@@ -125,3 +133,8 @@ extension BandDetailViewController {
     
 }
 
+extension BandDetailViewController: BandTopInfoViewDelegate {
+    func didBandSelectButtonTapped(isBandSelectButton: Bool) {
+        self.bandSelectToggleTableView.isHidden = !isBandSelectButton
+    }
+}
