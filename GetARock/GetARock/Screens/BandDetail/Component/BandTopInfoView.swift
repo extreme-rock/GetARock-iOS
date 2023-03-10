@@ -21,7 +21,7 @@ final class BandTopInfoView: UIView {
         return $0
     }(BasicLabel(
         contentText: bandName,
-        fontStyle: .headline04,
+        fontStyle: .nameTitle,
         textColorInfo: .white)
     )
     
