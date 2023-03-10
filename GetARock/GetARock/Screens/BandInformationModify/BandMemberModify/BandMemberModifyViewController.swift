@@ -14,11 +14,11 @@ enum BandMemberModifyTableViewSection {
 }
 
 final class BandMemberModifyViewController: UIViewController {
-
+    
     //MARK: - Property
     
     private let rootViewController: UIViewController
-
+    
     private var isNavigationButtonTapped: Bool = false
     
     private lazy var addedMembers: [SearchedUserInfo] = getTransformedVOData().filter { $0.memberState != .inviting }
@@ -32,14 +32,14 @@ final class BandMemberModifyViewController: UIViewController {
     private var indexPathOfLeaderCell: IndexPath = IndexPath(row: 0, section: 0)
     
     private var selectedCellInformationList: [(indexPath: IndexPath, id: String)] = []
-
+    
     //MARK: - View
     
     private lazy var invitingMemberSectionTitle: BasicLabel = BasicLabel(
         contentText: "초대중인 멤버 (\(self.invitingMembers.count)인)",
         fontStyle: .contentBold,
         textColorInfo: .white)
-
+    
     private lazy var bandMemberTableView: UITableView = {
         $0.register(BandMemberModifyTableViewCell.self,
                     forCellReuseIdentifier: BandMemberModifyTableViewCell.classIdentifier)
@@ -50,9 +50,9 @@ final class BandMemberModifyViewController: UIViewController {
         $0.delegate = self
         return $0
     }(UITableView(frame: .zero, style: .grouped)) // headerview 자체도 같이 스크롤을 위해 설정
-
+    
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> = self.makeDataSource()
-
+    
     private lazy var abandonMemberButton: BottomButton = {
         $0.setTitle("내보내기", for: .normal)
         $0.addTarget(self, action: #selector(didTapAbandonButton), for: .touchUpInside)
@@ -82,13 +82,13 @@ final class BandMemberModifyViewController: UIViewController {
         setupLayout()
         updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         self.isNavigationButtonTapped = false
     }
-
+    
     //MARK: - Methods
-
+    
     private func setupLayout() {
         view.addSubview(contentVstack)
         contentVstack.constraint(to: view)
@@ -98,11 +98,11 @@ final class BandMemberModifyViewController: UIViewController {
         view.backgroundColor = .dark01
         abandonMemberButton.isHidden = true
     }
-
+    
     private func showBottomButton() {
         abandonMemberButton.isHidden = false
     }
-
+    
     private func hideBottomButton() {
         abandonMemberButton.isHidden = true
     }
@@ -110,7 +110,7 @@ final class BandMemberModifyViewController: UIViewController {
 
 //MARK: DiffableDataSource 관련 메소드
 extension BandMemberModifyViewController {
-
+    
     func updateSnapShot(addedMembers: [SearchedUserInfo], invitingMembers: [SearchedUserInfo]) {
         var dataSourceSnapShot: NSDiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<BandMemberModifyTableViewSection, SearchedUserInfo>()
         dataSourceSnapShot.appendSections([.confirmedMembers, .invitingMembers])
@@ -118,19 +118,19 @@ extension BandMemberModifyViewController {
         dataSourceSnapShot.appendItems(invitingMembers, toSection: .invitingMembers)
         self.dataSource.apply(dataSourceSnapShot, animatingDifferences: true)
     }
-
+    
     func makeDataSource() -> UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> {
         return UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in
-
+            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberModifyTableViewCell.classIdentifier, for: indexPath) as? BandMemberModifyTableViewCell else { return UITableViewCell() }
-
+            
             cell.configure(data: cellData)
             if cellData.memberState == .admin {
                 self.updateLeaderPositionIndexPath(indexPath: indexPath)
                 cell.getLeaderPositionState()
             }
             cell.selectionStyle = .none
-
+            
             cell.setLeaderButtonAction {
                 //TODO: Post할 정보에서 리더 정보 바꾸기 필요
                 self.showAlertForChangingLeader(newLeader: cell.nameText()) {
@@ -144,28 +144,31 @@ extension BandMemberModifyViewController {
 
 //MARK: TableView Delegate
 extension BandMemberModifyViewController: UITableViewDelegate {
-
+    
     //MARK: ❗️TableView Header Configuration
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let sectionIdentifier = dataSource.snapshot().sectionIdentifiers[section]
-
+        
         switch sectionIdentifier {
         case .confirmedMembers:
             let addedMemberTableHeader = BandMemberModifyTableViewHeader()
-
+            
             addedMemberTableHeader.setInviteMemberButtonAction {
                 self.setNavigationAttribute(navigationRoot: self.rootViewController)
             }
             // 편집 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingEditButton = {
                 self.bandMemberTableView.isEditing = true
+                // 리더 cell인 경우, 편집 모드시 우측의 선택버튼 숨김처리
+                guard let cell = self.bandMemberTableView.cellForRow(at: self.indexPathOfLeaderCell) as? BandMemberModifyTableViewCell else { return }
+                cell.selectButton.isHidden = true
                 self.showBottomButton()
             }
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
                 self.bandMemberTableView.isEditing = false
-                self.selectedCellInformationList = [] // initialize selected cell
+                self.selectedCellInformationList = [] // 선택된 cell 초기화
                 self.hideBottomButton()
             }
             // init후 초기 action 설정 필요
@@ -174,10 +177,10 @@ extension BandMemberModifyViewController: UITableViewDelegate {
                 addedMemberTableHeader.isEditing = true
                 addedMemberTableHeader.editButton.setTitle("완료", for: .normal)
             }, for: .touchUpInside)
-
+            
             addedMemberTableHeader.configureSectionTitle(with: "밴드 멤버 (\(addedMembers.count)인)")
             return addedMemberTableHeader
-
+            
         case .invitingMembers:
             return invitingMemberSectionTitle
         }
@@ -212,7 +215,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
 
 //MARK: 데이터 추가 삭제 관련 로직
 extension BandMemberModifyViewController {
-
+    
     private func setNavigationAttribute(navigationRoot: UIViewController) {
         let nextViewController = UserSearchViewController()
         // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
@@ -248,10 +251,10 @@ extension BandMemberModifyViewController {
         let alertTitle = "멤버 내보내기"
         let alertMessage = "선택하신 멤버를 내보내시겠습니까?\n더이상 밴드에서 해당 멤버를 확인할 수 없습니다."
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-
+        
         let okayActionTitle = "확인"
         let cancleActionTitle = "취소"
-
+        
         alertController.addAction(UIAlertAction(title: cancleActionTitle, style: .default))
         alertController.addAction(UIAlertAction(title: okayActionTitle, style: .destructive, handler: { _ in
             completion()
@@ -259,26 +262,11 @@ extension BandMemberModifyViewController {
         present(alertController, animated: true)
     }
     
-    private func showAlertForLeaderAbandon() {
-        let alertTitle = "리더는 내보낼 수 없어요!"
-        let alertMessage = "리더를 양도하신 후 내보내기를 진행해주세요"
-        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-        let okayActionTitle = "확인"
-        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
-        present(alertController, animated: true)
-    }
-    
     @objc
     private func didTapAbandonButton() {
-        let isLeaderIncluded: Bool = self.selectedCellInformationList.map({ $0.indexPath }).contains(self.indexPathOfLeaderCell)
-        
-        if isLeaderIncluded {
-            self.showAlertForLeaderAbandon()
-        } else {
-            self.showAlertForAbandoningMembers(completion: {
-                self.abandonMembers()
-            })
-        }
+        self.showAlertForAbandoningMembers(completion: {
+            self.abandonMembers()
+        })
     }
 }
 
@@ -334,16 +322,16 @@ extension BandMemberModifyViewController {
     private func updateLeaderPositionIndexPath(indexPath: IndexPath) {
         indexPathOfLeaderCell = indexPath
     }
-
+    
     private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
         let alertTitle = "리더 권한 양도"
         let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-
+        
         let changeActionTitle = "양도"
         let okayActionTitle = "취소"
-
+        
         alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
         alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
             completion()
