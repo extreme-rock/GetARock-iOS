@@ -21,14 +21,7 @@ final class BandSelectToggleTableView: UITableView {
         super.init(frame: .zero, style: .plain)
         self.setupLayout()
         self.attribute()
-        delegate = self
-        dataSource = self
-        backgroundColor = .clear
-        layer.cornerRadius = 10
-        separatorInset = .init(top: 0, left: 15, bottom: 0, right: 15)
-        separatorColor = .dark04
-        isScrollEnabled = false
-        register(BandSelectToggleTableViewCell.self, forCellReuseIdentifier: BandSelectToggleTableViewCell.classIdentifier)
+        self.configureTableView()
     }
     
     required init?(coder: NSCoder) {
@@ -39,6 +32,17 @@ final class BandSelectToggleTableView: UITableView {
     
     private func attribute() {
         self.backgroundColor = .clear
+        backgroundColor = .clear
+        layer.cornerRadius = 10
+        separatorInset = .init(top: 0, left: 15, bottom: 0, right: 15)
+        separatorColor = .dark04
+        isScrollEnabled = false
+    }
+    
+    private func configureTableView() {
+        delegate = self
+        dataSource = self
+        register(BandSelectToggleTableViewCell.self, forCellReuseIdentifier: BandSelectToggleTableViewCell.classIdentifier)
     }
     
     private func setupLayout() {
@@ -61,6 +65,6 @@ extension BandSelectToggleTableView: UITableViewDataSource {
 
 extension BandSelectToggleTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     print(indexPath)
+     
     }
 }

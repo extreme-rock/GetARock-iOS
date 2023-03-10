@@ -86,15 +86,14 @@ final class BandDetailViewController: BaseViewController {
             padding: UIEdgeInsets(top: 84, left: 17, bottom: 0, right: 0)
         )
         
+        // MARK: tableViewHeight 설정 플로우
         self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: 88)
         self.tableViewHeight?.isActive = true
         bandSelectToggleTableView.constraint(.widthAnchor, constant: 250)
-        print(self.bandSelectToggleTableView.contentSize)
+        
         DispatchQueue.main.async {
-            print(self.bandSelectToggleTableView.contentSize)
             let size = self.bandSelectToggleTableView.contentSize
             self.tableViewHeight?.isActive = false
-            self.bandSelectToggleTableView.constraint(.heightAnchor, constant: size.height)
             self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: size.height)
             self.tableViewHeight?.isActive = true
         }
