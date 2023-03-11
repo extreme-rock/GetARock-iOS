@@ -31,7 +31,7 @@ final class BandMemberModifyViewController: UIViewController {
     
     private var indexPathOfLeaderCell: IndexPath = IndexPath(row: 0, section: 0)
     
-    private var selectedCellInformationList: [(indexPath: IndexPath, id: String)] = []
+    private var selectedCellIndexes: [(indexPath: IndexPath, id: String)] = []
     
     //MARK: - View
     
@@ -120,16 +120,26 @@ extension BandMemberModifyViewController {
     }
     
     func makeDataSource() -> UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> {
-        return UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in
-            
+        return UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in         
+
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberModifyTableViewCell.classIdentifier, for: indexPath) as? BandMemberModifyTableViewCell else { return UITableViewCell() }
             
             cell.configure(data: cellData)
+            cell.selectionStyle = .none
+            
+            // 처음 cell configuration 과정에서 리더 포지션의 경우 그에 맞게 UI를 조정하고 인덱스 패스를 부여함
             if cellData.memberState == .admin {
                 self.updateLeaderPositionIndexPath(indexPath: indexPath)
                 cell.getLeaderPositionState()
             }
-            cell.selectionStyle = .none
+            // cell configuration 과정에서 이미 선택된 셀은 선택 여부가 활성화 되게 만듬
+            if self.selectedCellIndexes.map({ $0.indexPath }).contains(indexPath) {
+                cell.isSelectedState = true
+            }
+            
+            if indexPath == self.indexPathOfLeaderCell {
+                cell.selectButton.isHidden = true
+            }
             
             cell.setLeaderButtonAction {
                 //TODO: Post할 정보에서 리더 정보 바꾸기 필요
@@ -168,7 +178,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             // 완료 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingDoneButton = {
                 self.bandMemberTableView.isEditing = false
-                self.selectedCellInformationList = [] // 선택된 cell 초기화
+                self.selectedCellIndexes = [] // 선택된 cell 초기화
                 self.hideBottomButton()
             }
             // init후 초기 action 설정 필요
@@ -189,14 +199,14 @@ extension BandMemberModifyViewController: UITableViewDelegate {
     // cellForRowAt은 스크린에서 보이지않는 Cell에 적용되지 않기 때문에 선택된 cell의 인덱스를 따로 관리하는 배열을 만듬
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? BandMemberModifyTableViewCell else { return }
-        if selectedCellInformationList.map({ $0.indexPath }).contains(indexPath) {
+        
+        if selectedCellIndexes.map({ $0.indexPath }).contains(indexPath) {
             selectedCell.isSelectedState = false
-            selectedCellInformationList.removeAll { $0.indexPath == indexPath }
+            selectedCellIndexes.removeAll { $0.indexPath == indexPath }
         } else {
             selectedCell.isSelectedState = true
-            selectedCellInformationList.append((indexPath: indexPath, id: selectedCell.id))
+            selectedCellIndexes.append((indexPath: indexPath, id: selectedCell.id))
         }
-        self.updateSnapShot(addedMembers: self.addedMembers, invitingMembers: self.invitingMembers)
     }
     
     // 테이블뷰의 편집모드시 셀 왼쪽의 indentation 삭제
@@ -211,6 +221,14 @@ extension BandMemberModifyViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cellToDisplay = tableView.cellForRow(at: indexPath) as? BandMemberModifyTableViewCell else { return }
+        if selectedCellIndexes.map({ $0.indexPath }).contains(indexPath) {
+            cellToDisplay.isSelectedState = true
+        }
+    }
+    
 }
 
 //MARK: 데이터 추가 삭제 관련 로직
@@ -239,7 +257,7 @@ extension BandMemberModifyViewController {
     }
     
     private func abandonMembers() {
-        for cellInfo in selectedCellInformationList {
+        for cellInfo in selectedCellIndexes {
             addedMembers.removeAll { $0.id == cellInfo.id }
             invitingMembers.removeAll { $0.id == cellInfo.id }
         }

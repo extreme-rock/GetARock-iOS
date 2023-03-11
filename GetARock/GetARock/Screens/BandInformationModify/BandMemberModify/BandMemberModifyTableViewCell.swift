@@ -19,6 +19,8 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
             selectButton.tintColor = isSelectedState ? .systemPurple : .gray02
         }
     }
+    
+    var isLeaderCell: Bool = false
 
     private let userNameLabel: BasicLabel = BasicLabel(
         contentText: "",
@@ -97,12 +99,10 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        print("=====This is leaderCell =====")
+        print(isLeaderCell)
         self.isSelectedState = false
         self.leftView.image = nil
-        self.userNameLabel.text = nil
-        self.userGenderLabel.text = nil
-        self.userAgeLabel.text = nil
-        self.instrumentListLabel.text = nil
     }
 
     private func attribute() {
@@ -159,6 +159,7 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         case .admin:
             leftView.image = ImageLiteral.leaderIcon
             leaderButton.tintColor = .systemPurple
+            selectButton.isHidden = true
         case .none:
             leftView.image = ImageLiteral.memberIcon
         case .annonymous:
@@ -187,11 +188,14 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
     func abandonLeaderPositionState() {
         self.leaderButton.tintColor = .gray01
         self.leftView.image = ImageLiteral.memberIcon
+        self.isLeaderCell = false
     }
     
     func getLeaderPositionState() {
         self.leaderButton.tintColor = .systemPurple
         self.leftView.image = ImageLiteral.leaderIcon
+        self.selectButton.isHidden = true
+        self.isLeaderCell = true
     }
 
     func setLeaderButtonAction(action: @escaping ()-> Void) {
