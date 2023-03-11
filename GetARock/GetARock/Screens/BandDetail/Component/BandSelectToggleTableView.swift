@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol BandSelectToggleTableViewDelegate: AnyObject {
+    func fetchSelectedBandInfo(indexPath: IndexPath)
+}
+
 final class BandSelectToggleTableView: UITableView {
     
     // MARK: - Property
+    weak var selectDelegate: BandSelectToggleTableViewDelegate?
     private let bandNames: [String]
     
     // MARK: - View
@@ -65,6 +70,14 @@ extension BandSelectToggleTableView: UITableViewDataSource {
 
 extension BandSelectToggleTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     
+    
+        selectDelegate?.fetchSelectedBandInfo(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if tableView.indexPathForSelectedRow == indexPath {
+            return nil
+        }
+        return indexPath
     }
 }

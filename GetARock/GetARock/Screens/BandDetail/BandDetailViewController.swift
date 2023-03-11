@@ -7,11 +7,19 @@
 
 import UIKit
 
+struct BandList {
+    var bandId: Int
+    let name: String
+    var memberCount: Int
+    var memberAge: String
+}
+
 final class BandDetailViewController: BaseViewController {
     
     // MARK: - Property
     
     private var tableViewHeight: NSLayoutConstraint? = nil
+    private let myBands: [BandList]
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
     private var bandID = "71"
@@ -21,10 +29,10 @@ final class BandDetailViewController: BaseViewController {
         age: "",
         introduction: "",
         address: AddressVO(city: "",
-                         street: "",
-                         detail: "",
-                         longitude: 0.0,
-                         latitude: 0.0),
+                           street: "",
+                           detail: "",
+                           longitude: 0.0,
+                           latitude: 0.0),
         memberList: [],
         songList: [],
         snsList: [],
@@ -36,7 +44,7 @@ final class BandDetailViewController: BaseViewController {
             NotificationCenter.default.post(
                 name: NSNotification.Name.loadBandData,
                 object: nil,
-               userInfo: bandDataDict as [AnyHashable : Any]
+                userInfo: bandDataDict as [AnyHashable : Any]
             )
         }
     }
@@ -48,7 +56,7 @@ final class BandDetailViewController: BaseViewController {
         return $0
     }(BandTopInfoView(name: bandData.name, address: bandData.address))
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
-    private lazy var bandSelectToggleTableView = BandSelectToggleTableView(bandNames: ["모여락", "락락"])
+    private lazy var bandSelectToggleTableView = BandSelectToggleTableView(bandNames: self.myBands.map { $0.name })
     
     // MARK: - LifeCycle
     
@@ -59,6 +67,18 @@ final class BandDetailViewController: BaseViewController {
             setupLayout()
             attribute()
         }
+        configureDelegate()
+    }
+    
+    // MARK: - Init
+    
+    init(myBands: [BandList]){
+        self.myBands = myBands
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
@@ -69,6 +89,10 @@ final class BandDetailViewController: BaseViewController {
     
     private func attribute() {
         self.bandSelectToggleTableView.isHidden = true
+    }
+    
+    private func configureDelegate() {
+        self.bandSelectToggleTableView.selectDelegate = self
     }
     
     private func setupLayout() {
@@ -114,8 +138,9 @@ final class BandDetailViewController: BaseViewController {
 extension BandDetailViewController {
     
     func fetchBandData() async {
+        guard let firstBand = self.myBands.first else { return }
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
-        let idQuery = URLQueryItem(name: "id", value: bandID)
+        let idQuery = URLQueryItem(name: "id", value: String(firstBand.bandId))
         queryURLComponent?.queryItems = [idQuery]
         guard let url = queryURLComponent?.url else { return }
         
@@ -131,10 +156,36 @@ extension BandDetailViewController {
         }
     }
     
+    
+    func fetchBandData2(with id: Int) async {
+        var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
+        let idQuery = URLQueryItem(name: "id", value: String(id))
+        queryURLComponent?.queryItems = [idQuery]
+        guard let url = queryURLComponent?.url else { return }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
+            print("Response data raw : \(data)")
+            print("응답 내용 : \(response)")
+            self.bandData = decodedData
+        } catch {
+            print(error)
+            print("bad news! decoding error occuerd")
+        }
+    }
 }
 
 extension BandDetailViewController: BandTopInfoViewDelegate {
     func didBandSelectButtonTapped(isBandSelectButton: Bool) {
         self.bandSelectToggleTableView.isHidden = !isBandSelectButton
+    }
+}
+
+extension BandDetailViewController: BandSelectToggleTableViewDelegate {
+    func fetchSelectedBandInfo(indexPath: IndexPath) {
+        Task {
+            await fetchBandData2(with: self.myBands[indexPath.row].bandId)
+        }
     }
 }
