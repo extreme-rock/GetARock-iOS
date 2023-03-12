@@ -158,6 +158,8 @@ final class BandTopInfoView: UIView {
         
         guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
         self.bandNameLabel.text = bandInfo.name
+        self.bandAddress = bandInfo.address
+        setBandAddress()
     }
 }
 

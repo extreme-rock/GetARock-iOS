@@ -11,11 +11,10 @@ final class SNSListStackView: UIStackView {
     
     // MARK: - VIew
     
-    private let snsData: SNS
+    private var snsData: SNS
     private lazy var youtubeButton = SNSButtonView(type: .youtube, data: snsData.youtube)
     private lazy var instagramButton = SNSButtonView(type: .instagram, data: snsData.instagram)
     private lazy var soundCloudButton = SNSButtonView(type: .soundCloud, data: snsData.soundCloud)
-
     
     // MARK: - Init
     
@@ -43,6 +42,9 @@ final class SNSListStackView: UIStackView {
         self.addArrangedSubview(youtubeButton)
         self.addArrangedSubview(instagramButton)
         self.addArrangedSubview(soundCloudButton)
-
+    }
+    
+    func configureSNSList() {
+        
     }
 }
