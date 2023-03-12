@@ -161,6 +161,7 @@ extension PositionCollectionView {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemberCollectionViewCell.classIdentifier, for: indexPath) as? BandMemberCollectionViewCell else { return UICollectionViewCell() }
                 cell.configure(data: bandMember)
                 return cell
+                
             case .position(let position):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PositionCollectionViewCell.classIdentifier, for: indexPath) as? PositionCollectionViewCell else { return UICollectionViewCell() }
                 if position.isETC {
@@ -168,6 +169,7 @@ extension PositionCollectionView {
                 }
                 cell.configure(data: position, indexPath: indexPath)
                 return cell
+                
             case .plusPosition:
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlusPositionCollectionViewCell.classIdentifier, for: indexPath) as? PlusPositionCollectionViewCell else { return UICollectionViewCell() }
                 return cell

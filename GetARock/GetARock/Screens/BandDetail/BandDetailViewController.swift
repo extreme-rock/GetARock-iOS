@@ -186,6 +186,9 @@ extension BandDetailViewController: BandSelectToggleTableViewDelegate {
     func fetchSelectedBandInfo(indexPath: IndexPath) {
         Task {
             await fetchBandData2(with: self.myBands[indexPath.row].bandId)
+            NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
+                                            object: nil,
+                                            userInfo: ["bandInfo": self.bandData])
         }
     }
 }

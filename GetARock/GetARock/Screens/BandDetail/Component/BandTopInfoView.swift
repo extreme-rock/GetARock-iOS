@@ -100,10 +100,15 @@ final class BandTopInfoView: UIView {
         super.init(frame: .zero)
         setupLayout()
         attribute()
+        addModifyObserver()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Method
@@ -146,5 +151,21 @@ final class BandTopInfoView: UIView {
     private func didBandSelectToggleButtonTapped() {
         self.isBandSelectButton.toggle()
         delegate?.didBandSelectButtonTapped(isBandSelectButton: self.isBandSelectButton)
+    }
+    
+    @objc
+    private func configure(with notification: Notification) {
+        
+        guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
+        self.bandNameLabel.text = bandInfo.name
+    }
+}
+
+extension BandTopInfoView {
+    private func addModifyObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(configure(with: )),
+                                               name: NSNotification.Name.configureBandData,
+                                               object: nil)
     }
 }

@@ -58,6 +58,16 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Life Cycle
+    override func prepareForReuse() {
+        let instrumentStackSubViews = self.informationStackView.arrangedSubviews
+        instrumentStackSubViews.forEach {
+            self.informationStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+        
+    }
+    
     //MARK: - Method
     
     private func setupLayout() {

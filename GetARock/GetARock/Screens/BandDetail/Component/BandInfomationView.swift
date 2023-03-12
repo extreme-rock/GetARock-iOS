@@ -37,19 +37,21 @@ final class BandInfomationView: UIView {
         isNeedHeader: false
     )
     
+    private lazy var memberIntroStartLabel = BasicLabel(contentText: "멤버는 총 ",
+                                                        fontStyle: .contentLight,
+                                                        textColorInfo: .white)
+    private lazy var memberCountAgeLabel = BasicLabel(contentText: "\(bandMember.count)명, \(bandAge)",
+                                                      fontStyle: .contentBold,
+                                                      textColorInfo: .white)
+    private lazy var memberIntroLastLabel = BasicLabel(contentText: "로 구성되어 있어요.",
+                                                       fontStyle: .contentLight,
+                                                       textColorInfo: .white)
+    
     private lazy var bandMemberInfoLabelStack: UIStackView = {
         $0.axis = .horizontal
         $0.alignment = .leading
         $0.distribution = .fill
-        let memberIntroStartLabel = BasicLabel(contentText: "멤버는 총 ",
-                                              fontStyle: .contentLight,
-                                              textColorInfo: .white)
-        var memberCountAgeLabel = BasicLabel(contentText: "\(bandMember.count)명, \(bandAge)",
-                                             fontStyle: .contentBold,
-                                             textColorInfo: .white)
-        let memberIntroLastLabel = BasicLabel(contentText: "로 구성되어 있어요.",
-                                             fontStyle: .contentLight,
-                                             textColorInfo: .white)
+        
         let spacingView = UIView()
         $0.addArrangedSubview(memberIntroStartLabel)
         $0.addArrangedSubview(memberCountAgeLabel)
@@ -57,7 +59,7 @@ final class BandInfomationView: UIView {
         $0.addArrangedSubview(spacingView)
         return $0
     }(UIStackView())
-
+    
     private lazy var bandMemberStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 15
@@ -140,10 +142,15 @@ final class BandInfomationView: UIView {
         makeBandMemberData()
         setupLayout()
         attribute()
+        addModifyObserver()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Method
@@ -189,7 +196,7 @@ final class BandInfomationView: UIView {
     private func setBandMemberCollectionView() {
         bandMemberInfoCollectView.constraint(
             .widthAnchor,
-           constant: UIScreen.main.bounds.width - 32
+            constant: UIScreen.main.bounds.width - 32
         )
         bandMemberInfoCollectView.constraint(
             .heightAnchor,
@@ -198,55 +205,90 @@ final class BandInfomationView: UIView {
     }
     
     private func makeBandMemberData() {
-           let transformedMemberData = bandMember.map {
-               BandMember(
-                   isUser: checkIsUserState(memberState: $0.memberState),
-                   isLeader: checkIsLeaderState(memberState: $0.memberState),
-                   userName: $0.name,
-                   instrumentImageName: checkInstrumentImage(instrumentList: $0.instrumentList),
-                   instrumentNames: $0.instrumentList.map{ $0.name }
-               )
-               
-           }
-           transformedMemberData.forEach {
-               bandMemberCollectionViewItem.append(.bandMember($0))
-           }
-       }
-       
-       private func checkIsUserState(memberState: MemberState) -> Bool {
-           switch memberState {
-           case .admin:
-               return true
-           case .member:
-               return true
-           default:
-               return false
-           }
-       }
-       
-       private func checkIsLeaderState(memberState: MemberState) -> Bool {
-           switch memberState {
-           case .admin:
-               return true
-           case .member:
-               return false
-           default:
-               return false
-           }
-       }
-       
-       private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> InstrumentImageName {
-           let transformedMemberInstrument = instrumentList.map{ $0.name }
-           
-           if let mainInstrument = transformedMemberInstrument.first {
-               return InstrumentImageName(rawValue: mainInstrument) ?? .etc
-           }
-           return .etc
-       }
+        let transformedMemberData = bandMember.map {
+            Item.bandMember(
+                BandMember(
+                    isUser: checkIsUserState(memberState: $0.memberState),
+                    isLeader: checkIsLeaderState(memberState: $0.memberState),
+                    userName: $0.name,
+                    instrumentImageName: checkInstrumentImage(instrumentList: $0.instrumentList),
+                    instrumentNames: $0.instrumentList.map{ $0.name }
+                )
+            )
+        }
+        
+        bandMemberCollectionViewItem = transformedMemberData
+    }
+    
+    private func checkIsUserState(memberState: MemberState) -> Bool {
+        switch memberState {
+        case .admin:
+            return true
+        case .member:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    private func checkIsLeaderState(memberState: MemberState) -> Bool {
+        switch memberState {
+        case .admin:
+            return true
+        case .member:
+            return false
+        default:
+            return false
+        }
+    }
+    
+    private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> InstrumentImageName {
+        let transformedMemberInstrument = instrumentList.map{ $0.name }
+        
+        if let mainInstrument = transformedMemberInstrument.first {
+            return InstrumentImageName(rawValue: mainInstrument) ?? .etc
+        }
+        return .etc
+    }
+    
+    @objc
+    private func configure(with notification: Notification) {
+        guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
+        let memberList = bandInfo.memberList
+        
+        let transformedMemberData = memberList.map {
+            Item.bandMember(
+                BandMember(
+                    isUser: checkIsUserState(memberState: $0.memberState),
+                    isLeader: checkIsLeaderState(memberState: $0.memberState),
+                    userName: $0.name,
+                    instrumentImageName: checkInstrumentImage(instrumentList: $0.instrumentList),
+                    instrumentNames: $0.instrumentList.map{ $0.name }
+                )
+            )
+        }
+        self.bandMember = bandInfo.memberList
+        self.bandAge = bandInfo.age
+        self.bandMemberCollectionViewItem = transformedMemberData
+        self.bandIntro = bandInfo.introduction
+        self.bandSong = bandInfo.songList
+        self.bandSNS = bandInfo.snsList
+        
+        self.bandMemberInfoCollectView.applySnapshot(with: self.bandMemberCollectionViewItem)
+        self.memberCountAgeLabel.text = "\(bandMember.count)명, \(bandAge)"
+    }
 }
 
+// MARK: Notification 관련
+extension BandInfomationView {
+    private func addModifyObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(configure(with: )),
+                                               name: NSNotification.Name.configureBandData,
+                                               object: nil)
+    }
+}
 // MARK: - PositionCollectionViewDelegate
 
 // TODO - : 추후 멤버 선택 시 헤당 멤버 상세 페이지로 보내기 구현 필요
-
 
