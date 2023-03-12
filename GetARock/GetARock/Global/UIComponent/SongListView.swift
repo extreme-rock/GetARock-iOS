@@ -63,6 +63,12 @@ final class SongListView: UIView {
         addSubview(collectionView)
         self.collectionView.constraint(to: self)
     }
+    
+    func reloadCollectionView(with songList: [SongListVO]?) {
+        guard let songList else { return }
+        self.songData = songList
+        self.collectionView.reloadData()
+    }
 }
 
 // MARK: - DataSource

@@ -277,6 +277,7 @@ final class BandInfomationView: UIView {
         self.memberCountAgeLabel.text = "\(bandMember.count)명, \(bandAge)"
         self.bandSNSListView.configureSNSList(with: self.bandSNS)
         self.bandIntroLabel.text = self.bandIntro
+        self.bandSongListView.reloadCollectionView(with: self.bandSong!)
     }
 }
 

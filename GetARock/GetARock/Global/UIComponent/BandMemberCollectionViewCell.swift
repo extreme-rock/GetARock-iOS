@@ -64,8 +64,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         instrumentStackSubViews.forEach {
             self.informationStackView.removeArrangedSubview($0)
             $0.removeFromSuperview()
-        }
-        
+        }   
     }
     
     //MARK: - Method
