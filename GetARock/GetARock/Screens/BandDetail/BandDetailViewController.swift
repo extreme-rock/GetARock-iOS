@@ -66,6 +66,7 @@ final class BandDetailViewController: BaseViewController {
             await fetchBandData()
             setupLayout()
             attribute()
+            touchScreenExceptBandSelectToggleView()
         }
         configureDelegate()
     }
@@ -128,6 +129,27 @@ final class BandDetailViewController: BaseViewController {
             self.tableViewHeight?.isActive = false
             self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: size.height)
             self.tableViewHeight?.isActive = true
+        }
+    }
+    
+    private func touchScreenExceptBandSelectToggleView() {
+        // TODO: bandTopInfo를 클릭하면 화면에서 터치를 받아오지 못함. why?
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc
+    func handleTap(_ sender: UITapGestureRecognizer) {
+        print("눌림")
+        print(sender.location(in: view), bandSelectToggleTableView.frame)
+        if sender.state == .ended {
+            let location = sender.location(in: view)
+            print(bandSelectToggleTableView.frame.contains(location))
+            if self.bandSelectToggleTableView.frame.contains(location) {
+                // Hide table view
+                self.bandSelectToggleTableView.isHidden = true
+            }
         }
     }
 }

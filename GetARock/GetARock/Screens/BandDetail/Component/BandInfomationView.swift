@@ -17,6 +17,7 @@ final class BandInfomationView: UIView {
     private var bandAge: String
     private var bandSNS: [SnsListVO]
     private var bandMemberCollectionViewItem: [Item] = []
+    private var bandMemberCollectionViewHeight: NSLayoutConstraint? = nil
     
     // MARK: - View
     
@@ -198,10 +199,15 @@ final class BandInfomationView: UIView {
             .widthAnchor,
             constant: UIScreen.main.bounds.width - 32
         )
-        bandMemberInfoCollectView.constraint(
-            .heightAnchor,
-            constant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
+        
+        self.bandMemberCollectionViewHeight = self.bandMemberInfoCollectView.heightAnchor.constraint(
+            equalToConstant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
         )
+        self.bandMemberCollectionViewHeight?.isActive = true
+//        bandMemberInfoCollectView.constraint(
+//            .heightAnchor,
+//            constant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
+//        )
     }
     
     private func makeBandMemberData() {
@@ -278,6 +284,16 @@ final class BandInfomationView: UIView {
         self.bandSNSListView.configureSNSList(with: self.bandSNS)
         self.bandIntroLabel.text = self.bandIntro
         self.bandSongListView.reloadCollectionView(with: self.bandSong!)
+        //TODO: band정보 바뀔 떄 memberCollectionView 높이 재설정
+        self.setupCollectionViewHeight()
+    }
+    
+    private func setupCollectionViewHeight() {
+        self.bandMemberCollectionViewHeight?.isActive = false
+        self.bandMemberCollectionViewHeight = self.bandMemberInfoCollectView.heightAnchor.constraint(
+            equalToConstant: CGFloat((140 + 10) * Int((bandMemberCollectionViewItem.count-1)/2) + 140)
+        )
+        self.bandMemberCollectionViewHeight?.isActive = true
     }
 }
 
