@@ -19,6 +19,17 @@ enum Item: Hashable {
     case bandMember(BandMember)
     case position(Position)
     case plusPosition
+    
+    func name() -> String {
+        switch self {
+        case .bandMember(let bandMember):
+            return bandMember.userName
+        case .position(let position):
+            return position.instrumentName
+        case .plusPosition:
+            return ""
+        }
+    }
 }
 
 enum CellSize {
@@ -149,9 +160,36 @@ final class PositionCollectionView: UIView {
             name: Notification.Name.hideDeselectAllPositionButton,
             object: nil)
     }
+    
+    private func postDidTapPositionItem() {
+        NotificationCenter.default.post(
+            name: Notification.Name.didTapPositionItem,
+            object: nil)
+    }
+    
+    func selectItems(with instrumentList: [InstrumentList]) {
+        for instrument in instrumentList {
+            guard let index = self.items.firstIndex(where: { $0.name() == instrument.name }) else { return }
+            let indexPath = IndexPath(row: index, section: 0)
+            self.selectedCellIndexPaths.append((indexPath: indexPath, isMain: false))
+            self.collectionView.selectItem(at: indexPath,
+                                           animated: true,
+                                           scrollPosition: .top)
+        }
+        self.selectedCellIndexPaths[0].isMain = true
+        
+        guard let mainInstrumentIndexPath = self.selectedCellIndexPaths.first?.indexPath else { return }
+        
+        // makrMainLabel 함수가 실행되는 시점을 늦추기 위해 main queue에서 async로 실행(?) 이렇게 사용하는게 맞나..
+        
+        DispatchQueue.main.async {
+            self.markMainLabel(indexPath: mainInstrumentIndexPath)
+            self.postDeselectAllPositionButtonHiddenToggle()
+        }
+    }
 }
 
-// MARK: - diffable
+// MARK: - DiffableDataSource
 
 extension PositionCollectionView {
     private func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Item> {
@@ -198,6 +236,8 @@ extension PositionCollectionView {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension PositionCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         let selectedPositionCount = collectionView.indexPathsForSelectedItems?.count ?? 0
@@ -207,13 +247,14 @@ extension PositionCollectionView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedCellIndexPaths.append((indexPath: indexPath,
-                                       isMain: selectedCellIndexPaths.isEmpty ? true : false))
+                                            isMain: selectedCellIndexPaths.isEmpty ? true : false))
         
         let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
         if selectedCellCount == 1 {
             postDeselectAllPositionButtonHiddenToggle()
             markMainLabel(indexPath: indexPath)
         }
+        postDidTapPositionItem()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -234,16 +275,17 @@ extension PositionCollectionView: UICollectionViewDelegate {
         if selectedCellCount == 0 {
             postDeselectAllPositionButtonHiddenToggle()
         }
+        postDidTapPositionItem()
     }
     
     private func markMainLabel(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
-            cell.setupMainLabelLayout()
+        cell.setupMainLabelLayout()
     }
     
     private func removeMainLabel(indexPath: IndexPath) {
         guard let cell = self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return }
-            cell.removeMainLabel()
+        cell.removeMainLabel()
     }
 }
 
@@ -251,11 +293,10 @@ extension PositionCollectionView: UICollectionViewDelegate {
 
 extension PositionCollectionView {
     func getSelectedInstruments() -> [InstrumentList] {
-        var selectedInstruments: [InstrumentList] = []
         let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems ?? []
-        for indexPath in selectedIndexPaths {
-            guard let cell =  self.collectionView.cellForItem(at: indexPath) as? PositionCollectionViewCell else { return [] }
-            selectedInstruments.append(InstrumentList(name: cell.positionNameLabel.text ?? ""))
+        let selectedInstruments: [InstrumentList] = selectedIndexPaths.map {
+            let index = $0.item
+            return InstrumentList(name: self.items[index].name())
         }
         return selectedInstruments
     }

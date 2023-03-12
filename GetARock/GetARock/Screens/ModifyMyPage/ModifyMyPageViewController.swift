@@ -10,22 +10,18 @@ import UIKit
 final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Property
+    
+    private var userInfo: User
 
-    private let pageViewControllers: [UIViewController] = [
-        ModifyPositionViewController(positions: [
-            .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
-            .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
-            .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
-            .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
-            .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false)),
-            .plusPosition
-        ]),
-        ModifyUserProfileViewController()
+    private lazy var pageViewControllers: [UIViewController] = [
+        ModifyPositionViewController(selectedPositions: self.userInfo.instrumentList),
+        ModifyUserProfileViewController(userInfo: self.userInfo)
         ]
     
     private var currentPageNumber: Int = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPageNumber ? .forward : .reverse
+            
             self.pageViewController.setViewControllers(
                 [pageViewControllers[self.currentPageNumber]],
                 direction: direction,
@@ -101,7 +97,15 @@ final class ModifyMyPageViewController: UIViewController {
     
     //MARK: - Life Cycle
     
-    // init 시에 유저에 대한 정보가 들어와야함
+    init(userInfo: User) {
+        self.userInfo = userInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -119,7 +123,43 @@ final class ModifyMyPageViewController: UIViewController {
     }
     
     private func completeButtonTapped() {
-        //TODO: 개인정보 UPDATE 함수
+        guard let modifyPositionViewController = self.pageViewControllers.first as? ModifyPositionViewController,
+              let modifyUserProfileViewController = self.pageViewControllers.last as? ModifyUserProfileViewController else { return }
+        
+        var modifiedUserInfo = self.userInfo
+        // ModifyUserProfileViewController가 열리지 않으면 상태를 체크할 수 없어서 viewDidLoad를 체크하여, load되지 않았으면 기존 userInfo를 입력하고, load되었다면 현재 입력된 info값을 가져옴
+        
+        let isModifyUserProfileAllFilled = !modifyUserProfileViewController.isViewLoaded
+        || modifyUserProfileViewController.checkCompleteButtonEnabledState()
+        let isPositionInfoFilled = modifyPositionViewController.checkCompleteButtonEnabledState()
+        let isAllUserInfoFilled = isModifyUserProfileAllFilled && isPositionInfoFilled
+        
+        if isAllUserInfoFilled {
+            if !modifyUserProfileViewController.isViewLoaded {
+                modifiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()
+            } else {
+                guard let userInfo = modifyUserProfileViewController.userInfoWithoutInstrumentList() else { return }
+                modifiedUserInfo = userInfo
+                modifiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()
+            }
+            
+            Task {
+                try await SignUpNetworkManager.putUserInformation(user: userInfo, completion: { result in
+                    switch result {
+                    case .success(_):
+                        // TODO: 성공했을 때 dismiss말고 다른 indicator가 필요할지?
+                        DispatchQueue.main.async { [weak self] in
+                            self?.dismiss(animated: true)
+                        }
+                    case .failure(let error):
+                        // TODO: error에 따른 대응
+                        print(error)
+                    }
+                })
+            }
+        } else {
+            // TODO: 필수사항을 모두 입력하지 않은경우에 대한 대처
+        }
     }
     
     private func setupLayout() {
@@ -191,3 +231,4 @@ final class ModifyMyPageViewController: UIViewController {
          self.segmentedController.selectedSegmentIndex = index
      }
  }
+
