@@ -12,7 +12,7 @@ final class SNSButtonView: UIView {
     // MARK: - Property
     
     private var snsType: SNSType
-    private let snsURI: String?
+    private var snsURI: String?
     
     enum SNSType: String {
         case youtube = "Youtube"
@@ -35,6 +35,11 @@ final class SNSButtonView: UIView {
             }
         }
     }
+    
+    private let tapGesture = UITapGestureRecognizer(
+        target: self,
+        action: #selector(moveSnsLink(_:))
+    )
     
     // MARK: - VIew
     
@@ -112,10 +117,6 @@ final class SNSButtonView: UIView {
     }
     
     private func addSNSButtonAction() {
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(moveSnsLink(_:))
-        )
         self.containerView.addGestureRecognizer(tapGesture)
         self.isUserInteractionEnabled = true
     }
@@ -128,6 +129,20 @@ final class SNSButtonView: UIView {
             name: Notification.Name.presentSNSSafariViewController,
             object: nil,
             userInfo: ["snsURL": snsURL])
+    }
+    
+    func configureSNSAttribute(with snsURL: String?) {
+        resetDefultAttribute()
+        self.snsURI = snsURL
+        print(snsURL)
+        if self.snsURI != nil { activateSNSButton() }
+    }
+    
+    func resetDefultAttribute() {
+        self.containerView.removeGestureRecognizer(tapGesture)
+        self.linkIcon.removeFromSuperview()
+        self.containerView.isUserInteractionEnabled = false
+        self.containerView.alpha = 0.4
     }
 }
 
