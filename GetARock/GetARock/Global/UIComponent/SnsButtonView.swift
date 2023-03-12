@@ -134,7 +134,6 @@ final class SNSButtonView: UIView {
     func configureSNSAttribute(with snsURL: String?) {
         resetDefultAttribute()
         self.snsURI = snsURL
-        print(snsURL)
         if self.snsURI != nil { activateSNSButton() }
     }
     

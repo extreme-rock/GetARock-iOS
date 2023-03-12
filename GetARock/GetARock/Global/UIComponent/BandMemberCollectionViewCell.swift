@@ -126,7 +126,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(data: BandMember) {
-        self.positionImageView.image = UIImage(named: data.instrumentImageName.rawValue)
+        self.positionImageView.image = UIImage(named: data.instrumentImageName.imageName)
         self.memberNameLabel.text = data.userName
         self.applyUserState(isUser: data.isUser)
         self.configureInstrumentNameUI(with: data.instrumentNames)

@@ -42,11 +42,9 @@ final class BandTopInfoView: UIView {
     private lazy var bandNameLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(
-        contentText: bandName,
-        fontStyle: .headline04,
-        textColorInfo: .white)
-    )
+    }(BasicLabel(contentText: bandName,
+                 fontStyle: .headline04,
+                 textColorInfo: .white))
     
     private lazy var bandSelectToggleButton: UIButton = {
         // TODO: 터치영역이 작은 문제 해결해야함
@@ -144,7 +142,6 @@ final class BandTopInfoView: UIView {
         let detail = bandAddress.detail
         let bandAddressText = city + " " + street + " " +  detail
         locationLabel.text = bandAddressText
-        print(bandAddressText)
     }
     
     @objc

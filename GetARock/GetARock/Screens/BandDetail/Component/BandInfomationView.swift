@@ -244,7 +244,6 @@ final class BandInfomationView: UIView {
     
     private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> Instrument {
         let transformedMemberInstrument = instrumentList.map{ $0.name }
-        
         if let mainInstrument = transformedMemberInstrument.first {
             return Instrument(rawValue: mainInstrument) ?? .etc
         }
