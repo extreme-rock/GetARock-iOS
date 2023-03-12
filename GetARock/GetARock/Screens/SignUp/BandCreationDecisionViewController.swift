@@ -102,9 +102,6 @@ final class BandCreationDecisionViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    deinit {
-        print("BandCreationDeinit")
-    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

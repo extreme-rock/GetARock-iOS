@@ -21,10 +21,15 @@ final class BasicLabel: UILabel {
         self.text = contentText
         self.font = UIFont.setFont(fontStyle)
         self.textColor = textColorInfo
+        attribute()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func attribute() {
+        addLabelSpacing(kernValue: 0, lineSpacing: 5)
     }
 
 }

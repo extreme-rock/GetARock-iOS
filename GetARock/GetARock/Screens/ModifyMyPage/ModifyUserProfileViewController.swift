@@ -11,6 +11,8 @@ final class ModifyUserProfileViewController: UIViewController {
     
     // MARK: - Property
     
+    private var userInfo: User
+    
     // MARK: - View
     
     private let contentViewTitleLabel: BasicLabel = {
@@ -31,15 +33,17 @@ final class ModifyUserProfileViewController: UIViewController {
         return $0
     }(UIStackView(arrangedSubviews: [contentViewTitleLabel,
                                      contentViewSubTitleLabel]))
-
-    private let userNamingGuideTitleLabel = InformationGuideLabel(guideText: "닉네임",
-                                                                  type: .required)
+    
+    private let userNamingGuideTitleLabel = InformationGuideLabel(
+        guideText: "닉네임",
+        type: .required
+    )
     
     private let userNamingGuideSubLabel = BasicLabel(
         contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",
         fontStyle: .caption,
         textColorInfo: .gray02)
-
+    
     private lazy var userNamingTextField: TextLimitTextField = TextLimitTextField(
         placeholer: "닉네임을 입력해주세요.",
         maxCount: 20,
@@ -54,7 +58,10 @@ final class ModifyUserProfileViewController: UIViewController {
                                      userNamingGuideSubLabel,
                                      userNamingTextField]))
     
-    private let ageTitleLabel = InformationGuideLabel(guideText: "연령대", type: .required)
+    private let ageTitleLabel = InformationGuideLabel(
+        guideText: "연령대",
+        type: .required
+    )
 
     private let ageSelectCollectionView: SelectCollectionView = {
         $0.constraint(.widthAnchor, constant: UIScreen.main.bounds.width - 32)
@@ -62,7 +69,7 @@ final class ModifyUserProfileViewController: UIViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .flexable,
-        items: ["20대 미만", "20대", "30대", "40대", "50대", "60대 이상"],
+        items: Age.allCases.map { $0.rawValue },
         widthSize: 25,
         itemSpacing: 5,
         cellBackgroundColor: .dark02
@@ -83,7 +90,7 @@ final class ModifyUserProfileViewController: UIViewController {
         return $0
     }(SelectCollectionView(
         widthOption: .fixed,
-        items: ["남자", "여자"],
+        items: Gender.allCases.map { $0.rawValue },
         widthSize: (UIScreen.main.bounds.width - 41) / 2,
         itemSpacing: 8,
         cellBackgroundColor: .dark02
@@ -169,12 +176,22 @@ final class ModifyUserProfileViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(userInfo: User) {
+        self.userInfo = userInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
+        self.configure(with: self.userInfo)
     }
-    
+
     private func attribute() {
         self.view.backgroundColor = .dark01
     }
@@ -205,5 +222,57 @@ final class ModifyUserProfileViewController: UIViewController {
                                     trailing: contentView.trailingAnchor,
                                     padding: UIEdgeInsets(top: 20, left: 16, bottom: 38, right: 16))
         
+    }
+    
+    func configure(with userInfo: User) {
+        guard let age = Age.CodingKeys(rawValue: userInfo.age)?.inKorean,
+              let gender = Gender.CodingKeys(rawValue: userInfo.gender)?.inKorean else { return }
+        
+        self.userNamingTextField.configureText(with: userInfo.name)
+        self.userNamingTextField.setupAvailableName(name: userInfo.name)
+        self.userIntroTextView.configureText(with: userInfo.introduction)
+        self.ageSelectCollectionView.selectItem(with: age)
+        self.genderSelectCollectionView.selectItem(with: gender)
+        userInfo.snsList.forEach { sns in
+            switch sns.type {
+            case .youtube:
+                self.youtubeTextField.configureText(with: sns.link)
+            case .instagram:
+                self.instagramTextField.configureText(with: sns.link)
+            case .soundcloud:
+                self.soundCloudTextField.configureText(with: sns.link)
+            }
+        }
+    }
+    
+    func userInfoWithoutInstrumentList() -> User? {
+        guard let age = Age(rawValue: ageSelectCollectionView.selectedItem())?.inEnglish,
+              let gender = Gender(rawValue: genderSelectCollectionView.selectedItem())?.inEnglish
+              else { return nil }
+        
+        let snsList = [youtubeTextField.inputText(),
+                       instagramTextField.inputText(),
+                       soundCloudTextField.inputText()]
+        
+        let user = User(memberId: 15,
+                        name: self.userNamingTextField.inputText(),
+                        age: age,
+                        gender: gender,
+                        introduction: self.userIntroTextView.inputText(),
+                        instrumentList: [],
+                        snsList: snsList)
+        return user
+    }
+    
+    func checkCompleteButtonEnabledState() -> Bool {
+        let isAgeSelected = ageSelectCollectionView.isSelected()
+        let isGenderSelected = genderSelectCollectionView.isSelected()
+        let isAvailableName = userNamingTextField.isAvailableName()
+        
+        if isAgeSelected && isGenderSelected && isAvailableName {
+            return true
+        } else {
+            return false
+        }
     }
 }
