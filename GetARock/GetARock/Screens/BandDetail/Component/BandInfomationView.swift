@@ -15,7 +15,7 @@ final class BandInfomationView: UIView {
     private var bandSong: [SongListVO]?
     private var bandIntro: String?
     private var bandAge: String
-    private var bandSNS: [SnsListVO]?
+    private var bandSNS: [SnsListVO]
     private var bandMemberCollectionViewItem: [Item] = []
     
     // MARK: - View
@@ -115,7 +115,7 @@ final class BandInfomationView: UIView {
     )
     
     //TODO - : SNS의 데이터 구조 수정이 끝나면 전달 데이터 반영 필요
-    private lazy var bandSNSListView = SNSListStackView(data: SNS(youtube: nil, instagram: nil, soundCloud: nil))
+    private lazy var bandSNSListView = SNSListStackView(data: self.bandSNS)
     
     private lazy var bandSNSStackView: UIStackView = {
         $0.axis = .vertical
@@ -132,7 +132,7 @@ final class BandInfomationView: UIView {
     
     // MARK: - Init
     
-    init(member: [MemberListVO], song: [SongListVO]?, intro: String?,sns: [SnsListVO]?, age:String) {
+    init(member: [MemberListVO], song: [SongListVO]?, intro: String?,sns: [SnsListVO], age:String) {
         self.bandMember = member
         self.bandSong = song
         self.bandIntro = intro
@@ -242,11 +242,11 @@ final class BandInfomationView: UIView {
         }
     }
     
-    private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> InstrumentImageName {
+    private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> Instrument {
         let transformedMemberInstrument = instrumentList.map{ $0.name }
         
         if let mainInstrument = transformedMemberInstrument.first {
-            return InstrumentImageName(rawValue: mainInstrument) ?? .etc
+            return Instrument(rawValue: mainInstrument) ?? .etc
         }
         return .etc
     }
