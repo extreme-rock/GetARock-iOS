@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BandSelectToggleTableViewCell: UITableViewCell {
+final class BandSelectMenuTableViewCell: UITableViewCell {
     
     // MARK: - View
     

@@ -18,7 +18,11 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var tableViewHeight: NSLayoutConstraint? = nil
+    enum BandSelectMenuDefaultSize {
+        static let width: CGFloat = 250
+        static let height: CGFloat = 120
+    }
+    
     private let myBands: [BandList]
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
@@ -56,7 +60,7 @@ final class BandDetailViewController: BaseViewController {
         return $0
     }(BandTopInfoView(name: bandData.name, address: bandData.address))
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
-    private lazy var bandSelectToggleTableView = BandSelectToggleTableView(bandNames: self.myBands.map { $0.name })
+    private lazy var bandSelectMenuView = BandSelectMenuTableView(bandNames: self.myBands.map { $0.name })
     
     // MARK: - LifeCycle
     
@@ -65,8 +69,7 @@ final class BandDetailViewController: BaseViewController {
         Task {
             await fetchBandData()
             setupLayout()
-            attribute()
-            touchScreenExceptBandSelectToggleView()
+//            touchScreenExceptBandSelectToggleView()
         }
         configureDelegate()
     }
@@ -88,12 +91,8 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - Method
     
-    private func attribute() {
-//        self.bandSelectToggleTableView.isHidden = true
-    }
-    
     private func configureDelegate() {
-        self.bandSelectToggleTableView.selectDelegate = self
+        self.bandSelectMenuView.selectDelegate = self
     }
     
     private func setupLayout() {
@@ -112,46 +111,28 @@ final class BandDetailViewController: BaseViewController {
             trailing: self.view.trailingAnchor
         )
         
-        view.addSubview(bandSelectToggleTableView)
-//        bandSelectToggleTableView.constraint(
-//            top: self.view.topAnchor,
-//            leading: self.view.leadingAnchor,
-//            padding: UIEdgeInsets(top: 54, left: 17, bottom: 0, right: 0)
-//        )
+        view.addSubview(bandSelectMenuView)
+    }
 //
-//        // MARK: tableViewHeight 설정 플로우
-//        self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: 88)
-//        self.tableViewHeight?.isActive = true
-//        bandSelectToggleTableView.constraint(.widthAnchor, constant: 250)
-//        self.tableViewHeight?.isActive = false
-//        DispatchQueue.main.async {
-//            let size = self.bandSelectToggleTableView.contentSize
-//            self.tableViewHeight?.isActive = false
-//            self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: size.height)
-//            self.tableViewHeight?.isActive = true
-//        }
-    }
-    
-    private func touchScreenExceptBandSelectToggleView() {
-        // TODO: bandTopInfo를 클릭하면 화면에서 터치를 받아오지 못함. why?
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc
-    func handleTap(_ sender: UITapGestureRecognizer) {
-//        print("눌림")
+//    private func touchScreenExceptBandSelectToggleView() {
+//        // TODO: bandTopInfo를 클릭하면 화면에서 터치를 받아오지 못함. why?
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+//        tapGesture.cancelsTouchesInView = false
+//        view.addGestureRecognizer(tapGesture)
+//    }
+//
+//    @objc
+//    func handleTap(_ sender: UITapGestureRecognizer) {
 //        print(sender.location(in: view), bandSelectToggleTableView.frame)
 //        if sender.state == .ended {
 //            let location = sender.location(in: view)
 //            print(bandSelectToggleTableView.frame.contains(location))
-//            if self.bandSelectToggleTableView.frame.contains(location) {
+//            if !self.bandSelectToggleTableView.frame.contains(location) {
 //                // Hide table view
-//                self.bandSelectToggleTableView.isHidden = true
+//                self.removeBandSelectView()
 //            }
 //        }
-    }
+//    }
 }
 
 
@@ -200,12 +181,11 @@ extension BandDetailViewController {
 
 extension BandDetailViewController: BandTopInfoViewDelegate {
     func didBandSelectButtonTapped(isBandSelectButton: Bool) {
-//        self.bandSelectToggleTableView.isHidden = !isBandSelectButton
-        isBandSelectButton ? addDropdownBackgroundView() : removeDropdownBackgroundView()
+        isBandSelectButton ? dropdownBandSelectMenu() : removeBandSelectMenu()
     }
 }
 
-extension BandDetailViewController: BandSelectToggleTableViewDelegate {
+extension BandDetailViewController: BandSelectMenuTableViewDelegate {
     func fetchSelectedBandInfo(indexPath: IndexPath) {
         Task {
             await fetchBandData2(with: self.myBands[indexPath.row].bandId)
@@ -216,34 +196,50 @@ extension BandDetailViewController: BandSelectToggleTableViewDelegate {
     }
 }
 
+//MARK: BandSelectMenu관련 Method
 extension BandDetailViewController {
-    // TODO: 첫 높이가 88로 잡히는 현상 수정 
-    private func addDropdownBackgroundView() {
-        bandSelectToggleTableView.frame = CGRect(
+    private func dropdownBandSelectMenu() {
+        bandSelectMenuView.frame = CGRect(
             x: view.frame.origin.x + 17,
             y: view.frame.origin.y + 57,
-            width: 250,
+            width: BandSelectMenuDefaultSize.width,
             height: 0
         )
-
-        DispatchQueue.main.async { [weak self] in
-            self?.animate { [weak self] in
-                self?.bandSelectToggleTableView.frame = CGRect(
-                    x: (self?.view.frame.origin.x ?? 0) + 17,
-                    y: (self?.view.frame.origin.y ?? 0) + 57,
-                    width: 250,
-                    height: self?.bandSelectToggleTableView.contentSize.height ?? 50
-                )
+        
+        // MARK: layout이 잡히기전 contentSize가 88로 잡혀서 frame 설정 후 layoutIfNeeded()
+        // 로 contentSize를 바로 업데이트하여 높이를 가져옴
+        self.bandSelectMenuView.performBatchUpdates {
+            DispatchQueue.main.async { [weak self] in
+                self?.animate { [weak self] in
+                    self?.bandSelectMenuView.frame = CGRect(
+                        x: (self?.view.frame.origin.x ?? 0) + 17,
+                        y: (self?.view.frame.origin.y ?? 0) + 57,
+                        width: BandSelectMenuDefaultSize.width,
+                        height: BandSelectMenuDefaultSize.height
+                    )
+                }
+            }
+        } completion: { _ in
+            DispatchQueue.main.async { [weak self] in
+                self?.animate { [weak self] in
+                    self?.bandSelectMenuView.layoutIfNeeded()
+                    let contentSize = self?.bandSelectMenuView.contentSize
+                    self?.bandSelectMenuView.frame = CGRect(
+                        x: (self?.view.frame.origin.x ?? 0) + 17,
+                        y: (self?.view.frame.origin.y ?? 0) + 57,
+                        width: BandSelectMenuDefaultSize.width,
+                        height: contentSize?.height ?? 50
+                    )
+                }
             }
         }
     }
     
-    private func removeDropdownBackgroundView() {
+    private func removeBandSelectMenu() {
         DispatchQueue.main.async { [weak self] in
             self?.animate { [weak self] in
-                self?.bandSelectToggleTableView.frame = CGRect(
+                self?.bandSelectMenuView.frame = CGRect(
                     x: (self?.view.frame.origin.x ?? 0) + 17,
-                    // FIXME: - 여기서 Navigation Height을 적용해야 할 듯
                     y: (self?.view.frame.origin.y ?? 0) + 57,
                     width: 250,
                     height: 0
@@ -253,6 +249,11 @@ extension BandDetailViewController {
     }
     
     private func animate(of animations: @escaping () -> Void) {
-        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut, animations: animations)
+        UIView.animate(withDuration: 0.4,
+                       delay: 0.0,
+                       usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: 1.0,
+                       options: .curveEaseInOut,
+                       animations: animations)
     }
 }
