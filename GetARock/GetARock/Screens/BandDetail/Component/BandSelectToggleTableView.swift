@@ -27,6 +27,7 @@ final class BandSelectToggleTableView: UITableView {
         self.setupLayout()
         self.attribute()
         self.configureTableView()
+        self.selectFirstBand()
     }
     
     required init?(coder: NSCoder) {
@@ -52,6 +53,11 @@ final class BandSelectToggleTableView: UITableView {
     
     private func setupLayout() {
         self.constraint(.widthAnchor, constant: 250)
+    }
+    
+    private func selectFirstBand() {
+        let firstIndexPath = IndexPath(row: 0, section: 0)
+        self.selectRow(at: firstIndexPath, animated: true, scrollPosition: .none)
     }
 }
 
