@@ -18,10 +18,10 @@ final class BandTopInfoView: UIView {
     weak var delegate: BandTopInfoViewDelegate?
     private var bandName = ""
     private var bandAddress: AddressVO
-    private lazy var isBandSelectButton: Bool = false {
+    private lazy var isBandButtonSelect: Bool = false {
         didSet {
             self.bandSelectToggleButton.setImage(
-                self.isBandSelectButton
+                self.isBandButtonSelect
                 ? ImageLiteral.chevronUpSymbol
                 : ImageLiteral.chevronDownSymbol
                 , for: .normal)
@@ -146,25 +146,27 @@ final class BandTopInfoView: UIView {
     
     @objc
     private func didBandSelectToggleButtonTapped() {
-        self.isBandSelectButton.toggle()
-        delegate?.didBandSelectButtonTapped(isBandSelectButton: self.isBandSelectButton)
+        self.isBandButtonSelect.toggle()
+        delegate?.didBandSelectButtonTapped(isBandSelectButton: self.isBandButtonSelect)
     }
     
     @objc
     private func configure(with notification: Notification) {
-        
         guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
         self.bandNameLabel.text = bandInfo.name
         self.bandAddress = bandInfo.address
         setBandAddress()
+        self.isBandButtonSelect = false
     }
 }
 
 extension BandTopInfoView {
     private func addModifyObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(configure(with: )),
-                                               name: NSNotification.Name.configureBandData,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(configure(with: )),
+            name: NSNotification.Name.configureBandData,
+            object: nil
+        )
     }
 }

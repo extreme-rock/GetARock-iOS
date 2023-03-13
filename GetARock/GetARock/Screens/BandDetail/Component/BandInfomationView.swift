@@ -284,8 +284,10 @@ final class BandInfomationView: UIView {
         self.bandSNSListView.configureSNSList(with: self.bandSNS)
         self.bandIntroLabel.text = self.bandIntro
         self.bandSongListView.reloadCollectionView(with: self.bandSong!)
-        //TODO: band정보 바뀔 떄 memberCollectionView 높이 재설정
+        
+        //MARK: band정보 바뀔 떄 memberCollectionView 높이 재설정
         self.setupCollectionViewHeight()
+        
     }
     
     private func setupCollectionViewHeight() {

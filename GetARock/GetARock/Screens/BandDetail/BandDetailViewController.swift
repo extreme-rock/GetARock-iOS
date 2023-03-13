@@ -67,9 +67,8 @@ final class BandDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            await fetchBandData()
+            await fetchBandData(with: self.myBands.first?.bandId)
             setupLayout()
-//            touchScreenExceptBandSelectToggleView()
         }
         configureDelegate()
     }
@@ -113,54 +112,14 @@ final class BandDetailViewController: BaseViewController {
         
         view.addSubview(bandSelectMenuView)
     }
-//
-//    private func touchScreenExceptBandSelectToggleView() {
-//        // TODO: bandTopInfo를 클릭하면 화면에서 터치를 받아오지 못함. why?
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-//        tapGesture.cancelsTouchesInView = false
-//        view.addGestureRecognizer(tapGesture)
-//    }
-//
-//    @objc
-//    func handleTap(_ sender: UITapGestureRecognizer) {
-//        print(sender.location(in: view), bandSelectToggleTableView.frame)
-//        if sender.state == .ended {
-//            let location = sender.location(in: view)
-//            print(bandSelectToggleTableView.frame.contains(location))
-//            if !self.bandSelectToggleTableView.frame.contains(location) {
-//                // Hide table view
-//                self.removeBandSelectView()
-//            }
-//        }
-//    }
 }
 
 
 // MARK: - Get BandData
 
 extension BandDetailViewController {
-    
-    func fetchBandData() async {
-        guard let firstBand = self.myBands.first else { return }
-        var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
-        let idQuery = URLQueryItem(name: "id", value: String(firstBand.bandId))
-        queryURLComponent?.queryItems = [idQuery]
-        guard let url = queryURLComponent?.url else { return }
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
-            print("Response data raw : \(data)")
-            print("응답 내용 : \(response)")
-            self.bandData = decodedData
-        } catch {
-            print(error)
-            print("bad news! decoding error occuerd")
-        }
-    }
-    
-    
-    func fetchBandData2(with id: Int) async {
+    func fetchBandData(with id: Int?) async {
+        guard let id else { return }
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
         let idQuery = URLQueryItem(name: "id", value: String(id))
         queryURLComponent?.queryItems = [idQuery]
@@ -188,12 +147,14 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
 extension BandDetailViewController: BandSelectMenuTableViewDelegate {
     func fetchSelectedBandInfo(indexPath: IndexPath) {
         Task {
-            await fetchBandData2(with: self.myBands[indexPath.row].bandId)
+            await fetchBandData(with: self.myBands[indexPath.row].bandId)
             NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
                                             object: nil,
                                             userInfo: ["bandInfo": self.bandData])
+            self.removeBandSelectMenu()
         }
     }
+    
 }
 
 //MARK: BandSelectMenu관련 Method

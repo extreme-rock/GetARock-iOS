@@ -75,7 +75,6 @@ extension BandSelectMenuTableView: UITableViewDataSource {
 
 extension BandSelectMenuTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
         selectDelegate?.fetchSelectedBandInfo(indexPath: indexPath)
     }
     
