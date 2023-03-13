@@ -37,7 +37,6 @@ final class BandSelectToggleTableView: UITableView {
     // MARK: - Method
     
     private func attribute() {
-        self.backgroundColor = .clear
         backgroundColor = .clear
         layer.cornerRadius = 10
         separatorInset = .init(top: 0, left: 15, bottom: 0, right: 15)
@@ -52,7 +51,7 @@ final class BandSelectToggleTableView: UITableView {
     }
     
     private func setupLayout() {
-        self.constraint(.widthAnchor, constant: 250)
+//        self.constraint(.widthAnchor, constant: 250)
     }
     
     private func selectFirstBand() {

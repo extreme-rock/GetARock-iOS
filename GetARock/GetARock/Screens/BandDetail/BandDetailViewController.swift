@@ -89,7 +89,7 @@ final class BandDetailViewController: BaseViewController {
     // MARK: - Method
     
     private func attribute() {
-        self.bandSelectToggleTableView.isHidden = true
+//        self.bandSelectToggleTableView.isHidden = true
     }
     
     private func configureDelegate() {
@@ -113,23 +113,23 @@ final class BandDetailViewController: BaseViewController {
         )
         
         view.addSubview(bandSelectToggleTableView)
-        bandSelectToggleTableView.constraint(
-            top: self.view.topAnchor,
-            leading: self.view.leadingAnchor,
-            padding: UIEdgeInsets(top: 54, left: 17, bottom: 0, right: 0)
-        )
-        
-        // MARK: tableViewHeight 설정 플로우
-        self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: 88)
-        self.tableViewHeight?.isActive = true
-        bandSelectToggleTableView.constraint(.widthAnchor, constant: 250)
-        
-        DispatchQueue.main.async {
-            let size = self.bandSelectToggleTableView.contentSize
-            self.tableViewHeight?.isActive = false
-            self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: size.height)
-            self.tableViewHeight?.isActive = true
-        }
+//        bandSelectToggleTableView.constraint(
+//            top: self.view.topAnchor,
+//            leading: self.view.leadingAnchor,
+//            padding: UIEdgeInsets(top: 54, left: 17, bottom: 0, right: 0)
+//        )
+//
+//        // MARK: tableViewHeight 설정 플로우
+//        self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: 88)
+//        self.tableViewHeight?.isActive = true
+//        bandSelectToggleTableView.constraint(.widthAnchor, constant: 250)
+//        self.tableViewHeight?.isActive = false
+//        DispatchQueue.main.async {
+//            let size = self.bandSelectToggleTableView.contentSize
+//            self.tableViewHeight?.isActive = false
+//            self.tableViewHeight = self.bandSelectToggleTableView.heightAnchor.constraint(equalToConstant: size.height)
+//            self.tableViewHeight?.isActive = true
+//        }
     }
     
     private func touchScreenExceptBandSelectToggleView() {
@@ -141,16 +141,16 @@ final class BandDetailViewController: BaseViewController {
     
     @objc
     func handleTap(_ sender: UITapGestureRecognizer) {
-        print("눌림")
-        print(sender.location(in: view), bandSelectToggleTableView.frame)
-        if sender.state == .ended {
-            let location = sender.location(in: view)
-            print(bandSelectToggleTableView.frame.contains(location))
-            if self.bandSelectToggleTableView.frame.contains(location) {
-                // Hide table view
-                self.bandSelectToggleTableView.isHidden = true
-            }
-        }
+//        print("눌림")
+//        print(sender.location(in: view), bandSelectToggleTableView.frame)
+//        if sender.state == .ended {
+//            let location = sender.location(in: view)
+//            print(bandSelectToggleTableView.frame.contains(location))
+//            if self.bandSelectToggleTableView.frame.contains(location) {
+//                // Hide table view
+//                self.bandSelectToggleTableView.isHidden = true
+//            }
+//        }
     }
 }
 
@@ -200,7 +200,8 @@ extension BandDetailViewController {
 
 extension BandDetailViewController: BandTopInfoViewDelegate {
     func didBandSelectButtonTapped(isBandSelectButton: Bool) {
-        self.bandSelectToggleTableView.isHidden = !isBandSelectButton
+//        self.bandSelectToggleTableView.isHidden = !isBandSelectButton
+        isBandSelectButton ? addDropdownBackgroundView() : removeDropdownBackgroundView()
     }
 }
 
@@ -212,5 +213,46 @@ extension BandDetailViewController: BandSelectToggleTableViewDelegate {
                                             object: nil,
                                             userInfo: ["bandInfo": self.bandData])
         }
+    }
+}
+
+extension BandDetailViewController {
+    // TODO: 첫 높이가 88로 잡히는 현상 수정 
+    private func addDropdownBackgroundView() {
+        bandSelectToggleTableView.frame = CGRect(
+            x: view.frame.origin.x + 17,
+            y: view.frame.origin.y + 57,
+            width: 250,
+            height: 0
+        )
+
+        DispatchQueue.main.async { [weak self] in
+            self?.animate { [weak self] in
+                self?.bandSelectToggleTableView.frame = CGRect(
+                    x: (self?.view.frame.origin.x ?? 0) + 17,
+                    y: (self?.view.frame.origin.y ?? 0) + 57,
+                    width: 250,
+                    height: self?.bandSelectToggleTableView.contentSize.height ?? 50
+                )
+            }
+        }
+    }
+    
+    private func removeDropdownBackgroundView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.animate { [weak self] in
+                self?.bandSelectToggleTableView.frame = CGRect(
+                    x: (self?.view.frame.origin.x ?? 0) + 17,
+                    // FIXME: - 여기서 Navigation Height을 적용해야 할 듯
+                    y: (self?.view.frame.origin.y ?? 0) + 57,
+                    width: 250,
+                    height: 0
+                )
+            }
+        }
+    }
+    
+    private func animate(of animations: @escaping () -> Void) {
+        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut, animations: animations)
     }
 }
