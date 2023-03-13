@@ -161,8 +161,8 @@ extension BandDetailViewController: BandSelectMenuTableViewDelegate {
 extension BandDetailViewController {
     private func dropdownBandSelectMenu() {
         bandSelectMenuView.frame = CGRect(
-            x: view.frame.origin.x + 17,
-            y: view.frame.origin.y + 57,
+            x: view.frame.origin.x + 15,
+            y: view.frame.origin.y + 67,
             width: BandSelectMenuDefaultSize.width,
             height: 0
         )
@@ -173,8 +173,8 @@ extension BandDetailViewController {
             DispatchQueue.main.async { [weak self] in
                 self?.animate { [weak self] in
                     self?.bandSelectMenuView.frame = CGRect(
-                        x: (self?.view.frame.origin.x ?? 0) + 17,
-                        y: (self?.view.frame.origin.y ?? 0) + 57,
+                        x: (self?.view.frame.origin.x ?? 0) + 15,
+                        y: (self?.view.frame.origin.y ?? 0) + 67,
                         width: BandSelectMenuDefaultSize.width,
                         height: BandSelectMenuDefaultSize.height
                     )
@@ -186,8 +186,8 @@ extension BandDetailViewController {
                     self?.bandSelectMenuView.layoutIfNeeded()
                     let contentSize = self?.bandSelectMenuView.contentSize
                     self?.bandSelectMenuView.frame = CGRect(
-                        x: (self?.view.frame.origin.x ?? 0) + 17,
-                        y: (self?.view.frame.origin.y ?? 0) + 57,
+                        x: (self?.view.frame.origin.x ?? 0) + 15,
+                        y: (self?.view.frame.origin.y ?? 0) + 67,
                         width: BandSelectMenuDefaultSize.width,
                         height: contentSize?.height ?? 50
                     )
@@ -200,8 +200,8 @@ extension BandDetailViewController {
         DispatchQueue.main.async { [weak self] in
             self?.animate { [weak self] in
                 self?.bandSelectMenuView.frame = CGRect(
-                    x: (self?.view.frame.origin.x ?? 0) + 17,
-                    y: (self?.view.frame.origin.y ?? 0) + 57,
+                    x: (self?.view.frame.origin.x ?? 0) + 15,
+                    y: (self?.view.frame.origin.y ?? 0) + 67,
                     width: 250,
                     height: 0
                 )

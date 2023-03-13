@@ -34,7 +34,6 @@ final class BandTopInfoView: UIView {
     
     private lazy var bandNameStackView: UIStackView = {
         $0.axis = .horizontal
-        $0.spacing = 5
         $0.alignment = .center
         return $0
     }(UIStackView(arrangedSubviews: [bandNameLabel, bandSelectToggleButton]))
@@ -47,13 +46,16 @@ final class BandTopInfoView: UIView {
                  textColorInfo: .white))
     
     private lazy var bandSelectToggleButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         // TODO: 터치영역이 작은 문제 해결해야함
-        $0.setImage(ImageLiteral.chevronDownSymbol, for: .normal)
-        $0.tintColor = .white
-        $0.constraint(.heightAnchor, constant: 24)
-        $0.addTarget(self, action: #selector(didBandSelectToggleButtonTapped), for: .touchUpInside)
-        return $0
-    }(UIButton())
+        let button = UIButton(configuration: configuration)
+        button.setImage(ImageLiteral.chevronDownSymbol, for: .normal)
+        button.tintColor = .white
+//        $0.constraint(.heightAnchor, constant: 24)
+        button.addTarget(self, action: #selector(didBandSelectToggleButtonTapped), for: .touchUpInside)
+        return button
+    }()
     
     //TODO: 추후 밴드 데이터를 이용해 이름을 각 라벨 업데이트 필요
     private lazy var locationLabel: BasicLabel = {
