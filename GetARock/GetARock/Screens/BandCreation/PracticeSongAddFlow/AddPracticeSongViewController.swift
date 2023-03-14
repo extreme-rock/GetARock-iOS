@@ -26,21 +26,22 @@ final class AddPracticeSongViewController: BaseViewController {
     
     // MARK: - View
     
-    private let firstPracticeSongCard: PracticeSongCardView = PracticeSongCardView()
+    private lazy var firstPracticeSongCard: PracticeSongCardView = {
+        let deleteAction: UIAction = UIAction { [weak self] _ in
+            self?.deleteFirstPracticeSongCard()
+        }
+        $0.deleteButton.addAction(deleteAction, for: .touchUpInside)
+        return $0
+    }(PracticeSongCardView())
     
     private lazy var contentView: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
         $0.spacing = 40
-        let deleteAction: UIAction = UIAction { [weak self] _ in
-            self?.deleteFirstPracticeSongCard()
-        }
-        firstPracticeSongCard.deleteButton.addAction(deleteAction, for: .touchUpInside)
         return $0
     }(UIStackView(arrangedSubviews: [firstPracticeSongCard]))
     
     private lazy var mainScrollView: UIScrollView = {
-        $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
         return $0
     }(UIScrollView())
@@ -109,23 +110,37 @@ final class AddPracticeSongViewController: BaseViewController {
         
         // contentView는 stackView라서 높이정보가 자동으로 세팅됨
         // 따라서 스크롤범위를 맞추기위해 contentView의 하단 constraint가 필요함
-        contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor,
-                               bottom: mainScrollView.contentLayoutGuide.bottomAnchor, centerX: mainScrollView.centerXAnchor,
-                               padding: UIEdgeInsets(top: 20, left: 0, bottom: 160, right: 0))
+        contentView.constraint(
+            top: mainScrollView.topAnchor,
+            leading: mainScrollView.leadingAnchor,
+            bottom: mainScrollView.bottomAnchor,
+            trailing: mainScrollView.trailingAnchor,
+            padding: UIEdgeInsets(top: 20,
+                                  left: 16,
+                                  bottom: 160,
+                                  right: 16))
         
         mainScrollView.addSubview(addPracticeSongButton)
         
-        addPracticeSongButton.constraint(top: contentView.bottomAnchor,
-                                         leading: contentView.leadingAnchor,
-                                         trailing: contentView.trailingAnchor,
-                                         padding: UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20))
+        addPracticeSongButton.constraint(
+            top: contentView.bottomAnchor,
+            leading: contentView.leadingAnchor,
+            trailing: contentView.trailingAnchor,
+            padding: UIEdgeInsets(top: 20,
+                                  left: 20,
+                                  bottom: 0,
+                                  right: 20))
         
         mainScrollView.addSubview(addCompleteButton)
         
-        addCompleteButton.constraint(top: addPracticeSongButton.bottomAnchor,
-                                     leading: view.safeAreaLayoutGuide.leadingAnchor,
-                                     trailing: view.safeAreaLayoutGuide.trailingAnchor,
-                                     padding: UIEdgeInsets(top: 40, left: 20, bottom: 10, right: 20))
+        addCompleteButton.constraint(
+            top: addPracticeSongButton.bottomAnchor,
+            leading: view.safeAreaLayoutGuide.leadingAnchor,
+            trailing: view.safeAreaLayoutGuide.trailingAnchor,
+            padding: UIEdgeInsets(top: 40,
+                                  left: 20,
+                                  bottom: 10,
+                                  right: 20))
     }
     
     private func updateDeleteButtonState() {

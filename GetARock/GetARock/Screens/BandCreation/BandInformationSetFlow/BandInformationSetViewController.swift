@@ -80,7 +80,7 @@ final class BandInformationSetViewController: BaseViewController {
 
     private let detailpracticeRoomTextField: BasicTextField = {
         let rightPaddingView = TextFieldRightPaddingView()
-        rightPaddingView.constraint(.widthAnchor, constant: 20)
+        rightPaddingView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         $0.textField.rightView = rightPaddingView
         $0.textField.rightViewMode = .always
         return $0
