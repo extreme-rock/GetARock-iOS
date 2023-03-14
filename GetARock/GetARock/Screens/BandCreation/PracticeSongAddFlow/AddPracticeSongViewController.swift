@@ -20,11 +20,7 @@ final class AddPracticeSongViewController: BaseViewController {
         didSet {
             addPracticeSongButton.configuration?.title = "합주곡 추가\(numberOfSong)/3"
             addPracticeSongButton.configuration?.attributedTitle?.font = UIFont.setFont(.contentBold)
-            if numberOfSong == 3 {
-                addPracticeSongButton.isHidden = true
-            } else {
-                addPracticeSongButton.isHidden = false
-            }
+                addPracticeSongButton.isHidden = numberOfSong == 3 ? true : false
         }
     }
     
