@@ -144,11 +144,12 @@ final class AddPracticeSongViewController: BaseViewController {
     }
     
     private func updateDeleteButtonState() {
-        if contentView.arrangedSubviews.count == 1 {
-            contentView.arrangedSubviews.compactMap { $0 as? PracticeSongCardView }.forEach { $0.deleteButton.isHidden = true }
-        } else {
-            contentView.arrangedSubviews.compactMap { $0 as? PracticeSongCardView }.forEach { $0.deleteButton.isHidden = false }
-        }
+        let practiceSongs = contentView.arrangedSubviews.compactMap { $0 as? PracticeSongCardView }
+                if contentView.arrangedSubviews.count == 1 {
+                    practiceSongs.forEach { $0.hideDeleteButton()}
+                } else {
+                    practiceSongs.forEach { $0.showDeleteButton() }
+                }
     }
     
     private func setKeyboardDismiss() {
@@ -161,13 +162,15 @@ final class AddPracticeSongViewController: BaseViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(getKeyboardHeight(notification: )),
-            name: UIResponder.keyboardWillShowNotification, object: nil
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
         )
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(updateCompleteButtonState),
-            name: Notification.Name.didPracticeCardViewTextFieldChange, object: nil
+            name: Notification.Name.didPracticeCardViewTextFieldChange,
+            object: nil
         )
     }
     
@@ -179,6 +182,7 @@ final class AddPracticeSongViewController: BaseViewController {
             self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
             UIView.animate(withDuration: 0.2) {
                 self?.contentView.layoutIfNeeded() // StackView 레이아웃 재조정 애니메이션
+                self?.updateCompleteButtonState()
             }
         })
     }
@@ -202,6 +206,7 @@ extension AddPracticeSongViewController {
                 self?.numberOfSong = self?.contentView.arrangedSubviews.count ?? 0
                 UIView.animate(withDuration: 0.3) { // StackView 레이아웃 재조정 애니메이션
                     self?.contentView.layoutIfNeeded()
+                    self?.updateCompleteButtonState()
                 }
             })
         }
@@ -229,7 +234,7 @@ extension AddPracticeSongViewController {
     private func updateCompleteButtonState() {
         let isAllRequiredInfoFilled = contentView.arrangedSubviews
             .compactMap { $0 as? PracticeSongCardView }
-            .filter { $0.getSongName().isEmpty || $0.getArtistName().isEmpty } // 정보가 하나라도 누락된 card만 필터링함
+            .filter { $0.songName().isEmpty || $0.artistName().isEmpty } // 정보가 하나라도 누락된 card만 필터링함
             .isEmpty // 정보가 누락되었는지 여부를 원소로 가지는 배열이 비어있다면, 모든 정보가 채워진 것임
         
         if isAllRequiredInfoFilled {

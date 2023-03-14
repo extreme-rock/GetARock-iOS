@@ -17,7 +17,7 @@ final class PracticeSongCardView: UIStackView {
         return $0
     }(UIButton())
     
-    private let practiceSongName: InformationGuideLabel = InformationGuideLabel(guideText: "합주곡 제목", type: .required)
+    private let practiceSongNameGuideLabel: InformationGuideLabel = InformationGuideLabel(guideText: "합주곡 제목", type: .required)
     
     private lazy var practiceSongTextField: BasicTextField = {
         $0.delegate = self
@@ -30,9 +30,9 @@ final class PracticeSongCardView: UIStackView {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [practiceSongName, practiceSongTextField]))
+    }(UIStackView(arrangedSubviews: [practiceSongNameGuideLabel, practiceSongTextField]))
     
-    private let artistName: InformationGuideLabel = InformationGuideLabel(guideText: "아티스트", type: .required)
+    private let artistNameGuideLabel: InformationGuideLabel = InformationGuideLabel(guideText: "아티스트", type: .required)
     
     private lazy var artistNameTextField: BasicTextField = {
         $0.delegate = self
@@ -45,7 +45,7 @@ final class PracticeSongCardView: UIStackView {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [artistName, artistNameTextField]))
+    }(UIStackView(arrangedSubviews: [artistNameGuideLabel, artistNameTextField]))
     
     private let linkLabel: InformationGuideLabel = InformationGuideLabel(guideText: "링크", type: .optional)
     
@@ -103,12 +103,20 @@ final class PracticeSongCardView: UIStackView {
         deleteButton.isHidden = true
     }
     
-    func getArtistName() -> String {
+    func artistName() -> String {
         return artistNameTextField.textField.text ?? ""
     }
     
-    func getSongName() -> String {
+    func songName() -> String {
         return practiceSongTextField.textField.text ?? ""
+    }
+
+    func hideDeleteButton() {
+        deleteButton.isHidden = true
+    }
+
+    func showDeleteButton() {
+        deleteButton.isHidden = false
     }
     
     func setTextFieldDelegate(controller: UITextFieldDelegate) {

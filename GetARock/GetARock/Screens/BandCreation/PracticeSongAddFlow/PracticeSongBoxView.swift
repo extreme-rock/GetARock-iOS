@@ -97,8 +97,8 @@ final class PracticeSongBoxView: UIView {
     }
     
     func configure(data: PracticeSongCardView) {
-        songTitleLabel.text = data.getSongName()
-        artistLabel.text = data.getArtistName()
+        songTitleLabel.text = data.songName()
+        artistLabel.text = data.artistName()
     }
 }
 
