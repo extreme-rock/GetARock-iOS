@@ -144,6 +144,7 @@ final class BandInfomationView: UIView {
         setupLayout()
         attribute()
         addModifyObserver()
+        bandMemberInfoCollectView.delegate = self
     }
     
     required init(coder: NSCoder) {
@@ -312,3 +313,12 @@ extension BandInfomationView {
 
 // TODO - : 추후 멤버 선택 시 헤당 멤버 상세 페이지로 보내기 구현 필요
 
+extension BandInfomationView: PositionCollectionViewDelegate {
+    func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
+        return false
+    }
+    
+    func canDeselectPosition(_ collectionView: UICollectionView, indexPath: IndexPath) -> Bool {
+        return false
+    }
+}

@@ -11,6 +11,12 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
 
     // MARK: - View
     
+    override var isSelected: Bool {
+        didSet {
+            self.applySelectedState()
+        }
+    }
+    
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .dark02
@@ -67,6 +73,12 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         }   
     }
     
+    override func setNeedsLayout() {
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        self.contentView.applyActiveGradation()
+    }
+    
     //MARK: - Method
     
     private func setupLayout() {
@@ -98,7 +110,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     }
     
     private func applyUserState(isUser: Bool) {
-        self.containerView.backgroundColor = isUser ? .activeGradationPurple : .dark02
+        self.containerView.backgroundColor = isUser ? .clear : .dark02
         self.containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
     
@@ -137,5 +149,10 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         if data.isLeader {
             configureLeaderUI()
         }
+    }
+    
+    private func applySelectedState() {
+        self.containerView.backgroundColor = isSelected ? .clear : .dark02
+        self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
 }

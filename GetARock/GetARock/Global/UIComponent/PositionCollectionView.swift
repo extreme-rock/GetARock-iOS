@@ -9,6 +9,13 @@ import UIKit
 
 protocol PositionCollectionViewDelegate: AnyObject {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool
+    func canDeselectPosition(_ collectionView: UICollectionView, indexPath: IndexPath) -> Bool
+}
+
+extension PositionCollectionViewDelegate {
+    func canDeselectPosition(_ collectionView: UICollectionView, indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 
 enum Section: Int {
@@ -198,6 +205,9 @@ extension PositionCollectionView {
             case .bandMember(let bandMember):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemberCollectionViewCell.classIdentifier, for: indexPath) as? BandMemberCollectionViewCell else { return UICollectionViewCell() }
                 cell.configure(data: bandMember)
+                if bandMember.isUser {
+                    self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+                }
                 return cell
                 
             case .position(let position):
@@ -243,6 +253,11 @@ extension PositionCollectionView: UICollectionViewDelegate {
         let selectedPositionCount = collectionView.indexPathsForSelectedItems?.count ?? 0
         guard let canSelect = delegate?.canSelectPosition(collectionView, indexPath: indexPath, selectedItemsCount: selectedPositionCount) else { return false }
         return canSelect
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        guard let canDeSelect = delegate?.canDeselectPosition(collectionView, indexPath: indexPath) else { return true }
+        return canDeSelect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
