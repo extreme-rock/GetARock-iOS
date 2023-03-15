@@ -92,8 +92,9 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         self.containerView.addSubview(memberNameLabel)
         self.memberNameLabel.constraint(top: containerView.topAnchor,
                                      leading: containerView.leadingAnchor,
-                                     trailing: containerView.trailingAnchor,
-                                     padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
+                                     padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 60))
+        self.memberNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -70).isActive = true
+        
         
         self.containerView.addSubview(informationStackView)
         self.informationStackView.constraint(top: memberNameLabel.bottomAnchor,
@@ -121,9 +122,9 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         crownImage.image?.withConfiguration(imageConfiguation)
         crownImage.tintColor = .white
         self.containerView.addSubview(crownImage)
-        crownImage.constraint(top: containerView.topAnchor,
-                              leading: memberNameLabel.trailingAnchor,
-                              padding: UIEdgeInsets(top: 14, left: -5, bottom: 0, right: 0))
+        crownImage.constraint(top: self.containerView.topAnchor,
+                              leading: self.memberNameLabel.trailingAnchor,
+                              padding: UIEdgeInsets(top: 14, left: 2, bottom: 0, right: 0))
     }
     
     private func configureInstrumentNameUI(with instrumentNames: [String]) {

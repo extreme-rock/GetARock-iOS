@@ -189,7 +189,6 @@ final class BandInfomationView: UIView {
             let emptyView = EmptyView(type: .noBand)
             bandIntroStackView.removeArrangedSubview(bandIntroLabel)
             bandIntroStackView.addArrangedSubview(emptyView)
-            
         } else {
             bandIntroLabel.text = bandIntro
         }
@@ -205,10 +204,6 @@ final class BandInfomationView: UIView {
             equalToConstant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
         )
         self.bandMemberCollectionViewHeight?.isActive = true
-//        bandMemberInfoCollectView.constraint(
-//            .heightAnchor,
-//            constant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
-//        )
     }
     
     private func makeBandMemberData() {
@@ -280,7 +275,7 @@ final class BandInfomationView: UIView {
         self.bandSong = bandInfo.songList
         self.bandSNS = bandInfo.snsList
         
-        self.bandMemberInfoCollectView.applySnapshot(with: self.bandMemberCollectionViewItem)
+        self.bandMemberInfoCollectView.applySnapshot(with: transformedMemberData)
         self.memberCountAgeLabel.text = "\(bandMember.count)명, \(bandAge)"
         self.bandSNSListView.configureSNSList(with: self.bandSNS)
         self.bandIntroLabel.text = self.bandIntro
@@ -309,9 +304,11 @@ extension BandInfomationView {
                                                object: nil)
     }
 }
-// MARK: - PositionCollectionViewDelegate
 
 // TODO - : 추후 멤버 선택 시 헤당 멤버 상세 페이지로 보내기 구현 필요
+
+
+// MARK: PositionCollectionViewDelegate
 
 extension BandInfomationView: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {

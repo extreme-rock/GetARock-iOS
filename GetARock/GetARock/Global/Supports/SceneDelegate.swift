@@ -19,11 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = PositionSelectViewController()
-//        window.rootViewController = BandDetailViewController(
-//            myBands: [BandList(bandId: 71, name: "극락", memberCount: 6, memberAge: "20대 ~ 30대"),
-//                      BandList(bandId: 124, name: "오락가락", memberCount: 6, memberAge: "60대 ~ 70대")]
-//        )
+        window.rootViewController = BandDetailViewController(
+            myBands: [BandList(bandId: 71, name: "극락", memberCount: 6, memberAge: "20대 ~ 30대"),
+                      BandList(bandId: 124, name: "오락가락", memberCount: 6, memberAge: "60대 ~ 70대")]
+        )
         window.makeKeyAndVisible()
         self.window = window
     }

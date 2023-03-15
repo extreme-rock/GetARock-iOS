@@ -14,17 +14,15 @@ protocol BandSelectMenuTableViewDelegate: AnyObject {
 final class BandSelectMenuTableView: UITableView {
     
     // MARK: - Property
+    
     weak var selectDelegate: BandSelectMenuTableViewDelegate?
     private let bandNames: [String]
-    
-    // MARK: - View
     
     // MARK: - Init
     
     init(bandNames: [String]) {
         self.bandNames = bandNames
         super.init(frame: .zero, style: .plain)
-        self.setupLayout()
         self.attribute()
         self.configureTableView()
         self.selectFirstBand()
@@ -48,10 +46,6 @@ final class BandSelectMenuTableView: UITableView {
         delegate = self
         dataSource = self
         register(BandSelectMenuTableViewCell.self, forCellReuseIdentifier: BandSelectMenuTableViewCell.classIdentifier)
-    }
-    
-    private func setupLayout() {
-//        self.constraint(.widthAnchor, constant: 250)
     }
     
     private func selectFirstBand() {
