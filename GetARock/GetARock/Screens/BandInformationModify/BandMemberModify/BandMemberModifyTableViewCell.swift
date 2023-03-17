@@ -67,9 +67,9 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         $0.tintColor = .gray01
         return $0
     }(UIButton(type: .custom))
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+    
+    init() {
+        super.init(style: .default, reuseIdentifier: "none")
         setupLayout()
         attribute()
     }
@@ -97,14 +97,6 @@ final class BandMemberModifyTableViewCell: UITableViewCell, Identifiable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        print("=====This is leaderCell =====")
-        print(isLeaderCell)
-        self.isSelectedState = false
-        self.leftView.image = nil
-    }
-
     private func attribute() {
         self.backgroundColor = .dark01
         self.indentationWidth = 0

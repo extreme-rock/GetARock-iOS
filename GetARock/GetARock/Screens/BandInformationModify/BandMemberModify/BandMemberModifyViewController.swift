@@ -120,17 +120,15 @@ extension BandMemberModifyViewController {
     }
     
     func makeDataSource() -> UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo> {
-        return UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in         
-
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: BandMemberModifyTableViewCell.classIdentifier, for: indexPath) as? BandMemberModifyTableViewCell else { return UITableViewCell() }
+        return UITableViewDiffableDataSource<BandMemberModifyTableViewSection, SearchedUserInfo>(tableView: self.bandMemberTableView) { tableView, indexPath, cellData in
             
+            let cell = BandMemberModifyTableViewCell()
             cell.configure(data: cellData)
             cell.selectionStyle = .none
             
             // 처음 cell configuration 과정에서 리더 포지션의 경우 그에 맞게 UI를 조정하고 인덱스 패스를 부여함
             if cellData.memberState == .admin {
                 self.updateLeaderPositionIndexPath(indexPath: indexPath)
-                cell.getLeaderPositionState()
             }
             // cell configuration 과정에서 이미 선택된 셀은 선택 여부가 활성화 되게 만듬
             if self.selectedCellIndexes.map({ $0.indexPath }).contains(indexPath) {
@@ -138,7 +136,7 @@ extension BandMemberModifyViewController {
             }
             
             if indexPath == self.indexPathOfLeaderCell {
-                cell.selectButton.isHidden = true
+                cell.getLeaderPositionState()
             }
             
             cell.setLeaderButtonAction {
@@ -165,7 +163,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
             let addedMemberTableHeader = BandMemberModifyTableViewHeader()
             
             addedMemberTableHeader.setInviteMemberButtonAction {
-                self.setNavigationAttribute(navigationRoot: self.rootViewController)
+                self.navigateToInvitingMemberView(navigationRoot: self.rootViewController)
             }
             // 편집 버튼 누르면 하는 액션 설정
             addedMemberTableHeader.actionForTappingEditButton = {
@@ -219,7 +217,7 @@ extension BandMemberModifyViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 77
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -234,11 +232,14 @@ extension BandMemberModifyViewController: UITableViewDelegate {
 //MARK: 데이터 추가 삭제 관련 로직
 extension BandMemberModifyViewController {
     
-    private func setNavigationAttribute(navigationRoot: UIViewController) {
+    private func navigateToInvitingMemberView(navigationRoot: UIViewController) {
         let nextViewController = UserSearchViewController()
         // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
         nextViewController.completion = { selectedUsers in
             for data in selectedUsers {
+                if self.addedMembers.count + self.invitingMembers.count == 6 {
+                    break
+                }
                 if self.invitingMembers.contains(where: { $0.id == data.id }) == false {
                     self.invitingMembers.append(data)
                 }

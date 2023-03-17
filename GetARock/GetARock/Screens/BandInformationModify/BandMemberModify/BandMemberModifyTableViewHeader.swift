@@ -109,9 +109,8 @@ final class BandMemberModifyTableViewHeader: UITableViewHeaderFooterView {
         $0.distribution = .equalSpacing
         $0.spacing = 20
         return $0
-    }(UIStackView(arrangedSubviews: [titleLabel,
-                                     subTitleLabel,
-                                     buttonHstack,
+        //MARK: Cell 재사용을 막기 위해 header 측의 공간 확보
+    }(UIStackView(arrangedSubviews: [buttonHstack,
                                      sectionTitleHstack]))
     
     //MARK: init
