@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SongListViewDelegate: AnyObject {
-    func presentSongLink(with link: String)
+    func presentInAppSafari(with link: String)
 }
 
 enum SongListType {
@@ -108,7 +108,7 @@ extension SongListView: UICollectionViewDelegate {
             return
         case .detail:
             guard let link = self.songList?[indexPath.item].link else { return }
-            self.delegate?.presentSongLink(with: link)
+            self.delegate?.presentInAppSafari(with: link)
         }
     }
 }
