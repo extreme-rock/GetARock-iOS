@@ -57,9 +57,14 @@ final class BandDetailViewController: BaseViewController {
     
     lazy var bandTopInfoView: BandTopInfoView = {
         $0.delegate = self
+        if self.myBands.count > 1 {
+            $0.setupToggleButtonLayout()
+        }
         return $0
     }(BandTopInfoView(name: bandData.name, address: bandData.address))
+    
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
+    
     private lazy var bandSelectMenuView = BandSelectMenuTableView(bandNames: self.myBands.map { $0.name })
     
     // MARK: - LifeCycle

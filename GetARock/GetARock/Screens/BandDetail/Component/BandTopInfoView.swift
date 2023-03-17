@@ -36,7 +36,7 @@ final class BandTopInfoView: UIView {
         $0.axis = .horizontal
         $0.alignment = .center
         return $0
-    }(UIStackView(arrangedSubviews: [bandNameLabel, bandSelectToggleButton]))
+    }(UIStackView(arrangedSubviews: [bandNameLabel]))
     
     private lazy var bandNameLabel: BasicLabel = {
         $0.numberOfLines = 2
@@ -48,11 +48,9 @@ final class BandTopInfoView: UIView {
     private lazy var bandSelectToggleButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
-        // TODO: 터치영역이 작은 문제 해결해야함
         let button = UIButton(configuration: configuration)
         button.setImage(ImageLiteral.chevronDownSymbol, for: .normal)
         button.tintColor = .white
-//        $0.constraint(.heightAnchor, constant: 24)
         button.addTarget(self, action: #selector(didBandSelectToggleButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -159,6 +157,10 @@ final class BandTopInfoView: UIView {
         self.bandAddress = bandInfo.address
         setBandAddress()
         self.isBandButtonSelect = false
+    }
+    
+    func setupToggleButtonLayout() {
+        self.bandNameStackView.addArrangedSubview(self.bandSelectToggleButton)
     }
 }
 
