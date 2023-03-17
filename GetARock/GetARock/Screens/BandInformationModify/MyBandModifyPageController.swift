@@ -120,7 +120,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         segmentedController.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                        leading: view.leadingAnchor,
                                        trailing: view.trailingAnchor,
-                                       padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
+                                       padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
         segmentedController.constraint(.heightAnchor, constant: 50)
 
         self.view.addSubview(pageViewController.view)

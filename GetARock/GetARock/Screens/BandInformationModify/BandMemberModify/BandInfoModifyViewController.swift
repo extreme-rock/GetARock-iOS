@@ -183,7 +183,7 @@ final class BandInfoModifyViewController: BaseViewController {
         $0.spacing = 60
         $0.backgroundColor = .dark01
         return $0
-    }(UIStackView(arrangedSubviews: [titleVstack,
+    }(UIStackView(arrangedSubviews: [
                                      textFieldVstack,
                                      practicePlaceVstack,
                                      practiceSongVstack,
