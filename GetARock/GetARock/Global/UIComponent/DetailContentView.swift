@@ -107,9 +107,21 @@ final class DetailContentView: UIView {
         switch detailInfoType {
             
         case .band:
-            // TODO: 임시 View들입니다. 추후 변경 예정
             let bandInfoVC: UIViewController = {
-                $0.view.backgroundColor = .red
+                let bandInfo = BandInformationView(
+                    member: bandData.memberList,
+                    song: bandData.songList,
+                    intro: bandData.introduction,
+                    sns: bandData.snsList,
+                    age: bandData.age
+                )
+                $0.view.addSubview(bandInfo)
+                bandInfo.constraint(
+                    top: $0.view.topAnchor,
+                    leading: $0.view.leadingAnchor,
+                    bottom: $0.view.bottomAnchor,
+                    trailing: $0.view.trailingAnchor
+                )
                 return $0
             }(UIViewController())
             

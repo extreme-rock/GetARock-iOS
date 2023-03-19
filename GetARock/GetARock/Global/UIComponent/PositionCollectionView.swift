@@ -98,6 +98,7 @@ final class PositionCollectionView: UIView {
         collectionView.delegate = self
         switch self.cellType {
         case .band:
+            collectionView.isScrollEnabled = false
             collectionView.register(BandMemberCollectionViewCell.self,
                                     forCellWithReuseIdentifier: BandMemberCollectionViewCell.classIdentifier)
         case .position:

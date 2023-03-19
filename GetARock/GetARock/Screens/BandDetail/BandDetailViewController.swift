@@ -12,7 +12,7 @@ final class BandDetailViewController: BaseViewController {
     // MARK: - Property
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "1"
+    private var bandID = "71"
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
@@ -41,8 +41,8 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - View
     
-    lazy var bandTopInfoView = BandTopInfoView()
-    lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
+    private lazy var bandTopInfoView = BandTopInfoView(name: bandData.name, address: bandData.address)
+    private lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     
     // MARK: - LifeCycle
     
@@ -50,8 +50,8 @@ final class BandDetailViewController: BaseViewController {
         super.viewDidLoad()
         Task {
             await fetchBandData()
+            setupLayout()
         }
-        setupLayout()
     }
     
     deinit {
