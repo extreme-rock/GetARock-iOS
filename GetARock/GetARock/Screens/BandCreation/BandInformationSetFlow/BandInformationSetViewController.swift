@@ -80,7 +80,7 @@ final class BandInformationSetViewController: BaseViewController {
 
     private let detailpracticeRoomTextField: BasicTextField = {
         let rightPaddingView = TextFieldRightPaddingView()
-        rightPaddingView.constraint(.widthAnchor, constant: 20)
+        rightPaddingView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         $0.textField.rightView = rightPaddingView
         $0.textField.rightViewMode = .always
         return $0
@@ -279,6 +279,15 @@ extension BandInformationSetViewController {
 
     //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
+        let nextViewController = AddPracticeSongViewController()
+        nextViewController.completion = { [weak self] songs in
+            let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
+            for song in addedSongs {
+                if self?.practiceSongList.arrangedSubviews.count ?? 0 > 3 { break }
+                self?.practiceSongList.addArrangedSubview(song)
+            }
+        }
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     @objc func didTouchScreen() {
@@ -292,6 +301,19 @@ extension BandInformationSetViewController {
     //TODO: 밴드 정보를 서버에 POST 하는 코드 추가 예정
     private func postBandInformation() {
 
+    }
+}
+
+    //추가된 합주곡 정보를 바탕으로 Box형 UI를 만드는 함수
+extension BandInformationSetViewController {
+    func makePracticeSongBoxes(with data: [PracticeSongCardView]) -> [PracticeSongBoxView] {
+        var result: [PracticeSongBoxView] = []
+        for datum in data {
+            let practiceSong: PracticeSongBoxView = PracticeSongBoxView()
+            practiceSong.configure(data: datum)
+            result.append(practiceSong)
+        }
+        return result
     }
 }
 
