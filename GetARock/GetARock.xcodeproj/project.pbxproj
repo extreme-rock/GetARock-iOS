@@ -47,7 +47,7 @@
 		7B287CF529B7651000439254 /* MypageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF429B7651000439254 /* MypageDetailViewController.swift */; };
 		7B287CF729B7655B00439254 /* MypageTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF629B7655B00439254 /* MypageTopInfoView.swift */; };
 		7B287CFA29B76A8E00439254 /* UserInformationVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF929B76A8E00439254 /* UserInformationVO.swift */; };
-		7B287CFC29B7785300439254 /* UserInfomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CFB29B7785300439254 /* UserInfomationView.swift */; };
+		7B287CFC29B7785300439254 /* UserInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CFB29B7785300439254 /* UserInformationView.swift */; };
 		7B3711D029A4F07500CC2F69 /* EventDataVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */; };
 		7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */; };
 		7B56DC3E29A36F2F00672EDD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */; };
@@ -193,7 +193,7 @@
 		7B287CF429B7651000439254 /* MypageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageDetailViewController.swift; sourceTree = "<group>"; };
 		7B287CF629B7655B00439254 /* MypageTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTopInfoView.swift; sourceTree = "<group>"; };
 		7B287CF929B76A8E00439254 /* UserInformationVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationVO.swift; sourceTree = "<group>"; };
-		7B287CFB29B7785300439254 /* UserInfomationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfomationView.swift; sourceTree = "<group>"; };
+		7B287CFB29B7785300439254 /* UserInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationView.swift; sourceTree = "<group>"; };
 		7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDataVO.swift; sourceTree = "<group>"; };
 		7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandTopInfoView.swift; sourceTree = "<group>"; };
 		7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -399,7 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				7B287CF629B7655B00439254 /* MypageTopInfoView.swift */,
-				7B287CFB29B7785300439254 /* UserInfomationView.swift */,
+				7B287CFB29B7785300439254 /* UserInformationView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1052,7 +1052,7 @@
 				4A8355E3299F78AD00D82AF3 /* UserInfoInputViewController.swift in Sources */,
 				4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */,
 				7B287CF729B7655B00439254 /* MypageTopInfoView.swift in Sources */,
-				7B287CFC29B7785300439254 /* UserInfomationView.swift in Sources */,
+				7B287CFC29B7785300439254 /* UserInformationView.swift in Sources */,
 				4A4A6E9429A8F58B005CF076 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

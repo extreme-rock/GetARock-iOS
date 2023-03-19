@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class UserInfomationView: UIView {
+final class UserInformationView: UIView {
     
     // MARK: - Property
     
@@ -64,7 +64,7 @@ final class UserInfomationView: UIView {
     
     private let userBandButtonStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = 5
+        $0.spacing = 10
         return $0
     }(UIStackView())
     
@@ -109,7 +109,6 @@ final class UserInfomationView: UIView {
     private lazy var userSNSListView = SNSListStackView(data: SNS(youtube: nil, instagram: nil, soundCloud: nil))
     
     private lazy var userSNSStackView: UIStackView = {
-        $0.backgroundColor = .blue
         $0.axis = .vertical
         $0.spacing = 15
         return $0
