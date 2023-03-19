@@ -81,6 +81,13 @@ final class MypageDetailViewController: UIViewController {
             leading: self.view.leadingAnchor,
             trailing: self.view.trailingAnchor
         )
+        view.addSubview(userInfomationView)
+        userInfomationView.constraint(
+            top: mypageTopInfoView.bottomAnchor,
+            leading: self.view.leadingAnchor,
+            bottom: self.view.bottomAnchor,
+            trailing: self.view.trailingAnchor
+        )
     }
 }
 
