@@ -431,10 +431,10 @@
 		9A53CFB729C6F8A2002F6E56 /* BandInformationModify */ = {
 			isa = PBXGroup;
 			children = (
+				9A53CFBC29C74923002F6E56 /* MyBandInfoModifyPageController.swift */,
 				9A53CFB529C6F89C002F6E56 /* BandInfoModifyViewController.swift */,
 				9A53CFB829C6F8C4002F6E56 /* BandMemberModifyViewController.swift */,
 				9A53CFBA29C6FD8C002F6E56 /* BandMemberModifyCell.swift */,
-				9A53CFBC29C74923002F6E56 /* MyBandInfoModifyPageController.swift */,
 			);
 			path = BandInformationModify;
 			sourceTree = "<group>";
