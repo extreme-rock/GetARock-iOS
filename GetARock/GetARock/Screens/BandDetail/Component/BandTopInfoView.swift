@@ -9,24 +9,28 @@ import UIKit
 
 final class BandTopInfoView: UIView {
     
+    // MARK: - Property
+    private var bandName = ""
+    private var bandAddress: AddressVO
+    
     // MARK: - View
     
     //TODO: 추후 밴드 데이터를 이용해 이름을 각 라벨 업데이트 필요
-    private let bandNameLabel: BasicLabel = {
+    private lazy var bandNameLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
     }(BasicLabel(
-        contentText: "블랙로즈",
-        fontStyle: .headline04,
+        contentText: bandName,
+        fontStyle: .nameTitle,
         textColorInfo: .white)
     )
     
     //TODO: 추후 밴드 데이터를 이용해 이름을 각 라벨 업데이트 필요
-    private let locationLabel: BasicLabel = {
+    private lazy var locationLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
     }(BasicLabel(
-        contentText: "경북 포항시 남구 연일읍 동문로 40-1",
+        contentText: "",
         fontStyle: .content,
         textColorInfo: .white)
     )
@@ -57,7 +61,9 @@ final class BandTopInfoView: UIView {
     
     // MARK: - Init
     
-    init() {
+    init(name: String, address: AddressVO) {
+        self.bandName = name
+        self.bandAddress = address
         super.init(frame: .zero)
         setupLayout()
         attribute()
@@ -71,6 +77,7 @@ final class BandTopInfoView: UIView {
     
     private func attribute() {
         self.backgroundColor = .dark01
+        setBandAddress()
     }
     
     private func setupLayout() {
@@ -91,5 +98,14 @@ final class BandTopInfoView: UIView {
             padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         )
         self.divider.constraint(.heightAnchor, constant: DividerSize.height)
+    }
+    
+    private func setBandAddress() {
+        let city = bandAddress.city
+        let street = bandAddress.street
+        let detail = bandAddress.detail
+        let bandAddressText = city + " " + street + " " +  detail
+        locationLabel.text = bandAddressText
+        print(bandAddressText)
     }
 }

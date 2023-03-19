@@ -17,9 +17,9 @@ final class WriteCommentTextView: UIView {
     private var keyboardHeight: CGFloat = 30
     
     //TODO: - 추후 로그인한 사용자 ID로 변경 해야함
-    private var memberId = "10"
+    private var memberId = "18"
     //TODO: - 추후 사용자가 들어간 밴드의 ID로 변경해야함
-    private var bandId = "1"
+    private var bandId = "71"
     private var contentText = ""
     
     // MARK: - View

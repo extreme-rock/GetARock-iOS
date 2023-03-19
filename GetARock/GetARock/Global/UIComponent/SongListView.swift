@@ -23,6 +23,7 @@ final class SongListView: UIView {
     weak var delegate: SongListViewDelegate?
     private var songList: [Song]?
     private var songListType: SongListType
+    private var songData: [SongListVO]?
     
     private enum Size {
         static let cellWidth: CGFloat = (UIScreen.main.bounds.width * 0.9)
@@ -42,6 +43,7 @@ final class SongListView: UIView {
             SongListCollectionViewCell.self,
             forCellWithReuseIdentifier: "SongListCollectionViewCell"
         )
+        $0.isScrollEnabled = false
         $0.showsVerticalScrollIndicator = false
         $0.dataSource = self
         $0.delegate = self
@@ -91,7 +93,6 @@ extension SongListView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        cell.delegate = self
         cell.configure(
             data: songList?[indexPath.item],
             songListType: songListType,

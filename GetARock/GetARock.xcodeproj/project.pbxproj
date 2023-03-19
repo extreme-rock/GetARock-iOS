@@ -43,6 +43,8 @@
 		4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4C2980BAE800BB823C /* SelectCollectionView.swift */; };
 		4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4E2980BD3700BB823C /* SelectCollectionViewCell.swift */; };
 		4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF584592978E497008F4068 /* UIView+Constraints.swift */; };
+		7B1F6D2629AF82FF00FC00D5 /* BandInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */; };
+		7B200E3529B03D1F00E3A75F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B200E3429B03D1F00E3A75F /* PaddingLabel.swift */; };
 		7B236A8529854196006AE385 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B236A8429854196006AE385 /* IconImageView.swift */; };
 		7B287CF529B7651000439254 /* MypageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF429B7651000439254 /* MypageDetailViewController.swift */; };
 		7B287CF729B7655B00439254 /* MypageTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF629B7655B00439254 /* MypageTopInfoView.swift */; };
@@ -196,6 +198,8 @@
 		6CC3391D5CB01B869CFE1F20 /* Pods-GetARock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.release.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.release.xcconfig"; sourceTree = "<group>"; };
 		73E771CD1A9B64570FE2B572 /* Pods-GetARock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.debug.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.debug.xcconfig"; sourceTree = "<group>"; };
 		77F817079C25E9C663E82B27 /* Pods_GetARockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationView.swift; sourceTree = "<group>"; };
+		7B200E3429B03D1F00E3A75F /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		7B236A8429854196006AE385 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
 		7B287CF429B7651000439254 /* MypageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageDetailViewController.swift; sourceTree = "<group>"; };
 		7B287CF629B7655B00439254 /* MypageTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTopInfoView.swift; sourceTree = "<group>"; };
@@ -397,6 +401,7 @@
 				A9EDD38D299A3114003F5392 /* BasicDataModel.swift */,
 				4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */,
 				9ABDA8CF29B0C19800DE710D /* BandCreationFinishGuideViewController.swift */,
+				7B200E3429B03D1F00E3A75F /* PaddingLabel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */,
+				7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -990,6 +996,7 @@
 				9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */,
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
+				7B1F6D2629AF82FF00FC00D5 /* BandInformationView.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */,
 				7B287CF529B7651000439254 /* MypageDetailViewController.swift in Sources */,
@@ -1089,6 +1096,7 @@
 				B8468F66297AD7CB00A9E77E /* MainMapViewController.swift in Sources */,
 				4AC4CE49297FE16600BB823C /* UIButton+Extension.swift in Sources */,
 				4A268C63299A18660068F200 /* ModifyMyPageViewController.swift in Sources */,
+				7B200E3529B03D1F00E3A75F /* PaddingLabel.swift in Sources */,
 				7B3711D029A4F07500CC2F69 /* EventDataVO.swift in Sources */,
 				4AC4CE3D297F7EED00BB823C /* BandMemberCollectionViewCell.swift in Sources */,
 				B8B17C542980B99900806899 /* Coordinate.swift in Sources */,
