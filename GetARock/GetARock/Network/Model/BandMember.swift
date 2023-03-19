@@ -12,6 +12,6 @@ struct BandMember: Hashable {
     var isUser: Bool
     var isLeader: Bool
     let userName: String
-    var instrumentImageName: InstrumentImageName
-    var instrumentNames: [String]
+    let instrumentImageName: Instrument
+    let instrumentNames: [String]
 }
