@@ -72,6 +72,8 @@
 		9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */; };
 		9A53CFB629C6F89C002F6E56 /* BandInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A53CFB529C6F89C002F6E56 /* BandInfoModifyViewController.swift */; };
 		9A53CFB929C6F8C4002F6E56 /* BandMemberModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A53CFB829C6F8C4002F6E56 /* BandMemberModifyViewController.swift */; };
+		9A53CFBB29C6FD8C002F6E56 /* BandMemberModifyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A53CFBA29C6FD8C002F6E56 /* BandMemberModifyCell.swift */; };
+		9A53CFBD29C74923002F6E56 /* MyBandInfoModifyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A53CFBC29C74923002F6E56 /* MyBandInfoModifyPageController.swift */; };
 		9A78BFE3298A9CD900953E4B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE2298A9CD900953E4B /* NetworkError.swift */; };
 		9A78BFE5298A9D7500953E4B /* DuplicationCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */; };
 		9A82AF2F29B9FCBA0056315D /* PracticeSongBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82AF2E29B9FCBA0056315D /* PracticeSongBoxView.swift */; };
@@ -223,6 +225,8 @@
 		9A3F07742987E1DB009CD500 /* TextLimitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimitTextField.swift; sourceTree = "<group>"; };
 		9A53CFB529C6F89C002F6E56 /* BandInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInfoModifyViewController.swift; sourceTree = "<group>"; };
 		9A53CFB829C6F8C4002F6E56 /* BandMemberModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyViewController.swift; sourceTree = "<group>"; };
+		9A53CFBA29C6FD8C002F6E56 /* BandMemberModifyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMemberModifyCell.swift; sourceTree = "<group>"; };
+		9A53CFBC29C74923002F6E56 /* MyBandInfoModifyPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBandInfoModifyPageController.swift; sourceTree = "<group>"; };
 		9A78BFE2298A9CD900953E4B /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicationCheckRequest.swift; sourceTree = "<group>"; };
 		9A82AF2E29B9FCBA0056315D /* PracticeSongBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongBoxView.swift; sourceTree = "<group>"; };
@@ -429,6 +433,8 @@
 			children = (
 				9A53CFB529C6F89C002F6E56 /* BandInfoModifyViewController.swift */,
 				9A53CFB829C6F8C4002F6E56 /* BandMemberModifyViewController.swift */,
+				9A53CFBA29C6FD8C002F6E56 /* BandMemberModifyCell.swift */,
+				9A53CFBC29C74923002F6E56 /* MyBandInfoModifyPageController.swift */,
 			);
 			path = BandInformationModify;
 			sourceTree = "<group>";
@@ -1027,6 +1033,7 @@
 				9AA0BB5329A4E83400871A05 /* NotificationTableViewCell.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
 				9ABDA8D029B0C19800DE710D /* BandCreationFinishGuideViewController.swift in Sources */,
+				9A53CFBD29C74923002F6E56 /* MyBandInfoModifyPageController.swift in Sources */,
 				B8B17C5D29823AC900806899 /* Event.swift in Sources */,
 				A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */,
 				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
@@ -1053,6 +1060,7 @@
 				9AFE0142299906E0004B0BCF /* LeaderPositionSelectViewController.swift in Sources */,
 				A97D579D29B6F0A200FEA49F /* PracticeRoomSearchTableViewCell.swift in Sources */,
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
+				9A53CFBB29C6FD8C002F6E56 /* BandMemberModifyCell.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
 				7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
