@@ -6,16 +6,29 @@
 //
 import UIKit
 
+protocol BasicTextFieldDelegate: AnyObject {
+    func textFieldTextDidChange()
+}
+
 final class BasicTextField: UIView {
 
+    weak var delegate: BasicTextFieldDelegate?
+    
     private let placeholder: String
 
-    lazy var textField: UITextField = UITextField.makeBasicTextField(placeholder: placeholder)
+    lazy var textField: UITextField = {
+        $0.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
+        return $0
+    }(UITextField.makeBasicTextField(placeholder: placeholder))
 
     init(placeholder: String) {
         self.placeholder = placeholder
         super.init(frame: .zero)
         self.setupLayout()
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupLayout() {
@@ -25,8 +38,10 @@ final class BasicTextField: UIView {
         self.addSubview(textField)
         textField.constraint(to: self)
     }
+}
 
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+extension BasicTextField {
+    @objc func textFieldTextDidChange() {
+        delegate?.textFieldTextDidChange()
     }
 }

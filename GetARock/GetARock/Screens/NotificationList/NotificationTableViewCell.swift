@@ -30,11 +30,16 @@ final class NotificationTableViewCell: UITableViewCell {
         return $0
     }(DefaultButton())
 
-    let rejectButton: DefaultButton = {
+    let rejectButton: UIButton = {
         $0.setTitle("거절", for: .normal)
+        $0.titleLabel?.font = UIFont.setFont(.contentBold)
+        $0.backgroundColor = .dark02
+        $0.layer.cornerRadius = 10
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray02.cgColor
         $0.constraint(.heightAnchor, constant: 40)
         return $0
-    }(DefaultButton())
+    }(UIButton())
 
     lazy var buttonHstack: UIStackView = {
         $0.axis = .horizontal
