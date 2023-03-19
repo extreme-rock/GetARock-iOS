@@ -9,11 +9,14 @@ import UIKit
 
 final class BandMemberModifyCell: UIStackView, Identifiable {
     
-    var id: String = "default"
+    var id: String = UUID().uuidString
     
     var isSelectedState: Bool = false {
         didSet {
-            selectButton.image = isSelectedState ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol
+            selectButton.setImage(UIImage(
+                systemName: isSelectedState ? "checkmark.circle" : "checkmark.circle",
+                withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),for: .normal)
+//            selectButton.setImage(isSelectedState ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol, for: .normal)
             selectButton.tintColor = isSelectedState ? .systemPurple : .gray02
         }
     }
@@ -71,12 +74,15 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         return $0
     }(UIButton(type: .custom))
     
-    lazy var selectButton: UIImageView = {
+    lazy var selectButton: UIButton = {
         $0.contentMode = .scaleAspectFit
-        $0.image = ImageLiteral.checkmarkCircleSymbol
+        $0.setImage(UIImage(
+            systemName: "checkmark.circle",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),for: .normal)
         $0.tintColor = .gray02
+        $0.setContentHuggingPriority(UILayoutPriority(1000), for: .horizontal)
         return $0
-    }(UIImageView())
+    }(UIButton(type: .custom))
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -152,15 +158,22 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         self.leaderButton.addAction(action, for: .touchUpInside)
     }
     
+    func setSelectButtonAction(action: @escaping ()-> Void) {
+        let action = UIAction { _ in action() }
+        self.selectButton.addAction(action, for: .touchUpInside)
+    }
+    
     func activateMemberEditingState() {
         leaderButton.isHidden = true
         selectButton.isHidden = false
+        self.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 10)
     }
     
     func deActiveMemberEditingState() {
         self.isSelectedState = false
         leaderButton.isHidden = false
         selectButton.isHidden = true
+        self.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
     }
 }
 

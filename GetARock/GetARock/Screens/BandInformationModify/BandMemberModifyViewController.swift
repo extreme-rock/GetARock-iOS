@@ -15,11 +15,15 @@ final class BandMemberModifyViewController: UIViewController {
     
     private let rootViewController: UIViewController
     
+    private var leaderCellId: String = ""
+    
+    private var selectedCellIds: [String] = []
+    
     private lazy var addedMembers: [SearchedUserInfo] = transformVOData().filter { $0.memberState != .inviting }
     
     private lazy var invitingMembers: [SearchedUserInfo] = transformVOData().filter { $0.memberState == .inviting }
     
-    let inviteMemberButton: DefaultButton = {
+    private lazy var inviteMemberButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.magnifyingGlassSymbol
         configuration.title = "멤버 초대"
@@ -28,6 +32,10 @@ final class BandMemberModifyViewController: UIViewController {
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
+        let action = UIAction { [weak self] _ in
+            self?.setNavigationAttribute(navigationRoot: self?.rootViewController ?? UIViewController())
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -58,7 +66,8 @@ final class BandMemberModifyViewController: UIViewController {
         $0.setTitle("편집", for: .normal)
         $0.setTitleColor(.blue01, for: .normal)
         $0.titleLabel?.font = UIFont.setFont(.headline04)
-        let action = UIAction { _ in
+        let action = UIAction { [weak self] _ in
+            self?.setEditingStateForMemberCell()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -68,7 +77,8 @@ final class BandMemberModifyViewController: UIViewController {
         $0.setTitle("완료", for: .normal)
         $0.setTitleColor(.blue01, for: .normal)
         $0.titleLabel?.font = UIFont.setFont(.headline04)
-        let action = UIAction { _ in
+        let action = UIAction { [weak self] _ in
+            self?.setNormalStateForMemberCell()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -105,6 +115,12 @@ final class BandMemberModifyViewController: UIViewController {
         return $0
     }(UIStackView(arrangedSubviews: []))
     
+    private lazy var abandonMemberButton: BottomButton = {
+        $0.setTitle("내보내기", for: .normal)
+        $0.addTarget(self, action: #selector(didTapAbandonButton), for: .touchUpInside)
+        return $0
+    }(BottomButton())
+    
     // Overall layout
     
     private lazy var mainScrollView: UIScrollView = {
@@ -124,7 +140,8 @@ final class BandMemberModifyViewController: UIViewController {
                                      bandMemberSectionHeader,
                                      bandMemberVstack,
                                      invitingMemberSectionTitle,
-                                     invitingMemberVstack]))
+                                     invitingMemberVstack,
+                                    abandonMemberButton]))
     
     //MARK: - Life Cycle
     
@@ -144,7 +161,8 @@ final class BandMemberModifyViewController: UIViewController {
     }
     
     private func attribute() {
-        setEditButtonForNormalState()
+        editEndButton.isHidden = true
+        abandonMemberButton.isHidden = true
         setBandMemberData()
         setInvitingMemberData()
     }
@@ -167,9 +185,21 @@ final class BandMemberModifyViewController: UIViewController {
         for data in addedMembers {
             let bandMemberCell = BandMemberModifyCell()
             bandMemberCell.configure(data: data)
+            if data.memberState == .admin { leaderCellId = data.id }
+            
+            //MARK: 리더버튼 클릭시 리더 변경 action 추가
+            bandMemberCell.setLeaderButtonAction {
+                self.showAlertForChangingLeader(newLeader: data.name) {
+                    let previousLeader = self.bandMemberVstack.arrangedSubviews
+                        .compactMap { $0 as? BandMemberModifyCell }
+                        .first { $0.id == self.leaderCellId }
+                    self.changeLeader(previousLeader: previousLeader ?? BandMemberModifyCell(),
+                                      newLeader: bandMemberCell)
+                }
+            }
             bandMemberVstack.addArrangedSubview(bandMemberCell)
         }
-        bandMemberSectionTitle.text = "밴드 멤버 (\(addedMembers.count))인"
+        bandMemberSectionTitle.text = "밴드 멤버 (\(addedMembers.count)인)"
     }
     
     private func setInvitingMemberData() {
@@ -178,16 +208,7 @@ final class BandMemberModifyViewController: UIViewController {
             invitingMembers.configure(data: data)
             invitingMemberVstack.addArrangedSubview(invitingMembers)
         }
-        invitingMemberSectionTitle.text = "초대중인 멤버 (\(invitingMembers.count))인"
-    }
-    
-    private func setEditButtonForNormalState() {
-        editEndButton.isHidden = true
-    }
-    
-    private func setEditButtonForEditingState() {
-        editEndButton.isHidden = false
-        editStartButton.isHidden = true
+        invitingMemberSectionTitle.text = "초대중인 멤버 (\(invitingMembers.count)인)"
     }
 }
 
@@ -236,12 +257,116 @@ extension BandMemberModifyViewController {
         // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
         nextViewController.completion = { selectedUsers in
             for data in selectedUsers {
-                if self.invitingMembers.contains(where: { $0.id == data.id }) == false {
-                    self.invitingMembers.append(data)
+                var selectedUserData = data
+                selectedUserData.memberState = .inviting
+                if self.invitingMembers.contains(where: { $0.id == selectedUserData.id }) == false {
+                    self.invitingMembers.append(selectedUserData)
+                    let newInvitingMember = BandMemberModifyCell()
+                    newInvitingMember.configure(data: selectedUserData)
+                    self.invitingMemberVstack.addArrangedSubview(newInvitingMember)
                 }
             }
-            // 전달받는 데이터가 추가되면서 datasource 업데이트 + 밴드 멤버 숫자를 나타내는 레이블 업데이트
-            self.invitingMemberSectionTitle.text = "초대중인 멤버 (\(self.invitingMembers.count))인"
+            self.invitingMemberSectionTitle.text = "초대중인 멤버 (\(self.invitingMembers.count)인)"
+        }
+        navigationRoot.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+    
+    private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
+        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
+        let alertTitle = "리더 권한 양도"
+        let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let changeActionTitle = "양도"
+        let okayActionTitle = "취소"
+
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
+            completion()
+        }))
+        present(alertController, animated: true)
+    }
+    
+    private func changeLeader(previousLeader: BandMemberModifyCell, newLeader: BandMemberModifyCell) {
+        newLeader.getLeaderPositionState()
+        previousLeader.abandonLeaderPositionState()
+        leaderCellId = newLeader.id
+    }
+}
+
+extension BandMemberModifyViewController {
+    private func setEditingStateForMemberCell() {
+        let bandMemberCells = bandMemberVstack.arrangedSubviews.compactMap { $0 as? BandMemberModifyCell }
+        bandMemberCells.forEach { if $0.id != leaderCellId { $0.activateMemberEditingState() } }
+        bandMemberCells.forEach { cell in
+            cell.setSelectButtonAction {
+                cell.isSelectedState.toggle()
+                if !self.selectedCellIds.contains(cell.id) {
+                    self.selectedCellIds.append(cell.id)
+                } else {
+                    self.selectedCellIds.removeAll { $0 == cell.id }
+                }
+            }
+        }
+        
+        let invitingMemberCells = invitingMemberVstack.arrangedSubviews.compactMap { $0 as? BandMemberModifyCell }
+        invitingMemberCells.forEach { $0.activateMemberEditingState() }
+        invitingMemberCells.forEach { cell in
+            cell.setSelectButtonAction {
+                cell.isSelectedState.toggle()
+                if !self.selectedCellIds.contains(cell.id) {
+                    self.selectedCellIds.append(cell.id)
+                } else {
+                    self.selectedCellIds.removeAll { $0 == cell.id }
+                }
+            }
+        }
+        
+        editStartButton.isHidden = true
+        editEndButton.isHidden = false
+        abandonMemberButton.isHidden = false
+    }
+    
+    private func setNormalStateForMemberCell() {
+        bandMemberVstack.arrangedSubviews
+            .compactMap { $0 as? BandMemberModifyCell }
+            .forEach {
+                if $0.id != leaderCellId { $0.deActiveMemberEditingState() }
+            }
+        
+        invitingMemberVstack.arrangedSubviews
+            .compactMap { $0 as? BandMemberModifyCell }
+            .forEach { $0.deActiveMemberEditingState() }
+        
+        editStartButton.isHidden = false
+        editEndButton.isHidden = true
+        abandonMemberButton.isHidden = true
+    }
+    
+    @objc
+    private func didTapAbandonButton() {
+        var deletingCells: [BandMemberModifyCell] = []
+        let bandMemberCells = bandMemberVstack.arrangedSubviews.compactMap({ $0 as? BandMemberModifyCell })
+        let invitingMemberCells = invitingMemberVstack.arrangedSubviews.compactMap({ $0 as? BandMemberModifyCell })
+        
+        for cell in bandMemberCells {
+            for id in selectedCellIds {
+                if cell.id == id { deletingCells.append(cell)}
+            }
+        }
+        
+        for cell in invitingMemberCells {
+            for id in selectedCellIds {
+                if cell.id == id { deletingCells.append(cell)}
+            }
+        }
+        
+        deletingCells.forEach { cell in
+            UIView.animate(withDuration: 0.4, animations: {
+                cell.alpha = 0 // fade out 애니메이션
+            }, completion: { _ in
+                cell.removeFromSuperview()
+            })
         }
     }
 }

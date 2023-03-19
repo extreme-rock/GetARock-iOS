@@ -128,7 +128,7 @@ final class MyBandInfoModifyPageController: UIViewController {
                                            leading: view.leadingAnchor,
                                            bottom: view.bottomAnchor,
                                            trailing: view.trailingAnchor,
-                                           padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+                                           padding: UIEdgeInsets(top: 25, left: 0, bottom: 0, right: 0))
 
     }
 
