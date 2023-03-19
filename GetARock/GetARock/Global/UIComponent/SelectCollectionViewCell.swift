@@ -24,6 +24,7 @@ final class SelectCollectionViewCell: UICollectionViewCell {
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
+        
         return $0
     }(UIView())
     
@@ -82,12 +83,12 @@ final class SelectCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(color: UIColor, text: String) {
-        self.containerView.backgroundColor = color
+        self.containerView.backgroundColor = isSelected ? .clear : color
         self.label.text = text
         self.cellColor = color
     }
     
-    private func applySelectedState() {
+    func applySelectedState() {
         self.containerView.backgroundColor = isSelected ? .clear : self.cellColor
         self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }

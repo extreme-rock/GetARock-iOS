@@ -130,6 +130,17 @@ final class TextLimitTextField: UIView {
         guard let text = self.textField.text else { return ""}
         return text
     }
+    
+    func configureText(with text: String) {
+        self.textField.text = text
+    }
+    
+    func setupAvailableName(name: String) {
+        self.availableName = name
+        self.isDuplicated = true
+        self.duplicationCheckLabel.isHidden = false
+        showDuplicationCheckPassedLabel()
+    }
 }
 
 //MARK: 글자수 제한 로직
