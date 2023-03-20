@@ -9,7 +9,7 @@ import UIKit
 
 final class BandMemberModifyViewController: UIViewController {
     
-    //MARK: - View
+    //MARK: - Property
     
     private let editState: Bool = false
     
@@ -30,6 +30,8 @@ final class BandMemberModifyViewController: UIViewController {
     private lazy var addedMembers: [SearchedUserInfo] = transformVOData().filter { $0.memberState != .inviting }
     
     private lazy var invitingMembers: [SearchedUserInfo] = transformVOData().filter { $0.memberState == .inviting }
+    
+    //MARK: - View
     
     private lazy var inviteMemberButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
@@ -296,6 +298,7 @@ extension BandMemberModifyViewController {
     }
     
     private func changeLeader(previousLeader: BandMemberModifyCell, newLeader: BandMemberModifyCell) {
+        //TODO: 현재 cell UI만 리더로 변경하지만 추후 데이터 자체로 리더로 변경하게끔 하는 코드가 추가되어야함
         newLeader.getLeaderPositionState()
         previousLeader.abandonLeaderPositionState()
         leaderCellId = newLeader.id
