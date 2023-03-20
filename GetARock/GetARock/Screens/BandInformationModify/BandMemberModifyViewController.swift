@@ -19,11 +19,7 @@ final class BandMemberModifyViewController: UIViewController {
     
     private var selectedCellIds: [String] = [] {
         didSet {
-            if selectedCellIds.isEmpty {
-                abandonMemberButton.isEnabled = false
-            } else {
-                abandonMemberButton.isEnabled = true
-            }
+            setAbandonButtonState()
         }
     }
     
@@ -68,7 +64,7 @@ final class BandMemberModifyViewController: UIViewController {
     }(UIStackView(arrangedSubviews: [inviteMemberButton,
                                      inviteUnRegisteredMemberButton]))
     
-    private let bandMemberSectionTitle: BasicLabel = BasicLabel(contentText: "밴드 멤버 (1인)",
+    private let bandMemberSectionTitle: BasicLabel = BasicLabel(contentText: "밴드 멤버",
                                                                 fontStyle: .contentBold,
                                                                 textColorInfo: .white)
     
@@ -78,6 +74,7 @@ final class BandMemberModifyViewController: UIViewController {
         $0.titleLabel?.font = UIFont.setFont(.headline04)
         let action = UIAction { [weak self] _ in
             self?.setEditingStateForMemberCell()
+            self?.setAbandonButtonState()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -113,7 +110,7 @@ final class BandMemberModifyViewController: UIViewController {
     }(UIStackView(arrangedSubviews: []))
     
     private let invitingMemberSectionTitle: BasicLabel = BasicLabel(
-        contentText: "초대중인 멤버 (1인)",
+        contentText: "초대중인 멤버",
         fontStyle: .contentBold,
         textColorInfo: .white)
     
@@ -128,7 +125,7 @@ final class BandMemberModifyViewController: UIViewController {
     private lazy var abandonMemberButton: BottomButton = {
         $0.setTitle("내보내기", for: .normal)
         $0.isEnabled = false
-        $0.addTarget(self, action: #selector(didTapAbandonButton), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(showAlertForMemberAbandon), for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -209,7 +206,7 @@ final class BandMemberModifyViewController: UIViewController {
             }
             bandMemberVstack.addArrangedSubview(bandMemberCell)
         }
-        bandMemberSectionTitle.text = "밴드 멤버 (\(addedMembers.count)인)"
+        bandMemberSectionTitle.text = "밴드 멤버"
     }
     
     private func setInvitingMemberData() {
@@ -218,7 +215,15 @@ final class BandMemberModifyViewController: UIViewController {
             invitingMembers.configure(data: data)
             invitingMemberVstack.addArrangedSubview(invitingMembers)
         }
-        invitingMemberSectionTitle.text = "초대중인 멤버 (\(invitingMembers.count)인)"
+        invitingMemberSectionTitle.text = "초대중인 멤버"
+    }
+    
+    private func setAbandonButtonState() {
+        if selectedCellIds.isEmpty {
+            abandonMemberButton.isEnabled = false
+        } else {
+            abandonMemberButton.isEnabled = true
+        }
     }
 }
 
@@ -276,7 +281,7 @@ extension BandMemberModifyViewController {
                     self.invitingMemberVstack.addArrangedSubview(newInvitingMember)
                 }
             }
-            self.invitingMemberSectionTitle.text = "초대중인 멤버 (\(self.invitingMembers.count)인)"
+            self.invitingMemberSectionTitle.text = "초대중인 멤버"
         }
         navigationRoot.navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -371,8 +376,7 @@ extension BandMemberModifyViewController {
         abandonMemberButton.isHidden = true
     }
     
-    @objc
-    private func didTapAbandonButton() {
+    private func abandonMembers() {
         var deletingCells: [BandMemberModifyCell] = []
         let bandMemberCells = bandMemberVstack.arrangedSubviews.compactMap({ $0 as? BandMemberModifyCell })
         let invitingMemberCells = invitingMemberVstack.arrangedSubviews.compactMap({ $0 as? BandMemberModifyCell })
@@ -396,5 +400,23 @@ extension BandMemberModifyViewController {
                 cell.removeFromSuperview()
             })
         }
+    }
+    
+    @objc
+    private func showAlertForMemberAbandon() {
+        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
+        let alertTitle = "멤버 내보내기"
+        let alertMessage = "선택한 멤버를 정말로 내보내시겠어요?"
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        
+        let changeActionTitle = "내보내기"
+        let okayActionTitle = "취소"
+        
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
+            self.abandonMembers()
+            self.setAbandonButtonState()
+        }))
+        present(alertController, animated: true)
     }
 }
