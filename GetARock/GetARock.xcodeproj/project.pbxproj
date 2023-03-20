@@ -77,6 +77,8 @@
 		9A82AF2F29B9FCBA0056315D /* PracticeSongBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82AF2E29B9FCBA0056315D /* PracticeSongBoxView.swift */; };
 		9A82AF3229B9FD130056315D /* PracticeSongCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82AF3129B9FD130056315D /* PracticeSongCardView.swift */; };
 		9A82AF3429B9FDBA0056315D /* AddPracticeSongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82AF3329B9FDBA0056315D /* AddPracticeSongViewController.swift */; };
+		9A9923D129C8B52200555649 /* AddUnRegisteredMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9923D029C8B52200555649 /* AddUnRegisteredMemberViewController.swift */; };
+		9A9923D329C8B54300555649 /* UnRegisteredMemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9923D229C8B54300555649 /* UnRegisteredMemberCardView.swift */; };
 		9AA0BB4F29A4E7FD00871A05 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB4E29A4E7FD00871A05 /* NotificationListViewController.swift */; };
 		9AA0BB5129A4E81700871A05 /* NotificationListVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */; };
 		9AA0BB5329A4E83400871A05 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */; };
@@ -228,6 +230,8 @@
 		9A82AF2E29B9FCBA0056315D /* PracticeSongBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongBoxView.swift; sourceTree = "<group>"; };
 		9A82AF3129B9FD130056315D /* PracticeSongCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSongCardView.swift; sourceTree = "<group>"; };
 		9A82AF3329B9FDBA0056315D /* AddPracticeSongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPracticeSongViewController.swift; sourceTree = "<group>"; };
+		9A9923D029C8B52200555649 /* AddUnRegisteredMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUnRegisteredMemberViewController.swift; sourceTree = "<group>"; };
+		9A9923D229C8B54300555649 /* UnRegisteredMemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnRegisteredMemberCardView.swift; sourceTree = "<group>"; };
 		9AA0BB4E29A4E7FD00871A05 /* NotificationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListViewController.swift; sourceTree = "<group>"; };
 		9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationListVO.swift; sourceTree = "<group>"; };
 		9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
@@ -461,6 +465,8 @@
 		A96F3682299E2D2700376620 /* BandMemberAddFlow */ = {
 			isa = PBXGroup;
 			children = (
+				9A9923D229C8B54300555649 /* UnRegisteredMemberCardView.swift */,
+				9A9923D029C8B52200555649 /* AddUnRegisteredMemberViewController.swift */,
 				9AA4E29429A4975F00CED0AE /* BandMemberAddViewController.swift */,
 				A96F3689299E2EFA00376620 /* BandMemberAddTableHeader.swift */,
 				A96F3685299E2EA200376620 /* BandMemberAddTableViewCell.swift */,
@@ -974,6 +980,7 @@
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
 				7B6D3354299A2F76001FD630 /* BandDetailViewController.swift in Sources */,
 				9A82AF2F29B9FCBA0056315D /* PracticeSongBoxView.swift in Sources */,
+				9A9923D329C8B54300555649 /* UnRegisteredMemberCardView.swift in Sources */,
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
 				4A4A6E9629A8F9CC005CF076 /* SignUpNetworkManager.swift in Sources */,
@@ -998,6 +1005,7 @@
 				4AC4CE41297FB85B00BB823C /* Position.swift in Sources */,
 				B8B17C522980B93300806899 /* Location.swift in Sources */,
 				7BFE0DDF299E1B4E002D6574 /* WriteCommentTextView.swift in Sources */,
+				9A9923D129C8B52200555649 /* AddUnRegisteredMemberViewController.swift in Sources */,
 				A9D7253E299B2CF500404E22 /* BandInformationSetViewController.swift in Sources */,
 				7BC2755E2987DF54008F4B9F /* BandButtonView.swift in Sources */,
 				7B80E5DE29A5F57F0050F010 /* BandInformationVO.swift in Sources */,

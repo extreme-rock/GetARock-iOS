@@ -153,8 +153,20 @@ extension BandMemberAddViewController: UITableViewDelegate {
             }
             self?.navigationController?.pushViewController(nextViewController, animated: true)
         }
+        
         headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
-        //TODO: 미가입 회원추가 관련 코드 작성 예정
+        
+//        //MARK: 미가입 멤버 추가 뷰로 이동
+//        let unRegisteredMemberButtonAction = UIAction { _ in
+//            let nextVC = AddUnRegisteredMemberViewController()
+//            nextVC.completion = { addedMembers in
+//                self.addedMembers = self.addedMembers + addedMembers
+//                self.updateSnapShot(with: self.addedMembers)
+//            }
+//            self.present(nextVC, animated: true)
+//        }
+//        headerView.inviteUnRegisteredMemberButton.addAction(unRegisteredMemberButtonAction, for: .touchUpInside)
+        
       return headerView
     }
 }
