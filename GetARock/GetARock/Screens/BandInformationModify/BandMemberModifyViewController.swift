@@ -17,7 +17,15 @@ final class BandMemberModifyViewController: UIViewController {
     
     private var leaderCellId: String = ""
     
-    private var selectedCellIds: [String] = []
+    private var selectedCellIds: [String] = [] {
+        didSet {
+            if selectedCellIds.isEmpty {
+                abandonMemberButton.isEnabled = false
+            } else {
+                abandonMemberButton.isEnabled = true
+            }
+        }
+    }
     
     private lazy var addedMembers: [SearchedUserInfo] = transformVOData().filter { $0.memberState != .inviting }
     
@@ -59,8 +67,8 @@ final class BandMemberModifyViewController: UIViewController {
                                      inviteUnRegisteredMemberButton]))
     
     private let bandMemberSectionTitle: BasicLabel = BasicLabel(contentText: "밴드 멤버 (1인)",
-                                                      fontStyle: .contentBold,
-                                                      textColorInfo: .white)
+                                                                fontStyle: .contentBold,
+                                                                textColorInfo: .white)
     
     private lazy var editStartButton: UIButton = {
         $0.setTitle("편집", for: .normal)
@@ -117,12 +125,12 @@ final class BandMemberModifyViewController: UIViewController {
     
     private lazy var abandonMemberButton: BottomButton = {
         $0.setTitle("내보내기", for: .normal)
+        $0.isEnabled = false
         $0.addTarget(self, action: #selector(didTapAbandonButton), for: .touchUpInside)
         return $0
     }(BottomButton())
     
     // Overall layout
-    
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
@@ -141,7 +149,7 @@ final class BandMemberModifyViewController: UIViewController {
                                      bandMemberVstack,
                                      invitingMemberSectionTitle,
                                      invitingMemberVstack,
-                                    abandonMemberButton]))
+                                     abandonMemberButton]))
     
     //MARK: - Life Cycle
     
@@ -276,10 +284,10 @@ extension BandMemberModifyViewController {
         let alertTitle = "리더 권한 양도"
         let alertMessage = "‘\(newLeader)’님에게 밴드 리더 권한을\n양도하겠습니까?\n권한을 양도하면 내 권한은 일반 멤버로 변경됩니다."
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-
+        
         let changeActionTitle = "양도"
         let okayActionTitle = "취소"
-
+        
         alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
         alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
             completion()
@@ -328,16 +336,33 @@ extension BandMemberModifyViewController {
     }
     
     private func setNormalStateForMemberCell() {
-        bandMemberVstack.arrangedSubviews
-            .compactMap { $0 as? BandMemberModifyCell }
-            .forEach {
-                if $0.id != leaderCellId { $0.deActiveMemberEditingState() }
+        let bandMemberCells = bandMemberVstack.arrangedSubviews.compactMap { $0 as? BandMemberModifyCell }
+        bandMemberCells.forEach {
+            if $0.id != leaderCellId { $0.deActiveMemberEditingState() }
+        }
+        bandMemberCells.forEach { cell in
+            cell.setSelectButtonAction {
+                cell.isSelectedState.toggle()
+                if !self.selectedCellIds.contains(cell.id) {
+                    self.selectedCellIds.append(cell.id)
+                } else {
+                    self.selectedCellIds.removeAll { $0 == cell.id }
+                }
             }
+        }
         
-        invitingMemberVstack.arrangedSubviews
-            .compactMap { $0 as? BandMemberModifyCell }
-            .forEach { $0.deActiveMemberEditingState() }
-        
+        let invitingMemberCells = invitingMemberVstack.arrangedSubviews.compactMap { $0 as? BandMemberModifyCell }
+        invitingMemberCells.forEach { $0.deActiveMemberEditingState() }
+        invitingMemberCells.forEach { cell in
+            cell.setSelectButtonAction {
+                cell.isSelectedState.toggle()
+                if !self.selectedCellIds.contains(cell.id) {
+                    self.selectedCellIds.append(cell.id)
+                } else {
+                    self.selectedCellIds.removeAll { $0 == cell.id }
+                }
+            }
+        }
         editStartButton.isHidden = false
         editEndButton.isHidden = true
         abandonMemberButton.isHidden = true

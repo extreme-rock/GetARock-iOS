@@ -15,8 +15,7 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         didSet {
             selectButton.setImage(UIImage(
                 systemName: isSelectedState ? "checkmark.circle" : "checkmark.circle",
-                withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),for: .normal)
-//            selectButton.setImage(isSelectedState ? ImageLiteral.checkmarkCircleFillSymbol : ImageLiteral.checkmarkCircleSymbol, for: .normal)
+                withConfiguration: UIImage.SymbolConfiguration(pointSize: 22)),for: .normal)
             selectButton.tintColor = isSelectedState ? .systemPurple : .gray02
         }
     }
@@ -78,7 +77,7 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         $0.contentMode = .scaleAspectFit
         $0.setImage(UIImage(
             systemName: "checkmark.circle",
-            withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)),for: .normal)
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 22)),for: .normal)
         $0.tintColor = .gray02
         $0.setContentHuggingPriority(UILayoutPriority(1000), for: .horizontal)
         return $0
