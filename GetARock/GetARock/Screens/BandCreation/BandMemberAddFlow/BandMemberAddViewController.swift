@@ -53,10 +53,9 @@ final class BandMemberAddViewController: BaseViewController {
         setupLayout()
     }
 
-    // View가 나타나기전 cell data 업데이트
+    // View가 나타나기전 추가된 멤버 정보 업데이트
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateSnapShot(with: self.addedMembers)
         self.updateSnapShot(with: self.addedMembers)
     }
 

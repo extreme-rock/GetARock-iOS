@@ -97,7 +97,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         deleteButton.constraint(.heightAnchor, constant: 25)
         deleteButton.constraint(trailing: contentView.trailingAnchor,
                                 centerY: contentView.centerYAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
+                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 20))
 
         contentView.addSubview(userDetailInfoHstack)
         userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor,

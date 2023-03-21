@@ -145,13 +145,17 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
 
 extension UnRegisteredMemberCardView: TextLimitTextFieldDelegate {
     func textFieldTextDidChanged() {
-        NotificationCenter.default.post(name: Notification.Name.checkUnRegisteredCardViewInformationFilled, object: nil)
+        NotificationCenter.default.post(
+            name: Notification.Name.checkUnRegisteredCardViewInformationFilled,
+            object: nil)
     }
 }
 
 extension UnRegisteredMemberCardView: SelectCollectionViewDelegate {
     func collectionViewCellDidSelect() {
-        NotificationCenter.default.post(name: Notification.Name.checkUnRegisteredCardViewInformationFilled, object: nil)
+        NotificationCenter.default.post(
+            name: Notification.Name.checkUnRegisteredCardViewInformationFilled,
+            object: nil)
     }
 }
 
