@@ -42,11 +42,8 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
-        $0.delegate = self
         return $0
     }(UIScrollView())
-
-    //TODO: 추후에 defualt 버튼으로 수정해야함
 
     private lazy var addPracticeSongButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
@@ -65,7 +62,6 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         return button
     }()
 
-    //TODO: 추후에 defualt 버튼으로 수정해야함
     private lazy var addCompleteButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("추가 완료", for: .normal)
@@ -119,16 +115,31 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     private func setupLayout() {
 
         view.addSubview(mainScrollView)
-        mainScrollView.constraint(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
+        mainScrollView.constraint(top: view.topAnchor,
+                                  leading: view.leadingAnchor,
+                                  bottom: view.bottomAnchor,
+                                  trailing: view.trailingAnchor)
 
         mainScrollView.addSubview(contentView)
-        contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor, bottom: mainScrollView.contentLayoutGuide.bottomAnchor, centerX: view.centerXAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 160, right: 16))
+        contentView.constraint(
+            top: mainScrollView.contentLayoutGuide.topAnchor,
+            bottom: mainScrollView.contentLayoutGuide.bottomAnchor,
+            centerX: view.centerXAnchor,
+            padding: UIEdgeInsets(top: 20, left: 16, bottom: 160, right: 16))
 
         mainScrollView.addSubview(addPracticeSongButton)
-        addPracticeSongButton.constraint(top: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+        addPracticeSongButton.constraint(
+            top: contentView.bottomAnchor,
+            leading: contentView.leadingAnchor,
+            trailing: contentView.trailingAnchor,
+            padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
 
         mainScrollView.addSubview(addCompleteButton)
-        addCompleteButton.constraint(top: addPracticeSongButton.bottomAnchor,leading: view.safeAreaLayoutGuide.leadingAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 40, left: 16, bottom: 10, right: 16))
+        addCompleteButton.constraint(
+            top: addPracticeSongButton.bottomAnchor,
+            leading: view.safeAreaLayoutGuide.leadingAnchor,
+            trailing: view.safeAreaLayoutGuide.trailingAnchor,
+            padding: UIEdgeInsets(top: 40, left: 16, bottom: 10, right: 16))
     }
 
     private func setNotificationObserver() {
@@ -142,9 +153,13 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
 
     private func applySnapshotForDeleteButton() {
         if contentView.arrangedSubviews.count == 1 {
-            contentView.arrangedSubviews.map { $0 as! UnRegisteredMemberCardView }.forEach { $0.deleteButton.isHidden = true }
+            contentView.arrangedSubviews
+                .compactMap { $0 as? UnRegisteredMemberCardView }
+                .forEach { $0.deleteButton.isHidden = true }
         } else {
-            contentView.arrangedSubviews.map { $0 as! UnRegisteredMemberCardView }.forEach { $0.deleteButton.isHidden = false }
+            contentView.arrangedSubviews
+                .compactMap { $0 as? UnRegisteredMemberCardView }
+                .forEach { $0.deleteButton.isHidden = false }
         }
     }
 }
@@ -167,22 +182,13 @@ extension AddUnRegisteredMemberViewController {
     private func updateCompleteButtonState() {
         let isAllRequiredInfoFilled = contentView.arrangedSubviews
             .compactMap { $0 as? UnRegisteredMemberCardView }
-            .filter { $0.nickName().isEmpty || $0.isPositionSelected() == false } // 정보가 하나라도 누락된 card만 필터링함
-            .isEmpty // 정보가 누락되었는지 여부를 원소로 가지는 배열이 비어있다면, 모든 정보가 채워진 것임
+            .filter { $0.nickName().isEmpty || $0.isPositionSelected() == false }
+            .isEmpty
 
         if isAllRequiredInfoFilled {
             addCompleteButton.isEnabled = true
         } else {
             addCompleteButton.isEnabled = false
-        }
-    }
-}
-
-// ScrollView 가로 스크롤 막기
-extension AddUnRegisteredMemberViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.x != 0 {
-            scrollView.contentOffset.x = 0
         }
     }
 }
