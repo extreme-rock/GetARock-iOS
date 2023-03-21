@@ -112,7 +112,6 @@ final class BandInformationView: UIView {
         textColorInfo: .white
     )
     
-    //TODO - : SNS의 데이터 구조 수정이 끝나면 전달 데이터 반영 필요
     private lazy var bandSNSListView = SNSListStackView(data: bandSNS ?? [])
     
     private lazy var bandSNSStackView: UIStackView = {
