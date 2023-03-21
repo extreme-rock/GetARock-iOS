@@ -94,7 +94,7 @@ extension SongListView: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         cell.configure(
-            data: songList?[indexPath.item],
+            data: songData?[indexPath.item],
             songListType: songListType,
             index: indexPath.item
         )
