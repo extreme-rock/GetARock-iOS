@@ -32,7 +32,7 @@ final class BandMemberAddViewController: BaseViewController {
         $0.backgroundColor = .dark01
         $0.delegate = self
         return $0
-    }(UITableView())
+    }(UITableView(frame: .zero, style: .grouped))
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
@@ -72,7 +72,7 @@ final class BandMemberAddViewController: BaseViewController {
             padding: UIEdgeInsets(top: 20,
                                   left: 16,
                                   bottom: 100,
-                                  right: 16))
+                                  right: 0))
 
         view.addSubview(nextButton)
         nextButton.constraint(
@@ -81,7 +81,7 @@ final class BandMemberAddViewController: BaseViewController {
             padding: UIEdgeInsets(top: 0,
                                   left: 0,
                                   bottom: 16,
-                                  right: 0))
+                                  right: 16))
     }
 
     private func attribute() {
@@ -157,7 +157,6 @@ extension BandMemberAddViewController: UITableViewDelegate {
                         self?.addedMembers.append(data)
                     }
                 }
-                //                self?.updateSnapShot(with: self?.addedMembers ?? [])
             }
             self?.navigationController?.pushViewController(nextViewController, animated: true)
         }
@@ -168,7 +167,6 @@ extension BandMemberAddViewController: UITableViewDelegate {
             let nextViewController = AddUnRegisteredMemberViewController()
             nextViewController.completion = { newAddedMembers in
                 self.addedMembers = self.addedMembers + newAddedMembers
-                //                self.updateSnapShot(with: self.addedMembers)
             }
             self.navigationController?.pushViewController(nextViewController, animated: true)
         }
