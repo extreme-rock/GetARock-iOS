@@ -97,7 +97,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         deleteButton.constraint(.heightAnchor, constant: 25)
         deleteButton.constraint(trailing: contentView.trailingAnchor,
                                 centerY: contentView.centerYAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 20))
+                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
 
         contentView.addSubview(userDetailInfoHstack)
         userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor,
@@ -108,6 +108,13 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
     }
 
     func configure(data: SearchedUserInfo) {
+        if data.name.count > 10 {
+            userNameLabel.numberOfLines = 1
+            userNameLabel.adjustsFontSizeToFitWidth = true
+            userNameLabel.minimumScaleFactor = 0.9
+            userNameLabel.lineBreakMode = .byTruncatingTail
+            userNameLabel.constraint(.widthAnchor, constant: 160)
+        }
         self.userNameLabel.text = data.name
         self.instrumentListLabel.text = data.instrumentList.first?.name ?? ""
         self.id = data.id
