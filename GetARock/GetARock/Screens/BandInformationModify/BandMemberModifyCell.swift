@@ -110,7 +110,7 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         if data.name.count > 10 {
             userNameLabel.numberOfLines = 1
             userNameLabel.adjustsFontSizeToFitWidth = true
-            userNameLabel.minimumScaleFactor = 0.9 // The minimum scale factor to apply to the font size
+            userNameLabel.minimumScaleFactor = 0.9
             userNameLabel.lineBreakMode = .byTruncatingTail
             userNameLabel.constraint(.widthAnchor, constant: 160)
         }
