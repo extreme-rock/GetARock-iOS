@@ -48,16 +48,19 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
 
     //TODO: 추후에 defualt 버튼으로 수정해야함
 
-    private lazy var addPracticeSongButton: DefaultButton = {
+    private lazy var addPracticeSongButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
-        //TODO: 이전 PR 머지 이후 이미지 리터럴로 변경하기
-        configuration.image = UIImage(systemName: "plus")
+        configuration.image = ImageLiteral.plusSymbol
         configuration.title = "미가입 멤버 추가"
         configuration.attributedTitle?.font = UIFont.setFont(.contentBold)
         configuration.imagePadding = 10
-        let button = DefaultButton(configuration: configuration)
+        let button = UIButton(configuration: configuration)
         button.tintColor = .white
-        button.constraint(.heightAnchor, constant: 55)
+        button.backgroundColor = .dark02
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.gray02.cgColor
+        button.constraint(.heightAnchor, constant: 50)
         button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
         return button
     }()
@@ -76,7 +79,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
             let mainPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
                 instrumentId: 0,
                 isMain: true,
-                name: card.positionSelectCollectionView.selectedItem() ?? "")
+                name: card.positionSelectCollectionView.selectedItem() )
             
             let otherPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
                 instrumentId: 0,
@@ -93,9 +96,8 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
                 age: "Unknown")
             self.addedMembers.append(data)
         }
-        self.dismiss(animated: true){
-            self.completion(self.addedMembers)
-        }
+        self.completion(self.addedMembers)
+        self.navigationController?.popViewController(animated: true)
     }
 
     override func viewDidLoad() {
@@ -141,7 +143,6 @@ extension AddUnRegisteredMemberViewController {
         let newCard = UnRegisteredMemberCardView()
         if contentView.arrangedSubviews.count == 3 { addPracticeSongButton.backgroundColor = .gray02 }
         guard contentView.arrangedSubviews.count < 3 else { return }
-        // UI에 카드뷰 추가 (stackView에 넣는 방식임)
         contentView.insertArrangedSubview(
             newCard,
             at: contentView.arrangedSubviews.endIndex)

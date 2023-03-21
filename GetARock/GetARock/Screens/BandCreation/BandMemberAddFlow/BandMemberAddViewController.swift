@@ -46,10 +46,18 @@ final class BandMemberAddViewController: BaseViewController {
     }(BottomButton())
 
     //MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
         setupLayout()
+    }
+
+    // View가 나타나기전 cell data 업데이트
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateSnapShot(with: self.addedMembers)
+        self.updateSnapShot(with: self.addedMembers)
     }
 
     //MARK: - Method
@@ -149,25 +157,24 @@ extension BandMemberAddViewController: UITableViewDelegate {
                         self?.addedMembers.append(data)
                     }
                 }
-                self?.updateSnapShot(with: self?.addedMembers ?? [])
+                //                self?.updateSnapShot(with: self?.addedMembers ?? [])
             }
             self?.navigationController?.pushViewController(nextViewController, animated: true)
         }
-        
         headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
         
-//        //MARK: 미가입 멤버 추가 뷰로 이동
-//        let unRegisteredMemberButtonAction = UIAction { _ in
-//            let nextVC = AddUnRegisteredMemberViewController()
-//            nextVC.completion = { addedMembers in
-//                self.addedMembers = self.addedMembers + addedMembers
-//                self.updateSnapShot(with: self.addedMembers)
-//            }
-//            self.present(nextVC, animated: true)
-//        }
-//        headerView.inviteUnRegisteredMemberButton.addAction(unRegisteredMemberButtonAction, for: .touchUpInside)
+        //MARK: 미가입 멤버 추가 뷰로 이동
+        let unRegisteredMemberButtonAction = UIAction { _ in
+            let nextViewController = AddUnRegisteredMemberViewController()
+            nextViewController.completion = { newAddedMembers in
+                self.addedMembers = self.addedMembers + newAddedMembers
+                //                self.updateSnapShot(with: self.addedMembers)
+            }
+            self.navigationController?.pushViewController(nextViewController, animated: true)
+        }
+        headerView.inviteUnRegisteredMemberButton.addAction(unRegisteredMemberButtonAction, for: .touchUpInside)
         
-      return headerView
+        return headerView
     }
 }
 
