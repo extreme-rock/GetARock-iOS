@@ -122,7 +122,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         mainScrollView.constraint(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
 
         mainScrollView.addSubview(contentView)
-        contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor, bottom: mainScrollView.contentLayoutGuide.bottomAnchor, centerX: view.centerXAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 160, right: 0))
+        contentView.constraint(top: mainScrollView.contentLayoutGuide.topAnchor, bottom: mainScrollView.contentLayoutGuide.bottomAnchor, centerX: view.centerXAnchor, padding: UIEdgeInsets(top: 20, left: 16, bottom: 160, right: 16))
 
         mainScrollView.addSubview(addPracticeSongButton)
         addPracticeSongButton.constraint(top: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
