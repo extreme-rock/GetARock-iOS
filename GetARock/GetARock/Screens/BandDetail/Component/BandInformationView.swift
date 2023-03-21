@@ -73,7 +73,7 @@ final class BandInformationView: UIView {
     private lazy var bandSongListView: SongListView = {
         $0.constraint(.heightAnchor, constant: CGFloat((bandSong?.count ?? 0) * 80))
         return $0
-    }(SongListView(songListType: .detail, data: bandSong))
+    }(SongListView(songListType: .detail, songList: bandSong))
     
     private lazy var bandSongStackView: UIStackView = {
         $0.axis = .vertical
@@ -113,7 +113,7 @@ final class BandInformationView: UIView {
     )
     
     //TODO - : SNS의 데이터 구조 수정이 끝나면 전달 데이터 반영 필요
-    private lazy var bandSNSListView = SNSListStackView(data: SNS(youtube: nil, instagram: nil, soundCloud: nil))
+    private lazy var bandSNSListView = SNSListStackView(data: bandSNS ?? [])
     
     private lazy var bandSNSStackView: UIStackView = {
         $0.axis = .vertical
@@ -233,11 +233,11 @@ final class BandInformationView: UIView {
            }
        }
        
-       private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> InstrumentImageName {
+       private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> Instrument {
            let transformedMemberInstrument = instrumentList.map{ $0.name }
            
            if let mainInstrument = transformedMemberInstrument.first {
-               return InstrumentImageName(rawValue: mainInstrument) ?? .etc
+               return Instrument(rawValue: mainInstrument) ?? .etc
            }
            return .etc
        }
