@@ -10,6 +10,8 @@ import UIKit
 //TODO: API 업데이트 되면 TableCell에 선택한 여러 악기가 표기 되게 만들기
 final class AddUnRegisteredMemberViewController: BaseViewController {
 
+    //MARK: - Property
+
     private var addedMembers: [SearchedUserInfo] = []
 
     var completion: (_ registeredMember: [SearchedUserInfo]) -> Void = { addedMembers in }
@@ -21,6 +23,8 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         instrumentList: [SearchedUserInstrumentList(instrumentId: 0,
                                                     isMain: true,
                                                     name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
+
+    //MARK: - View
 
     private lazy var firstPracticeSongCard: UnRegisteredMemberCardView = {
         let card = UnRegisteredMemberCardView()
@@ -97,6 +101,8 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
 
+    //MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -107,6 +113,8 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         applySnapshotForDeleteButton()
     }
+
+    deinit { NotificationCenter.default.removeObserver(self) }
 
     private func attribute() {
         self.view.backgroundColor = .dark01
@@ -163,6 +171,8 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         }
     }
 }
+
+//MARK: - Extension
 
 extension AddUnRegisteredMemberViewController {
     @objc func didTapAddPracticeSong() {
