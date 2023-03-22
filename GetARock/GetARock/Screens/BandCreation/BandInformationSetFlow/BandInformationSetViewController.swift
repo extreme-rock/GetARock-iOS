@@ -181,9 +181,13 @@ final class BandInformationSetViewController: BaseViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let informationFillCompleteButton: BottomButton = {
-        //TODO: 밴드 정보 POST action 추가 필요
+    private lazy var informationFillCompleteButton: BottomButton = {
+        let action = UIAction { _ in
+            //TODO: 밴드 정보 POST action 추가 필요
+            self.navigationController?.pushViewController(BandCreationFinishGuideViewController(), animated: true)
+        }
         $0.setTitle("추가", for: .normal)
+        $0.addAction(action, for: .touchUpInside)
         $0.isEnabled = false
         return $0
     }(BottomButton())
