@@ -84,6 +84,7 @@
 		9AA0BB5329A4E83400871A05 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */; };
 		9AA0BB5629A4FD1800871A05 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0BB5529A4FD1800871A05 /* Date+Extension.swift */; };
 		9AA4E29529A4975F00CED0AE /* BandMemberAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA4E29429A4975F00CED0AE /* BandMemberAddViewController.swift */; };
+		9ABC0C2329CB4EAF002DC070 /* BandCreationNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC0C2229CB4EAF002DC070 /* BandCreationNetworkManager.swift */; };
 		9ABDA8CE29B0C03200DE710D /* PositionSelectForInvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABDA8CD29B0C03200DE710D /* PositionSelectForInvitationViewController.swift */; };
 		9ABDA8D029B0C19800DE710D /* BandCreationFinishGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABDA8CF29B0C19800DE710D /* BandCreationFinishGuideViewController.swift */; };
 		9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */; };
@@ -237,6 +238,7 @@
 		9AA0BB5229A4E83400871A05 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		9AA0BB5529A4FD1800871A05 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		9AA4E29429A4975F00CED0AE /* BandMemberAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandMemberAddViewController.swift; sourceTree = "<group>"; };
+		9ABC0C2229CB4EAF002DC070 /* BandCreationNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationNetworkManager.swift; sourceTree = "<group>"; };
 		9ABDA8CD29B0C03200DE710D /* PositionSelectForInvitationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectForInvitationViewController.swift; sourceTree = "<group>"; };
 		9ABDA8CF29B0C19800DE710D /* BandCreationFinishGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationFinishGuideViewController.swift; sourceTree = "<group>"; };
 		9ACA5855299B689B00C6C2BC /* BasicBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicBoxView.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */,
 				9ADC2FEE29A763F000CD580A /* NotificationNetworkManager.swift */,
 				4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */,
+				9ABC0C2229CB4EAF002DC070 /* BandCreationNetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -975,6 +978,7 @@
 				A96B8A0D2981714800905BC9 /* BasicLabel.swift in Sources */,
 				B88ABF3929A3D4FF004C1793 /* SettingViewDefaultCell.swift in Sources */,
 				7B1F6D2629AF82FF00FC00D5 /* BandInformationView.swift in Sources */,
+				9ABC0C2329CB4EAF002DC070 /* BandCreationNetworkManager.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */,
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,

@@ -325,20 +325,18 @@ extension BandInformationSetViewController {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
     }
 
-    //TODO: 밴드 정보를 서버에 POST 하는 코드 추가 예정
     private func postBandInformation() {
         confirmBandInformation()
-        print(BasicDataModel.bandCreationData.name)
-        print(BasicDataModel.bandCreationData.introduction)
-        print(BasicDataModel.bandCreationData.address.latitude)
-        print(BasicDataModel.bandCreationData.snsList?.count)
-        print(BasicDataModel.bandCreationData.songList?.count)
+        Task {
+            //TODO: 로딩뷰 삽입 필요
+            try await BandCreationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
+        }
     }
 
     private func confirmBandInformation() {
         BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
         BasicDataModel.bandCreationData.address.detail = detailpracticeRoomTextField.inputText()
-        //SongList는 AddPracticeSongVC에서 추가
+        //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
         BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),
                                   instagramTextField.inputText(),
