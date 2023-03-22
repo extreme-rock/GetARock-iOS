@@ -21,6 +21,12 @@ final class PracticeRoomSearchViewController: BaseViewController {
 
     private var searchResults: [LocationInfo] = []
 
+    private var addressInfo: Address = Address(city: "",
+                                               street: "",
+                                               detail: "",
+                                               longitude: 0,
+                                               latitude: 0)
+
     // MARK: View
 
     private lazy var searchBar: SearchTextField = {
@@ -131,7 +137,7 @@ extension PracticeRoomSearchViewController: CLLocationManagerDelegate {
     func getCurrentAddressInfo() {
         guard let userLocation = locationManager.location else { return }
         let location = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+        CLGeocoder().reverseGeocodeLocation(location) { [self] (placemarks, error) in
 
             guard let placemark = placemarks?.first else { return }
 
@@ -149,6 +155,7 @@ extension PracticeRoomSearchViewController: CLLocationManagerDelegate {
             if let subThoroughfare = placemark.subThoroughfare {
                 address += " "+subThoroughfare //ex.272-13
             }
+
             self.searchBar.textField.text = address
             self.searchCompleter.queryFragment = address
         }
@@ -194,8 +201,10 @@ extension PracticeRoomSearchViewController: UITableViewDelegate {
         let selectedResult = searchResults[indexPath.row]
         if selectedResult.subtitle.isEmpty {
             completion(selectedResult.title)
+            BasicDataModel.bandCreationData.address = addressInfo
         } else {
             completion(selectedResult.subtitle)
+            BasicDataModel.bandCreationData.address = addressInfo
         }
         self.navigationController?.popViewController(animated: true)
     }
@@ -213,4 +222,3 @@ struct LocationInfo {
     let title: String
     let subtitle: String
 }
-

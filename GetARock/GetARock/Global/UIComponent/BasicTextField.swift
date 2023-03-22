@@ -38,6 +38,11 @@ final class BasicTextField: UIView {
         self.addSubview(textField)
         textField.constraint(to: self)
     }
+
+    func inputText() -> String {
+        guard let text = self.textField.text else { return ""}
+        return text
+    }
 }
 
 extension BasicTextField {

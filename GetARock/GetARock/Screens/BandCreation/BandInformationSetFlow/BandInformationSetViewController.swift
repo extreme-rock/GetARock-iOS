@@ -76,7 +76,7 @@ final class BandInformationSetViewController: BaseViewController {
 
     private lazy var practiceRoomSearchButton: BasicBoxView = {
         $0.showRightView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappracticeRoomSearchButton))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPracticeRoomSearchButton))
         $0.addGestureRecognizer(tapGesture)
         return $0
     }(BasicBoxView(text: "주소 검색"))
@@ -185,6 +185,7 @@ final class BandInformationSetViewController: BaseViewController {
         let action = UIAction { _ in
             //TODO: 밴드 정보 POST action 추가 필요
             self.navigationController?.pushViewController(BandCreationFinishGuideViewController(), animated: true)
+            self.postBandInformation()
         }
         $0.setTitle("추가", for: .normal)
         $0.addAction(action, for: .touchUpInside)
@@ -291,7 +292,7 @@ final class BandInformationSetViewController: BaseViewController {
 
 extension BandInformationSetViewController {
 
-    @objc func didTappracticeRoomSearchButton() {
+    @objc func didTapPracticeRoomSearchButton() {
         let nextViewController = PracticeRoomSearchViewController()
         nextViewController.completion = { [weak self] locationInformation in
             self?.practiceRoomSearchButton.configureText(with: locationInformation)
@@ -326,7 +327,22 @@ extension BandInformationSetViewController {
 
     //TODO: 밴드 정보를 서버에 POST 하는 코드 추가 예정
     private func postBandInformation() {
+        confirmBandInformation()
+        print(BasicDataModel.bandCreationData.name)
+        print(BasicDataModel.bandCreationData.introduction)
+        print(BasicDataModel.bandCreationData.address.latitude)
+        print(BasicDataModel.bandCreationData.snsList?.count)
+        print(BasicDataModel.bandCreationData.songList?.count)
+    }
 
+    private func confirmBandInformation() {
+        BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
+        BasicDataModel.bandCreationData.address.detail = detailpracticeRoomTextField.inputText()
+        //SongList는 AddPracticeSongVC에서 추가
+        BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
+        BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),
+                                  instagramTextField.inputText(),
+                                  soundCloudTextField.inputText()]
     }
 }
 
