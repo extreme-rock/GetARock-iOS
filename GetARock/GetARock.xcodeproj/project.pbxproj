@@ -21,6 +21,7 @@
 		4A268C63299A18660068F200 /* ModifyMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */; };
 		4A268C65299A187B0068F200 /* ModifyPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */; };
 		4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */; };
+		4A32706F29CAEA480046EE0C /* DeleteBandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A32706E29CAEA480046EE0C /* DeleteBandViewController.swift */; };
 		4A43E6EB29A33B4F00EC4BA5 /* AgreeTermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */; };
 		4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */; };
 		4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */; };
@@ -171,6 +172,7 @@
 		4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMyPageViewController.swift; sourceTree = "<group>"; };
 		4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPositionViewController.swift; sourceTree = "<group>"; };
 		4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyUserProfileViewController.swift; sourceTree = "<group>"; };
+		4A32706E29CAEA480046EE0C /* DeleteBandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteBandViewController.swift; sourceTree = "<group>"; };
 		4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsViewController.swift; sourceTree = "<group>"; };
 		4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkButton.swift; sourceTree = "<group>"; };
 		4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermGuideStackView.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			children = (
 				7B6D3355299A4F13001FD630 /* Component */,
 				7B6D3353299A2F76001FD630 /* BandDetailViewController.swift */,
+				4A32706E29CAEA480046EE0C /* DeleteBandViewController.swift */,
 			);
 			path = BandDetail;
 			sourceTree = "<group>";
@@ -415,7 +418,7 @@
 			isa = PBXGroup;
 			children = (
 				7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */,
-				7B1F6D2529AF82FF00FC00D5 /* BandInfomationView.swift */,
+				7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */,
 				4A18E49329B9A53F00617524 /* BandListMenuTableView.swift */,
 				4A18E49529B9BACC00617524 /* BandListMenuTableViewCell.swift */,
 			);
@@ -1054,6 +1057,7 @@
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
 				7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */,
+				4A32706F29CAEA480046EE0C /* DeleteBandViewController.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */,

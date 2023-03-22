@@ -33,6 +33,7 @@ enum ImageLiteral {
     static var exclamationMarkCircleSymbol: UIImage { .load(systemName: "exclamationmark.circle") }
     static var quarternoteSymbol: UIImage { .load(systemName: "music.quarternote.3") }
     static var ellipsisSymbol: UIImage { .load(systemName: "ellipsis") }
+    static var infoCircleSymbol: UIImage { .load(systemName: "info.circle") }
     
     // MARK: - icon
     
