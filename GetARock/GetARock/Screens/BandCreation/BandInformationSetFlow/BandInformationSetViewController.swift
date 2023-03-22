@@ -50,11 +50,14 @@ final class BandInformationSetViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    private lazy var bandNamingTextField: TextLimitTextField = TextLimitTextField(
+    private lazy var bandNamingTextField: TextLimitTextField = {
+        $0.delegate = self
+        return $0
+    }(TextLimitTextField(
         placeholer: "밴드 이름을 입력해주세요.",
         maxCount: 20,
         duplicationCheckType: .bandName,
-        textExpressionCheck: true)
+        textExpressionCheck: true))
 
     private lazy var textFieldVstack: UIStackView = {
         $0.axis = .vertical
@@ -181,6 +184,7 @@ final class BandInformationSetViewController: BaseViewController {
     private let informationFillCompleteButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("추가", for: .normal)
+        $0.isEnabled = false
         return $0
     }(BottomButton())
 
@@ -237,6 +241,12 @@ final class BandInformationSetViewController: BaseViewController {
             selector: #selector(getKeyboardHeight(notification: )),
             name: UIResponder.keyboardWillShowNotification, object: nil
         )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(setAddCompleteButtonState),
+            name: Notification.Name.checkRequiredBandInformationFilled,
+            object: nil)
     }
 
     private func setupLayout() {
@@ -261,6 +271,16 @@ final class BandInformationSetViewController: BaseViewController {
         instagramTextField.textField.delegate = self
         soundCloudTextField.textField.delegate = self
     }
+
+    @objc
+    private func setAddCompleteButtonState() {
+        let isAvailableName = bandNamingTextField.isAvailableName()
+        if isAvailableName && !bandNamingTextField.isTextFieldEmpty() && practiceRoomSearchButton.inputText() != "주소 검색" {
+            informationFillCompleteButton.isEnabled = true
+        } else {
+            informationFillCompleteButton.isEnabled = false
+        }
+    }
 }
 
 // MARK: - Extension
@@ -273,6 +293,8 @@ extension BandInformationSetViewController {
             self?.practiceRoomSearchButton.configureText(with: locationInformation)
             self?.practiceRoomSearchButton.hideRightView()
             self?.practiceRoomSearchButton.setTextColor(with: .white)
+            NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
+                                            object: nil)
         }
         navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -324,5 +346,12 @@ extension BandInformationSetViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y += self.keyBoardHeight
+    }
+}
+
+extension BandInformationSetViewController: TextLimitTextFieldDelegate {
+    func textFieldTextDidChanged() {
+        NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
+                                        object: nil)
     }
 }

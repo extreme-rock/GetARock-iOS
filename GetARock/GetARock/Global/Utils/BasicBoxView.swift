@@ -70,4 +70,9 @@ final class BasicBoxView: UIStackView {
     func setTextColor(with color: UIColor) {
         self.basicLabel.textColor = color
     }
+
+    func inputText() -> String {
+        guard let text = basicLabel.text else { return "" }
+        return text
+    }
 }
