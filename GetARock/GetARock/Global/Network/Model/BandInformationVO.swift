@@ -16,7 +16,7 @@ struct BandInformationVO: Codable {
     let address: AddressVO
     let memberList: [MemberListVO]
     let songList: [SongListVO]? // 정보 입력시 선택사항
-    let snsList: [SnsListVO]? // 정보 입력시 선택사항
+    let snsList: [SnsListVO] // 정보 입력시 선택사항
     let eventList: [EventList]? // 없을 수 있음
     let commentList: [CommentList]? // 없을 수 있음
 
