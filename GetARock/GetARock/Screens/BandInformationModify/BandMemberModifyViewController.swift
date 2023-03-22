@@ -39,13 +39,13 @@ final class BandMemberModifyViewController: UIViewController {
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
         let action = UIAction { [weak self] _ in
-            self?.setNavigationAttribute(navigationRoot: self?.rootViewController ?? UIViewController())
+            self?.setNavigationForMemberInviting(navigationRoot: self?.rootViewController ?? UIViewController())
         }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
     
-    let inviteUnRegisteredMemberButton: DefaultButton = {
+    private lazy var inviteUnRegisteredMemberButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.plusSymbol
         configuration.title = "미가입 회원 추가"
@@ -54,6 +54,10 @@ final class BandMemberModifyViewController: UIViewController {
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
+        let action = UIAction { [weak self] _ in
+            self?.setNavigationForUnRegisteredMember(navigationRoot: self?.rootViewController ?? UIViewController())
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -267,7 +271,7 @@ extension BandMemberModifyViewController {
 
 extension BandMemberModifyViewController {
     
-    private func setNavigationAttribute(navigationRoot: UIViewController) {
+    private func setNavigationForMemberInviting(navigationRoot: UIViewController) {
         let nextViewController = UserSearchViewController()
         // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
         nextViewController.completion = { selectedUsers in
@@ -281,10 +285,29 @@ extension BandMemberModifyViewController {
                     self.invitingMemberVstack.addArrangedSubview(newInvitingMember)
                 }
             }
-            self.invitingMemberSectionTitle.text = "초대중인 멤버"
         }
         navigationRoot.navigationController?.pushViewController(nextViewController, animated: true)
     }
+    
+    private func setNavigationForUnRegisteredMember(navigationRoot: UIViewController) {
+        let nextViewController = AddUnRegisteredMemberViewController()
+        // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
+        nextViewController.completion = { selectedUsers in
+            for data in selectedUsers {
+                var selectedUserData = data
+                selectedUserData.memberState = .annonymous
+                if self.addedMembers.contains(where: { $0.id == selectedUserData.id }) == false {
+                    self.addedMembers.append(selectedUserData)
+                    let newInvitingMember = BandMemberModifyCell()
+                    newInvitingMember.configure(data: selectedUserData)
+                    self.bandMemberVstack.addArrangedSubview(newInvitingMember)
+                }
+            }
+        }
+        navigationRoot.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+    
+    
     
     private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
