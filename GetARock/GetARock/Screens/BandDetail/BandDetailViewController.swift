@@ -144,6 +144,29 @@ extension BandDetailViewController {
 }
 
 extension BandDetailViewController: BandTopInfoViewDelegate {
+    func showBandOptionActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let modifyBandAction = UIAlertAction(title: "밴드 수정", style: .default) { _ in
+            print("밴드수정")
+        }
+        
+        let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in
+            print("내 포지션 수정")
+        }
+        
+        let deleteMyBandAction = UIAlertAction(title: "밴드 삭제", style: .destructive) { _ in
+            print("밴드 삭제")
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        [modifyBandAction, modifyMyPositionAction, deleteMyBandAction, cancelAction].forEach {
+            actionSheet.addAction($0)
+        }
+        self.present(actionSheet, animated: true)
+    }
+    
     func didBandSelectButtonTapped(isBandSelectButton: Bool) {
         isBandSelectButton ? dropdownBandSelectMenu() : removeBandSelectMenu()
     }
