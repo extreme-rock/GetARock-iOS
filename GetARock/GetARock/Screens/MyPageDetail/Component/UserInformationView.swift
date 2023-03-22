@@ -106,7 +106,7 @@ final class UserInformationView: UIView {
     )
     
     //TODO: - SNS의 데이터 구조 수정이 끝나면 전달 데이터 반영 필요
-    private lazy var userSNSListView = SNSListStackView(data: SNS(youtube: nil, instagram: nil, soundCloud: nil))
+    private lazy var userSNSListView = SNSListStackView(data: userData.snsList ?? [])
     
     private lazy var userSNSStackView: UIStackView = {
         $0.axis = .vertical
@@ -187,8 +187,8 @@ final class UserInformationView: UIView {
         }
     }
     
-    private func setInstrumentImage(instrumentName: String) -> InstrumentImageName {
-        return InstrumentImageName(rawValue: instrumentName) ?? .etc
+    private func setInstrumentImage(instrumentName: String) -> Instrument {
+        return Instrument(rawValue: instrumentName) ?? .etc
     }
     
     private func setUserBandButton() {
