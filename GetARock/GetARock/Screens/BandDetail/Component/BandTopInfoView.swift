@@ -20,7 +20,7 @@ final class BandTopInfoView: UIView {
     private var bandAddress: AddressVO
     private lazy var isBandButtonSelect: Bool = false {
         didSet {
-            self.bandSelectToggleButton.setImage(
+            self.bandListDisclosureButton.setImage(
                 self.isBandButtonSelect
                 ? ImageLiteral.chevronUpSymbol
                 : ImageLiteral.chevronDownSymbol
@@ -45,7 +45,7 @@ final class BandTopInfoView: UIView {
                  fontStyle: .headline04,
                  textColorInfo: .white))
     
-    private lazy var bandSelectToggleButton: UIButton = {
+    private lazy var bandListDisclosureButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         let button = UIButton(configuration: configuration)
@@ -160,7 +160,7 @@ final class BandTopInfoView: UIView {
     }
     
     func setupToggleButtonLayout() {
-        self.bandNameStackView.addArrangedSubview(self.bandSelectToggleButton)
+        self.bandNameStackView.addArrangedSubview(self.bandListDisclosureButton)
     }
 }
 

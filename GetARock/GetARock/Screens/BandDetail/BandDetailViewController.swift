@@ -65,7 +65,7 @@ final class BandDetailViewController: BaseViewController {
     
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     
-    private lazy var bandSelectMenuView = BandSelectMenuTableView(bandNames: self.myBands.map { $0.name })
+    private lazy var bandSelectMenuView = BandListMenuTableView(bandNames: self.myBands.map { $0.name })
     
     // MARK: - LifeCycle
     
@@ -149,7 +149,7 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
     }
 }
 
-extension BandDetailViewController: BandSelectMenuTableViewDelegate {
+extension BandDetailViewController: BandListMenuTableViewDelegate {
     func fetchSelectedBandInfo(indexPath: IndexPath) {
         Task {
             await fetchBandData(with: self.myBands[indexPath.row].bandId)

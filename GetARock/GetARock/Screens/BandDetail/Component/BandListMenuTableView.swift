@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol BandSelectMenuTableViewDelegate: AnyObject {
+protocol BandListMenuTableViewDelegate: AnyObject {
     func fetchSelectedBandInfo(indexPath: IndexPath)
 }
 
-final class BandSelectMenuTableView: UITableView {
+final class BandListMenuTableView: UITableView {
     
     // MARK: - Property
     
-    weak var selectDelegate: BandSelectMenuTableViewDelegate?
+    weak var selectDelegate: BandListMenuTableViewDelegate?
     private let bandNames: [String]
     
     // MARK: - Init
@@ -45,7 +45,7 @@ final class BandSelectMenuTableView: UITableView {
     private func configureTableView() {
         delegate = self
         dataSource = self
-        register(BandSelectMenuTableViewCell.self, forCellReuseIdentifier: BandSelectMenuTableViewCell.classIdentifier)
+        register(BandListMenuTableViewCell.self, forCellReuseIdentifier: BandListMenuTableViewCell.classIdentifier)
     }
     
     private func selectFirstBand() {
@@ -54,20 +54,20 @@ final class BandSelectMenuTableView: UITableView {
     }
 }
 
-extension BandSelectMenuTableView: UITableViewDataSource {
+extension BandListMenuTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.bandNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.dequeueReusableCell(withIdentifier: BandSelectMenuTableViewCell.classIdentifier, for: indexPath) as? BandSelectMenuTableViewCell else { return UITableViewCell() }
+        guard let cell = self.dequeueReusableCell(withIdentifier: BandListMenuTableViewCell.classIdentifier, for: indexPath) as? BandListMenuTableViewCell else { return UITableViewCell() }
         cell.configure(with: self.bandNames[indexPath.row])
         cell.selectionStyle = .none
         return cell
     }
 }
 
-extension BandSelectMenuTableView: UITableViewDelegate {
+extension BandListMenuTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectDelegate?.fetchSelectedBandInfo(indexPath: indexPath)
     }
