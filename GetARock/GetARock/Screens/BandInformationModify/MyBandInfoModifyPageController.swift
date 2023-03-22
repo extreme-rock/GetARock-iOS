@@ -35,7 +35,6 @@ final class MyBandInfoModifyPageController: UIViewController {
             self?.dismissButtonTapped()
         }
         $0.addAction(action, for: .touchUpInside)
-        $0.addAction(action, for: .touchUpInside)
         $0.setContentHuggingPriority(
             .defaultHigh,
             for: .horizontal

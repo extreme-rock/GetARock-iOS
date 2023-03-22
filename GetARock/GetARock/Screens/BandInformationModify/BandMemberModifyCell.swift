@@ -59,11 +59,10 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         $0.constraint(.widthAnchor, constant: 45)
         $0.constraint(.heightAnchor, constant: 45)
         $0.contentMode = .scaleAspectFit
-        
         return $0
     }(UIImageView())
     
-    lazy var leaderButton: UIButton = {
+    private lazy var leaderButton: UIButton = {
         //MARK: ImageLiteral로 바꾸기
         $0.setImage(UIImage(systemName: "crown"), for: .normal)
         $0.contentMode = .scaleAspectFit
@@ -73,7 +72,7 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         return $0
     }(UIButton(type: .custom))
     
-    lazy var selectButton: UIButton = {
+    private lazy var selectButton: UIButton = {
         $0.contentMode = .scaleAspectFit
         $0.setImage(UIImage(
             systemName: "checkmark.circle",
@@ -168,7 +167,7 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         self.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 10)
     }
     
-    func deActiveMemberEditingState() {
+    func deactiveMemberEditingState() {
         self.isSelectedState = false
         leaderButton.isHidden = false
         selectButton.isHidden = true

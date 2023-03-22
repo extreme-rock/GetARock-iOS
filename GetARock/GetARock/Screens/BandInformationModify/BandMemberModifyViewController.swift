@@ -346,7 +346,7 @@ extension BandMemberModifyViewController {
     private func setNormalStateForMemberCell() {
         let bandMemberCells = bandMemberVstack.arrangedSubviews.compactMap { $0 as? BandMemberModifyCell }
         bandMemberCells.forEach {
-            if $0.id != leaderCellId { $0.deActiveMemberEditingState() }
+            if $0.id != leaderCellId { $0.deactiveMemberEditingState() }
         }
         bandMemberCells.forEach { cell in
             cell.setSelectButtonAction {
@@ -360,7 +360,7 @@ extension BandMemberModifyViewController {
         }
         
         let invitingMemberCells = invitingMemberVstack.arrangedSubviews.compactMap { $0 as? BandMemberModifyCell }
-        invitingMemberCells.forEach { $0.deActiveMemberEditingState() }
+        invitingMemberCells.forEach { $0.deactiveMemberEditingState() }
         invitingMemberCells.forEach { cell in
             cell.setSelectButtonAction {
                 cell.isSelectedState.toggle()
