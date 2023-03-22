@@ -52,6 +52,7 @@ enum ImageLiteral {
     static var eventNotificationIcon: UIImage { .load(named: "eventNotificationIcon") }
     static var bandNotificationIcon: UIImage { .load(named: "bandNotificationIcon") }
     static var bubbleWithThunderIcon: UIImage { .load(named: "bubbleWithThunderIcon") }
+    static var invitingIcon: UIImage { .load(named: "invitingIcon") }
 }
 
 extension UIImage {
