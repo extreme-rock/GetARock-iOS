@@ -115,26 +115,22 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
             userNameLabel.lineBreakMode = .byTruncatingTail
             userNameLabel.constraint(.widthAnchor, constant: 160)
         }
-        self.userNameLabel.text = data.name
-        self.instrumentListLabel.text = data.instrumentList.first?.name ?? ""
-        self.id = data.id
 
         //Cell 왼쪽 아이콘 케이스 분류
         switch data.memberState {
         case .admin: leftView.image = ImageLiteral.leaderIcon
         case .none: leftView.image = ImageLiteral.memberIcon
-        case .annonymous: leftView.image = ImageLiteral.unRegisteredMemberIcon
+        case .annonymous:
+            leftView.image = ImageLiteral.unRegisteredMemberIcon
+            userDetailInfoHstack.isHidden = true
         default: return
         }
-        
+
+        // Cell 데이터 주입
         self.userNameLabel.text = data.name
         self.userAgeLabel.text = data.age
         self.userGenderLabel.text = data.gender
-
-        switch data.memberState {
-        case .annonymous: userDetailInfoHstack.isHidden = true
-        default:
-            self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
-        }
+        self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
+        self.id = data.id
     }
 }

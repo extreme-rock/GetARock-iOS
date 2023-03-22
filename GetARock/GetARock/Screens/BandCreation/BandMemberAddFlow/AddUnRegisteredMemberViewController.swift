@@ -76,7 +76,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
 
     private lazy var addCompletionAction = UIAction { _ in
         for subview in self.contentView.arrangedSubviews {
-            let card = subview as! UnRegisteredMemberCardView
+            guard let card = subview as? UnRegisteredMemberCardView else { return }
             let mainPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
                 instrumentId: 0,
                 isMain: true,
@@ -85,7 +85,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
             let otherPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
                 instrumentId: 0,
                 isMain: true,
-                name: card.otherPositionTextField.textField.text ?? "")
+                name: card.otherPositionTextField.inputText())
             
             let data = SearchedUserInfo(
                 memberId: 0,
@@ -171,7 +171,6 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         }
     }
 }
-
 //MARK: - Extension
 
 extension AddUnRegisteredMemberViewController {
