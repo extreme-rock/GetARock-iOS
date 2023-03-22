@@ -56,4 +56,11 @@ final class SNSListStackView: UIStackView {
                       soundCloud: soundCloudLink)
         return sns
     }
+    
+    func configureSNSList(with data: [SnsListVO]) {
+        let sns = toSNS(with: data)
+        self.youtubeButton.configureSNSAttribute(with: sns?.youtube)
+        self.instagramButton.configureSNSAttribute(with: sns?.instagram)
+        self.soundCloudButton.configureSNSAttribute(with: sns?.soundCloud)
+    }
 }

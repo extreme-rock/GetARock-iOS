@@ -107,7 +107,16 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
+    
+    // MARK: - Life Cycle
+    
+    override func prepareForReuse() {
+        if self.songStackView.subviews.contains(self.linkButton) {
+            self.songStackView.removeArrangedSubview(self.linkButton)
+            self.linkButton.removeFromSuperview()
+        }
+    }
+    
     // MARK: - Method
     
     private func setupLayout() {
@@ -122,7 +131,6 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     private func setupLinkButtonLayout() {
         self.songStackView.addArrangedSubview(linkButton)
     }
-    
     
     func addDeleteAction() {
         let action = UIAction { _ in

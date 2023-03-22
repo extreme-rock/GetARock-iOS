@@ -31,6 +31,8 @@ enum ImageLiteral {
     static var chatBubbleSymbol: UIImage { .load(systemName: "bubble.left.and.bubble.right.fill") }
     static var clockArrowCirclePathSymbol: UIImage { .load(systemName: "clock.arrow.circlepath") }
     static var scopeSymbol: UIImage { .load(systemName: "scope") }
+    static var chevronDownSymbol: UIImage { .load(systemName: "chevron.down")}
+    static var chevronUpSymbol: UIImage { .load(systemName: "chevron.up")}
 
     static var exclamationMarkCircleSymbol: UIImage { .load(systemName: "exclamationmark.circle") }
     static var quarternoteSymbol: UIImage { .load(systemName: "music.quarternote.3") }
@@ -50,6 +52,7 @@ enum ImageLiteral {
     static var eventNotificationIcon: UIImage { .load(named: "eventNotificationIcon") }
     static var bandNotificationIcon: UIImage { .load(named: "bandNotificationIcon") }
     static var bubbleWithThunderIcon: UIImage { .load(named: "bubbleWithThunderIcon") }
+    static var invitingIcon: UIImage { .load(named: "invitingIcon") }
 }
 
 extension UIImage {
