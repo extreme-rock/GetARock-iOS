@@ -39,8 +39,9 @@ final class BandMemberAddViewController: BaseViewController {
     private lazy var nextButton: BottomButton = {
         let action = UIAction { _ in
             self.confirmBandMemberList()
+            self.navigationController?.pushViewController(BandInformationSetViewController(), animated: true)
         }
-        $0.setTitle("추가", for: .normal)
+        $0.setTitle("초대하기", for: .normal)
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
