@@ -22,7 +22,7 @@ extension UITextField {
             $0.backgroundColor = .dark02
             $0.textColor = .white
             
-            $0.leftView = TextFieldLeftPaddingView()
+            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             $0.leftViewMode = .always
 
             return $0
@@ -45,25 +45,9 @@ extension UITextField {
     }
 }
 
-final class TextFieldLeftPaddingView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        
-        self.constraint(.widthAnchor, constant: 20)
-        self.constraint(.heightAnchor, constant: 20)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 final class TextFieldRightPaddingView: UIView {
     override init(frame: CGRect) {
-        super.init(frame: .zero)
-
-        self.constraint(.widthAnchor, constant: 100)
-        self.constraint(.heightAnchor, constant: 20)
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
     }
 
     required init?(coder: NSCoder) {

@@ -104,7 +104,7 @@ struct SnsListVO: Codable {
 // MARK: - SongList
 struct SongListVO: Codable {
     let songID: Int? //입력시 선택항목
-    let name, artist: String? //입력시 선택항목
+    let name, artist: String //입력시 선택항목
     let link: String? //입력시 선택항목
 
     enum CodingKeys: String, CodingKey {

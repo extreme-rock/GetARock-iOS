@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BandInfomationView: UIView {
+final class BandInformationView: UIView {
     
     // MARK: - Property
     
@@ -32,7 +32,7 @@ final class BandInfomationView: UIView {
         textColorInfo: .white
     )
     
-    private lazy var bandMemberInfoCollectView = PositionCollectionView(
+    private lazy var bandMemberInfoCollectionView = PositionCollectionView(
         cellType: .band,
         items: bandMemberCollectionViewItem,
         isNeedHeader: false
@@ -65,7 +65,7 @@ final class BandInfomationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandMemberTitleLabel,bandMemberInfoLabelStack,bandMemberInfoCollectView]))
+    }(UIStackView(arrangedSubviews: [bandMemberTitleLabel,bandMemberInfoLabelStack,bandMemberInfoCollectionView]))
     
     private let bandSongTitleLabel = BasicLabel(
         contentText: "합주곡 🎤",
@@ -76,7 +76,7 @@ final class BandInfomationView: UIView {
     private lazy var bandSongListView: SongListView = {
         $0.constraint(.heightAnchor, constant: CGFloat((bandSong?.count ?? 0) * 80))
         return $0
-    }(SongListView(songListType: .detail, data: bandSong))
+    }(SongListView(songListType: .detail, songList: bandSong))
     
     private lazy var bandSongStackView: UIStackView = {
         $0.axis = .vertical
@@ -115,8 +115,7 @@ final class BandInfomationView: UIView {
         textColorInfo: .white
     )
     
-    //TODO - : SNS의 데이터 구조 수정이 끝나면 전달 데이터 반영 필요
-    private lazy var bandSNSListView = SNSListStackView(data: self.bandSNS)
+    private lazy var bandSNSListView = SNSListStackView(data: bandSNS)
     
     private lazy var bandSNSStackView: UIStackView = {
         $0.axis = .vertical
@@ -144,7 +143,7 @@ final class BandInfomationView: UIView {
         setupLayout()
         attribute()
         addModifyObserver()
-        bandMemberInfoCollectView.delegate = self
+        bandMemberInfoCollectionView.delegate = self
     }
     
     required init(coder: NSCoder) {
@@ -172,7 +171,7 @@ final class BandInfomationView: UIView {
             trailing: self.trailingAnchor
         )
         
-        setBandMemberCollectionView()
+        setLayoutForBandMembeCollectionView()
         setBandInfo()
         scrollView.addSubview(bandInfoStackView)
         bandInfoStackView.constraint(
@@ -194,13 +193,13 @@ final class BandInfomationView: UIView {
         }
     }
     
-    private func setBandMemberCollectionView() {
-        bandMemberInfoCollectView.constraint(
+    private func setLayoutForBandMembeCollectionView() {
+        bandMemberInfoCollectionView.constraint(
             .widthAnchor,
             constant: UIScreen.main.bounds.width - 32
         )
         
-        self.bandMemberCollectionViewHeight = self.bandMemberInfoCollectView.heightAnchor.constraint(
+        self.bandMemberCollectionViewHeight = self.bandMemberInfoCollectionView.heightAnchor.constraint(
             equalToConstant: CGFloat((140 + 10) * (bandMemberCollectionViewItem.count-1)/2 + 140)
         )
         self.bandMemberCollectionViewHeight?.isActive = true
@@ -275,7 +274,7 @@ final class BandInfomationView: UIView {
         self.bandSong = bandInfo.songList
         self.bandSNS = bandInfo.snsList
         
-        self.bandMemberInfoCollectView.applySnapshot(with: transformedMemberData)
+        self.bandMemberInfoCollectionView.applySnapshot(with: transformedMemberData)
         self.memberCountAgeLabel.text = "\(bandMember.count)명, \(bandAge)"
         self.bandSNSListView.configureSNSList(with: self.bandSNS)
         self.bandIntroLabel.text = self.bandIntro
@@ -288,7 +287,7 @@ final class BandInfomationView: UIView {
     
     private func setupCollectionViewHeight() {
         self.bandMemberCollectionViewHeight?.isActive = false
-        self.bandMemberCollectionViewHeight = self.bandMemberInfoCollectView.heightAnchor.constraint(
+        self.bandMemberCollectionViewHeight = self.bandMemberInfoCollectionView.heightAnchor.constraint(
             equalToConstant: CGFloat((140 + 10) * Int((bandMemberCollectionViewItem.count-1)/2) + 140)
         )
         self.bandMemberCollectionViewHeight?.isActive = true
@@ -296,7 +295,7 @@ final class BandInfomationView: UIView {
 }
 
 // MARK: Notification 관련
-extension BandInfomationView {
+extension BandInformationView {
     private func addModifyObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(configure(with: )),
@@ -310,7 +309,7 @@ extension BandInfomationView {
 
 // MARK: PositionCollectionViewDelegate
 
-extension BandInfomationView: PositionCollectionViewDelegate {
+extension BandInformationView: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
         return false
     }

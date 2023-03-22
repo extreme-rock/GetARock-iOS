@@ -14,6 +14,7 @@ extension Notification.Name {
     static let hideDeselectAllPositionButton = Notification.Name("hideDeselectAllPositionButton")
     static let didTapPositionItem = Notification.Name("didTapPositionItem")
     static let loadBandData = NSNotification.Name("LoadBandData")
+    static let didPracticeCardViewTextFieldChange = NSNotification.Name("didPracticeCardViewTextFieldChange")
     static let presentSNSSafariViewController = Notification.Name("presentSNSSafariViewController")
     static let configureBandData = Notification.Name("configureBandData")
 }

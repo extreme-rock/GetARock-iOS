@@ -24,7 +24,6 @@ final class DefaultButton: UIButton {
         layer.borderWidth = 1
         layer.masksToBounds = true
         layer.cornerRadius = 10
-        
         titleLabel?.font = UIFont.setFont(.contentBold)
         setTitleColor(.white, for: .normal)
     }
