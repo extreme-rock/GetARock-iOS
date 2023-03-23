@@ -22,7 +22,7 @@ final class MypageTopInfoView: UIView {
         return $0
     }(BasicLabel(
         contentText: userName,
-        fontStyle: .headline04,
+        fontStyle: .nameTitle,
         textColorInfo: .white)
     )
     
