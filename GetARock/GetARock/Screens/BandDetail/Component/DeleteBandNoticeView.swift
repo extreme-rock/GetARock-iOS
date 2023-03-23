@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol DeleteBandNoticeViewDelegate: AnyObject {
+    func didOKButtonTapped()
+}
+
 final class DeleteBandNoticeView: UIView {
+    
+    weak var delegate: DeleteBandNoticeViewDelegate?
+    
     private let titleLabel = BasicLabel(contentText: "밴드 해체 알림",
                                         fontStyle: .headline01,
                                         textColorInfo: .white)
@@ -25,11 +32,13 @@ final class DeleteBandNoticeView: UIView {
         fontStyle: .headline04,
         textColorInfo: .white))
     
-    
-    
-    private let okButton: BottomButton = {
+    private lazy var okButton: BottomButton = {
         $0.setTitle("확인", for: .normal)
         $0.titleLabel?.font = .setFont(.headline02)
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.didOKButtonTapped()
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -64,12 +73,12 @@ final class DeleteBandNoticeView: UIView {
                                 centerX: self.centerXAnchor,
                                 padding: UIEdgeInsets(top: 18, left: 0, bottom: 0, right: 0))
         
+        //TODO: BottomButton을 사용하여 console에서 layout 깨지는 것 해결해야함
         self.addSubview(okButton)
         okButton.constraint(top: self.contentLabel.bottomAnchor,
                             leading: self.leadingAnchor,
                             bottom: self.bottomAnchor,
                             trailing:  self.trailingAnchor,
                             padding: UIEdgeInsets(top: 32, left: 18, bottom: 20, right: 18))
-//        okButton.constraint(.heightAnchor, constant: 55)
     }
 }

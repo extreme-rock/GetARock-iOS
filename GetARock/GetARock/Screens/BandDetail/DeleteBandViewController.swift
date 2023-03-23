@@ -7,7 +7,17 @@
 
 import UIKit
 
+protocol DeleteBandViewControllerDelegate: AnyObject {
+    func didDeleteBandButtonTapped()
+}
+
 final class DeleteBandViewController: UIViewController {
+    
+    // MARK: - Property
+    
+    weak var delegate: DeleteBandViewControllerDelegate?
+    
+    // MARK: - View
     
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 0
@@ -75,9 +85,18 @@ final class DeleteBandViewController: UIViewController {
         return $0
     }(UIButton())
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
+        attribute()
+    }
+    
+    // MARK: - Method
+    
+    private func attribute() {
+        self.view.backgroundColor = .dark01
     }
     
     private func setupLayout() {
@@ -105,13 +124,6 @@ final class DeleteBandViewController: UIViewController {
                                 trailing: self.view.trailingAnchor,
                                 padding: UIEdgeInsets(top: 0, left: 16, bottom: 30, right: 16))
         deleteButton.constraint(.heightAnchor, constant: 60)
-        
-//        self.view.addSubview(test)
-//        test.constraint(leading: self.view.leadingAnchor,
-//                        trailing: self.view.trailingAnchor,
-//                        centerY: self.view.centerYAnchor,
-//                        padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))
-//        test.constraint(.heightAnchor, constant: 321)
     }
     
     private func showDeleteAlertView() {
@@ -121,7 +133,7 @@ final class DeleteBandViewController: UIViewController {
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         let deleteAction = UIAlertAction(title: "해체", style: .destructive) { _ in
-            print("해체")
+            self.delegate?.didDeleteBandButtonTapped()
         }
             
         [cancelAction, deleteAction].forEach {

@@ -102,7 +102,7 @@ final class BandDetailViewController: BaseViewController {
     private func setupLayout() {
         view.addSubview(bandTopInfoView)
         bandTopInfoView.constraint(
-            top: self.view.topAnchor,
+            top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.leadingAnchor,
             trailing: self.view.trailingAnchor
         )
@@ -156,7 +156,9 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
         }
         
         let deleteMyBandAction = UIAlertAction(title: "밴드 삭제", style: .destructive) { _ in
-            print("밴드 삭제")
+            let viewController = DeleteBandViewController()
+            viewController.delegate = self
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -244,5 +246,15 @@ extension BandDetailViewController {
                        initialSpringVelocity: 1.0,
                        options: .curveEaseInOut,
                        animations: animations)
+    }
+}
+
+extension BandDetailViewController: DeleteBandViewControllerDelegate {
+    func didDeleteBandButtonTapped() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        let viewController = MainMapViewController()
+        viewController.setupLayoutDeleteBandNoticeView()
+        window.rootViewController = viewController
+        window.makeKeyAndVisible()
     }
 }
