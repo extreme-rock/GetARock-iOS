@@ -114,7 +114,6 @@ final class UserInformationView: UIView {
         return $0
     }(UIStackView(arrangedSubviews: [userSNSTitleLabel, userSNSListView]))
     
-    
     private lazy var userInfoStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 60
@@ -178,7 +177,7 @@ final class UserInformationView: UIView {
     private func transformPositionData() {
         //TODO: - 유저의 메인악기는 메인 표시 부여 및 배경색상 변경해야함
         let userInstrumentList = userData.instrumentList.map {
-            Position(instrumentName: $0.name,
+            Position(instrumentName: Instrument.CodingKeys(rawValue: $0.name)?.inKorean ?? $0.name,
                      instrumentImageName: setInstrumentImage(instrumentName: $0.name), isETC: false)
         }
         
@@ -188,7 +187,8 @@ final class UserInformationView: UIView {
     }
     
     private func setInstrumentImage(instrumentName: String) -> Instrument {
-        return Instrument(rawValue: instrumentName) ?? .etc
+        guard let koreaName = Instrument.CodingKeys(rawValue: instrumentName)?.inKorean else { return .etc }
+        return Instrument(rawValue: koreaName) ?? .etc
     }
     
     private func setUserBandButton() {
