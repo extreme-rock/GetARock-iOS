@@ -353,6 +353,12 @@ extension BandMemberModifyViewController {
         newLeader.getLeaderPositionState()
         previousLeader.abandonLeaderPositionState()
         leaderCellId = newLeader.id
+        
+        let previousLeaderIndex = self.addedMembers.firstIndex { $0.name == previousLeader.nameText() }!
+        self.addedMembers[previousLeaderIndex].memberState = .member
+        
+        let newLeaderIndex = self.addedMembers.firstIndex { $0.name == newLeader.nameText() }!
+        self.addedMembers[newLeaderIndex].memberState = .admin
     }
 }
 
