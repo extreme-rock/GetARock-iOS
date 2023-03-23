@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A35EDA1F6F1B54EC4E9AEF0 /* Pods_GetARock_GetARockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */; };
 		4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A00132A29835CF600EA992E /* UIImage+Extension.swift */; };
+		4A063C4C29CC951C00BFD253 /* BandNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A063C4B29CC951C00BFD253 /* BandNetworkManager.swift */; };
 		4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */; };
 		4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */; };
 		4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */; };
@@ -161,6 +162,7 @@
 		1C72EC7590FAAB055CED6028 /* Pods-GetARockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.debug.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock_GetARockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A00132A29835CF600EA992E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		4A063C4B29CC951C00BFD253 /* BandNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandNetworkManager.swift; sourceTree = "<group>"; };
 		4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionView.swift; sourceTree = "<group>"; };
 		4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */,
 				9ADC2FEE29A763F000CD580A /* NotificationNetworkManager.swift */,
 				4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */,
+				4A063C4B29CC951C00BFD253 /* BandNetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -970,6 +973,7 @@
 			files = (
 				A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */,
 				7B6D3357299A50F2001FD630 /* DetailContentView.swift in Sources */,
+				4A063C4C29CC951C00BFD253 /* BandNetworkManager.swift in Sources */,
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,

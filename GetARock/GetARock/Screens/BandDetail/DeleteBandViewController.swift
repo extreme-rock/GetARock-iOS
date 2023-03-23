@@ -132,8 +132,13 @@ final class DeleteBandViewController: UIViewController {
                                       preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        let deleteAction = UIAlertAction(title: "해체", style: .destructive) { _ in
+        let deleteAction = UIAlertAction(title: "해체", style: .destructive) { (action) -> Void in
             self.delegate?.didDeleteBandButtonTapped()
+            do {
+                try BandNetworkManager.shared.deleteBand(with: 71)
+            } catch {
+                // TODO: handle error
+            }
         }
             
         [cancelAction, deleteAction].forEach {

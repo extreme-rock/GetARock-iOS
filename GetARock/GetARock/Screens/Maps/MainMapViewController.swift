@@ -24,7 +24,6 @@ final class MainMapViewController: UIViewController {
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
 
-
     private let zoomInRange: Float = 15
     
     private var currentLocationLabel: UILabel = {
