@@ -30,7 +30,7 @@ final class CheckMarkButton: UIButton {
         self.addTarget(self, action:#selector(buttonClicked), for: .touchUpInside)
         self.isChecked = false
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -38,7 +38,7 @@ final class CheckMarkButton: UIButton {
     // MARK: - Method
     
     @objc func buttonClicked() {
-            isChecked.toggle()
+        isChecked.toggle()
     }
     
     private func attribute() {

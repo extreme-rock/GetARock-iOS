@@ -11,6 +11,12 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
 
     // MARK: - View
     
+    override var isSelected: Bool {
+        didSet {
+            self.applySelectedState()
+        }
+    }
+    
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .dark02
@@ -58,6 +64,21 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Life Cycle
+    override func prepareForReuse() {
+        let instrumentStackSubViews = self.informationStackView.arrangedSubviews
+        instrumentStackSubViews.forEach {
+            self.informationStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }   
+    }
+    
+    override func setNeedsLayout() {
+        self.contentView.layer.cornerRadius = 10
+        self.contentView.layer.masksToBounds = true
+        self.contentView.applyActiveGradation()
+    }
+    
     //MARK: - Method
     
     private func setupLayout() {
@@ -71,8 +92,9 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         self.containerView.addSubview(memberNameLabel)
         self.memberNameLabel.constraint(top: containerView.topAnchor,
                                      leading: containerView.leadingAnchor,
-                                     trailing: containerView.trailingAnchor,
-                                     padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 75))
+                                     padding: UIEdgeInsets(top: 14, left: 14, bottom: 0, right: 60))
+        self.memberNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: containerView.trailingAnchor, constant: -70).isActive = true
+        
         
         self.containerView.addSubview(informationStackView)
         self.informationStackView.constraint(top: memberNameLabel.bottomAnchor,
@@ -89,7 +111,7 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     }
     
     private func applyUserState(isUser: Bool) {
-        self.containerView.backgroundColor = isUser ? .activeGradationPurple : .dark02
+        self.containerView.backgroundColor = isUser ? .clear : .dark02
         self.containerView.layer.borderColor = isUser ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
     
@@ -100,9 +122,9 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         crownImage.image?.withConfiguration(imageConfiguation)
         crownImage.tintColor = .white
         self.containerView.addSubview(crownImage)
-        crownImage.constraint(top: containerView.topAnchor,
-                              leading: memberNameLabel.trailingAnchor,
-                              padding: UIEdgeInsets(top: 14, left: -5, bottom: 0, right: 0))
+        crownImage.constraint(top: self.containerView.topAnchor,
+                              leading: self.memberNameLabel.trailingAnchor,
+                              padding: UIEdgeInsets(top: 14, left: 2, bottom: 0, right: 0))
     }
     
     private func configureInstrumentNameUI(with instrumentNames: [String]) {
@@ -128,5 +150,10 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
         if data.isLeader {
             configureLeaderUI()
         }
+    }
+    
+    private func applySelectedState() {
+        self.containerView.backgroundColor = isSelected ? .clear : .dark02
+        self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
     }
 }
