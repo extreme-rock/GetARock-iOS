@@ -106,6 +106,5 @@ final class BandTopInfoView: UIView {
         let detail = bandAddress.detail
         let bandAddressText = city + " " + street + " " +  detail
         locationLabel.text = bandAddressText
-        print(bandAddressText)
     }
 }
