@@ -12,7 +12,7 @@ final class BandDetailViewController: BaseViewController {
     // MARK: - Property
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "172"
+    private var bandID = "343"
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
