@@ -9,8 +9,8 @@ import Foundation
 import MapKit
 
 struct MapMarkerVO: Codable {
-    let bandList: [BandMarkerVO]
-    let eventList: [EventMarkerVO]
+    var bandList: [BandMarkerVO]
+    var eventList: [EventMarkerVO]
 }
 
 struct BandMarkerVO: Codable {
