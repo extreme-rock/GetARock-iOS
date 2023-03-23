@@ -18,15 +18,15 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
 
     private lazy var firstData: SearchedUserInfo = SearchedUserInfo(
         memberId: 0,
-        name: firstPracticeSongCard.nickNameTextField.textField.text ?? "",
+        name: firstUnRegisteredCard.nickNameTextField.textField.text ?? "",
         memberState: .annonymous,
         instrumentList: [SearchedUserInstrumentList(instrumentId: 0,
                                                     isMain: true,
-                                                    name: firstPracticeSongCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
+                                                    name: firstUnRegisteredCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
 
     //MARK: - View
 
-    private lazy var firstPracticeSongCard: UnRegisteredMemberCardView = {
+    private lazy var firstUnRegisteredCard: UnRegisteredMemberCardView = {
         let card = UnRegisteredMemberCardView()
         let action = UIAction { _ in
             self.addedMembers.append(self.firstData)
@@ -41,7 +41,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         $0.distribution = .equalSpacing
         $0.spacing = 40
         return $0
-    }(UIStackView(arrangedSubviews: [firstPracticeSongCard]))
+    }(UIStackView(arrangedSubviews: [firstUnRegisteredCard]))
 
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true

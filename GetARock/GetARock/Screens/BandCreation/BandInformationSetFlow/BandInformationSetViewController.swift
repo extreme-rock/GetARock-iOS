@@ -183,7 +183,6 @@ final class BandInformationSetViewController: BaseViewController {
 
     private lazy var informationFillCompleteButton: BottomButton = {
         let action = UIAction { _ in
-            //TODO: 밴드 정보 POST action 추가 필요
             self.navigationController?.pushViewController(BandCreationFinishGuideViewController(), animated: true)
             self.postBandInformation()
         }
