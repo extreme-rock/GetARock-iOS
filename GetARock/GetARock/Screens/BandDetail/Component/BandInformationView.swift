@@ -223,9 +223,7 @@ final class BandInformationView: UIView {
     
     private func checkIsUserState(memberState: MemberState) -> Bool {
         switch memberState {
-        case .admin:
-            return true
-        case .member:
+        case .admin, .member:
             return true
         default:
             return false
@@ -245,6 +243,7 @@ final class BandInformationView: UIView {
     
     private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> Instrument {
         let transformedMemberInstrument = instrumentList.map{ $0.name }
+        
         if let mainInstrument = transformedMemberInstrument.first {
             return Instrument(rawValue: mainInstrument) ?? .etc
         }
