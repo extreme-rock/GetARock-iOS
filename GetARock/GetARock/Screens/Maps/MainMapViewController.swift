@@ -220,6 +220,7 @@ extension MainMapViewController: GMSMapViewDelegate {
         let updatedMinLongitude = bounds.southWest.longitude
         let updatedMaxLongitude = bounds.northEast.longitude
         
+        // 현재 보이는 지도의 경계가 기존의 경계를 벗어나는 경우 새롭게 마커를 로드합니다.
         if (updatedMinLatitude < minLatitude) || (updatedMinLongitude < minLongitude) || (updatedMaxLatitude > maxLatitude) || (updatedMaxLongitude > maxLongitude) {
             setMarkers()
         }
@@ -231,10 +232,6 @@ extension MainMapViewController: GMSMapViewDelegate {
         // 최소 경도와 최대 경도를 저장합니다.
         minLongitude = bounds.southWest.longitude - 0.1
         maxLongitude = bounds.northEast.longitude + 0.1
-        
-        // 경계를 출력합니다.
-        print("Min Lat: \(minLatitude), Max Lat: \(maxLatitude), Min Long: \(minLongitude), Max Long: \(maxLongitude)")
-        
     }
 }
 
