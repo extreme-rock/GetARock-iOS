@@ -10,9 +10,13 @@ import UIKit
 final class MyBandInfoModifyPageController: UIViewController {
 
     //MARK: - Property
+    private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self)
+    
+    private let bandInfoModifyViewController = BandInfoModifyViewController()
+    
     private lazy var pageViewControllers: [UIViewController] = [
-        BandMemberModifyViewController(navigateDelegate: self),
-        BandInfoModifyViewController()
+        bandMemberModifyViewController,
+        bandInfoModifyViewController
         ]
 
     private var currentPageNumber: Int = 0 {
@@ -48,6 +52,13 @@ final class MyBandInfoModifyPageController: UIViewController {
         $0.titleLabel?.font = .setFont(.headline04)
         let action = UIAction { [weak self] _ in
             self?.updateModifiedBandInformation()
+            Task {
+                // MARK: 수정된 정보 확정
+                self?.bandMemberModifyViewController.confirmModifiedMembers()
+                self?.bandInfoModifyViewController.confirmModifiedBandInformation()
+                // MARK: Band 생성과 수정의 모델이 같아서 creation을 그대로 사용함
+                try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandCreationData)
+            }
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setContentHuggingPriority(

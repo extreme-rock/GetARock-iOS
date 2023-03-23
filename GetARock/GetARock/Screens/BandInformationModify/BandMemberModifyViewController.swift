@@ -246,6 +246,7 @@ extension BandMemberModifyViewController {
                 name: data.name,
                 memberState: data.memberState,
                 instrumentList: instrumentListInfo,
+                //MARK: 성별, 나이 정보가 memberList에 없음
                 gender: "남",
                 age: "20대")
             
@@ -266,6 +267,28 @@ extension BandMemberModifyViewController {
         resultList += annonymous
         resultList += invitingMembers
         return resultList
+    }
+    
+    func confirmModifiedMembers() {
+        let addedMembers = addedMembers.map { MemberList(
+            memberId: $0.memberId,
+            name: $0.name,
+            memberState: $0.memberState,
+            instrumentList: $0.instrumentList
+                .map({ searchedInstrument in
+                    InstrumentList(name: searchedInstrument.name)})
+        )}
+        
+        let invitingMembers = invitingMembers.map { MemberList(
+            memberId: $0.memberId,
+            name: $0.name,
+            memberState: $0.memberState,
+            instrumentList: $0.instrumentList
+                .map({ searchedInstrument in
+                    InstrumentList(name: searchedInstrument.name)})
+        )}
+        
+        BasicDataModel.bandCreationData.memberList = addedMembers + invitingMembers
     }
 }
 

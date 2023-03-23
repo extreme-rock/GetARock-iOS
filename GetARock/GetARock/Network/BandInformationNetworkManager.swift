@@ -55,7 +55,7 @@ final class BandInformationNetworkManager {
             "content-type": "application/json"
         ]
 
-        guard let url = URL(string: "https://api.ryomyom.com/band/update") else { throw NetworkError.badURL }
+        guard let url = URL(string: "https://api.ryomyom.com/band") else { throw NetworkError.badURL }
         var request = URLRequest(url: url,
                                  cachePolicy: .useProtocolCachePolicy,
                                  timeoutInterval: 10)

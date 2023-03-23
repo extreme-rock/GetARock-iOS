@@ -209,6 +209,8 @@ final class BandInfoModifyViewController: BaseViewController {
         setTextFieldDelegate()
         setKeyboardDismiss()
         setNotification()
+        //TODO: 추후 백엔드 데이터 확인 과정에서 바꿔야함
+        configure(with: BasicDataModel.dummyBandInfo)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -296,14 +298,14 @@ extension BandInfoModifyViewController {
     }
 
     private func postBandInformation() {
-        confirmBandInformation()
+        confirmModifiedBandInformation()
         Task {
             //TODO: 로딩뷰 삽입 필요
             try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
         }
     }
 
-    private func confirmBandInformation() {
+    func confirmModifiedBandInformation() {
         BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
         BasicDataModel.bandCreationData.address.detail = detailPracticeRoomTextField.inputText()
         //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
@@ -318,8 +320,27 @@ extension BandInfoModifyViewController {
         self.practiceRoomSearchButton.configureText(with: bandData.address.city + " " + bandData.address.street)
         self.detailPracticeRoomTextField.configureText(with: bandData.address.detail)
         if let songList = bandData.songList {
+            var tempCardViewList: [PracticeSongCardView] = []
             for song in songList {
                 let practiceSongCard = PracticeSongCardView()
+                practiceSongCard.configure(with: SongList(name: song.name, artist: song.artist, link: song.link))
+                tempCardViewList.append(practiceSongCard)
+            }
+            let songListBox = makePracticeSongBoxes(with: tempCardViewList)
+            songListBox.forEach { practiceSongVstack.addArrangedSubview($0) }
+        }
+        self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
+        
+        let snsList = bandData.snsList
+        
+        for sns in snsList {
+            switch sns.snsType {
+            case .youtube:
+                self.youtubeTextField.configureText(with: sns.link)
+            case .instagram:
+                self.instagramTextField.configureText(with: sns.link)
+            case .soundcloud:
+                self.soundCloudTextField.configureText(with: sns.link)
             }
         }
     }
