@@ -48,10 +48,8 @@ final class MypageTopInfoView: UIView {
         return $0
     }(UIStackView(arrangedSubviews: [userNameLabel, modifyButton]))
     
-    
-    //TODO: - 데이크 PR 반영되면 성별하고 나이 한국어로 변환할 예정!
     private lazy var userInfoLabel = BasicLabel(
-        contentText: "\(userGender) ⏐ \(userAge)",
+        contentText: "",
         fontStyle: .content,
         textColorInfo: .white)
     
@@ -74,6 +72,7 @@ final class MypageTopInfoView: UIView {
         self.userAge = userAge
         super.init(frame: .zero)
         setupLayout()
+        setUserInfoLabel()
         attribute()
     }
     
@@ -105,5 +104,12 @@ final class MypageTopInfoView: UIView {
             padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         )
         self.divider.constraint(.heightAnchor, constant: DividerSize.height)
+    }
+    
+    private func setUserInfoLabel() {
+        guard let age = Age.CodingKeys(rawValue: userAge)?.inKorean,
+              let gender = Gender.CodingKeys(rawValue: userGender)?.inKorean else { return }
+        
+        userInfoLabel.text = "\(gender) ⏐ \(age)"
     }
 }
