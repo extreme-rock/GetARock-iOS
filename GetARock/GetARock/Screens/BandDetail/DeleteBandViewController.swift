@@ -62,15 +62,18 @@ final class DeleteBandViewController: UIViewController {
                  fontStyle: .contentLight,
                  textColorInfo: .white))
     
-    private lazy var deleteButton: BottomButton = {
+    private lazy var deleteButton: UIButton = {
         $0.setTitle("삭제하기", for: .normal)
         $0.titleLabel?.font = .setFont(.headline02)
+        $0.backgroundColor = .dark03
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 10
         let action = UIAction { [weak self] _ in
-c            self?.showDeleteAlertView()
+            self?.showDeleteAlertView()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
-    }(BottomButton())
+    }(UIButton())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,9 +100,11 @@ c            self?.showDeleteAlertView()
                                               padding: UIEdgeInsets(top: 30, left: 16, bottom: 0, right: 16))
         
         self.view.addSubview(deleteButton)
-        deleteButton.constraint(bottom: self.view.safeAreaLayoutGuide.bottomAnchor,
-                                centerX: self.view.centerXAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0))
+        deleteButton.constraint(leading: self.view.leadingAnchor,
+                                bottom: self.view.safeAreaLayoutGuide.bottomAnchor,
+                                trailing: self.view.trailingAnchor,
+                                padding: UIEdgeInsets(top: 0, left: 16, bottom: 30, right: 16))
+        deleteButton.constraint(.heightAnchor, constant: 60)
     }
     
     private func showDeleteAlertView() {
@@ -111,7 +116,7 @@ c            self?.showDeleteAlertView()
         let deleteAction = UIAlertAction(title: "해체", style: .destructive) { _ in
             print("해체")
         }
-        
+            
         [cancelAction, deleteAction].forEach {
             alert.addAction($0)
         }
