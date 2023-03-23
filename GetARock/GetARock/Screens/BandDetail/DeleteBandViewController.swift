@@ -75,6 +75,8 @@ final class DeleteBandViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private let test = DeleteBandNoticeView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -105,6 +107,13 @@ final class DeleteBandViewController: UIViewController {
                                 trailing: self.view.trailingAnchor,
                                 padding: UIEdgeInsets(top: 0, left: 16, bottom: 30, right: 16))
         deleteButton.constraint(.heightAnchor, constant: 60)
+        
+        self.view.addSubview(test)
+        test.constraint(leading: self.view.leadingAnchor,
+                        trailing: self.view.trailingAnchor,
+                        centerY: self.view.centerYAnchor,
+                        padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))
+        test.constraint(.heightAnchor, constant: 321)
     }
     
     private func showDeleteAlertView() {
