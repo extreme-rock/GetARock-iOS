@@ -7,9 +7,15 @@
 
 import UIKit
 
-final class BandCreationDecisionViewController: UIViewController {
+final class BandCreationDecisionViewController: BaseViewController {
     
-    //MARK: - View
+    // MARK: - Property
+    
+    private let user: User
+    private var isMakeBandButtonTapped = false
+    private var isSkipMakingBandButtonTapped = false
+    
+    // MARK: - View
     
     private lazy var titleStackView: UIStackView = {
         $0.axis = .vertical
@@ -89,20 +95,24 @@ final class BandCreationDecisionViewController: UIViewController {
         return $0
     }(UILabel())
     
-    //MARK: - Life Cycle
+    // MARK: - Life Cycle
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        attribute()
         setupLayout()
         addActionToButtons()
     }
     
-    //MARK: - Method
-    
-    private func attribute() {
-        self.view.backgroundColor = .dark01
-    }
+    // MARK: - Method
     
     private func setupLayout() {
         self.view.addSubview(titleStackView)
@@ -141,12 +151,26 @@ final class BandCreationDecisionViewController: UIViewController {
     
     private func addActionToButtons() {
         // TODO: 각 상황에 따라 VC 연결하기
-        let makeBandAction = UIAction { _ in
-            print("make")
+        let makeBandAction = UIAction { [weak self] _ in
+            guard let isMakeBandButtonTapped = self?.isMakeBandButtonTapped else { return }
+            if !isMakeBandButtonTapped {
+                Task {
+                    guard let user = self?.user else { return }
+                    try await SignUpNetworkManager.postUserInformation(user: user)
+                }
+            }
+            self?.isMakeBandButtonTapped = true
         }
         
-        let passMakeBandAction = UIAction { _ in
-            print("pass")
+        let passMakeBandAction = UIAction { [weak self] _ in
+            guard let isSkipMakingBandButtonTapped = self?.isSkipMakingBandButtonTapped else { return }
+            if !isSkipMakingBandButtonTapped {
+                Task {
+                    guard let user = self?.user else { return }
+                    try await SignUpNetworkManager.postUserInformation(user: user)
+                }
+            }
+            self?.isSkipMakingBandButtonTapped = true
         }
         self.makeBandButton.addAction(makeBandAction, for: .touchUpInside)
         self.skipMakingBandButton.addAction(passMakeBandAction, for: .touchUpInside)

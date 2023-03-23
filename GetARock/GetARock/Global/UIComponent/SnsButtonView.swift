@@ -12,7 +12,7 @@ final class SNSButtonView: UIView {
     // MARK: - Property
     
     private var snsType: SNSType
-    private let snsURL: String?
+    private var snsURI: String?
     
     enum SNSType: String {
         case youtube = "Youtube"
@@ -26,7 +26,20 @@ final class SNSButtonView: UIView {
             case .soundCloud: return ImageLiteral.soundCloudIcon
             }
         }
+        
+        var snsDefaultURL: String {
+            switch self {
+            case .youtube: return "https://www.youtube.com/"
+            case .instagram: return "https://www.instagram.com/"
+            case .soundCloud: return "https://soundcloud.com/"
+            }
+        }
     }
+    
+    private let tapGesture = UITapGestureRecognizer(
+        target: self,
+        action: #selector(moveSnsLink(_:))
+    )
     
     // MARK: - VIew
     
@@ -50,14 +63,14 @@ final class SNSButtonView: UIView {
         return $0
     }(UIImageView())
     
-    private let snsLebel: BasicLabel = {
+    private let snsLabel: BasicLabel = {
         return $0
     }(BasicLabel(contentText: "", fontStyle: .content, textColorInfo: .white))
     
     // MARK: - Init
     
     init(type: SNSType, data: String?) {
-        self.snsURL = data
+        self.snsURI = data
         self.snsType = type
         super.init(frame: .zero)
         setupLayout()
@@ -71,9 +84,9 @@ final class SNSButtonView: UIView {
     // MARK: - Layout
     
     private func attribute() {
-        snsLebel.text = snsType.rawValue
+        snsLabel.text = snsType.rawValue
         snsIcon.image = snsType.snsIconImage
-        if self.snsURL != nil { activateSNSButton() }
+        if self.snsURI != nil { activateSNSButton() }
     }
     
     private func setupLayout() {
@@ -87,8 +100,8 @@ final class SNSButtonView: UIView {
                                 leading: containerView.leadingAnchor,
                                 padding: UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 0))
         
-        self.containerView.addSubview(snsLebel)
-        self.snsLebel.constraint(leading: containerView.leadingAnchor,
+        self.containerView.addSubview(snsLabel)
+        self.snsLabel.constraint(leading: containerView.leadingAnchor,
                                  bottom: containerView.bottomAnchor,
                                  padding: UIEdgeInsets(top: 0, left: 15, bottom: 15, right: 0))
     }
@@ -104,19 +117,31 @@ final class SNSButtonView: UIView {
     }
     
     private func addSNSButtonAction() {
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(moveSnsLink(_:))
-        )
         self.containerView.addGestureRecognizer(tapGesture)
         self.isUserInteractionEnabled = true
     }
     
     @objc
     func moveSnsLink(_ gesture: UITapGestureRecognizer) {
-        //TO-DO: 링크로 연결 액션 필요
-        print(self.snsURL)
+        guard let snsURI else { return }
+        let snsURL = self.snsType.snsDefaultURL + snsURI
+        NotificationCenter.default.post(
+            name: Notification.Name.presentSNSSafariViewController,
+            object: nil,
+            userInfo: ["snsURL": snsURL])
     }
     
+    func configureSNSAttribute(with snsURL: String?) {
+        resetDefultAttribute()
+        self.snsURI = snsURL
+        if self.snsURI != nil { activateSNSButton() }
+    }
+    
+    func resetDefultAttribute() {
+        self.containerView.removeGestureRecognizer(tapGesture)
+        self.linkIcon.removeFromSuperview()
+        self.containerView.isUserInteractionEnabled = false
+        self.containerView.alpha = 0.4
+    }
 }
 

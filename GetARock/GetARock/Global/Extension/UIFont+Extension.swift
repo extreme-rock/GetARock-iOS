@@ -12,6 +12,7 @@ enum FontType {
     case largeTitle02
     case subTitle
     case subTitle2
+    case nameTitle
     case headline01
     case headline02
     case headline03
@@ -36,6 +37,8 @@ extension UIFont {
             return systemFont(ofSize: 18, weight: .light)
         case .subTitle2:
             return systemFont(ofSize: 22, weight: .bold)
+        case .nameTitle:
+            return systemFont(ofSize: 20, weight: .bold)
         
         // MARK: - Headline
         

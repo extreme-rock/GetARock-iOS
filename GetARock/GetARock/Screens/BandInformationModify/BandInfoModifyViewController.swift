@@ -1,26 +1,19 @@
 //
-//  BandInformationViewController.swift
+//  BandInfoModifyViewController.swift
 //  GetARock
 //
-//  Created by Jisu Jang on 2023/02/14.
+//  Created by 장지수 on 2023/03/19.
 //
 
 import UIKit
 
-final class BandInformationSetViewController: BaseViewController {
-    
+final class BandInfoModifyViewController: BaseViewController {
+
     // MARK: - Properties
-    
+
     private var keyBoardHeight: CGFloat = 280
 
     // MARK: - View
-    
-    private let pageIndicatorLabel: UILabel = {
-        $0.font = .setFont(.headline03)
-        $0.text = "3/3"
-        $0.textColor = .gray02
-        return $0
-    }(UILabel())
 
     private let contentViewTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
@@ -34,17 +27,16 @@ final class BandInformationSetViewController: BaseViewController {
         contentText: "작성 정보는 프로필로 만들어집니다.\n밴드를 잘 어필할 수 있도록 작성해보세요! 😎",
         fontStyle: .headline03,
         textColorInfo: .gray02))
-    
+
     private lazy var titleVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [pageIndicatorLabel,
-                                     contentViewTitleLabel,
+    }(UIStackView(arrangedSubviews: [contentViewTitleLabel,
                                      contentViewSubTitleLabel]))
 
     private let bandNamingGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 이름", type: .required)
-    
+
     private let bandNamingGuideSubLabel: BasicLabel = BasicLabel(
         contentText: "* 공백없이 20자 이하, 기호는 _만 입력 가능합니다.",
         fontStyle: .content,
@@ -55,7 +47,7 @@ final class BandInformationSetViewController: BaseViewController {
         maxCount: 20,
         duplicationCheckType: .bandName,
         textExpressionCheck: true)
-    
+
     private lazy var textFieldVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
@@ -63,7 +55,7 @@ final class BandInformationSetViewController: BaseViewController {
     }(UIStackView(arrangedSubviews: [bandNamingGuideTitleLabel,
                                      bandNamingGuideSubLabel,
                                      bandNamingTextField]))
-    
+
     private let practicePlaceTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "합주실 위치", type: .required)
 
     private let practicePlaceSubTitleLabel: BasicLabel = BasicLabel(
@@ -89,7 +81,7 @@ final class BandInformationSetViewController: BaseViewController {
                                      practicePlaceSubTitleLabel,
                                      practicePlaceSearchButton,
                                      detailPracticePlaceTextField]))
-    
+
     private let bandIntroGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
 
     private let bandIntroTextView: BasicTextView = BasicTextView(
@@ -148,7 +140,7 @@ final class BandInformationSetViewController: BaseViewController {
         contentText: "* 본인계정이 아닌 계정 등록 시 책임은 본인에게 있습니다.",
         fontStyle: .content,
         textColorInfo: .gray02)
-    
+
     private lazy var snsGuideLabelVstack: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
@@ -178,7 +170,7 @@ final class BandInformationSetViewController: BaseViewController {
         $0.setTitle("추가", for: .normal)
         return $0
     }(BottomButton())
-    
+
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
@@ -191,14 +183,14 @@ final class BandInformationSetViewController: BaseViewController {
         $0.spacing = 60
         $0.backgroundColor = .dark01
         return $0
-    }(UIStackView(arrangedSubviews: [titleVstack,
+    }(UIStackView(arrangedSubviews: [
                                      textFieldVstack,
                                      practicePlaceVstack,
                                      practiceSongVstack,
                                      textViewVstack,
                                      snsInformationVstack,
                                     informationFillCompleteButton]))
-    
+
     private let keyBoardHeightPaddingView: UIView = UIView(frame: .zero)
 
     // MARK: - Life Cycle
@@ -210,7 +202,7 @@ final class BandInformationSetViewController: BaseViewController {
         setKeyboardDismiss()
         setNotification()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(
             self,
@@ -218,14 +210,14 @@ final class BandInformationSetViewController: BaseViewController {
             object: nil
         )
     }
-    
+
     // MARK: - Method
-    
+
     private func setKeyboardDismiss() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTouchScreen))
         mainScrollView.addGestureRecognizer(recognizer)
     }
-    
+
     private func setNotification() {
         NotificationCenter.default.addObserver(
             self,
@@ -235,22 +227,22 @@ final class BandInformationSetViewController: BaseViewController {
     }
 
     private func setupLayout() {
-        
+
         view.addSubview(mainScrollView)
         mainScrollView.addSubview(contentView)
-        
+
         mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
                                   bottom: view.bottomAnchor,
-                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)
+                                  trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
 
         contentView.constraint(top: mainScrollView.topAnchor,
                                leading: mainScrollView.leadingAnchor,
                                bottom: mainScrollView.bottomAnchor,
                                trailing: mainScrollView.trailingAnchor,
-                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 25, right: 16))
+                               padding: UIEdgeInsets(top: 15, left: 16, bottom: 25, right: 16))
     }
-    
+
     private func setTextFieldDelegate() {
         youtubeTextField.textField.delegate = self
         instagramTextField.textField.delegate = self
@@ -260,7 +252,7 @@ final class BandInformationSetViewController: BaseViewController {
 
 // MARK: - Extension
 
-extension BandInformationSetViewController {
+extension BandInfoModifyViewController {
 
     // TODO: - 추후 합주실 위치 검색 VC로 넘어가는 코드 추가
     @objc func presentLocationSearchViewController() {
@@ -269,11 +261,11 @@ extension BandInformationSetViewController {
     // TODO: - 추후 합주곡 등록 VC로 넘어가는 코드 추가
     @objc func didTapAddPracticeSong() {
     }
-    
+
     @objc func didTouchScreen() {
         self.view.endEditing(true)
     }
-    
+
     @objc func getKeyboardHeight(notification: Notification) {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
     }
@@ -284,12 +276,13 @@ extension BandInformationSetViewController {
     }
 }
 
-extension BandInformationSetViewController: UITextFieldDelegate {
+extension BandInfoModifyViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.view.frame.origin.y -= self.keyBoardHeight
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y += self.keyBoardHeight
     }
 }
+

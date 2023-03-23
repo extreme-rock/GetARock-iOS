@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class emptyView: UIView {
+final class EmptyView: UIView {
 
     // MARK: - Property
     
