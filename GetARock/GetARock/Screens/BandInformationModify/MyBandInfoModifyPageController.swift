@@ -47,7 +47,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         $0.setTitleColor(.blue01, for: .normal)
         $0.titleLabel?.font = .setFont(.headline04)
         let action = UIAction { [weak self] _ in
-            self?.completeButtonTapped()
+            self?.updateModifiedBandInformation()
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setContentHuggingPriority(
@@ -109,7 +109,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         self.dismiss(animated: true)
     }
 
-    private func completeButtonTapped() {
+    private func updateModifiedBandInformation() {
         //TODO: 개인정보 UPDATE 함수
     }
 

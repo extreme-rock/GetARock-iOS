@@ -4,7 +4,6 @@
 //
 //  Created by 장지수 on 2023/03/19.
 //
-
 import UIKit
 
 final class BandInfoModifyViewController: BaseViewController {
@@ -14,6 +13,13 @@ final class BandInfoModifyViewController: BaseViewController {
     private var keyBoardHeight: CGFloat = 280
 
     // MARK: - View
+
+    private let pageIndicatorLabel: UILabel = {
+        $0.font = .setFont(.headline03)
+        $0.text = "3/3"
+        $0.textColor = .gray02
+        return $0
+    }(UILabel())
 
     private let contentViewTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
@@ -32,7 +38,8 @@ final class BandInfoModifyViewController: BaseViewController {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [contentViewTitleLabel,
+    }(UIStackView(arrangedSubviews: [pageIndicatorLabel,
+                                     contentViewTitleLabel,
                                      contentViewSubTitleLabel]))
 
     private let bandNamingGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 이름", type: .required)
@@ -42,11 +49,14 @@ final class BandInfoModifyViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    private lazy var bandNamingTextField: TextLimitTextField = TextLimitTextField(
+    private lazy var bandNamingTextField: TextLimitTextField = {
+        $0.delegate = self
+        return $0
+    }(TextLimitTextField(
         placeholer: "밴드 이름을 입력해주세요.",
         maxCount: 20,
         duplicationCheckType: .bandName,
-        textExpressionCheck: true)
+        textExpressionCheck: true))
 
     private lazy var textFieldVstack: UIStackView = {
         $0.axis = .vertical
@@ -56,31 +66,36 @@ final class BandInfoModifyViewController: BaseViewController {
                                      bandNamingGuideSubLabel,
                                      bandNamingTextField]))
 
-    private let practicePlaceTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "합주실 위치", type: .required)
+    private let practiceRoomTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "합주실 위치", type: .required)
 
-    private let practicePlaceSubTitleLabel: BasicLabel = BasicLabel(
+    private let practiceRoomSubTitleLabel: BasicLabel = BasicLabel(
         contentText: "* 지도에서 우리밴드가 보여질 위치입니다.",
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    //TODO: 합주실 찾기 VC로 이동하는 TapGesture 추가
-    private lazy var practicePlaceSearchButton = {
+    private lazy var practiceRoomSearchButton: BasicBoxView = {
         $0.showRightView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentLocationSearchViewController))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPracticeRoomSearchButton))
         $0.addGestureRecognizer(tapGesture)
         return $0
     }(BasicBoxView(text: "주소 검색"))
 
-    private let detailPracticePlaceTextField: BasicTextField = BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)")
+    private let detailPracticeRoomTextField: BasicTextField = {
+        let rightPaddingView = TextFieldRightPaddingView()
+        rightPaddingView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        $0.textField.rightView = rightPaddingView
+        $0.textField.rightViewMode = .always
+        return $0
+    }(BasicTextField(placeholder: "상세 주소를 입력해주세요. (선택)"))
 
-    private lazy var practicePlaceVstack: UIStackView = {
+    private lazy var practiceRoomVstack: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 10
         return $0
-    }(UIStackView(arrangedSubviews: [practicePlaceTitleLabel,
-                                     practicePlaceSubTitleLabel,
-                                     practicePlaceSearchButton,
-                                     detailPracticePlaceTextField]))
+    }(UIStackView(arrangedSubviews: [practiceRoomTitleLabel,
+                                     practiceRoomSubTitleLabel,
+                                     practiceRoomSearchButton,
+                                     detailPracticeRoomTextField]))
 
     private let bandIntroGuideTitleLabel: InformationGuideLabel = InformationGuideLabel(guideText: "밴드 소개", type: .optional)
 
@@ -101,7 +116,6 @@ final class BandInfoModifyViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    //TODO: 추후에 합주곡 삽입 action 추가 필요
     private lazy var addPracticeSongButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.plusSymbol
@@ -111,13 +125,14 @@ final class BandInfoModifyViewController: BaseViewController {
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
+        button.addTarget(self, action: #selector(didTapAddPracticeSong), for: .touchUpInside)
         return button
     }()
 
     private lazy var practiceSongList: UIStackView = {
         $0.axis = .vertical
         $0.distribution = .equalSpacing
-        $0.spacing = 20
+        $0.spacing = 10
         return $0
     }(UIStackView(arrangedSubviews: [addPracticeSongButton]))
 
@@ -165,12 +180,6 @@ final class BandInfoModifyViewController: BaseViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let informationFillCompleteButton: BottomButton = {
-        //TODO: 밴드 정보 POST action 추가 필요
-        $0.setTitle("추가", for: .normal)
-        return $0
-    }(BottomButton())
-
     private lazy var mainScrollView: UIScrollView = {
         $0.showsVerticalScrollIndicator = true
         $0.backgroundColor = .dark01
@@ -183,13 +192,12 @@ final class BandInfoModifyViewController: BaseViewController {
         $0.spacing = 60
         $0.backgroundColor = .dark01
         return $0
-    }(UIStackView(arrangedSubviews: [
+    }(UIStackView(arrangedSubviews: [titleVstack,
                                      textFieldVstack,
-                                     practicePlaceVstack,
+                                     practiceRoomVstack,
                                      practiceSongVstack,
                                      textViewVstack,
-                                     snsInformationVstack,
-                                    informationFillCompleteButton]))
+                                     snsInformationVstack]))
 
     private let keyBoardHeightPaddingView: UIView = UIView(frame: .zero)
 
@@ -234,13 +242,13 @@ final class BandInfoModifyViewController: BaseViewController {
         mainScrollView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.safeAreaLayoutGuide.leadingAnchor,
                                   bottom: view.bottomAnchor,
-                                  trailing: view.safeAreaLayoutGuide.trailingAnchor, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)
 
         contentView.constraint(top: mainScrollView.topAnchor,
                                leading: mainScrollView.leadingAnchor,
                                bottom: mainScrollView.bottomAnchor,
                                trailing: mainScrollView.trailingAnchor,
-                               padding: UIEdgeInsets(top: 15, left: 16, bottom: 25, right: 16))
+                               padding: UIEdgeInsets(top: 20, left: 16, bottom: 25, right: 16))
     }
 
     private func setTextFieldDelegate() {
@@ -254,12 +262,29 @@ final class BandInfoModifyViewController: BaseViewController {
 
 extension BandInfoModifyViewController {
 
-    // TODO: - 추후 합주실 위치 검색 VC로 넘어가는 코드 추가
-    @objc func presentLocationSearchViewController() {
+    @objc func didTapPracticeRoomSearchButton() {
+        let nextViewController = PracticeRoomSearchViewController()
+        nextViewController.completion = { [weak self] locationInformation in
+            self?.practiceRoomSearchButton.configureText(with: locationInformation)
+            self?.practiceRoomSearchButton.hideRightView()
+            self?.practiceRoomSearchButton.setTextColor(with: .white)
+            NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
+                                            object: nil)
+        }
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 
-    // TODO: - 추후 합주곡 등록 VC로 넘어가는 코드 추가
+    //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
+        let nextViewController = AddPracticeSongViewController()
+        nextViewController.completion = { [weak self] songs in
+            let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
+            for song in addedSongs {
+                if self?.practiceSongList.arrangedSubviews.count ?? 0 > 3 { break }
+                self?.practiceSongList.addArrangedSubview(song)
+            }
+        }
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     @objc func didTouchScreen() {
@@ -270,9 +295,46 @@ extension BandInfoModifyViewController {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
     }
 
-    //TODO: 밴드 정보를 서버에 POST 하는 코드 추가 예정
     private func postBandInformation() {
+        confirmBandInformation()
+        Task {
+            //TODO: 로딩뷰 삽입 필요
+            try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
+        }
+    }
 
+    private func confirmBandInformation() {
+        BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
+        BasicDataModel.bandCreationData.address.detail = detailPracticeRoomTextField.inputText()
+        //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
+        BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
+        BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),
+                                  instagramTextField.inputText(),
+                                  soundCloudTextField.inputText()]
+    }
+
+    private func configure(with bandData: BandInformationVO) {
+        self.bandNamingTextField.configureText(with: bandData.name)
+        self.practiceRoomSearchButton.configureText(with: bandData.address.city + " " + bandData.address.street)
+        self.detailPracticeRoomTextField.configureText(with: bandData.address.detail)
+        if let songList = bandData.songList {
+            for song in songList {
+                let practiceSongCard = PracticeSongCardView()
+            }
+        }
+    }
+}
+
+    //추가된 합주곡 정보를 바탕으로 Box형 UI를 만드는 함수
+extension BandInfoModifyViewController {
+    func makePracticeSongBoxes(with data: [PracticeSongCardView]) -> [PracticeSongBoxView] {
+        var result: [PracticeSongBoxView] = []
+        for datum in data {
+            let practiceSong: PracticeSongBoxView = PracticeSongBoxView()
+            practiceSong.configure(data: datum)
+            result.append(practiceSong)
+        }
+        return result
     }
 }
 
@@ -283,6 +345,13 @@ extension BandInfoModifyViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y += self.keyBoardHeight
+    }
+}
+
+extension BandInfoModifyViewController: TextLimitTextFieldDelegate {
+    func textFieldTextDidChanged() {
+        NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
+                                        object: nil)
     }
 }
 

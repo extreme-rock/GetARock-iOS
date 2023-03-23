@@ -329,7 +329,7 @@ extension BandInformationSetViewController {
         confirmBandInformation()
         Task {
             //TODO: 로딩뷰 삽입 필요
-            try await BandCreationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
+            try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
         }
     }
 

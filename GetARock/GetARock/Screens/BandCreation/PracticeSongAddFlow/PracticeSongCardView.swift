@@ -122,6 +122,12 @@ final class PracticeSongCardView: UIStackView {
     func showDeleteButton() {
         deleteButton.isHidden = false
     }
+
+    func configure(with data: SongList) {
+        artistNameTextField.textField.text = data.artist
+        practiceSongTextField.textField.text = data.name
+        linkTextField.textField.text = data.link
+    }
     
     func setTextFieldDelegate(controller: UITextFieldDelegate) {
         artistNameTextField.textField.delegate = controller

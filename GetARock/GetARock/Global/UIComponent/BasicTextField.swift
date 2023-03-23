@@ -43,6 +43,10 @@ final class BasicTextField: UIView {
         guard let text = self.textField.text else { return ""}
         return text
     }
+
+    func configureText(with text: String) {
+        self.textField.text = text
+    }
 }
 
 extension BasicTextField {

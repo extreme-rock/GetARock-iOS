@@ -9,7 +9,7 @@ import UIKit
 
 final class BasicBoxView: UIStackView {
 
-    private var text: String = ""
+    var text: String = ""
 
     private lazy var basicLabel = {
         $0.numberOfLines = 0
