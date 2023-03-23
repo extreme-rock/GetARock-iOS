@@ -105,6 +105,32 @@ enum Instrument: String {
     case vocal = "보컬"
     case etc = ""
     
+    enum CodingKeys: String, CodingKey {
+        case guitar = "guitar"
+        case bass = "bass"
+        case keyboard = "keyboard"
+        case drum = "drum"
+        case vocal = "vocal"
+        case etc = "etc"
+
+        var inKorean: String {
+            switch self {
+            case .guitar:
+                return "기타"
+            case .bass:
+                return "베이스"
+            case .keyboard:
+                return "키보드"
+            case .drum:
+                return "드럼"
+            case .vocal:
+                return "보컬"
+            case .etc:
+                return ""
+            }
+        }
+    }
+    
     var imageName: String {
         switch self {
         case .guitar:
