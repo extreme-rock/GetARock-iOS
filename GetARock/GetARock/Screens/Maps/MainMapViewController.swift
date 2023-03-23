@@ -140,19 +140,15 @@ final class MainMapViewController: UIViewController {
     
     private func setMarkers() {
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
-        
         Task {
             await fetchMarkers()
-        }
-        
-        mapView.clear()
-        for band in markers.bandList {
-            print("❗❗❗❗❗❗❗❗❗❗❗")
-            print("add band")
-            let marker = CustomMarker(bandName: band.name,
-                                      coordinate: band.toCLLocationCoordinate2D(),
-                                      category: .band)
-            marker.map = mapView
+            mapView.clear()
+            for band in markers.bandList {
+                let marker = CustomMarker(bandName: band.name,
+                                          coordinate: band.toCLLocationCoordinate2D(),
+                                          category: .band)
+                marker.map = mapView
+            }
         }
     
     }
@@ -189,11 +185,11 @@ extension MainMapViewController: GMSMapViewDelegate {
             }
         }
         
-        let selectedMarker = marker as! CustomMarker
-        if selectedMarker.category == .band {
-            selectedMarker.changeBandMarkerImageWhenSelected()
+        let selectedMarker = marker as? CustomMarker
+        if selectedMarker?.category == .band {
+            selectedMarker?.changeBandMarkerImageWhenSelected()
         }
-        moveMap(to: selectedMarker.position)
+        moveMap(to: selectedMarker?.position)
         self.previousSelectedMarker = selectedMarker
         
         return true
@@ -225,7 +221,6 @@ extension MainMapViewController: GMSMapViewDelegate {
         let updatedMaxLongitude = bounds.northEast.longitude
         
         if (updatedMinLatitude < minLatitude) || (updatedMinLongitude < minLongitude) || (updatedMaxLatitude > maxLatitude) || (updatedMaxLongitude > maxLongitude) {
-            print("❗❗❗❗❗set marker❗❗❗❗❗❗")
             setMarkers()
         }
         
@@ -300,7 +295,6 @@ extension MainMapViewController {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             let decodedData = try JSONDecoder().decode(MapMarkerVO.self, from: data)
-            print("❗❗❗❗❗❗❗❗❗❗❗")
             print(String(data: data, encoding: String.Encoding.utf8) ?? "no responce")
             print("응답 내용 : \(response)")
             self.markers = decodedData
