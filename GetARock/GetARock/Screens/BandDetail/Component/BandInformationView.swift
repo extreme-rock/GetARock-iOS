@@ -213,12 +213,19 @@ final class BandInformationView: UIView {
                     isLeader: checkIsLeaderState(memberState: $0.memberState),
                     userName: $0.name,
                     instrumentImageName: checkInstrumentImage(instrumentList: $0.instrumentList),
-                    instrumentNames: $0.instrumentList.map{ $0.name }
+                    instrumentNames: translateInstrumentNames(names: $0.instrumentList.map{ $0.name })
                 )
             )
         }
         
         bandMemberCollectionViewItem = transformedMemberData
+    }
+    
+    private func translateInstrumentNames(names: [String]) -> [String] {
+        let InstrumentKr = names.compactMap{
+            Instrument(rawValue: $0)?.inKorean ?? $0
+        }
+        return InstrumentKr
     }
     
     private func checkIsUserState(memberState: MemberState) -> Bool {
