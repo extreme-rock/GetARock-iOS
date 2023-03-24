@@ -22,6 +22,8 @@ final class BandMemberModifyViewController: UIViewController {
             setAbandonButtonState()
         }
     }
+
+    private let bandData: BandInformationVO
     
     private lazy var addedMembers: [SearchedUserInfo] = transformVOData().filter { $0.memberState != .inviting }
     
@@ -156,8 +158,9 @@ final class BandMemberModifyViewController: UIViewController {
     
     //MARK: - Life Cycle
     
-    init(navigateDelegate: UIViewController) {
+    init(navigateDelegate: UIViewController, bandData: BandInformationVO) {
         self.rootViewController = navigateDelegate
+        self.bandData = bandData
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -237,7 +240,7 @@ extension BandMemberModifyViewController {
     private func transformVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
         //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
-        for data in BasicDataModel.dummyBandInfo.memberList {
+        for data in self.bandData.memberList {
             let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
                 SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
             }

@@ -10,6 +10,8 @@ final class BandInfoModifyViewController: BaseViewController {
 
     // MARK: - Properties
 
+    private let bandData: BandInformationVO
+
     private var keyBoardHeight: CGFloat = 280
 
     // MARK: - View
@@ -210,7 +212,7 @@ final class BandInfoModifyViewController: BaseViewController {
         setKeyboardDismiss()
         setNotification()
         //TODO: 추후 백엔드 데이터 확인 과정에서 바꿔야함
-        configure(with: BasicDataModel.dummyBandInfo)
+        configure(with: bandData)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -219,6 +221,15 @@ final class BandInfoModifyViewController: BaseViewController {
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
+    }
+
+    init(bandData: BandInformationVO) {
+        self.bandData = bandData
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Method
@@ -300,7 +311,6 @@ extension BandInfoModifyViewController {
     private func postBandInformation() {
         confirmModifiedBandInformation()
         Task {
-            //TODO: 로딩뷰 삽입 필요
             try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
         }
     }

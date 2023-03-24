@@ -8,6 +8,42 @@
 import Foundation
 
 final class BandInformationNetworkManager {
+
+    func getBandData(bandId: Int) async throws -> BandInformationVO {
+        var result: BandInformationVO = BandInformationVO(bandID: 0,
+                                                          name: "",
+                                                          age: "",
+                                                          introduction: "",
+                                                          address: AddressVO(city: "", street: "", detail: "", longitude: 0, latitude: 0),
+                                                          memberList: [],
+                                                          songList: [],
+                                                          snsList: [],
+                                                          eventList: [],
+                                                          commentList: [])
+        let baseURL = "https://api.ryomyom.com/band"
+        var queryURLComponent = URLComponents(string: baseURL)
+        let nameQuery = URLQueryItem(name: "id", value: String(describing: bandId))
+        queryURLComponent?.queryItems = [nameQuery]
+        guard let url = queryURLComponent?.url else { throw NetworkError.badURL }
+
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            let httpResponse = response as! HTTPURLResponse
+
+            if (200..<300).contains(httpResponse.statusCode) {
+                let decodedData = try JSONDecoder().decode(BandInformationVO.self, from: data)
+                result = decodedData
+
+            } else {
+                throw NetworkError.failedRequest(status: httpResponse.statusCode)
+            }
+            print(httpResponse)
+        } catch {
+            print(error)
+        }
+
+        return result
+    }
     
     func postBandCreation(data: BandCreationDTO) async throws {
         let headers = [

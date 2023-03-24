@@ -10,9 +10,12 @@ import UIKit
 final class MyBandInfoModifyPageController: UIViewController {
 
     //MARK: - Property
-    private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self)
+
+    private var bandInfo: BandInformationVO
+
+    private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self, bandData: bandInfo)
     
-    private let bandInfoModifyViewController = BandInfoModifyViewController()
+    private lazy var bandInfoModifyViewController = BandInfoModifyViewController(bandData: bandInfo)
     
     private lazy var pageViewControllers: [UIViewController] = [
         bandMemberModifyViewController,
@@ -101,6 +104,15 @@ final class MyBandInfoModifyPageController: UIViewController {
         attribute()
         setNavigationItem()
         setupLayout()
+    }
+
+    init(bandData: BandInformationVO) {
+        self.bandInfo = bandData
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     //MARK: - Method
