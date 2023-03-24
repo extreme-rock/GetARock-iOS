@@ -137,13 +137,13 @@ final class BandTopInfoView: UIView {
             top: self.topAnchor,
             leading: self.leadingAnchor,
             trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 30, left: 16, bottom: 0, right: 16)
+            padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         )
         
         self.addSubview(optionButton)
         optionButton.constraint(top: self.topAnchor,
                                 trailing: self.trailingAnchor,
-                                padding: UIEdgeInsets(top: 30, left: 0, bottom: 0, right: 16))
+                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
         
         self.addSubview(divider)
         divider.constraint(
