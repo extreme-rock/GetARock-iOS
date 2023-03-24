@@ -8,8 +8,7 @@
 import UIKit
 
 enum ImageLiteral {
-//     static var exampleIcon: UIImage { .load(named: sth) }
-    
+
     // MARK: - SF Symbols
     static var xmarkSymbol: UIImage { .load(systemName: "xmark") }
     static var arrowUpRightSymbol: UIImage { .load(systemName: "arrow.up.right") }
@@ -53,6 +52,12 @@ enum ImageLiteral {
     static var bandNotificationIcon: UIImage { .load(named: "bandNotificationIcon") }
     static var bubbleWithThunderIcon: UIImage { .load(named: "bubbleWithThunderIcon") }
     static var invitingIcon: UIImage { .load(named: "invitingIcon") }
+    
+    
+    // MARK: - background
+    
+    static var landingBackground: UIImage { .load(named: "landingBackground.png") }
+    
 }
 
 extension UIImage {
