@@ -25,8 +25,13 @@ final class PositionSelectViewController: UIViewController {
         headerView: PositionSelectCollectionViewHeader()
     )
     
-    private let nextButton: BottomButton = {
+    private lazy var nextButton: BottomButton = {
         $0.setTitle("다음", for: .normal)
+        let action = UIAction { [weak self] _ in
+            let viewController = UserInfoInputViewController()
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -38,7 +43,7 @@ final class PositionSelectViewController: UIViewController {
         addAllObserver()
     }
     
-    deinit {
+    override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
     
