@@ -8,7 +8,7 @@
 import Foundation
 
 struct SearchedUserListDTO: Codable {
-    let memberList: [SearchedUserInfo]
+    var memberList: [SearchedUserInfo]
 }
 //MARK: 이름 기반 유저 검색시 받게되는 MemberList와 밴드 생성시 사용하는 MemberList의 내부 프로퍼티가 다르기 때문에 다른 이름을 사용
 
@@ -31,7 +31,7 @@ struct SearchedUserInstrumentList: Hashable, Codable {
 
 #if DEBUG
 extension SearchedUserListDTO {
-    static var testData =
+    static var dataSet =
         SearchedUserListDTO(memberList: [
             SearchedUserInfo(memberId: 0,
                        name: "루키",

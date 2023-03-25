@@ -37,6 +37,13 @@ struct MemberList: Codable {
     let instrumentList: [InstrumentList]
 }
 
+struct SearchedMemberList: Codable {
+    let memberId: Int?
+    let name, gender, age: String
+    let memberState: MemberState
+    let instrumentList: [SearchedUserInstrumentList]
+}
+
 struct InstrumentList: Codable {
     let name: String
 }
