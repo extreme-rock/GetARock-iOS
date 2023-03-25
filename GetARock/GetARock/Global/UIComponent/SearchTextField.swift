@@ -66,6 +66,11 @@ final class SearchTextField: UIView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func inputText() -> String {
+        guard let text = self.textField.text else { return ""}
+        return text
+    }
 }
 
 extension SearchTextField: UITextFieldDelegate {

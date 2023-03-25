@@ -7,19 +7,15 @@
 
 import UIKit
 
-final class BandCreatDecisionViewController: UIViewController {
+final class BandCreationDecisionViewController: BaseViewController {
     
-    //MARK: - View
+    // MARK: - Property
     
-    private lazy var dismissButton: UIButton = {
-        $0.setImage(ImageLiteral.xmarkSymbol, for: .normal)
-        $0.tintColor = .white
-        let action = UIAction { [weak self] _ in
-            self?.dismiss(animated: true)
-        }
-        $0.addAction(action, for: .touchUpInside)
-      return $0
-    }(UIButton())
+    private let user: User
+    private var isMakeBandButtonTapped = false
+    private var isSkipMakingBandButtonTapped = false
+    
+    // MARK: - View
     
     private lazy var titleStackView: UIStackView = {
         $0.axis = .vertical
@@ -68,47 +64,51 @@ final class BandCreatDecisionViewController: UIViewController {
         return $0
     }(UILabel())
     
-//    private let skipMakingBandButton: UIButton = {
-//        $0.setBackgroundColor(.dark02, for: .normal)
-//        $0.layer.borderColor = UIColor.gray02.cgColor
-//        $0.layer.borderWidth = 1
-//        $0.layer.cornerRadius = 10
-//        $0.layer.masksToBounds = true
-//        return $0
-//    }(UIButton())
-//
-//    private lazy var skipMakingLabelStackView: UIStackView = {
-//        $0.axis = .vertical
-//        $0.spacing = 14
-//        return $0
-//    }(UIStackView(arrangedSubviews: [skipMakingBandTitleLabel, skipMakingBandContentLabel]))
-//
-//    private let skipMakingBandTitleLabel = BasicLabel(contentText: "밴드 다음에 만들기",
-//                                                      fontStyle: .subTitle2,
-//                                                      textColorInfo: .white)
-//
-//    private let skipMakingBandContentLabel: UILabel = {
-//        $0.font = .setFont(.contentLight)
-//        $0.text = "밴드가 없으면 모여락 이벤트를 만들 수 없어요🥹\n하지만 이벤트 참여와 소통은 가능해요!"
-//        $0.textColor = .white
-//        $0.numberOfLines = 2
-//        return $0
-//    }(UILabel())
-//
-    //MARK: - Life Cycle
+    private let skipMakingBandButton: UIButton = {
+        $0.setBackgroundColor(.dark02, for: .normal)
+        $0.layer.borderColor = UIColor.gray02.cgColor
+        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        return $0
+    }(UIButton())
+    
+    private lazy var skipMakingLabelStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 14
+        return $0
+    }(UIStackView(arrangedSubviews: [skipMakingBandTitleLabel, skipMakingBandContentLabel]))
+    
+    private let skipMakingBandTitleLabel = BasicLabel(contentText: "밴드 다음에 만들기",
+                                                      fontStyle: .subTitle2,
+                                                      textColorInfo: .white)
+    
+    private let skipMakingBandContentLabel: UILabel = {
+        $0.font = .setFont(.contentLight)
+        $0.text = "밴드가 없으면 모여락 이벤트를 만들 수 없어요🥹\n하지만 이벤트 참여와 소통은 가능해요!"
+        $0.textColor = .white
+        $0.numberOfLines = 2
+        return $0
+    }(UILabel())
+    
+    // MARK: - Life Cycle
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        attribute()
         setupLayout()
         addActionToButtons()
     }
     
-    //MARK: - Method
-    
-    private func attribute() {
-        self.view.backgroundColor = .dark01
-    }
+    // MARK: - Method
     
     private func setupLayout() {
         self.view.addSubview(titleStackView)
@@ -147,13 +147,27 @@ final class BandCreatDecisionViewController: UIViewController {
     
     private func addActionToButtons() {
         // TODO: 각 상황에 따라 VC 연결하기
-        let makeBandAction = UIAction { _ in
-            print("make")
+        let makeBandAction = UIAction { [weak self] _ in
+            guard let isMakeBandButtonTapped = self?.isMakeBandButtonTapped else { return }
+            if !isMakeBandButtonTapped {
+                Task {
+                    guard let user = self?.user else { return }
+                    try await SignUpNetworkManager.postUserInformation(user: user)
+                }
+            }
+            self?.isMakeBandButtonTapped = true
         }
         
-//        let passMakeBandAction = UIAction { _ in
-//            print("pass")
-//        }
+        let passMakeBandAction = UIAction { [weak self] _ in
+            guard let isSkipMakingBandButtonTapped = self?.isSkipMakingBandButtonTapped else { return }
+            if !isSkipMakingBandButtonTapped {
+                Task {
+                    guard let user = self?.user else { return }
+                    try await SignUpNetworkManager.postUserInformation(user: user)
+                }
+            }
+            self?.isSkipMakingBandButtonTapped = true
+        }
         self.makeBandButton.addAction(makeBandAction, for: .touchUpInside)
 //        self.skipMakingBandButton.addAction(passMakeBandAction, for: .touchUpInside)
     }

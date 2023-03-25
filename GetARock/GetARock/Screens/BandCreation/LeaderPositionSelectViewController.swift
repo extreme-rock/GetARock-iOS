@@ -39,6 +39,7 @@ final class LeaderPositionSelectViewController: UIViewController {
             self.addSelectedPositionData()
             self.navigateToNext()
         }
+        $0.isEnabled = false
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
@@ -50,8 +51,11 @@ final class LeaderPositionSelectViewController: UIViewController {
         setupLayout()
         attribute()
         configureDelegate()
+        setNotificationObserver()
         fixNavigationBarColorWhenScrollDown()
     }
+
+    deinit { NotificationCenter.default.removeObserver(self) }
     
     override func viewWillAppear(_ animated: Bool) {
 //        self.navigationController?.navigationBar.isHidden = true
@@ -68,6 +72,13 @@ final class LeaderPositionSelectViewController: UIViewController {
                                             action: #selector(dismissButtonTapped))
         dismissButton.tintColor = .white
         self.navigationItem.rightBarButtonItem = dismissButton
+    }
+
+    private func setNotificationObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(setNextButtonState),
+                                               name: Notification.Name.didTapPositionItem,
+                                               object: nil)
     }
     
     @objc
@@ -120,6 +131,15 @@ extension LeaderPositionSelectViewController {
         let nextVC = BandMemberAddViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
         self.navigationController?.navigationBar.isHidden = false
+    }
+
+    @objc
+    func setNextButtonState() {
+        if self.positionCollectionView.getSelectedInstruments().isEmpty {
+            nextButton.isEnabled = false
+        } else {
+            nextButton.isEnabled = true
+        }
     }
 }
 

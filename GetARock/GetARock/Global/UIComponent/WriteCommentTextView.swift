@@ -16,6 +16,12 @@ final class WriteCommentTextView: UIView {
     private var keyboardHeightPaddingConstraint: NSLayoutConstraint?
     private var keyboardHeight: CGFloat = 30
     
+    //TODO: - 추후 로그인한 사용자 ID로 변경 해야함
+    private var memberId = "18"
+    //TODO: - 추후 사용자가 들어간 밴드의 ID로 변경해야함
+    private var bandId = "71"
+    private var contentText = ""
+    
     // MARK: - View
     
     private lazy var commentTextView: UITextView = {
@@ -27,14 +33,11 @@ final class WriteCommentTextView: UIView {
         return $0
     }(UITextView())
     
-    private let addCommentButton: DefaultButton = {
+    private lazy var addCommentButton: DefaultButton = {
         $0.setTitle("등록", for: .normal)
+        $0.addTarget(self, action: #selector(didTapAddCommentButton), for: .touchUpInside)
         return $0
     }(DefaultButton())
-    
-    private let contentView: UIView = {
-        return $0
-    }(UIView())
     
     private let placeholderLabel: UILabel = BasicLabel(
         contentText: "댓글을 입력하세요",
@@ -42,9 +45,8 @@ final class WriteCommentTextView: UIView {
         textColorInfo: .gray02
     )
     
-    private let keyboardHeightPaddingView: UIView = {
-        return $0
-    }(UIView())
+    private let contentView = UIView()
+    private let keyboardHeightPaddingView = UIView()
     
     // MARK: - Init
     
@@ -59,6 +61,10 @@ final class WriteCommentTextView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Method
     
     private func attribute() {
@@ -67,7 +73,6 @@ final class WriteCommentTextView: UIView {
     }
     
     private func setupLayout() {
-        
         self.addSubview(contentView)
         contentView.constraint(
             top: self.topAnchor,
@@ -112,7 +117,7 @@ final class WriteCommentTextView: UIView {
     private func setTextViewHeightConstraint() {
         textViewHeightConstraint = commentTextView.heightAnchor.constraint(
             equalToConstant: 35
-    )
+        )
         textViewHeightConstraint?.isActive = true
     }
     
@@ -144,6 +149,16 @@ final class WriteCommentTextView: UIView {
         else {
             commentTextView.isScrollEnabled = false
             textViewHeightConstraint?.constant = newSize.height + 2
+        }
+    }
+    
+    // MARK: - @objc
+    
+    @objc func didTapAddCommentButton() {
+        if !self.commentTextView.text.isEmpty {
+            self.contentText = commentTextView.text
+            postComment()
+            self.commentTextView.text.removeAll()
         }
     }
 }
@@ -201,5 +216,52 @@ extension WriteCommentTextView {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.keyboardHeightPaddingConstraint?.constant = 40
+    }
+}
+
+// MARK: - Post Comment
+
+extension WriteCommentTextView {
+    
+    func postComment() {
+        do {
+            let headers = [
+                "accept": "application/json",
+                "content-type": "application/json"
+            ]
+            
+            var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/comment/band")
+            
+            let memberIdQuery = URLQueryItem(name: "memberId", value: memberId)
+            
+            let bandIdQuery = URLQueryItem(name: "bandId", value: bandId)
+            
+            let content = URLQueryItem(name: "content", value: contentText)
+            
+            queryURLComponent?.queryItems = [memberIdQuery,bandIdQuery,content]
+            
+            guard let url = queryURLComponent?.url else { return }
+            var request = URLRequest(url: url,
+                                     cachePolicy: .useProtocolCachePolicy,
+                                     timeoutInterval: 10.0)
+            request.httpMethod = "POST"
+            request.allHTTPHeaderFields = headers
+            Task {
+                //TODO: fetch함수 손보기
+//                await BandDetailViewController().fetchBandData()
+            }
+            
+            let dataTask = URLSession.shared.dataTask(with: request,
+                                                      completionHandler: { (data, response, error) -> Void in
+                if (error != nil) {
+                    print("통신 과정에서 에러가 났습니다.")
+                    print(error?.localizedDescription ?? "error case occured")
+                } else {
+                    print("response는 다음과 같습니다")
+                    print(response)
+                }
+            })
+            dataTask.resume()
+        }
     }
 }

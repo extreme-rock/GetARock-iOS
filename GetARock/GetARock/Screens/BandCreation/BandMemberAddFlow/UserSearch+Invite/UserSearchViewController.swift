@@ -25,12 +25,7 @@ final class UserSearchViewController: BaseViewController {
     
     private lazy var searchBar: SearchTextField = {
         let searchBar = SearchTextField(placeholder: "닉네임으로 검색")
-        let action = UIAction { _ in
-            if searchBar.textField.text == "" {
-                self.searchResultTable.reloadData()
-            }
-        }
-        searchBar.textField.addAction(action, for: .editingChanged)
+        searchBar.textField.addTarget(self, action: #selector(searchTextDidChange(_:)), for: .editingChanged)
         return searchBar
     }()
 
@@ -45,7 +40,6 @@ final class UserSearchViewController: BaseViewController {
     }(UITableView())
 
     private lazy var doneButton: BottomButton = {
-        //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("완료", for: .normal)
         let action = UIAction { _ in
             self.completion(self.selectedUsers)
@@ -112,14 +106,15 @@ final class UserSearchViewController: BaseViewController {
 extension UserSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        SearchedUserListDTO.testData.memberList.count
+        //TODO: 추후 데이터 업데이트 이후에 변경 필요
+        SearchedUserListDTO.dataSet.memberList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: UserSearchTableViewCell.classIdentifier,
             for: indexPath) as? UserSearchTableViewCell else { return UITableViewCell()}
-        cell.configure(data: SearchedUserListDTO.testData.memberList[indexPath.row])
+        cell.configure(data: SearchedUserListDTO.dataSet.memberList[indexPath.row])
         cell.selectionStyle = .none
         return cell
     }
@@ -206,5 +201,30 @@ extension UserSearchViewController {
             cell.deleteButton.addAction(deleteAction, for: .touchUpInside)
             return cell
         })
+    }
+}
+
+extension UserSearchViewController {
+    @objc func searchTextDidChange(_ sender: Any?) {
+        if searchBar.inputText().isEmpty {
+            self.searchResultTable.reloadData()
+        } else {
+            Task {
+                let searchedUsers = try await MemberSearchNetworkManager().getSearchedMemberList(with: searchBar.inputText())
+
+                SearchedUserListDTO.dataSet.memberList = searchedUsers.map({
+                    SearchedUserInfo(
+                        memberId: $0.memberId ?? -1,
+                        name: $0.name,
+                        memberState: $0.memberState,
+                        //MARK: 여기 데이터 변환 과정 궁금
+                        instrumentList: $0.instrumentList,
+                        gender: $0.gender,
+                        age: $0.age)
+                })
+
+                self.searchResultTable.reloadData()
+            }
+        }
     }
 }

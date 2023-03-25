@@ -7,16 +7,21 @@
 
 import UIKit
 
-final class BasicBoxView: UIView {
+final class BasicBoxView: UIStackView {
 
-    private var text: String = ""
+    var text: String = ""
 
-    private lazy var basicLabel = BasicLabel(contentText: text, fontStyle: .content, textColorInfo: .gray02)
+    private lazy var basicLabel = {
+        $0.numberOfLines = 0
+        return $0
+    }(BasicLabel(contentText: text, fontStyle: .content, textColorInfo: .gray02))
 
     private let basicRightView: UIImageView = {
         $0.image = ImageLiteral.chevronRightSymbol
+        $0.constraint(.widthAnchor, constant: 16)
+        $0.constraint(.heightAnchor, constant: 16)
         $0.tintColor = .white
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         return $0
     }(UIImageView())
 
@@ -26,33 +31,48 @@ final class BasicBoxView: UIView {
         attribute()
         setupLayout()
     }
-    
+
     private func attribute() {
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 10
         self.backgroundColor = .dark02
         self.layer.borderColor = UIColor.white.cgColor
+        self.axis = .horizontal
         basicRightView.isHidden = true
     }
-    
+
     private func setupLayout() {
+
         self.constraint(.widthAnchor, constant: BasicComponentSize.width)
         self.constraint(.heightAnchor, constant: 55)
-        
-        addSubview(basicLabel)
-        basicLabel.constraint(leading: self.leadingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0))
-        
-        addSubview(basicRightView)
-        basicRightView.constraint(.widthAnchor, constant: 15)
-        basicRightView.constraint(.heightAnchor, constant: 15)
-        basicRightView.constraint(trailing: self.trailingAnchor, centerY: self.centerYAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+        self.isLayoutMarginsRelativeArrangement = true
+        self.layoutMargins = UIEdgeInsets(top: 0, left: 20.0, bottom: 0, right: 20)
+        self.addArrangedSubview(basicLabel)
+        self.addArrangedSubview(basicRightView)
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func showRightView() {
         basicRightView.isHidden = false
+    }
+
+    func hideRightView() {
+        basicRightView.isHidden = true
+    }
+
+    func configureText(with text: String) {
+        self.basicLabel.text = text
+    }
+
+    func setTextColor(with color: UIColor) {
+        self.basicLabel.textColor = color
+    }
+
+    func inputText() -> String {
+        guard let text = basicLabel.text else { return "" }
+        return text
     }
 }

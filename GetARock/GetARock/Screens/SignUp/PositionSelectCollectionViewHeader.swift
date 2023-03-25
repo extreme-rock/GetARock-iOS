@@ -9,9 +9,16 @@ import UIKit
 
 final class PositionSelectCollectionViewHeader: UIView {
     
+    //MARK: - Property
+    
+    enum ViewType {
+        case withPageIndicator
+        case withoutPageIndicator
+    }
+    
     //MARK: - View
     
-    private let pageIndicatorLabel: UILabel = {
+    private lazy var pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.subTitle)
         $0.text = "1/2"
         $0.textColor = .gray02
@@ -49,10 +56,15 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     //MARK: - Life Cycle
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupLayout()
+    init(viewType: ViewType) {
+        super.init(frame: .zero)
         addObserveHideDeselectAllPositionButton()
+        switch viewType {
+        case .withPageIndicator:
+            self.setupLayout()
+        case .withoutPageIndicator:
+            self.setupLayoutWithoutPageIndicator()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -70,7 +82,7 @@ final class PositionSelectCollectionViewHeader: UIView {
         pageIndicatorLabel.constraint(top: self.topAnchor,
                                       leading: self.leadingAnchor,
                                       trailing: self.trailingAnchor,
-                                      padding: UIEdgeInsets(top: 20, left: 1, bottom: 0, right: 0))
+                                      padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
         
         self.addSubview(titleLabel)
         titleLabel.constraint(top: pageIndicatorLabel.bottomAnchor,
@@ -95,6 +107,26 @@ final class PositionSelectCollectionViewHeader: UIView {
 //MARK: Notification 관련
 
 extension PositionSelectCollectionViewHeader {
+    
+    private func setupLayoutWithoutPageIndicator() {
+        self.addSubview(titleLabel)
+        titleLabel.constraint(top: self.topAnchor,
+                              leading: self.leadingAnchor,
+                              trailing: self.trailingAnchor,
+                              padding: UIEdgeInsets(top: 6, left: 0, bottom: 0, right: 0))
+        
+        self.addSubview(subTitleLabel)
+        subTitleLabel.constraint(top: titleLabel.bottomAnchor,
+                                 leading: self.leadingAnchor,
+                                 trailing: self.trailingAnchor,
+                                 padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+        
+        self.addSubview(deselectAllPositionButton)
+        deselectAllPositionButton.constraint(top: subTitleLabel.bottomAnchor,
+                                             bottom: self.bottomAnchor,
+                                             trailing: self.trailingAnchor,
+                                             padding: UIEdgeInsets(top: 15, left: 0, bottom: 11, right: 0))
+    }
     
     private func postDeselectAllPosition() {
         NotificationCenter.default.post(

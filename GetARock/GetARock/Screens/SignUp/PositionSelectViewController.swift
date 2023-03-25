@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PositionSelectViewController: UIViewController {
+final class PositionSelectViewController: BaseViewController {
     
     private var positions: [Item] = [
         .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
@@ -22,15 +22,14 @@ final class PositionSelectViewController: UIViewController {
         cellType: .position,
         items: positions,
         isNeedHeader: true,
-        headerView: PositionSelectCollectionViewHeader()
+        headerView: PositionSelectCollectionViewHeader(viewType: .withPageIndicator)
     )
     
     private lazy var nextButton: BottomButton = {
         $0.setTitle("다음", for: .normal)
         $0.isEnabled = false
-        let action = UIAction { [weak self] _ in
-            let viewController = UserInfoInputViewController()
-            self?.navigationController?.pushViewController(viewController, animated: true)
+        let action = UIAction { _ in
+            self.showUserInfoInputViewController()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -42,6 +41,10 @@ final class PositionSelectViewController: UIViewController {
         attribute()
         configureDelegate()
         addAllObserver()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -64,12 +67,18 @@ final class PositionSelectViewController: UIViewController {
                                           leading: view.leadingAnchor,
                                           bottom: nextButton.topAnchor,
                                           trailing: view.trailingAnchor,
-                                          padding: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+                                          padding: UIEdgeInsets(top: 0, left: 16, bottom: 10, right: 16))
         
         
         nextButton.constraint(bottom: view.bottomAnchor,
                               centerX: view.centerXAnchor,
                               padding: UIEdgeInsets(top: 0, left: 0, bottom: 42, right: 0))
+    }
+    
+    private func showUserInfoInputViewController() {
+        let selectedInstrument = self.positionCollectionView.getSelectedInstruments()
+        let viewController = UserInfoInputViewController(instrumentList: selectedInstrument)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

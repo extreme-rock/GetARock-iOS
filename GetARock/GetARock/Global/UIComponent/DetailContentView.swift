@@ -11,16 +11,16 @@ final class DetailContentView: UIView {
     
     // MARK: - Property
     
-    enum DetailTopInfoType {
+    enum DetailInfoType {
         case band
         case event
         case myPage
     }
     
     private lazy var segmentTitle: [String] = {
-        switch detailTopInfoType {
+        switch detailInfoType {
         case .band:
-            return ["밴드상세", "타임라인", "방명록"]
+            return ["밴드상세", "방명록"]
         case .event:
             return ["모여락상세", "댓글"]
         case .myPage:
@@ -28,7 +28,7 @@ final class DetailContentView: UIView {
         }
     }()
     
-    private var detailTopInfoType : DetailTopInfoType
+    private var detailInfoType : DetailInfoType
     
     private var currentPage: Int = 0 {
         didSet {
@@ -41,6 +41,8 @@ final class DetailContentView: UIView {
             )
         }
     }
+    
+    private var bandData: BandInformationVO
     
     // MARK: - View
     
@@ -62,8 +64,9 @@ final class DetailContentView: UIView {
     
     // MARK: - Init
     
-    init(type: DetailTopInfoType) {
-        self.detailTopInfoType = type
+    init(detailInfoType: DetailInfoType, bandData: BandInformationVO ) {
+        self.detailInfoType = detailInfoType
+        self.bandData = bandData
         super.init(frame: .zero)
         setupLayout()
         attribute()
@@ -101,29 +104,44 @@ final class DetailContentView: UIView {
     }
     
     private func setDetailViewController() {
-        switch detailTopInfoType {
+        switch detailInfoType {
+            
         case .band:
-            
-            // TODO: 임시 View들입니다. 추후 변경 예정
-            let vc1: UIViewController = {
-                $0.view.backgroundColor = .red
+            let bandInfoVC: UIViewController = {
+                let bandInfo = BandInformationView(
+                    member: bandData.memberList,
+                    song: bandData.songList,
+                    intro: bandData.introduction,
+                    sns: bandData.snsList,
+                    age: bandData.age
+                )
+                $0.view.addSubview(bandInfo)
+                bandInfo.constraint(
+                    top: $0.view.topAnchor,
+                    leading: $0.view.leadingAnchor,
+                    bottom: $0.view.bottomAnchor,
+                    trailing: $0.view.trailingAnchor
+                )
                 return $0
             }(UIViewController())
             
-            let vc2: UIViewController = {
-                $0.view.backgroundColor = .orange
+            // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
+
+            let bandCommentListVC: UIViewController = {
+                let bandCommentList = CommentListView(data: bandData.commentList)
+                $0.view.addSubview(bandCommentList)
+                bandCommentList.constraint(
+                    top: $0.view.topAnchor,
+                    leading: $0.view.leadingAnchor,
+                    bottom: $0.view.bottomAnchor,
+                    trailing: $0.view.trailingAnchor
+                )
                 return $0
             }(UIViewController())
             
-            let vc3: UIViewController = {
-                $0.view.backgroundColor = .yellow
-                return $0
-            }(UIViewController())
-            
-            detailContentViewControllers = [vc1, vc2, vc3]
+            detailContentViewControllers = [bandInfoVC, bandCommentListVC]
             
         case .event:
-            
             // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
                 $0.view.backgroundColor = .green
@@ -138,7 +156,6 @@ final class DetailContentView: UIView {
             detailContentViewControllers = [vc1, vc2]
             
         case .myPage:
-            
             // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
                 $0.view.backgroundColor = .purple

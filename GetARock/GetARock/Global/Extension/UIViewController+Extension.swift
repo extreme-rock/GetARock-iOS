@@ -49,3 +49,4 @@ extension UIViewController {
         navigationBar.scrollEdgeAppearance?.titleTextAttributes = [NSAttributedString.Key.foregroundColor : color]
     }
 }
+
