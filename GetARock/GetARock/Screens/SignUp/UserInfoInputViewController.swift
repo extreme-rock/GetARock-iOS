@@ -281,10 +281,12 @@ final class UserInfoInputViewController: UIViewController {
                         introduction: self.userIntroTextView.inputText(),
                         instrumentList: instrumentList,
                         snsList: snsList)
+        Task {
+            try await SignUpNetworkManager.shared.postUserInformation(user: user)
+        }
         
-        let viewcontroller = MainMapViewController(isFromSignUp: true)
-        self.view.window?.rootViewController = MainMapViewController(isFromSignUp: true)
-//        self.navigationController?.pushViewController(viewcontroller, animated: true)
+        let viewcontroller = SetAuthorizationViewController()
+        self.navigationController?.pushViewController(viewcontroller, animated: true)
     }
 }
 
