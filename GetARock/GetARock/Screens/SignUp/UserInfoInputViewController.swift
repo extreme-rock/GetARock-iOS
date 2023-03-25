@@ -158,10 +158,15 @@ final class UserInfoInputViewController: BaseViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let nextButton: BottomButton = {
+    private lazy var nextButton: BottomButton = {
         //TODO: 밴드 정보 POST action 추가 필요
         $0.setTitle("다음", for: .normal)
         $0.isEnabled = false
+        let action = UIAction { [weak self] _ in
+            let viewController = SetAuthorizationViewController()
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
