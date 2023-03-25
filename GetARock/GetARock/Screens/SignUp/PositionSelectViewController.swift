@@ -27,6 +27,7 @@ final class PositionSelectViewController: UIViewController {
     
     private lazy var nextButton: BottomButton = {
         $0.setTitle("다음", for: .normal)
+        $0.isEnabled = false
         let action = UIAction { [weak self] _ in
             let viewController = UserInfoInputViewController()
             self?.navigationController?.pushViewController(viewController, animated: true)
@@ -79,6 +80,7 @@ extension PositionSelectViewController {
         addObserveShowPositionPlusModal()
         addObserveDelePositionCell()
         addObserveDeselectAllPosition()
+        addObserveToggleNextButtonEnabled()
     }
     
     private func addObserveDeselectAllPosition() {
@@ -129,6 +131,19 @@ extension PositionSelectViewController {
         for index in startIndex..<endIndex {
             positionCollectionView.updateCellIndex(at: IndexPath(item: index, section: 0))
         }
+    }
+    
+    private func addObserveToggleNextButtonEnabled() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(toggleNextButtonEnabled),
+            name: Notification.Name.toggleNextButtonEnbaled,
+            object: nil)
+    }
+    
+    @objc
+    private func toggleNextButtonEnabled() {
+        self.nextButton.isEnabled.toggle()
     }
 }
 

@@ -12,4 +12,5 @@ extension Notification.Name {
     static let showPositionPlusModal = Notification.Name("showPositionPlusModal")
     static let deselectAllPosition = Notification.Name("deselectAllPosition")
     static let hideDeselectAllPositionButton = Notification.Name("hideDeselectAllPositionButton")
+    static let toggleNextButtonEnbaled = Notification.Name("toggleNextButtonEnbaled")
 }
