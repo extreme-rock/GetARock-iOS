@@ -52,6 +52,7 @@
 		7B287CF729B7655B00439254 /* MypageTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF629B7655B00439254 /* MypageTopInfoView.swift */; };
 		7B287CFA29B76A8E00439254 /* UserInformationVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF929B76A8E00439254 /* UserInformationVO.swift */; };
 		7B287CFC29B7785300439254 /* UserInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CFB29B7785300439254 /* UserInformationView.swift */; };
+		7B36825029D02043004D8EBF /* Reportable+protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B36824F29D02043004D8EBF /* Reportable+protocol.swift */; };
 		7B3711D029A4F07500CC2F69 /* EventDataVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */; };
 		7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */; };
 		7B56DC3E29A36F2F00672EDD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */; };
@@ -213,6 +214,7 @@
 		7B287CF629B7655B00439254 /* MypageTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTopInfoView.swift; sourceTree = "<group>"; };
 		7B287CF929B76A8E00439254 /* UserInformationVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationVO.swift; sourceTree = "<group>"; };
 		7B287CFB29B7785300439254 /* UserInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationView.swift; sourceTree = "<group>"; };
+		7B36824F29D02043004D8EBF /* Reportable+protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reportable+protocol.swift"; sourceTree = "<group>"; };
 		7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDataVO.swift; sourceTree = "<group>"; };
 		7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandTopInfoView.swift; sourceTree = "<group>"; };
 		7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */,
 				9ABDA8CF29B0C19800DE710D /* BandCreationFinishGuideViewController.swift */,
 				7B200E3429B03D1F00E3A75F /* PaddingLabel.swift */,
+				7B36824F29D02043004D8EBF /* Reportable+protocol.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				A96F3688299E2EE100376620 /* UserSearchTableViewCell.swift in Sources */,
 				4AC4CE4B2980B41400BB823C /* DefaultButton.swift in Sources */,
 				B887184A29AC5379000026ED /* DeviceTokenDTO.swift in Sources */,
+				7B36825029D02043004D8EBF /* Reportable+protocol.swift in Sources */,
 				4AC4CE43297FB8AD00BB823C /* BandMember.swift in Sources */,
 				A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */,
 				4A18E49629B9BACC00617524 /* BandListMenuTableViewCell.swift in Sources */,
