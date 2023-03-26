@@ -7,11 +7,23 @@
 
 import UIKit
 
-// MARK: - UITableViewCell
+// MARK: - NotifyTapMoreButtonDelegate
+
+protocol NotifyTapMoreButtonDelegate: AnyObject {
+    func notifyTapMoreButton(cell: UITableViewCell, commentData: CommentList?)
+}
+
+// MARK: - class UITableViewCell
 
 final class CommentTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
+    
+    weak var delegate: NotifyTapMoreButtonDelegate?
     private var cellIndex: Int = 0
+    private var commentID: Int = 0
+    private var memberName = ""
+    private var commentData: CommentList? = nil
     
     // MARK: - View
     
@@ -24,6 +36,7 @@ final class CommentTableViewCell: UITableViewCell {
     private let moreButton: UIButton = {
         $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         $0.tintColor = .white
+        $0.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -81,11 +94,18 @@ final class CommentTableViewCell: UITableViewCell {
     
     func configure(data: CommentList?, index: Int) {
         guard let comment = data else { return }
+        self.commentData = comment
         self.cellIndex = index
         self.bandNameLabel.text = comment.memberName
         self.commentTextLabel.text = comment.comment
         self.commentDateLabel.text = comment.createdDate
     }
+    
+    @objc func showActionSheet() {
+        self.delegate?.notifyTapMoreButton(cell: self, commentData: self.commentData)
+        print("버튼눌림")
+    }
+    
 }
 
 // MARK: - UITableViewHeaderFooterView
