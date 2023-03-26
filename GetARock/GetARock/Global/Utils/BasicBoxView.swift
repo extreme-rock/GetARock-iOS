@@ -9,7 +9,7 @@ import UIKit
 
 final class BasicBoxView: UIStackView {
 
-    private var text: String = ""
+    var text: String = ""
 
     private lazy var basicLabel = {
         $0.numberOfLines = 0
@@ -69,5 +69,10 @@ final class BasicBoxView: UIStackView {
 
     func setTextColor(with color: UIColor) {
         self.basicLabel.textColor = color
+    }
+
+    func inputText() -> String {
+        guard let text = basicLabel.text else { return "" }
+        return text
     }
 }

@@ -220,8 +220,16 @@ extension AddPracticeSongViewController {
     
     @objc
     func didTapCompleteButton() {
+        var songListData: [SongList] = []
         let addedSongs: [PracticeSongCardView] = contentView.arrangedSubviews.compactMap { $0 as? PracticeSongCardView }
+
+        for songData in addedSongs {
+            songListData.append(SongList(name: songData.songName(), artist: songData.artistName(), link: songData.linkText()))
+        }
+
+        BasicDataModel.bandCreationData.songList = songListData
         completion(addedSongs)
+
         self.navigationController?.popViewController(animated: true)
     }
     

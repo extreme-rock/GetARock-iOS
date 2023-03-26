@@ -22,6 +22,8 @@ final class BandMemberModifyViewController: UIViewController {
             setAbandonButtonState()
         }
     }
+
+    private let bandData: BandInformationVO
     
     private lazy var addedMembers: [SearchedUserInfo] = transformVOData().filter { $0.memberState != .inviting }
     
@@ -39,13 +41,13 @@ final class BandMemberModifyViewController: UIViewController {
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
         let action = UIAction { [weak self] _ in
-            self?.setNavigationAttribute(navigationRoot: self?.rootViewController ?? UIViewController())
+            self?.setNavigationForMemberInviting(navigationRoot: self?.rootViewController ?? UIViewController())
         }
         button.addAction(action, for: .touchUpInside)
         return button
     }()
     
-    let inviteUnRegisteredMemberButton: DefaultButton = {
+    private lazy var inviteUnRegisteredMemberButton: DefaultButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = ImageLiteral.plusSymbol
         configuration.title = "미가입 회원 추가"
@@ -54,6 +56,10 @@ final class BandMemberModifyViewController: UIViewController {
         let button = DefaultButton(configuration: configuration)
         button.tintColor = .white
         button.constraint(.heightAnchor, constant: 55)
+        let action = UIAction { [weak self] _ in
+            self?.setNavigationForUnRegisteredMember(navigationRoot: self?.rootViewController ?? UIViewController())
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -152,8 +158,9 @@ final class BandMemberModifyViewController: UIViewController {
     
     //MARK: - Life Cycle
     
-    init(navigateDelegate: UIViewController) {
+    init(navigateDelegate: UIViewController, bandData: BandInformationVO) {
         self.rootViewController = navigateDelegate
+        self.bandData = bandData
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -233,7 +240,7 @@ extension BandMemberModifyViewController {
     private func transformVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
         //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
-        for data in BasicDataModel.dummyBandInfo.memberList {
+        for data in self.bandData.memberList {
             let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
                 SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
             }
@@ -242,6 +249,7 @@ extension BandMemberModifyViewController {
                 name: data.name,
                 memberState: data.memberState,
                 instrumentList: instrumentListInfo,
+                //MARK: 성별, 나이 정보가 memberList에 없음
                 gender: "남",
                 age: "20대")
             
@@ -263,11 +271,33 @@ extension BandMemberModifyViewController {
         resultList += invitingMembers
         return resultList
     }
+    
+    func confirmModifiedMembers() {
+        let addedMembers = addedMembers.map { MemberList(
+            memberId: $0.memberId,
+            name: $0.name,
+            memberState: $0.memberState,
+            instrumentList: $0.instrumentList
+                .map({ searchedInstrument in
+                    InstrumentList(name: searchedInstrument.name)})
+        )}
+        
+        let invitingMembers = invitingMembers.map { MemberList(
+            memberId: $0.memberId,
+            name: $0.name,
+            memberState: $0.memberState,
+            instrumentList: $0.instrumentList
+                .map({ searchedInstrument in
+                    InstrumentList(name: searchedInstrument.name)})
+        )}
+        
+        BasicDataModel.bandCreationData.memberList = addedMembers + invitingMembers
+    }
 }
 
 extension BandMemberModifyViewController {
     
-    private func setNavigationAttribute(navigationRoot: UIViewController) {
+    private func setNavigationForMemberInviting(navigationRoot: UIViewController) {
         let nextViewController = UserSearchViewController()
         // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
         nextViewController.completion = { selectedUsers in
@@ -281,10 +311,29 @@ extension BandMemberModifyViewController {
                     self.invitingMemberVstack.addArrangedSubview(newInvitingMember)
                 }
             }
-            self.invitingMemberSectionTitle.text = "초대중인 멤버"
         }
         navigationRoot.navigationController?.pushViewController(nextViewController, animated: true)
     }
+    
+    private func setNavigationForUnRegisteredMember(navigationRoot: UIViewController) {
+        let nextViewController = AddUnRegisteredMemberViewController()
+        // 유저 검색 VC에서 초대할 멤버를 전달받는 로직
+        nextViewController.completion = { selectedUsers in
+            for data in selectedUsers {
+                var selectedUserData = data
+                selectedUserData.memberState = .annonymous
+                if self.addedMembers.contains(where: { $0.id == selectedUserData.id }) == false {
+                    self.addedMembers.append(selectedUserData)
+                    let newInvitingMember = BandMemberModifyCell()
+                    newInvitingMember.configure(data: selectedUserData)
+                    self.bandMemberVstack.addArrangedSubview(newInvitingMember)
+                }
+            }
+        }
+        navigationRoot.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+    
+    
     
     private func showAlertForChangingLeader(newLeader: String, completion: @escaping ()->Void ) {
         //TODO: 밴드 데이터 바탕으로 업데이트 해야함
@@ -307,6 +356,12 @@ extension BandMemberModifyViewController {
         newLeader.getLeaderPositionState()
         previousLeader.abandonLeaderPositionState()
         leaderCellId = newLeader.id
+        
+        let previousLeaderIndex = self.addedMembers.firstIndex { $0.name == previousLeader.nameText() }!
+        self.addedMembers[previousLeaderIndex].memberState = .member
+        
+        let newLeaderIndex = self.addedMembers.firstIndex { $0.name == newLeader.nameText() }!
+        self.addedMembers[newLeaderIndex].memberState = .admin
     }
 }
 

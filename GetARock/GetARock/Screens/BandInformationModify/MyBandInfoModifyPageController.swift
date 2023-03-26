@@ -10,9 +10,16 @@ import UIKit
 final class MyBandInfoModifyPageController: UIViewController {
 
     //MARK: - Property
+
+    private var bandInfo: BandInformationVO
+
+    private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self, bandData: bandInfo)
+    
+    private lazy var bandInfoModifyViewController = BandInfoModifyViewController(bandData: bandInfo)
+    
     private lazy var pageViewControllers: [UIViewController] = [
-        BandMemberModifyViewController(navigateDelegate: self),
-        BandInfoModifyViewController()
+        bandMemberModifyViewController,
+        bandInfoModifyViewController
         ]
 
     private var currentPageNumber: Int = 0 {
@@ -47,7 +54,14 @@ final class MyBandInfoModifyPageController: UIViewController {
         $0.setTitleColor(.blue01, for: .normal)
         $0.titleLabel?.font = .setFont(.headline04)
         let action = UIAction { [weak self] _ in
-            self?.completeButtonTapped()
+            Task {
+                // MARK: 수정된 정보 확정
+                self?.bandMemberModifyViewController.confirmModifiedMembers()
+                self?.bandInfoModifyViewController.confirmModifiedBandInformation()
+                // MARK: Band 생성과 수정의 모델이 같아서 creation을 그대로 사용함
+                try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandCreationData)
+            }
+            self?.showAlertForEditComplete()
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setContentHuggingPriority(
@@ -92,6 +106,15 @@ final class MyBandInfoModifyPageController: UIViewController {
         setupLayout()
     }
 
+    init(bandData: BandInformationVO) {
+        self.bandInfo = bandData
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     //MARK: - Method
 
     private func attribute() {
@@ -107,10 +130,6 @@ final class MyBandInfoModifyPageController: UIViewController {
 
     private func dismissButtonTapped() {
         self.dismiss(animated: true)
-    }
-
-    private func completeButtonTapped() {
-        //TODO: 개인정보 UPDATE 함수
     }
 
     private func setupLayout() {
@@ -175,3 +194,16 @@ final class MyBandInfoModifyPageController: UIViewController {
      }
  }
 
+extension MyBandInfoModifyPageController {
+    private func showAlertForEditComplete() {
+        //TODO: 밴드 데이터 바탕으로 업데이트 해야함
+        let alertTitle = "밴드 정보 편집 완료"
+        let alertMessage = "새롭게 입력해주신 정보로 밴드 정보가 편집되었어요!"
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        
+        let okayActionTitle = "확인"
+        
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        present(alertController, animated: true)
+    }
+}
