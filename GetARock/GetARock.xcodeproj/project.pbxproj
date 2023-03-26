@@ -53,6 +53,7 @@
 		7B287CFA29B76A8E00439254 /* UserInformationVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF929B76A8E00439254 /* UserInformationVO.swift */; };
 		7B287CFC29B7785300439254 /* UserInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CFB29B7785300439254 /* UserInformationView.swift */; };
 		7B36825029D02043004D8EBF /* Reportable+protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B36824F29D02043004D8EBF /* Reportable+protocol.swift */; };
+		7B36825229D023AA004D8EBF /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B36825129D023AA004D8EBF /* CommentListViewController.swift */; };
 		7B3711D029A4F07500CC2F69 /* EventDataVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */; };
 		7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */; };
 		7B56DC3E29A36F2F00672EDD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */; };
@@ -215,6 +216,7 @@
 		7B287CF929B76A8E00439254 /* UserInformationVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationVO.swift; sourceTree = "<group>"; };
 		7B287CFB29B7785300439254 /* UserInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationView.swift; sourceTree = "<group>"; };
 		7B36824F29D02043004D8EBF /* Reportable+protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reportable+protocol.swift"; sourceTree = "<group>"; };
+		7B36825129D023AA004D8EBF /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
 		7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDataVO.swift; sourceTree = "<group>"; };
 		7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandTopInfoView.swift; sourceTree = "<group>"; };
 		7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */,
 				4A18E49329B9A53F00617524 /* BandListMenuTableView.swift */,
 				4A18E49529B9BACC00617524 /* BandListMenuTableViewCell.swift */,
+				7B36825129D023AA004D8EBF /* CommentListViewController.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1125,6 +1128,7 @@
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
 				7B7598AD29893A1E00FA6B78 /* SNSButtonView.swift in Sources */,
 				7BEB09D8299CF12E0076A82F /* CommentTableViewCell.swift in Sources */,
+				7B36825229D023AA004D8EBF /* CommentListViewController.swift in Sources */,
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
 				4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */,
 				9AA0BB5129A4E81700871A05 /* NotificationListVO.swift in Sources */,
