@@ -77,7 +77,7 @@ final class BandDetailViewController: BaseViewController {
             setupLayout()
         }
         configureDelegate()
-        setSNSNotification()
+        setNotification()
     }
     
     // MARK: - Init
@@ -119,23 +119,32 @@ final class BandDetailViewController: BaseViewController {
         view.addSubview(bandSelectMenuView)
     }
     
-    private func setSNSNotification() {
+    private func setNotification() {
         NotificationCenter.default.addObserver(self,
-            selector: #selector(presentSNSViewController(_:)),
-            name: Notification.Name.presentSNSSafariViewController,
-            object: nil)
+                                               selector: #selector(presentSNSViewController(_:)),
+                                               name: Notification.Name.presentSNSSafariViewController,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentSongViewController(_:)),
+                                               name: Notification.Name.presentSongSafariViewController,
+                                               object: nil)
     }
     
     @objc private func presentSNSViewController(_ notification: Notification) {
-        print(notification.userInfo)
-        print("버튼눌림")
         guard let snsURL = notification.userInfo?["snsURL"] as? String else { return }
         guard let url = URL(string: snsURL) else { return }
         let snsSafariViewController = SFSafariViewController(url: url)
         self.present(snsSafariViewController, animated: true)
     }
+    
+    @objc private func presentSongViewController(_ notification: Notification) {
+        guard let songURL = notification.userInfo?["songURL"] as? String else { return }
+        guard let url = URL(string: songURL) else { return }
+        let vc = SFSafariViewController(url: url)
+        self.present(vc, animated: true)
+    }
 }
-
 
 // MARK: - Get BandData
 
@@ -176,7 +185,6 @@ extension BandDetailViewController: BandListMenuTableViewDelegate {
             self.removeBandSelectMenu()
         }
     }
-    
 }
 
 //MARK: BandSelectMenu관련 Method
@@ -240,3 +248,4 @@ extension BandDetailViewController {
                        animations: animations)
     }
 }
+

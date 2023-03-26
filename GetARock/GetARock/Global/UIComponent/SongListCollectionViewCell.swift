@@ -79,7 +79,6 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     private lazy var songLabelStackView: UIStackView = {
         $0.axis = .vertical
         $0.spacing = 3
-        $0.distribution = .fill
         return $0
     }(UIStackView(arrangedSubviews: [songTitleLabel,artistLabel]))
     
@@ -107,7 +106,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     // MARK: - Life Cycle
     
     override func prepareForReuse() {
@@ -132,6 +131,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         self.songStackView.addArrangedSubview(linkButton)
     }
     
+    
     func addDeleteAction() {
         let action = UIAction { _ in
             self.delegate?.deleteSongList(index: self.cellIndex)
@@ -139,12 +139,13 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         self.deleteButton.addAction(action, for: .touchUpInside)
     }
     
-    func configure(data: SongListVO?, songListType: SongListType, index: Int) {
+    func configure(data: Song?, songListType: SongListType, index: Int) {
         
         guard let song = data else { return }
         
         self.cellIndex = index
-        self.songTitleLabel.text = song.name
+        
+        self.songTitleLabel.text = song.title
         self.artistLabel.text = song.artist
         
         switch songListType {
