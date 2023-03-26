@@ -199,9 +199,7 @@ extension CommentListView: UITableViewDataSource {
 extension CommentListView: NotifyTapMoreButtonDelegate {
     func notifyTapMoreButton(cell: UITableViewCell, commentData: CommentList?) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        print(indexPath)
         let commentData = commentData
-        print(commentData)
         self.delegate?.checkCellIndex(indexPath: indexPath, commentData: commentData)
     }
 }

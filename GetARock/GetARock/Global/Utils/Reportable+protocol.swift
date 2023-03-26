@@ -55,7 +55,6 @@ extension AlertSheet {
             } else {
                 self.alertReportButtonPressed()
             }
-            
         }
         
         alertSheet.addAction(cancel)

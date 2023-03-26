@@ -103,9 +103,7 @@ final class CommentTableViewCell: UITableViewCell {
     
     @objc func showActionSheet() {
         self.delegate?.notifyTapMoreButton(cell: self, commentData: self.commentData)
-        print("버튼눌림")
     }
-    
 }
 
 // MARK: - UITableViewHeaderFooterView

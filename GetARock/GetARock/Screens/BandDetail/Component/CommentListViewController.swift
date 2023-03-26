@@ -25,7 +25,6 @@ class CommentListViewController: UIViewController {
     
     init(commentData: [CommentList]?) {
         self.commentData = commentData
-        print(commentData)
         super.init(nibName: nil, bundle: nil)
         }
         
@@ -58,15 +57,6 @@ class CommentListViewController: UIViewController {
         
     }
     
-//    private func setCommentListLoadObserver() {
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(loadList),
-//            name: NSNotification.Name.loadBandData,
-//            object: nil
-//        )
-//    }
-    
 }
 
 // MARK: - extension CheckCellIndexDelegate, Reportable
@@ -75,8 +65,7 @@ extension CommentListViewController: CheckCellIndexDelegate, Reportable {
     func checkCellIndex(indexPath: IndexPath, commentData: CommentList?) {
         cellIndex = indexPath
         self.selectedcommentID = commentData
-        print("\(cellIndex)번 눌림")
-        print("\(commentID)댓글아이디값")
+
         //TODO: 댓글의 멤버 ID와 로그인한 유저의 ID가 일치하면 삭제가능하도록 수정
         if selectedcommentID?.memberName == "노엘" {
             showActionSheet(isWriter: true)
@@ -85,22 +74,7 @@ extension CommentListViewController: CheckCellIndexDelegate, Reportable {
         }
     }
     
-    
-    
-//    func checkCellIndex(indexPath: IndexPath, commentID: Int) {
-//        cellIndex = indexPath
-//        self.commentID = commentID
-//        print("\(cellIndex)번 눌림")
-//        print("\(commentID)댓글아이디값")
-//        //TODO: 댓글의 멤버 ID와 로그인한 유저의 ID가 일치하면 삭제가능하게
-//        showActionSheet(isWriter: false)
-//    }
-    
-
-    // TODO: - 테이블뷰 리로드..
     func alertDeleteButtonPressed() {
-        print("삭제 선택")
-        print(commentID)
         deleteCommentID()
     }
     

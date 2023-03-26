@@ -131,7 +131,6 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         self.songStackView.addArrangedSubview(linkButton)
     }
     
-    
     func addDeleteAction() {
         let action = UIAction { _ in
             self.delegate?.deleteSongList(index: self.cellIndex)

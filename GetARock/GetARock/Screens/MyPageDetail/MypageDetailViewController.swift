@@ -78,8 +78,6 @@ final class MypageDetailViewController: UIViewController {
     }
     
     @objc private func presentSNSViewController(_ notification: Notification) {
-        print(notification.userInfo)
-        print("버튼눌림")
         guard let snsURL = notification.userInfo?["snsURL"] as? String else { return }
         guard let url = URL(string: snsURL) else { return }
         let snsSafariViewController = SFSafariViewController(url: url)
