@@ -5,6 +5,7 @@
 //  Created by Yu ahyeon on 2023/03/07.
 //
 
+import SafariServices
 import UIKit
 
 final class MypageDetailViewController: UIViewController {
@@ -13,18 +14,18 @@ final class MypageDetailViewController: UIViewController {
     
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
     private var userID = "329"
-        private var userData = UserInformationVO(
-            userID: 0,
-            name: "",
-            age: "",
-            gender: "",
-            introduction: nil,
-            bandList: nil,
-            instrumentList: [],
-            snsList: nil,
-            eventList: nil,
-            commentEventList: nil)
-
+    private var userData = UserInformationVO(
+        userID: 0,
+        name: "",
+        age: "",
+        gender: "",
+        introduction: nil,
+        bandList: nil,
+        instrumentList: [],
+        snsList: nil,
+        eventList: nil,
+        commentEventList: nil)
+    
     // MARK: - View
     
     private lazy var mypageTopInfoView = MypageTopInfoView(
@@ -43,7 +44,12 @@ final class MypageDetailViewController: UIViewController {
         Task {
             await fetchUserData()
             setupLayout()
+            setSNSNotification()
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Method
@@ -62,6 +68,22 @@ final class MypageDetailViewController: UIViewController {
             bottom: self.view.bottomAnchor,
             trailing: self.view.trailingAnchor
         )
+    }
+    
+    private func setSNSNotification() {
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(presentSNSViewController(_:)),
+            name: Notification.Name.presentSNSSafariViewController,
+            object: nil)
+    }
+    
+    @objc private func presentSNSViewController(_ notification: Notification) {
+        print(notification.userInfo)
+        print("버튼눌림")
+        guard let snsURL = notification.userInfo?["snsURL"] as? String else { return }
+        guard let url = URL(string: snsURL) else { return }
+        let snsSafariViewController = SFSafariViewController(url: url)
+        self.present(snsSafariViewController, animated: true)
     }
 }
 

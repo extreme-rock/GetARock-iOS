@@ -5,6 +5,7 @@
 //  Created by Yu ahyeon on 2023/02/13.
 //
 
+import SafariServices
 import UIKit
 
 struct BandList {
@@ -76,6 +77,7 @@ final class BandDetailViewController: BaseViewController {
             setupLayout()
         }
         configureDelegate()
+        setSNSNotification()
     }
     
     // MARK: - Init
@@ -88,7 +90,6 @@ final class BandDetailViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -116,6 +117,22 @@ final class BandDetailViewController: BaseViewController {
         )
         
         view.addSubview(bandSelectMenuView)
+    }
+    
+    private func setSNSNotification() {
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(presentSNSViewController(_:)),
+            name: Notification.Name.presentSNSSafariViewController,
+            object: nil)
+    }
+    
+    @objc private func presentSNSViewController(_ notification: Notification) {
+        print(notification.userInfo)
+        print("버튼눌림")
+        guard let snsURL = notification.userInfo?["snsURL"] as? String else { return }
+        guard let url = URL(string: snsURL) else { return }
+        let snsSafariViewController = SFSafariViewController(url: url)
+        self.present(snsSafariViewController, animated: true)
     }
 }
 

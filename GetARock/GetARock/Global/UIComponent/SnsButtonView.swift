@@ -29,14 +29,14 @@ final class SNSButtonView: UIView {
         
         var snsDefaultURL: String {
             switch self {
-            case .youtube: return "https://www.youtube.com/"
+            case .youtube: return "https://m.youtube.com/"
             case .instagram: return "https://www.instagram.com/"
             case .soundCloud: return "https://soundcloud.com/"
             }
         }
     }
     
-    private let tapGesture = UITapGestureRecognizer(
+    private lazy var tapGesture = UITapGestureRecognizer(
         target: self,
         action: #selector(moveSnsLink(_:))
     )
@@ -129,6 +129,7 @@ final class SNSButtonView: UIView {
             name: Notification.Name.presentSNSSafariViewController,
             object: nil,
             userInfo: ["snsURL": snsURL])
+        
     }
     
     func configureSNSAttribute(with snsURL: String?) {
