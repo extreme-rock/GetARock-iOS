@@ -13,7 +13,7 @@ final class MypageDetailViewController: UIViewController {
     // MARK: - Property
     
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
-    private var userID = "329"
+    private var userID = "1"
     private var userData = UserInformationVO(
         userID: 0,
         name: "",
@@ -44,7 +44,7 @@ final class MypageDetailViewController: UIViewController {
         Task {
             await fetchUserData()
             setupLayout()
-            setSNSNotification()
+            setNotification()
         }
     }
     
@@ -70,11 +70,16 @@ final class MypageDetailViewController: UIViewController {
         )
     }
     
-    private func setSNSNotification() {
+    private func setNotification() {
         NotificationCenter.default.addObserver(self,
-            selector: #selector(presentSNSViewController(_:)),
-            name: Notification.Name.presentSNSSafariViewController,
-            object: nil)
+                                               selector: #selector(presentSNSViewController(_:)),
+                                               name: Notification.Name.presentSNSSafariViewController,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentBandCreation(_:)),
+                                               name: NSNotification.Name.presentLeaderPositionSelectViewController,
+                                               object: nil)
     }
     
     @objc private func presentSNSViewController(_ notification: Notification) {
@@ -84,6 +89,11 @@ final class MypageDetailViewController: UIViewController {
         guard let url = URL(string: snsURL) else { return }
         let snsSafariViewController = SFSafariViewController(url: url)
         self.present(snsSafariViewController, animated: true)
+    }
+    
+    @objc private func presentBandCreation(_ notification: Notification) {
+        let bandCreationVC = LeaderPositionSelectViewController()
+        self.navigationController?.pushViewController(bandCreationVC, animated: true)
     }
 }
 
