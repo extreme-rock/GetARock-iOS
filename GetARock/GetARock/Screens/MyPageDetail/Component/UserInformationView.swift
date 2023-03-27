@@ -89,7 +89,6 @@ final class UserInformationView: UIView {
         $0.backgroundColor = .dark02
         $0.layer.borderColor = UIColor.gray02.cgColor
         $0.layer.borderWidth = 1
-        $0.numberOfLines = 0
         return $0
     }(PaddingLabel())
     
