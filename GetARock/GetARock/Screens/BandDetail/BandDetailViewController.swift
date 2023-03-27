@@ -66,6 +66,7 @@ final class BandDetailViewController: UIViewController {
         $0.delegate = self
         switch self.entryPoint {
         case .myBand:
+            $0.setupMoreButton()
             if self.myBands?.count ?? 0 > 1 {
                 $0.setupToggleButtonLayout()
             }
