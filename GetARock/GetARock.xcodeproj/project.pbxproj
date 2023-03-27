@@ -138,6 +138,7 @@
 		B8B17C522980B93300806899 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C512980B93300806899 /* Location.swift */; };
 		B8B17C542980B99900806899 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C532980B99900806899 /* Coordinate.swift */; };
 		B8B17C5D29823AC900806899 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C5C29823AC900806899 /* Event.swift */; };
+		B8D51C9D29D02A0500F927FC /* LoginVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9C29D02A0500F927FC /* LoginVO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -300,6 +301,7 @@
 		B8B17C512980B93300806899 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B8B17C532980B99900806899 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		B8B17C5C29823AC900806899 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B8D51C9C29D02A0500F927FC /* LoginVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,6 +389,7 @@
 			children = (
 				4AC4CE40297FB85B00BB823C /* Position.swift */,
 				4AC4CE42297FB8AD00BB823C /* BandMember.swift */,
+				B8D51C9C29D02A0500F927FC /* LoginVO.swift */,
 				B887184929AC5379000026ED /* DeviceTokenDTO.swift */,
 				4A4A6E9329A8F58B005CF076 /* User.swift */,
 			);
@@ -1050,6 +1053,7 @@
 				9ABDA8D029B0C19800DE710D /* BandCreationFinishGuideViewController.swift in Sources */,
 				9A53CFBD29C74923002F6E56 /* MyBandInfoModifyPageController.swift in Sources */,
 				B8B17C5D29823AC900806899 /* Event.swift in Sources */,
+				B8D51C9D29D02A0500F927FC /* LoginVO.swift in Sources */,
 				A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */,
 				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
 				4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */,
