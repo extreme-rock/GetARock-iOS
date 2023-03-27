@@ -102,7 +102,9 @@ final class MypageDetailViewController: BaseViewController {
     
     @objc private func presentBandCreation(_ notification: Notification) {
         let bandCreationVC = LeaderPositionSelectViewController()
-        self.navigationController?.pushViewController(bandCreationVC, animated: true)
+//        self.navigationController?.pushViewController(bandCreationVC, animated: true)
+        bandCreationVC.modalPresentationStyle = .fullScreen
+        self.present(bandCreationVC, animated: true)
     }
 }
 
