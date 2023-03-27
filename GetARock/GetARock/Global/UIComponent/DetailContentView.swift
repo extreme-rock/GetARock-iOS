@@ -158,7 +158,6 @@ final class DetailContentView: UIView {
         case .myPage:
             // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
-                $0.view.backgroundColor = .purple
                 return $0
             }(UIViewController())
             
