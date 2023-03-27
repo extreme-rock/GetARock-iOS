@@ -431,7 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */,
-				7B1F6D2529AF82FF00FC00D5 /* BandInfomationView.swift */,
+				7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */,
 				4A18E49329B9A53F00617524 /* BandListMenuTableView.swift */,
 				4A18E49529B9BACC00617524 /* BandListMenuTableViewCell.swift */,
 			);
