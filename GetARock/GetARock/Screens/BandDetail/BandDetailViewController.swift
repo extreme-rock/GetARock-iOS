@@ -15,7 +15,7 @@ struct BandList {
     var memberAge: String
 }
 
-final class BandDetailViewController: BaseViewController {
+final class BandDetailViewController: UIViewController {
     
     // MARK: - Property
     
@@ -24,7 +24,13 @@ final class BandDetailViewController: BaseViewController {
         static let height: CGFloat = 120
     }
     
-    private let myBands: [BandList]
+    enum EntryPoint {
+        case myBand
+        case otherBand
+    }
+    
+    private let myBands: [BandList]?
+    private let entryPoint: EntryPoint
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
     private var bandID = "25"
@@ -58,22 +64,28 @@ final class BandDetailViewController: BaseViewController {
     
     lazy var bandTopInfoView: BandTopInfoView = {
         $0.delegate = self
-        if self.myBands.count > 1 {
-            $0.setupToggleButtonLayout()
+        switch self.entryPoint {
+        case .myBand:
+            $0.setupMoreButton()
+            if self.myBands?.count ?? 0 > 1 {
+                $0.setupToggleButtonLayout()
+            }
+        case .otherBand:
+            break
         }
         return $0
     }(BandTopInfoView(name: bandData.name, address: bandData.address))
     
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     
-    private lazy var bandSelectMenuView = BandListMenuTableView(bandNames: self.myBands.map { $0.name })
+    private lazy var bandSelectMenuView = BandListMenuTableView(bandNames: self.myBands?.map { $0.name } ?? [])
     
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            await fetchBandData(with: self.myBands.first?.bandId)
+            await fetchBandData(with: self.myBands?.first?.bandId)
             setupLayout()
         }
         configureDelegate()
@@ -82,8 +94,9 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(myBands: [BandList]){
+    init(myBands: [BandList]?, entryPoint: EntryPoint) {
         self.myBands = myBands
+        self.entryPoint = entryPoint
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -116,7 +129,13 @@ final class BandDetailViewController: BaseViewController {
             trailing: self.view.trailingAnchor
         )
         
-        view.addSubview(bandSelectMenuView)
+        switch self.entryPoint {
+        case .myBand:
+            view.addSubview(bandSelectMenuView)
+        case .otherBand:
+            break
+        }
+        
     }
     
     private func setNotification() {
@@ -128,6 +147,11 @@ final class BandDetailViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(presentSongViewController(_:)),
                                                name: Notification.Name.presentSongSafariViewController,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentMypageDetailViewController(_:)),
+                                               name: NSNotification.Name.presentMypageDetailViewController,
                                                object: nil)
     }
     
@@ -143,6 +167,14 @@ final class BandDetailViewController: BaseViewController {
         guard let url = URL(string: songURL) else { return }
         let vc = SFSafariViewController(url: url)
         self.present(vc, animated: true)
+    }
+    
+    @objc private func presentMypageDetailViewController(_ notification: Notification) {
+        guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
+        let mypageVC = MypageDetailViewController(userID: memberID)
+//        self.navigationController?.pushViewController(mypageVC, animated: true)
+        mypageVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        self.present(mypageVC, animated: true)
     }
 }
 
@@ -178,7 +210,7 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
 extension BandDetailViewController: BandListMenuTableViewDelegate {
     func fetchSelectedBandInfo(indexPath: IndexPath) {
         Task {
-            await fetchBandData(with: self.myBands[indexPath.row].bandId)
+            await fetchBandData(with: self.myBands?[indexPath.row].bandId)
             NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
                                             object: nil,
                                             userInfo: ["bandInfo": self.bandData])

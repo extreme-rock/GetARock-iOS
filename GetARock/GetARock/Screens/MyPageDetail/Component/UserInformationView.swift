@@ -47,6 +47,9 @@ final class UserInformationView: UIView {
     //TODO: - 추후 본인의 계정에만 노출 되어야함
     private let addBandButton: UIButton = {
         let action = UIAction {_ in
+            NotificationCenter.default.post(name: NSNotification.Name.presentLeaderPositionSelectViewController,
+                                            object: nil,
+                                            userInfo: nil)
             print("밴드 추가 버튼 눌림!!")
         }
         $0.setImage(ImageLiteral.plusSymbol, for: .normal)
@@ -131,6 +134,10 @@ final class UserInformationView: UIView {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Method

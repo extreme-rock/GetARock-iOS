@@ -209,6 +209,7 @@ final class BandInformationView: UIView {
         let transformedMemberData = bandMember.map {
             Item.bandMember(
                 BandMember(
+                    memberID: $0.memberID ?? 0,
                     isUser: checkIsUserState(memberState: $0.memberState),
                     isLeader: checkIsLeaderState(memberState: $0.memberState),
                     userName: $0.name,
@@ -265,6 +266,7 @@ final class BandInformationView: UIView {
         let transformedMemberData = memberList.map {
             Item.bandMember(
                 BandMember(
+                    memberID: $0.memberID ?? 0,
                     isUser: checkIsUserState(memberState: $0.memberState),
                     isLeader: checkIsLeaderState(memberState: $0.memberState),
                     userName: $0.name,
@@ -317,10 +319,10 @@ extension BandInformationView {
 
 extension BandInformationView: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
-        return false
+        return true
     }
     
     func canDeselectPosition(_ collectionView: UICollectionView, indexPath: IndexPath) -> Bool {
-        return false
+        return true
     }
 }
