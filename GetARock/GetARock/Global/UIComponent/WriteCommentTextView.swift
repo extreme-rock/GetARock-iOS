@@ -248,7 +248,7 @@ extension WriteCommentTextView {
             request.allHTTPHeaderFields = headers
             Task {
                 //TODO: fetch함수 손보기
-                await BandDetailViewController(myBands: []).fetchBandData(with: Int(bandId))
+//                await BandDetailViewController(myBands: []).fetchBandData(with: Int(bandId))
             }
             
             let dataTask = URLSession.shared.dataTask(with: request,

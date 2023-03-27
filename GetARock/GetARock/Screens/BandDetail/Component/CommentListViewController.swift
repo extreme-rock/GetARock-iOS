@@ -68,9 +68,9 @@ extension CommentListViewController: CheckCellIndexDelegate, Reportable {
 
         //TODO: 댓글의 멤버 ID와 로그인한 유저의 ID가 일치하면 삭제가능하도록 수정
         if selectedcommentID?.memberName == "노엘" {
-            showActionSheet(isWriter: true)
+            showActionSheet(isCreator: true)
         } else {
-            showActionSheet(isWriter: false)
+            showActionSheet(isCreator: false)
         }
     }
     
@@ -110,7 +110,7 @@ extension CommentListViewController {
             request.allHTTPHeaderFields = headers
             Task {
                 //TODO: fetch함수 손보기
-                await BandDetailViewController(myBands: []).fetchBandData(with: 25)
+//                await BandDetailViewController(myBands: []).fetchBandData(with: 25)
             }
             
             let dataTask = URLSession.shared.dataTask(with: request,

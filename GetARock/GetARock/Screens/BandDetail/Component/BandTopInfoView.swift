@@ -57,7 +57,10 @@ final class BandTopInfoView: UIView {
     
     private let moreButton: UIButton = {
         let action = UIAction { _ in
-            print("수정버튼 눌림")
+            print("버튼눌림")
+            NotificationCenter.default.post(name: NSNotification.Name.showBandModifyActionSheet,
+                                            object: nil,
+                                            userInfo: nil)
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setImage(ImageLiteral.ellipsisSymbol, for: .normal)
