@@ -8,14 +8,14 @@
 import SafariServices
 import UIKit
 
-final class MypageDetailViewController: UIViewController {
+final class MypageDetailViewController: BaseViewController {
     
     // MARK: - Property
     
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
-    private var userID = "1"
-    private var userData = UserInformationVO(
-        userID: 0,
+    private var userID = 0
+    private lazy var userData = UserInformationVO(
+        userID: userID,
         name: "",
         age: "",
         gender: "",
@@ -24,7 +24,8 @@ final class MypageDetailViewController: UIViewController {
         instrumentList: [],
         snsList: nil,
         eventList: nil,
-        commentEventList: nil)
+        commentEventList: nil
+    )
     
     // MARK: - View
     
@@ -36,11 +37,25 @@ final class MypageDetailViewController: UIViewController {
     
     private lazy var userInfomationView = UserInformationView(userData: userData)
     
+    
+    // MARK: - Init
+    
+    init(userID: Int) {
+        self.userID = userID
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purple
         Task {
             await fetchUserData()
             setupLayout()
@@ -48,16 +63,12 @@ final class MypageDetailViewController: UIViewController {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     // MARK: - Method
     
     private func setupLayout() {
         view.addSubview(mypageTopInfoView)
         mypageTopInfoView.constraint(
-            top: self.view.topAnchor,
+            top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.leadingAnchor,
             trailing: self.view.trailingAnchor
         )
@@ -83,8 +94,6 @@ final class MypageDetailViewController: UIViewController {
     }
     
     @objc private func presentSNSViewController(_ notification: Notification) {
-        print(notification.userInfo)
-        print("버튼눌림")
         guard let snsURL = notification.userInfo?["snsURL"] as? String else { return }
         guard let url = URL(string: snsURL) else { return }
         let snsSafariViewController = SFSafariViewController(url: url)
@@ -103,7 +112,7 @@ extension MypageDetailViewController {
     
     func fetchUserData() async {
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/member")
-        let idQuery = URLQueryItem(name: "id", value: userID)
+        let idQuery = URLQueryItem(name: "id", value: String(userID))
         queryURLComponent?.queryItems = [idQuery]
         guard let url = queryURLComponent?.url else { return }
         

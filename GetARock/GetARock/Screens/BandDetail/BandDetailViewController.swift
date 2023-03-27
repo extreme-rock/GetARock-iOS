@@ -15,7 +15,7 @@ struct BandList {
     var memberAge: String
 }
 
-final class BandDetailViewController: BaseViewController {
+final class BandDetailViewController: UIViewController {
     
     // MARK: - Property
     
@@ -147,6 +147,11 @@ final class BandDetailViewController: BaseViewController {
                                                selector: #selector(presentSongViewController(_:)),
                                                name: Notification.Name.presentSongSafariViewController,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentMypageDetailViewController(_:)),
+                                               name: NSNotification.Name.presentMypageDetailViewController,
+                                               object: nil)
     }
     
     @objc private func presentSNSViewController(_ notification: Notification) {
@@ -161,6 +166,14 @@ final class BandDetailViewController: BaseViewController {
         guard let url = URL(string: songURL) else { return }
         let vc = SFSafariViewController(url: url)
         self.present(vc, animated: true)
+    }
+    
+    @objc private func presentMypageDetailViewController(_ notification: Notification) {
+        guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
+        let mypageVC = MypageDetailViewController(userID: memberID)
+//        self.navigationController?.pushViewController(mypageVC, animated: true)
+        mypageVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        self.present(mypageVC, animated: true)
     }
 }
 

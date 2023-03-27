@@ -43,14 +43,16 @@ enum CellSize {
     static let width = (UIScreen.main.bounds.width - 42) / 2
 }
 
+enum CellType {
+    case band
+    case position
+}
+
 final class PositionCollectionView: UIView {
     
     // MARK: - Property
     
-    enum CellType {
-        case band
-        case position
-    }
+    
     
     private var cellType: CellType
     weak var delegate: PositionCollectionViewDelegate?
@@ -188,7 +190,6 @@ final class PositionCollectionView: UIView {
         guard let mainInstrumentIndexPath = self.selectedCellIndexPaths.first?.indexPath else { return }
         
         // makrMainLabel 함수가 실행되는 시점을 늦추기 위해 main queue에서 async로 실행(?) 이렇게 사용하는게 맞나..
-        
         DispatchQueue.main.async {
             self.markMainLabel(indexPath: mainInstrumentIndexPath)
             self.postDeselectAllPositionButtonHiddenToggle()
@@ -261,6 +262,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         self.selectedCellIndexPaths.append((indexPath: indexPath,
                                             isMain: selectedCellIndexPaths.isEmpty ? true : false))
         
@@ -273,24 +275,36 @@ extension PositionCollectionView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let indexOfSelectedCell = self.selectedCellIndexPaths.firstIndex(where: { element in
-            element.indexPath == indexPath
-        }) else { return }
         
-        let deselectedCell = selectedCellIndexPaths.remove(at: indexOfSelectedCell)
-        if deselectedCell.isMain {
-            removeMainLabel(indexPath: indexPath)
-            if let mainPosition = selectedCellIndexPaths.first {
-                selectedCellIndexPaths[0].isMain = true
-                markMainLabel(indexPath: mainPosition.indexPath)
+        switch cellType {
+        case .band:
+            guard let cell = self.collectionView.cellForItem(at: indexPath) as? BandMemberCollectionViewCell else { return }
+            
+            let userID = cell.memberData.memberID
+            NotificationCenter.default.post(name: NSNotification.Name.presentMypageDetailViewController,
+                                            object: nil,
+                                            userInfo: ["memberID":userID])
+            
+        case .position:
+            guard let indexOfSelectedCell = self.selectedCellIndexPaths.firstIndex(where: { element in
+                element.indexPath == indexPath
+            }) else { return }
+            
+            let deselectedCell = selectedCellIndexPaths.remove(at: indexOfSelectedCell)
+            if deselectedCell.isMain {
+                removeMainLabel(indexPath: indexPath)
+                if let mainPosition = selectedCellIndexPaths.first {
+                    selectedCellIndexPaths[0].isMain = true
+                    markMainLabel(indexPath: mainPosition.indexPath)
+                }
             }
+            
+            let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
+            if selectedCellCount == 0 {
+                postDeselectAllPositionButtonHiddenToggle()
+            }
+            postDidTapPositionItem()
         }
-        
-        let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
-        if selectedCellCount == 0 {
-            postDeselectAllPositionButtonHiddenToggle()
-        }
-        postDidTapPositionItem()
     }
     
     private func markMainLabel(indexPath: IndexPath) {

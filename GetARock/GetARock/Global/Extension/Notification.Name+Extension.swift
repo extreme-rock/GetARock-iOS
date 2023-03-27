@@ -19,4 +19,6 @@ extension Notification.Name {
     static let presentSongSafariViewController = Notification.Name("presentSongSafariViewController")
     static let configureBandData = Notification.Name("configureBandData")
     static let presentLeaderPositionSelectViewController = Notification.Name("presentLeaderPositionSelectViewController")
+    static let presentMypageDetailViewController = Notification.Name("presentMypageDetailViewController")
+    
 }

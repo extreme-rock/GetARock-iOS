@@ -8,15 +8,18 @@
 import UIKit
 
 final class BandMemberCollectionViewCell: UICollectionViewCell {
-
+    
+    // MARK: - Property
+    var memberData = BandMember(
+        memberID: 0,
+        isUser: false,
+        isLeader: false,
+        userName: "",
+        instrumentImageName: .guitar,
+        instrumentNames: [])
+    
     // MARK: - View
-    
-    override var isSelected: Bool {
-        didSet {
-            self.applySelectedState()
-        }
-    }
-    
+
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .dark02
@@ -138,22 +141,25 @@ final class BandMemberCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(data: BandMember) {
+        self.memberData = data
         self.positionImageView.image = UIImage(named: data.instrumentImageName.imageName)
         self.memberNameLabel.text = data.userName
         self.applyUserState(isUser: data.isUser)
         self.configureInstrumentNameUI(with: data.instrumentNames)
         
         if data.isUser {
+            configureIsUserMember()
             setupLinkButtonLayout()
         }
         
         if data.isLeader {
+            configureIsUserMember()
             configureLeaderUI()
         }
     }
     
-    private func applySelectedState() {
-        self.containerView.backgroundColor = isSelected ? .clear : .dark02
-        self.containerView.layer.borderColor = isSelected ? UIColor.mainPurple.cgColor : UIColor.gray02.cgColor
+    private func configureIsUserMember() {
+        self.containerView.backgroundColor = .clear
+        self.containerView.layer.borderColor = UIColor.mainPurple.cgColor
     }
 }
