@@ -5,6 +5,7 @@
 //  Created by Mijoo Kim on 2023/01/18.
 //
 
+import AuthenticationServices
 import UIKit
 
 final class LandingViewController: UIViewController {
@@ -77,6 +78,35 @@ final class LandingViewController: UIViewController {
     // MARK: - 애플 로그인 요청
     
     @objc func handleSignInWithApple() {
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
     }
      }
- }
+
+// MARK: - ASAuthorizationControllerDelegate
+
+extension LandingViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle the authorization error
+        print(error)
+    }
+}
+
+// MARK: - ASAuthorizationControllerPresentationContextProviding
+
+extension LandingViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
