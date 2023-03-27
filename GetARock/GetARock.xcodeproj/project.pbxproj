@@ -139,6 +139,8 @@
 		B8B17C542980B99900806899 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C532980B99900806899 /* Coordinate.swift */; };
 		B8B17C5D29823AC900806899 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C5C29823AC900806899 /* Event.swift */; };
 		B8D51C9D29D02A0500F927FC /* LoginVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9C29D02A0500F927FC /* LoginVO.swift */; };
+		B8D51CA029D0AE4B00F927FC /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */; };
+		B8D51CA229D0AE9200F927FC /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -302,6 +304,8 @@
 		B8B17C532980B99900806899 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		B8B17C5C29823AC900806899 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		B8D51C9C29D02A0500F927FC /* LoginVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVO.swift; sourceTree = "<group>"; };
+		B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
+		B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,6 +379,7 @@
 		4AC4CE3E297FB81E00BB823C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B8D51C9E29D0AE3E00F927FC /* Storage */,
 				4AC4CE3F297FB82C00BB823C /* Model */,
 				9A78BFE2298A9CD900953E4B /* NetworkError.swift */,
 				9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */,
@@ -747,6 +752,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B8D51C9E29D0AE3E00F927FC /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */,
+				B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1081,6 +1095,7 @@
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				9A53CFBB29C6FD8C002F6E56 /* BandMemberModifyCell.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
+				B8D51CA029D0AE4B00F927FC /* UserDefaultStorage.swift in Sources */,
 				7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
@@ -1094,6 +1109,7 @@
 				B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
 				7B7598AD29893A1E00FA6B78 /* SNSButtonView.swift in Sources */,
+				B8D51CA229D0AE9200F927FC /* UserDefaultHandler.swift in Sources */,
 				7BEB09D8299CF12E0076A82F /* CommentTableViewCell.swift in Sources */,
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
 				4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */,
