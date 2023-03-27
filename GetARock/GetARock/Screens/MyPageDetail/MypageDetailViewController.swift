@@ -91,6 +91,10 @@ final class MypageDetailViewController: BaseViewController {
                                                selector: #selector(presentBandCreation(_:)),
                                                name: NSNotification.Name.presentLeaderPositionSelectViewController,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentUserBandDetailViewController(_:)),
+                                               name: NSNotification.Name.presentBandDetailViewController,
+                                               object: nil)
     }
     
     @objc private func presentSNSViewController(_ notification: Notification) {
@@ -106,6 +110,16 @@ final class MypageDetailViewController: BaseViewController {
         bandCreationVC.modalPresentationStyle = .fullScreen
         self.present(bandCreationVC, animated: true)
     }
+    
+    //TODO - 지금 서버에 들어가는 멤버 밴드가 다른데 구엘한테 확인중....
+    @objc private func presentUserBandDetailViewController(_ notification: Notification) {
+        guard let selectbandData = notification.userInfo?["selectbandData"] as? BandList else { return }
+        let bandDetailVC = BandDetailViewController(myBands: [selectbandData], entryPoint: .myBand)
+//        self.navigationController?.pushViewController(bandCreationVC, animated: true)
+        bandDetailVC.modalPresentationStyle = .fullScreen
+        self.present(bandDetailVC, animated: true)
+    }
+
 }
 
 // MARK: - fetchBandData

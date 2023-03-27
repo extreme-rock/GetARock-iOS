@@ -10,6 +10,7 @@ import UIKit
 final class BandButtonView: UIView {
     
     // MARK: - Property
+//    private let bandData: BandListVO
     private let bandID: Int
     private let bandName: String
     private let membersNumber: Int
@@ -61,10 +62,13 @@ final class BandButtonView: UIView {
     
     // MARK: - Init
     
-    init(bandID: Int,
+    init(
+//        bandData: BandListVO,
+        bandID: Int,
          bandName: String,
          membersNumber: Int,
          membersAge: String) {
+//        self.bandData = bandData
         self.bandID = bandID
         self.bandName = bandName
         self.membersNumber = membersNumber
@@ -109,5 +113,12 @@ final class BandButtonView: UIView {
        func moveBandInfo(_ gesture: UITapGestureRecognizer) {
            //TO-DO: 밴드 상세페이지로 연결 액션 필요
            print("\(bandID)버튼 눌림")
+           let selectbandData = BandList(bandId: bandID,
+                                   name: bandName,
+                                   memberCount: membersNumber,
+                                   memberAge: membersAge)
+           NotificationCenter.default.post(name: NSNotification.Name.presentBandDetailViewController,
+                                           object: nil,
+                                           userInfo: ["selectbandData": selectbandData])
        }
 }
