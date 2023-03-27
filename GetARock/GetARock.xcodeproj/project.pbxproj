@@ -142,6 +142,7 @@
 		B8B17C522980B93300806899 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C512980B93300806899 /* Location.swift */; };
 		B8B17C542980B99900806899 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C532980B99900806899 /* Coordinate.swift */; };
 		B8B17C5D29823AC900806899 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C5C29823AC900806899 /* Event.swift */; };
+		B8E7181229B64FC20097D7C5 /* MapMarkerVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +309,7 @@
 		B8B17C512980B93300806899 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B8B17C532980B99900806899 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		B8B17C5C29823AC900806899 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerVO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +401,7 @@
 				4AC4CE42297FB8AD00BB823C /* BandMember.swift */,
 				B887184929AC5379000026ED /* DeviceTokenDTO.swift */,
 				4A4A6E9329A8F58B005CF076 /* User.swift */,
+				B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1078,6 +1081,7 @@
 				9A82AF3229B9FD130056315D /* PracticeSongCardView.swift in Sources */,
 				A951F6532989EF6C00902CED /* String+Extension.swift in Sources */,
 				7BC275602987EA10008F4B9F /* EmptyView.swift in Sources */,
+				B8E7181229B64FC20097D7C5 /* MapMarkerVO.swift in Sources */,
 				A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
 				B863B481299B7D7E0016CC48 /* SettingViewController.swift in Sources */,
