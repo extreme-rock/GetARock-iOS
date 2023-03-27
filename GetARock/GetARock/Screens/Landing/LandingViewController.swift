@@ -98,7 +98,6 @@ final class LandingViewController: UIViewController {
         let headers = [
             "social-token": "\(token)"
         ]
-        var resultString = ""
         
         let urlComponent = URLComponents(string: "https://api.ryomyom.com/signup")
         guard let url = urlComponent?.url else {
@@ -210,7 +209,7 @@ extension LandingViewController: ASAuthorizationControllerDelegate {
                 }
             }
         }
-
+        
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {

@@ -60,10 +60,10 @@ extension AppDelegate {
             case .authorized:
                 // TODO: isLogin 값 체크 후 자동로그인 (refresh token 필요함)
                 print("authorized")
-//                DispatchQueue.main.async {
-//                    self.presentMaipMapViewController()
-//                }
-            // The Apple ID credential is valid.
+                //                DispatchQueue.main.async {
+                //                    self.presentMaipMapViewController()
+                //                }
+                // The Apple ID credential is valid.
             case .revoked:
                 print("revoked")
             case .notFound:
@@ -77,7 +77,7 @@ extension AppDelegate {
 }
 
 extension AppDelegate {
-
+    
     private func registerForRemoteNotifications() {
         DispatchQueue.main.async {
             UIApplication.shared.registerForRemoteNotifications()
@@ -127,7 +127,7 @@ extension AppDelegate {
     private func presentMaipMapViewController() {
         let viewController = MainMapViewController()
         viewController.modalPresentationStyle = .fullScreen
-//        viewController.modalTransitionStyle = .crossDissolve
+        //        viewController.modalTransitionStyle = .crossDissolve
         
         UIApplication.shared.windows.first?.rootViewController?.present(viewController, animated: false, completion: nil)
     }
