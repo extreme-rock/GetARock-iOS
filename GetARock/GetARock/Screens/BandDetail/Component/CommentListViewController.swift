@@ -110,7 +110,7 @@ extension CommentListViewController {
             request.allHTTPHeaderFields = headers
             Task {
                 //TODO: fetch함수 손보기
-                await BandDetailViewController(myBands: []).fetchBandData(with: 343)
+                await BandDetailViewController(myBands: []).fetchBandData(with: 25)
             }
             
             let dataTask = URLSession.shared.dataTask(with: request,

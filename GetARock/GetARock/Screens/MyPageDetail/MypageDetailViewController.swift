@@ -13,7 +13,7 @@ final class MypageDetailViewController: UIViewController {
     // MARK: - Property
     
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
-    private var userID = "329"
+    private var userID = "18"
     private var userData = UserInformationVO(
         userID: 0,
         name: "",
