@@ -5,6 +5,7 @@
 //  Created by Mijoo Kim on 2023/01/18.
 //
 
+import AuthenticationServices
 import UIKit
 
 import GoogleMaps
@@ -14,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         GMSServices.provideAPIKey(Bundle.main.apiKey)
+        getCredentialState()
         registerForRemoteNotifications()
         
         return true
@@ -48,22 +50,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
+// MARK: - 애플 로그인 상태 체크
+
 extension AppDelegate {
-    // TODO: 알림 권한 받는 기능 삭제 후 머지 (현재는 테스트를 위해 추가해둔 상태)
-    private func registerForRemoteNotifications() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            
-            guard granted else {
-                print("An error has occurred while requesting authorization for notification")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
+    private func getCredentialState() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: UserDefaultStorage.userID) { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                // TODO: isLogin 값 체크 후 자동로그인 (refresh token 필요함)
+                print("authorized")
+                //                DispatchQueue.main.async {
+                //                    self.presentMaipMapViewController()
+                //                }
+                // The Apple ID credential is valid.
+            case .revoked:
+                print("revoked")
+            case .notFound:
+                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                print("notFound")
+            default:
+                break
             }
         }
-        
+    }
+}
+
+extension AppDelegate {
+    
+    private func registerForRemoteNotifications() {
+        DispatchQueue.main.async {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
     }
     
     private func sendDeviceTokenToServer(token: Data) {
@@ -102,5 +120,15 @@ extension AppDelegate {
             
             dataTask.resume()
         }
+    }
+}
+
+extension AppDelegate {
+    private func presentMaipMapViewController() {
+        let viewController = MainMapViewController(isFromSignUp: false)
+        viewController.modalPresentationStyle = .fullScreen
+        //        viewController.modalTransitionStyle = .crossDissolve
+        
+        UIApplication.shared.windows.first?.rootViewController?.present(viewController, animated: false, completion: nil)
     }
 }

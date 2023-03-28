@@ -5,6 +5,7 @@
 //  Created by Yu ahyeon on 2023/02/13.
 //
 
+import SafariServices
 import UIKit
 
 struct BandList {
@@ -14,7 +15,7 @@ struct BandList {
     var memberAge: String
 }
 
-final class BandDetailViewController: BaseViewController {
+final class BandDetailViewController: UIViewController {
     
     // MARK: - Property
     
@@ -23,10 +24,16 @@ final class BandDetailViewController: BaseViewController {
         static let height: CGFloat = 120
     }
     
-    private let myBands: [BandList]
+    enum EntryPoint {
+        case myBand
+        case otherBand
+    }
+    
+    private let myBands: [BandList]?
+    private let entryPoint: EntryPoint
     
     //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "172"
+    private var bandID = "25"
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
@@ -57,25 +64,32 @@ final class BandDetailViewController: BaseViewController {
     
     lazy var bandTopInfoView: BandTopInfoView = {
         $0.delegate = self
-        if self.myBands.count > 1 {
-            $0.setupToggleButtonLayout()
+        switch self.entryPoint {
+        case .myBand:
+            $0.setupMoreButton()
+            if self.myBands?.count ?? 0 > 1 {
+                $0.setupToggleButtonLayout()
+            }
+        case .otherBand:
+            break
         }
         return $0
     }(BandTopInfoView(name: bandData.name, address: bandData.address))
     
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
     
-    private lazy var bandSelectMenuView = BandListMenuTableView(bandNames: self.myBands.map { $0.name })
+    private lazy var bandSelectMenuView = BandListMenuTableView(bandNames: self.myBands?.map { $0.name } ?? [])
     
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            await fetchBandData(with: self.myBands.first?.bandId)
+            await fetchBandData(with: self.myBands?.first?.bandId)
             setupLayout()
         }
         configureDelegate()
+        setNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,15 +98,15 @@ final class BandDetailViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(myBands: [BandList]){
+    init(myBands: [BandList]?, entryPoint: EntryPoint) {
         self.myBands = myBands
+        self.entryPoint = entryPoint
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -119,10 +133,87 @@ final class BandDetailViewController: BaseViewController {
             trailing: self.view.trailingAnchor
         )
         
-        view.addSubview(bandSelectMenuView)
+        switch self.entryPoint {
+        case .myBand:
+            view.addSubview(bandSelectMenuView)
+        case .otherBand:
+            break
+        }
+        
+    }
+    
+    private func setNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentSNSViewController(_:)),
+                                               name: Notification.Name.presentSNSSafariViewController,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentSongViewController(_:)),
+                                               name: Notification.Name.presentSongSafariViewController,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentMypageDetailViewController(_:)),
+                                               name: NSNotification.Name.presentMypageDetailViewController,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(showBandModifyActionSheet(_:)),
+                                               name: NSNotification.Name.showBandModifyActionSheet,
+                                               object: nil)
+    }
+    
+    @objc private func presentSNSViewController(_ notification: Notification) {
+        guard let snsURL = notification.userInfo?["snsURL"] as? String else { return }
+        guard let url = URL(string: snsURL) else { return }
+        let snsSafariViewController = SFSafariViewController(url: url)
+        self.present(snsSafariViewController, animated: true)
+    }
+    
+    @objc private func presentSongViewController(_ notification: Notification) {
+        guard let songURL = notification.userInfo?["songURL"] as? String else { return }
+        guard let url = URL(string: songURL) else { return }
+        let vc = SFSafariViewController(url: url)
+        self.present(vc, animated: true)
+    }
+    
+    @objc private func presentMypageDetailViewController(_ notification: Notification) {
+        guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
+        let mypageVC = MypageDetailViewController(userID: memberID)
+        //        self.navigationController?.pushViewController(mypageVC, animated: true)
+        mypageVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        self.present(mypageVC, animated: true)
+    }
+    
+    @objc private func showBandModifyActionSheet(_ notification: Notification) {
+        // TODO - 유저 정보에 따라 분기처리 해야함..
+        showActionSheet(isCreator: true)
+    }
+    
+    func showActionSheet(isCreator: Bool) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        let positionModify = UIAlertAction(title: "내 포지션 수정", style: .default) { [weak self] _ in
+            print("밴드 포지션 수정하기로 연결")
+            
+        }
+        let bandModify = UIAlertAction(title: "밴드 수정", style: .default) { [weak self] _ in
+            print("밴드 수정하기로 연결 (밴드 어드민만)")
+            //
+        }
+        let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
+            print("밴드 삭제 연결 (밴드 어드민만)")
+        }
+        actionSheet.addAction(positionModify)
+        if isCreator == true {
+            actionSheet.addAction(bandModify)
+            actionSheet.addAction(banddelete)
+        }
+        actionSheet.addAction(cancel)
+        present(actionSheet, animated: true)
     }
 }
-
 
 // MARK: - Get BandData
 
@@ -184,14 +275,13 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
 extension BandDetailViewController: BandListMenuTableViewDelegate {
     func fetchSelectedBandInfo(indexPath: IndexPath) {
         Task {
-            await fetchBandData(with: self.myBands[indexPath.row].bandId)
+            await fetchBandData(with: self.myBands?[indexPath.row].bandId)
             NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
                                             object: nil,
                                             userInfo: ["bandInfo": self.bandData])
             self.removeBandSelectMenu()
         }
     }
-    
 }
 
 //MARK: BandSelectMenu관련 Method

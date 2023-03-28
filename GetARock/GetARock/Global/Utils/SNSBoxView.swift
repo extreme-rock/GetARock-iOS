@@ -132,4 +132,9 @@ final class SNSBoxView: UIView {
         guard let text else { return }
         self.textField.text = text
     }
+    
+    func configureLink(with text: String?) {
+        guard let text else { return }
+        self.textField.text = text
+    }
 }

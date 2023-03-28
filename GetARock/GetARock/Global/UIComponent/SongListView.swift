@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol SongListViewDelegate: AnyObject {
-    func presentInAppSafari(with link: String)
-}
-
 enum SongListType {
     case create
     case detail
@@ -20,7 +16,6 @@ final class SongListView: UIView {
     
     // MARK: - Property
     
-    weak var delegate: SongListViewDelegate?
     private var songList: [Song]?
     private var songListType: SongListType
     private var songData: [SongListVO]?
@@ -43,7 +38,6 @@ final class SongListView: UIView {
             SongListCollectionViewCell.self,
             forCellWithReuseIdentifier: "SongListCollectionViewCell"
         )
-        $0.isScrollEnabled = false
         $0.showsVerticalScrollIndicator = false
         $0.dataSource = self
         $0.delegate = self
@@ -99,8 +93,9 @@ extension SongListView: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
+        cell.delegate = self
         cell.configure(
-            data: songData?[indexPath.item],
+            data: songList?[indexPath.item],
             songListType: songListType,
             index: indexPath.item
         )
@@ -115,7 +110,10 @@ extension SongListView: UICollectionViewDelegate {
             return
         case .detail:
             guard let link = self.songList?[indexPath.item].link else { return }
-            self.delegate?.presentInAppSafari(with: link)
+            NotificationCenter.default.post(
+                name: Notification.Name.presentSongSafariViewController,
+                object: nil,
+                userInfo: ["songURL": link])
         }
     }
 }

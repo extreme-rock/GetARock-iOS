@@ -125,20 +125,9 @@ final class DetailContentView: UIView {
                 return $0
             }(UIViewController())
             
-            // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
-
-            let bandCommentListVC: UIViewController = {
-                let bandCommentList = CommentListView(data: bandData.commentList)
-                $0.view.addSubview(bandCommentList)
-                bandCommentList.constraint(
-                    top: $0.view.topAnchor,
-                    leading: $0.view.leadingAnchor,
-                    bottom: $0.view.bottomAnchor,
-                    trailing: $0.view.trailingAnchor
-                )
-                return $0
-            }(UIViewController())
+            let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList)
             
+            // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
             detailContentViewControllers = [bandInfoVC, bandCommentListVC]
             
         case .event:
@@ -158,7 +147,6 @@ final class DetailContentView: UIView {
         case .myPage:
             // TODO: 임시 View들입니다. 추후 변경 예정
             let vc1: UIViewController = {
-                $0.view.backgroundColor = .purple
                 return $0
             }(UIViewController())
             
@@ -224,4 +212,5 @@ extension DetailContentView: UIPageViewControllerDelegate {
         self.segmentedControl.selectedSegmentIndex = index
     }
 }
+
 

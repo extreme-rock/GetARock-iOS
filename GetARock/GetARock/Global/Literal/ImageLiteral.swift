@@ -8,8 +8,7 @@
 import UIKit
 
 enum ImageLiteral {
-    //     static var exampleIcon: UIImage { .load(named: sth) }
-    
+
     // MARK: - SF Symbols
     static var xmarkSymbol: UIImage { .load(systemName: "xmark") }
     static var arrowUpRightSymbol: UIImage { .load(systemName: "arrow.up.right") }
@@ -22,6 +21,9 @@ enum ImageLiteral {
     static var chevronRightSymbol: UIImage { .load(systemName: "chevron.right")}
     static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
     static var chevronLeftSymbol: UIImage { .load(systemName: "chevron.backward") }
+    static var ellipsisSymbol: UIImage { .load(systemName: "ellipsis") }
+    static var ellipsisSymbol: UIImage { .load(systemName: "ellipsis") }
+
     static var magnifyingGlassSymbol: UIImage { .load(systemName: "magnifyingglass") }
     static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     static var checkMarkCircleFillSymbol: UIImage { .load(systemName: "checkmark.circle.fill") }
@@ -49,6 +51,13 @@ enum ImageLiteral {
     static var eventNotificationIcon: UIImage { .load(named: "eventNotificationIcon") }
     static var bandNotificationIcon: UIImage { .load(named: "bandNotificationIcon") }
     static var bubbleWithThunderIcon: UIImage { .load(named: "bubbleWithThunderIcon") }
+    static var invitingIcon: UIImage { .load(named: "invitingIcon") }
+    
+    
+    // MARK: - background
+    
+    static var landingBackground: UIImage { .load(named: "landingBackground.png") }
+    
 }
 
 extension UIImage {

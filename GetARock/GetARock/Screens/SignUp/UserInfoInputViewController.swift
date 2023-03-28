@@ -18,7 +18,7 @@ final class UserInfoInputViewController: UIViewController {
     
     private let pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.headline03)
-        $0.text = "3/3"
+        $0.text = "2/2"
         $0.textColor = .gray02
         return $0
     }(UILabel())
@@ -281,8 +281,11 @@ final class UserInfoInputViewController: UIViewController {
                         introduction: self.userIntroTextView.inputText(),
                         instrumentList: instrumentList,
                         snsList: snsList)
+        Task {
+            try await SignUpNetworkManager.shared.postUserInformation(user: user)
+        }
         
-        let viewcontroller = BandCreationDecisionViewController(user: user)
+        let viewcontroller = SetAuthorizationViewController()
         self.navigationController?.pushViewController(viewcontroller, animated: true)
     }
 }

@@ -17,9 +17,9 @@ final class WriteCommentTextView: UIView {
     private var keyboardHeight: CGFloat = 30
     
     //TODO: - 추후 로그인한 사용자 ID로 변경 해야함
-    private var memberId = "18"
+    private var memberId = "1"
     //TODO: - 추후 사용자가 들어간 밴드의 ID로 변경해야함
-    private var bandId = "71"
+    private var bandId = "25"
     private var contentText = ""
     
     // MARK: - View
@@ -247,8 +247,11 @@ extension WriteCommentTextView {
             request.httpMethod = "POST"
             request.allHTTPHeaderFields = headers
             Task {
-                //TODO: fetch함수 손보기
-//                await BandDetailViewController().fetchBandData()
+                //TODO: 유저디폴트의 Band와 ID가 같으면 유저디폴트의 밴드 리스트와 엔트리포인트 마이밴드로 수정
+//                await BandDetailViewController(
+//                    myBands: <#[BandList]#>, -> 유저디폴트의 유저의 밴드 리스트 받아오기
+//                    entryPoint: <#BandDetailViewController.EntryPoint#> -> 유저디폴트의 배열 속 밴드ID값이 지도에서 불러온 밴드 ID과 일치하면 .myband
+//                ).fetchBandData(with: <#Int?#>) -> 지도에서 받아온 밴드 ID
             }
             
             let dataTask = URLSession.shared.dataTask(with: request,
