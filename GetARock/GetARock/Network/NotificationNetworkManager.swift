@@ -12,12 +12,12 @@ final class NotificationNetworkManager {
     
     static let shared = NotificationNetworkManager()
     
-    func getNotificationList(memberId: Int) async throws -> [NotificationInfo] {
+    func getNotificationList(memberID: Int) async throws -> [NotificationInfo] {
         var returnData: [NotificationInfo] = []
         let baseURL = "https://api.ryomyom.com/alerts"
         
         var queryURLComponent = URLComponents(string: baseURL)
-        let memberIdQuery = URLQueryItem(name: "memberId", value: String(memberId))
+        let memberIdQuery = URLQueryItem(name: "memberId", value: String(memberID))
         queryURLComponent?.queryItems = [memberIdQuery]
         guard let url = queryURLComponent?.url else { throw NetworkError.badURL }
         

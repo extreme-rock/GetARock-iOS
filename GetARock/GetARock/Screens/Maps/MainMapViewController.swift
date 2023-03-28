@@ -72,8 +72,13 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let notificationButton: UIButton = {
+    private lazy var notificationButton: UIButton = {
         $0.setImage(UIImage(named: "notificationButton"), for: .normal)
+        let action = UIAction { [weak self] _ in
+            let viewController = NotificationListViewController()
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -127,7 +132,6 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.setLocationManager()
         self.requestLocationAuthorization()
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -140,7 +144,7 @@ final class MainMapViewController: UIViewController {
     }
     
     // MARK: - Method
-    
+
     private func setupLayout() {
         self.view.addSubview(self.currentLocationLabel)
         self.currentLocationLabel.constraint(
