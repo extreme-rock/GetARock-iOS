@@ -22,8 +22,6 @@ enum ImageLiteral {
     static var personThreeFillSymbol: UIImage { .load(systemName: "person.3.fill") }
     static var chevronLeftSymbol: UIImage { .load(systemName: "chevron.backward") }
     static var ellipsisSymbol: UIImage { .load(systemName: "ellipsis") }
-    static var ellipsisSymbol: UIImage { .load(systemName: "ellipsis") }
-
     static var magnifyingGlassSymbol: UIImage { .load(systemName: "magnifyingglass") }
     static var bellSymbol: UIImage { .load(systemName: "bell.fill") }
     static var checkMarkCircleFillSymbol: UIImage { .load(systemName: "checkmark.circle.fill") }
@@ -34,7 +32,6 @@ enum ImageLiteral {
     static var chevronUpSymbol: UIImage { .load(systemName: "chevron.up")}
     static var exclamationMarkCircleSymbol: UIImage { .load(systemName: "exclamationmark.circle") }
     static var quarternoteSymbol: UIImage { .load(systemName: "music.quarternote.3") }
-    static var ellipsisSymbol: UIImage { .load(systemName: "ellipsis") }
     static var infoCircleSymbol: UIImage { .load(systemName: "info.circle") }
     
     // MARK: - icon

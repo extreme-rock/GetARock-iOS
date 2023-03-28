@@ -349,7 +349,7 @@ extension BandDetailViewController {
 extension BandDetailViewController: DeleteBandViewControllerDelegate {
     func didDeleteBandButtonTapped() {
         guard let window = UIApplication.shared.windows.first else { return }
-        let viewController = MainMapViewController()
+        let viewController = MainMapViewController(isFromSignUp: false)
         viewController.setupLayoutDeleteBandNoticeView()
         window.rootViewController = viewController
         window.makeKeyAndVisible()
