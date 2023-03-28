@@ -24,4 +24,5 @@ extension Notification.Name {
     static let presentMypageDetailViewController = Notification.Name("presentMypageDetailViewController")
     static let presentBandDetailViewController = Notification.Name("presentBandDetailViewController")
     static let showBandModifyActionSheet = Notification.Name("showBandModifyActionSheet")
+    static let toggleNextButtonEnbaled = Notification.Name("toggleNextButtonEnbaled")
 }

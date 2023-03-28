@@ -27,7 +27,6 @@
 		4A4A6E9429A8F58B005CF076 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A6E9329A8F58B005CF076 /* User.swift */; };
 		4A4A6E9629A8F9CC005CF076 /* SignUpNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */; };
 		4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */; };
-		4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */; };
 		4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5931892989041200C8DA31 /* PlusPositionViewController.swift */; };
 		4A59318C29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */; };
 		4A63BE5429A601F900A30CA8 /* InstructionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */; };
@@ -44,6 +43,7 @@
 		4AC4CE4B2980B41400BB823C /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4A2980B41400BB823C /* DefaultButton.swift */; };
 		4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4C2980BAE800BB823C /* SelectCollectionView.swift */; };
 		4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4CE4E2980BD3700BB823C /* SelectCollectionViewCell.swift */; };
+		4AEEAA3F29B0DC3900316B0C /* GetARockInfoPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEEAA3E29B0DC3900316B0C /* GetARockInfoPopUpView.swift */; };
 		4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF584592978E497008F4068 /* UIView+Constraints.swift */; };
 		7B1F6D2629AF82FF00FC00D5 /* BandInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */; };
 		7B200E3529B03D1F00E3A75F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B200E3429B03D1F00E3A75F /* PaddingLabel.swift */; };
@@ -148,6 +148,10 @@
 		B8B17C522980B93300806899 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C512980B93300806899 /* Location.swift */; };
 		B8B17C542980B99900806899 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C532980B99900806899 /* Coordinate.swift */; };
 		B8B17C5D29823AC900806899 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C5C29823AC900806899 /* Event.swift */; };
+		B8E7181229B64FC20097D7C5 /* MapMarkerVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */; };
+		B8D51C9D29D02A0500F927FC /* LoginVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9C29D02A0500F927FC /* LoginVO.swift */; };
+		B8D51CA029D0AE4B00F927FC /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */; };
+		B8D51CA229D0AE9200F927FC /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,7 +195,6 @@
 		4A4A6E9329A8F58B005CF076 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNetworkManager.swift; sourceTree = "<group>"; };
 		4A4AF2CF29961A1B00E48791 /* SetAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAuthorizationViewController.swift; sourceTree = "<group>"; };
-		4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandCreationDecisionViewController.swift; sourceTree = "<group>"; };
 		4A5931892989041200C8DA31 /* PlusPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusPositionViewController.swift; sourceTree = "<group>"; };
 		4A59318B29896E7800C8DA31 /* PositionSelectCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionSelectCollectionViewHeader.swift; sourceTree = "<group>"; };
 		4A63BE5329A601F900A30CA8 /* InstructionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +211,7 @@
 		4AC4CE4A2980B41400BB823C /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		4AC4CE4C2980BAE800BB823C /* SelectCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCollectionView.swift; sourceTree = "<group>"; };
 		4AC4CE4E2980BD3700BB823C /* SelectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AEEAA3E29B0DC3900316B0C /* GetARockInfoPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetARockInfoPopUpView.swift; sourceTree = "<group>"; };
 		4AF584592978E497008F4068 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		6CC3391D5CB01B869CFE1F20 /* Pods-GetARock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.release.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.release.xcconfig"; sourceTree = "<group>"; };
 		73E771CD1A9B64570FE2B572 /* Pods-GetARock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARock.debug.xcconfig"; path = "Target Support Files/Pods-GetARock/Pods-GetARock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -320,6 +324,10 @@
 		B8B17C512980B93300806899 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B8B17C532980B99900806899 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		B8B17C5C29823AC900806899 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerVO.swift; sourceTree = "<group>"; };
+		B8D51C9C29D02A0500F927FC /* LoginVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVO.swift; sourceTree = "<group>"; };
+		B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
+		B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,7 +383,6 @@
 				4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */,
 				4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */,
 				4A8355E2299F78AD00D82AF3 /* UserInfoInputViewController.swift */,
-				4A4AF2D72999122800E48791 /* BandCreationDecisionViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -393,6 +400,7 @@
 		4AC4CE3E297FB81E00BB823C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B8D51C9E29D0AE3E00F927FC /* Storage */,
 				4AC4CE3F297FB82C00BB823C /* Model */,
 				9A78BFE2298A9CD900953E4B /* NetworkError.swift */,
 				9A78BFE4298A9D7500953E4B /* DuplicationCheckRequest.swift */,
@@ -409,8 +417,10 @@
 			children = (
 				4AC4CE40297FB85B00BB823C /* Position.swift */,
 				4AC4CE42297FB8AD00BB823C /* BandMember.swift */,
+				B8D51C9C29D02A0500F927FC /* LoginVO.swift */,
 				B887184929AC5379000026ED /* DeviceTokenDTO.swift */,
 				4A4A6E9329A8F58B005CF076 /* User.swift */,
+				B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -563,6 +573,7 @@
 			children = (
 				B8468F65297AD7CB00A9E77E /* MainMapViewController.swift */,
 				B808B6962982A85F00A1A9E2 /* CustomMarker.swift */,
+				4AEEAA3E29B0DC3900316B0C /* GetARockInfoPopUpView.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -788,6 +799,15 @@
 				7B287CF929B76A8E00439254 /* UserInformationVO.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B8D51C9E29D0AE3E00F927FC /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */,
+				B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1053,7 +1073,6 @@
 				B88E1BE52977AEC2006072B7 /* LandingViewController.swift in Sources */,
 				4AF5845A2978E497008F4068 /* UIView+Constraints.swift in Sources */,
 				4A4A6E9629A8F9CC005CF076 /* SignUpNetworkManager.swift in Sources */,
-				4A4AF2D82999122800E48791 /* BandCreationDecisionViewController.swift in Sources */,
 				9A29E6EA297E233900D4A433 /* BasicTextField.swift in Sources */,
 				4A20271329865BEB0042EEFA /* InformationPageSegmentedControl.swift in Sources */,
 				9ACA585A299B71DD00C6C2BC /* MemberState.swift in Sources */,
@@ -1102,6 +1121,7 @@
 				9ABDA8D029B0C19800DE710D /* BandCreationFinishGuideViewController.swift in Sources */,
 				9A53CFBD29C74923002F6E56 /* MyBandInfoModifyPageController.swift in Sources */,
 				B8B17C5D29823AC900806899 /* Event.swift in Sources */,
+				B8D51C9D29D02A0500F927FC /* LoginVO.swift in Sources */,
 				A96F368A299E2EFA00376620 /* BandMemberAddTableHeader.swift in Sources */,
 				7B7B04142988FC1100186986 /* SNSListStackView.swift in Sources */,
 				4A4AF2D029961A1B00E48791 /* SetAuthorizationViewController.swift in Sources */,
@@ -1114,6 +1134,7 @@
 				9A82AF3229B9FD130056315D /* PracticeSongCardView.swift in Sources */,
 				A951F6532989EF6C00902CED /* String+Extension.swift in Sources */,
 				7BC275602987EA10008F4B9F /* EmptyView.swift in Sources */,
+				B8E7181229B64FC20097D7C5 /* MapMarkerVO.swift in Sources */,
 				A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */,
 				7B287CFA29B76A8E00439254 /* UserInformationVO.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
@@ -1130,6 +1151,7 @@
 				4A20271129863D800042EEFA /* ModifyPageSegmentedControl.swift in Sources */,
 				9A53CFBB29C6FD8C002F6E56 /* BandMemberModifyCell.swift in Sources */,
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
+				B8D51CA029D0AE4B00F927FC /* UserDefaultStorage.swift in Sources */,
 				7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
@@ -1139,10 +1161,12 @@
 				9AA0BB4F29A4E7FD00871A05 /* NotificationListViewController.swift in Sources */,
 				9ACA5856299B689B00C6C2BC /* BasicBoxView.swift in Sources */,
 				9A29E6E6297E21C500D4A433 /* UITextField+Extension.swift in Sources */,
+				4AEEAA3F29B0DC3900316B0C /* GetARockInfoPopUpView.swift in Sources */,
 				4A43E6EB29A33B4F00EC4BA5 /* AgreeTermsViewController.swift in Sources */,
 				B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */,
 				4A20270D2983FF410042EEFA /* NegativeDefaultButton.swift in Sources */,
 				7B7598AD29893A1E00FA6B78 /* SNSButtonView.swift in Sources */,
+				B8D51CA229D0AE9200F927FC /* UserDefaultHandler.swift in Sources */,
 				7BEB09D8299CF12E0076A82F /* CommentTableViewCell.swift in Sources */,
 				7B36825229D023AA004D8EBF /* CommentListViewController.swift in Sources */,
 				B88E1BE12977AD2D006072B7 /* UIColor+Extension.swift in Sources */,
