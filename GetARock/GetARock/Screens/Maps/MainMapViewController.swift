@@ -97,6 +97,11 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
+    private lazy var deleteBandNoticeView: DeleteBandNoticeView = {
+        $0.delegate = self
+        return $0
+    }(DeleteBandNoticeView())
+    
     private lazy var alertView: GetARockInfoPopUpView = {
         $0.delegate = self
         return $0
@@ -166,6 +171,15 @@ final class MainMapViewController: UIViewController {
             trailing: self.view.trailingAnchor,
             padding: UIEdgeInsets(top: 26, left: 0, bottom: 0, right: 25)
         )
+    }
+    
+    func setupLayoutDeleteBandNoticeView() {
+        self.view.addSubview(deleteBandNoticeView)
+        deleteBandNoticeView.constraint(leading: self.view.leadingAnchor,
+                        trailing: self.view.trailingAnchor,
+                        centerY: self.view.centerYAnchor,
+                        padding: UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22))
+        deleteBandNoticeView.constraint(.heightAnchor, constant: 321)
     }
     
     private func setupAlertViewLayout() {
@@ -439,3 +453,10 @@ extension MainMapViewController {
     }
 }
 
+//MARK: DeleteBandNoticeViewDelegate
+
+extension MainMapViewController: DeleteBandNoticeViewDelegate {
+    func didOKButtonTapped() {
+        self.deleteBandNoticeView.removeFromSuperview()
+    }
+}
