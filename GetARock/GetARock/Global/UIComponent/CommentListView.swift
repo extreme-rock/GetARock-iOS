@@ -7,6 +7,14 @@
 
 import UIKit
 
+// MARK: - CheckCellIndexDelegate
+
+protocol CheckCellIndexDelegate: AnyObject {
+    func checkCellIndex(indexPath: IndexPath, commentData: CommentList?)
+}
+
+// MARK: - class CommentListView
+
 final class CommentListView: UIView {
     
     // MARK: - Property
@@ -14,6 +22,7 @@ final class CommentListView: UIView {
     private var commentData: [CommentList]?
     private var totalCommentNumber: Int = 0
     private let tableviewRefreshControl = UIRefreshControl()
+    weak var delegate: CheckCellIndexDelegate?
     
     // MARK: - View
     
@@ -119,6 +128,7 @@ final class CommentListView: UIView {
             object: nil
         )
     }
+    
     // MARK: - @objc
     
     @objc func didScrollDownCommentTable(refresh: UIRefreshControl) {
@@ -176,11 +186,20 @@ extension CommentListView: UITableViewDataSource {
             for: indexPath ) as? CommentTableViewCell
         else { return UITableViewCell()}
         
+        cell.delegate = self
         cell.backgroundColor = UIColor.clear
         cell.configure(data: commentData?[indexPath.row],
                        index: indexPath.row)
         cell.selectionStyle = .none
         
         return cell
+    }
+}
+
+extension CommentListView: NotifyTapMoreButtonDelegate {
+    func notifyTapMoreButton(cell: UITableViewCell, commentData: CommentList?) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let commentData = commentData
+        self.delegate?.checkCellIndex(indexPath: indexPath, commentData: commentData)
     }
 }

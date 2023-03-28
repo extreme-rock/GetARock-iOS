@@ -153,6 +153,10 @@ final class BandDetailViewController: UIViewController {
                                                selector: #selector(presentMypageDetailViewController(_:)),
                                                name: NSNotification.Name.presentMypageDetailViewController,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(showBandModifyActionSheet(_:)),
+                                               name: NSNotification.Name.showBandModifyActionSheet,
+                                               object: nil)
     }
     
     @objc private func presentSNSViewController(_ notification: Notification) {
@@ -172,9 +176,38 @@ final class BandDetailViewController: UIViewController {
     @objc private func presentMypageDetailViewController(_ notification: Notification) {
         guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
         let mypageVC = MypageDetailViewController(userID: memberID)
-//        self.navigationController?.pushViewController(mypageVC, animated: true)
+        //        self.navigationController?.pushViewController(mypageVC, animated: true)
         mypageVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         self.present(mypageVC, animated: true)
+    }
+    
+    @objc private func showBandModifyActionSheet(_ notification: Notification) {
+        // TODO - 유저 정보에 따라 분기처리 해야함..
+        showActionSheet(isCreator: true)
+    }
+    
+    func showActionSheet(isCreator: Bool) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        let positionModify = UIAlertAction(title: "내 포지션 수정", style: .default) { [weak self] _ in
+            print("밴드 포지션 수정하기로 연결")
+            
+        }
+        let bandModify = UIAlertAction(title: "밴드 수정", style: .default) { [weak self] _ in
+            print("밴드 수정하기로 연결 (밴드 어드민만)")
+            //
+        }
+        let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
+            print("밴드 삭제 연결 (밴드 어드민만)")
+        }
+        actionSheet.addAction(positionModify)
+        if isCreator == true {
+            actionSheet.addAction(bandModify)
+            actionSheet.addAction(banddelete)
+        }
+        actionSheet.addAction(cancel)
+        present(actionSheet, animated: true)
     }
 }
 
