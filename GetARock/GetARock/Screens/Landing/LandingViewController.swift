@@ -197,6 +197,11 @@ extension LandingViewController: ASAuthorizationControllerDelegate {
                         // 애플 로그인 성공은 했지만 서버에 member ID는 없음 -> 회원가입
                         // TODO: 회원가입 페이지로 연결
                         print("아직 없지롱")
+                        DispatchQueue.main.async { [weak self] in
+                            let viewController = AgreeTermsViewController()
+                            viewController.delegate = self
+                            self?.present(viewController, animated: true)
+                        }
                     }
                     
                     break
@@ -234,5 +239,13 @@ extension LandingViewController {
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)
+    }
+}
+
+extension LandingViewController: AgreeTermsViewControllerDelegate {
+    func presentPositionSelectViewController() {
+        let navigationViewController = UINavigationController(rootViewController: PositionSelectViewController())
+        navigationViewController.modalPresentationStyle = .fullScreen
+        self.present(navigationViewController, animated: true)
     }
 }

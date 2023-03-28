@@ -148,7 +148,6 @@
 		B8B17C522980B93300806899 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C512980B93300806899 /* Location.swift */; };
 		B8B17C542980B99900806899 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C532980B99900806899 /* Coordinate.swift */; };
 		B8B17C5D29823AC900806899 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C5C29823AC900806899 /* Event.swift */; };
-		B8E7181229B64FC20097D7C5 /* MapMarkerVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */; };
 		B8D51C9D29D02A0500F927FC /* LoginVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9C29D02A0500F927FC /* LoginVO.swift */; };
 		B8D51CA029D0AE4B00F927FC /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */; };
 		B8D51CA229D0AE9200F927FC /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */; };
@@ -325,7 +324,6 @@
 		B8B17C512980B93300806899 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B8B17C532980B99900806899 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		B8B17C5C29823AC900806899 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerVO.swift; sourceTree = "<group>"; };
 		B8D51C9C29D02A0500F927FC /* LoginVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVO.swift; sourceTree = "<group>"; };
 		B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
@@ -1363,7 +1361,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarockR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1399,7 +1397,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarockR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
