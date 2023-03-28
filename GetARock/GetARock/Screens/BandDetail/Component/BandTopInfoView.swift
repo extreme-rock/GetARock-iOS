@@ -70,22 +70,6 @@ final class BandTopInfoView: UIView {
         return button
     }()
     
-    private let moreButton: UIButton = {
-        let action = UIAction { _ in
-            print("버튼눌림")
-            NotificationCenter.default.post(name: NSNotification.Name.showBandModifyActionSheet,
-                                            object: nil,
-                                            userInfo: nil)
-        }
-        $0.addAction(action, for: .touchUpInside)
-        $0.setImage(ImageLiteral.ellipsisSymbol, for: .normal)
-        $0.tintColor = .white
-        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
-                                                   for: .horizontal)
-        return $0
-    }(UIButton())
-    
     //TODO: 추후 밴드 데이터를 이용해 이름을 각 라벨 업데이트 필요
     private lazy var locationLabel: BasicLabel = {
         $0.numberOfLines = 2
@@ -198,17 +182,7 @@ final class BandTopInfoView: UIView {
     func setupToggleButtonLayout() {
         self.bandNameStackView.addArrangedSubview(self.bandListDisclosureButton)
     }
-    
-    func setupMoreButton() {
-        self.addSubview(moreButton)
-        moreButton.constraint(
-            top: self.topAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 16)
-        )
-    }
 
-    
     private func showOptionActionSheet() {
         // TODO: 리더이면 밴드 삭제를 넣고 아님 말고
         self.delegate?.showBandOptionActionSheet()

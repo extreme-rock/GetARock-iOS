@@ -14,15 +14,16 @@ protocol DeleteBandViewControllerDelegate: AnyObject {
 final class DeleteBandViewController: UIViewController {
     
     // MARK: - Property
-    
+
+    private let bandData: BandInformationVO
     weak var delegate: DeleteBandViewControllerDelegate?
     
     // MARK: - View
     
-    private let titleLabel: BasicLabel = {
+    private lazy var titleLabel: BasicLabel = {
         $0.numberOfLines = 0
         return $0
-    }(BasicLabel(contentText: "'블랙로즈'를\n해체 하시겠습니까?",
+    }(BasicLabel(contentText: "\(self.bandData.name)'를\n해체 하시겠습니까?",
                  fontStyle: .largeTitle01,
                  textColorInfo: .white))
     
@@ -84,7 +85,17 @@ final class DeleteBandViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
-    
+
+    // MARK: - Init
+    init(bandData: BandInformationVO) {
+        self.bandData = bandData
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -135,7 +146,7 @@ final class DeleteBandViewController: UIViewController {
         let deleteAction = UIAlertAction(title: "해체", style: .destructive) { (action) -> Void in
             self.delegate?.didDeleteBandButtonTapped()
             do {
-                try BandNetworkManager.shared.deleteBand(with: 71)
+                try BandNetworkManager.shared.deleteBand(with: self.bandData.bandID)
             } catch {
                 // TODO: handle error
             }

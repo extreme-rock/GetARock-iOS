@@ -414,7 +414,7 @@ extension MainMapViewController {
                              memberCount: $0.memberCount,
                              memberAge: $0.memberAge)
                 }
-                let viewController = BandDetailViewController(myBands: bandList, entryPoint: .myBand)
+                let viewController = UINavigationController(rootViewController: BandDetailViewController(myBands: bandList, entryPoint: .myBand)) 
                 viewController.modalPresentationStyle = .pageSheet
                 if let sheet = viewController.sheetPresentationController {
                     sheet.detents = [.medium(), .large()]

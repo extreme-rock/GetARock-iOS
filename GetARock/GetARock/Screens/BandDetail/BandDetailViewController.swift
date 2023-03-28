@@ -66,7 +66,6 @@ final class BandDetailViewController: UIViewController {
         $0.delegate = self
         switch self.entryPoint {
         case .myBand:
-            $0.setupMoreButton()
             if self.myBands?.count ?? 0 > 1 {
                 $0.setupToggleButtonLayout()
             }
@@ -90,6 +89,7 @@ final class BandDetailViewController: UIViewController {
         }
         configureDelegate()
         setNotification()
+        attribute()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,7 +112,11 @@ final class BandDetailViewController: UIViewController {
     }
     
     // MARK: - Method
-    
+
+    private func attribute() {
+        self.view.backgroundColor = .dark01
+    }
+
     private func configureDelegate() {
         self.bandSelectMenuView.selectDelegate = self
     }
@@ -122,7 +126,8 @@ final class BandDetailViewController: UIViewController {
         bandTopInfoView.constraint(
             top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.leadingAnchor,
-            trailing: self.view.trailingAnchor
+            trailing: self.view.trailingAnchor,
+            padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         )
         
         view.addSubview(bandDetailContentView)
@@ -249,21 +254,22 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
         let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in
             print("내 포지션 수정")
         }
-        
-        let bandLeaderID = self.bandData.memberList.filter { $0.memberState == .admin }
-        // TODO: 애플로그인을 통해 userID를 보관하는 곳이 생기면 그때 비교 해야할듯
-        
-        let deleteMyBandAction = UIAlertAction(title: "밴드 삭제", style: .destructive) { _ in
-            let viewController = DeleteBandViewController()
-            viewController.delegate = self
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        
-        [modifyBandAction, modifyMyPositionAction, deleteMyBandAction, cancelAction].forEach {
+        [modifyBandAction, modifyMyPositionAction].forEach {
             actionSheet.addAction($0)
         }
+        let bandLeader = self.bandData.memberList.filter { $0.memberState == .admin }
+        
+        if UserDefaultStorage.memberID == bandLeader.first?.memberID {
+            let deleteMyBandAction = UIAlertAction(title: "밴드 삭제", style: .destructive) { _ in
+                let viewController = DeleteBandViewController(bandData: self.bandData)
+                viewController.delegate = self
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+            actionSheet.addAction(deleteMyBandAction)        }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        actionSheet.addAction(cancelAction)
+
         self.present(actionSheet, animated: true)
     }
     
