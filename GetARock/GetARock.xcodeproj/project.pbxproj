@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A35EDA1F6F1B54EC4E9AEF0 /* Pods_GetARock_GetARockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */; };
 		4A00132B29835CF600EA992E /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A00132A29835CF600EA992E /* UIImage+Extension.swift */; };
+		4A063C4C29CC951C00BFD253 /* BandNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A063C4B29CC951C00BFD253 /* BandNetworkManager.swift */; };
 		4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */; };
 		4A08A9B6297BC39000822FF9 /* PositionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */; };
 		4A08A9B8297C05F800822FF9 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */; };
@@ -21,6 +22,8 @@
 		4A268C63299A18660068F200 /* ModifyMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */; };
 		4A268C65299A187B0068F200 /* ModifyPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */; };
 		4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */; };
+		4A32706F29CAEA480046EE0C /* DeleteBandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A32706E29CAEA480046EE0C /* DeleteBandViewController.swift */; };
+		4A32707129CBE44D0046EE0C /* DeleteBandNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A32707029CBE44D0046EE0C /* DeleteBandNoticeView.swift */; };
 		4A43E6EB29A33B4F00EC4BA5 /* AgreeTermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */; };
 		4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */; };
 		4A43E6EF29A465CD00EC4BA5 /* TermGuideStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */; };
@@ -178,6 +181,7 @@
 		1C72EC7590FAAB055CED6028 /* Pods-GetARockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetARockTests.debug.xcconfig"; path = "Target Support Files/Pods-GetARockTests/Pods-GetARockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2CDE4C1D1C0D8EC9E6B8B706 /* Pods_GetARock_GetARockUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock_GetARockUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A00132A29835CF600EA992E /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		4A063C4B29CC951C00BFD253 /* BandNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandNetworkManager.swift; sourceTree = "<group>"; };
 		4A08A9B3297BB0A300822FF9 /* PositionCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionView.swift; sourceTree = "<group>"; };
 		4A08A9B5297BC39000822FF9 /* PositionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A08A9B7297C05F800822FF9 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -190,6 +194,8 @@
 		4A268C62299A18660068F200 /* ModifyMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMyPageViewController.swift; sourceTree = "<group>"; };
 		4A268C64299A187B0068F200 /* ModifyPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPositionViewController.swift; sourceTree = "<group>"; };
 		4A268C66299A18B10068F200 /* ModifyUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyUserProfileViewController.swift; sourceTree = "<group>"; };
+		4A32706E29CAEA480046EE0C /* DeleteBandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteBandViewController.swift; sourceTree = "<group>"; };
+		4A32707029CBE44D0046EE0C /* DeleteBandNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteBandNoticeView.swift; sourceTree = "<group>"; };
 		4A43E6EA29A33B4F00EC4BA5 /* AgreeTermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsViewController.swift; sourceTree = "<group>"; };
 		4A43E6EC29A4659800EC4BA5 /* CheckMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckMarkButton.swift; sourceTree = "<group>"; };
 		4A43E6EE29A465CD00EC4BA5 /* TermGuideStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermGuideStackView.swift; sourceTree = "<group>"; };
@@ -410,6 +416,7 @@
 				4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */,
 				9ABC0C2229CB4EAF002DC070 /* BandInformationNetworkManager.swift */,
 				A9BAAFB329CEAF3700C254DD /* MemberSearchNetworkManager.swift */,
+				4A063C4B29CC951C00BFD253 /* BandNetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -468,6 +475,7 @@
 			children = (
 				7B6D3355299A4F13001FD630 /* Component */,
 				7B6D3353299A2F76001FD630 /* BandDetailViewController.swift */,
+				4A32706E29CAEA480046EE0C /* DeleteBandViewController.swift */,
 			);
 			path = BandDetail;
 			sourceTree = "<group>";
@@ -480,6 +488,7 @@
 				4A18E49329B9A53F00617524 /* BandListMenuTableView.swift */,
 				4A18E49529B9BACC00617524 /* BandListMenuTableViewCell.swift */,
 				7B36825129D023AA004D8EBF /* CommentListViewController.swift */,
+				4A32707029CBE44D0046EE0C /* DeleteBandNoticeView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1052,6 +1061,7 @@
 			files = (
 				A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */,
 				7B6D3357299A50F2001FD630 /* DetailContentView.swift in Sources */,
+				4A063C4C29CC951C00BFD253 /* BandNetworkManager.swift in Sources */,
 				7B7B04162988FE9900186986 /* SNS.swift in Sources */,
 				4A43E6ED29A4659800EC4BA5 /* CheckMarkButton.swift in Sources */,
 				9AFE014529990754004B0BCF /* LeaderPositionSelectHeaderView.swift in Sources */,
@@ -1155,9 +1165,11 @@
 				4A59318A2989041200C8DA31 /* PlusPositionViewController.swift in Sources */,
 				B8D51CA029D0AE4B00F927FC /* UserDefaultStorage.swift in Sources */,
 				7BB4FA88299B9AEF00C44184 /* EventStateLabelStackView.swift in Sources */,
+				4A32706F29CAEA480046EE0C /* DeleteBandViewController.swift in Sources */,
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */,
+				4A32707129CBE44D0046EE0C /* DeleteBandNoticeView.swift in Sources */,
 				4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */,
 				7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */,
 				9AA0BB4F29A4E7FD00871A05 /* NotificationListViewController.swift in Sources */,

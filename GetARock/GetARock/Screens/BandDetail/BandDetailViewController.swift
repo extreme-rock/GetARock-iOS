@@ -92,6 +92,10 @@ final class BandDetailViewController: UIViewController {
         setNotification()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
     // MARK: - Init
     
     init(myBands: [BandList]?, entryPoint: EntryPoint) {
@@ -116,7 +120,7 @@ final class BandDetailViewController: UIViewController {
     private func setupLayout() {
         view.addSubview(bandTopInfoView)
         bandTopInfoView.constraint(
-            top: self.view.topAnchor,
+            top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.leadingAnchor,
             trailing: self.view.trailingAnchor
         )
@@ -235,6 +239,34 @@ extension BandDetailViewController {
 }
 
 extension BandDetailViewController: BandTopInfoViewDelegate {
+    func showBandOptionActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let modifyBandAction = UIAlertAction(title: "밴드 수정", style: .default) { _ in
+            print("밴드수정")
+        }
+        
+        let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in
+            print("내 포지션 수정")
+        }
+        
+        let bandLeaderID = self.bandData.memberList.filter { $0.memberState == .admin }
+        // TODO: 애플로그인을 통해 userID를 보관하는 곳이 생기면 그때 비교 해야할듯
+        
+        let deleteMyBandAction = UIAlertAction(title: "밴드 삭제", style: .destructive) { _ in
+            let viewController = DeleteBandViewController()
+            viewController.delegate = self
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        [modifyBandAction, modifyMyPositionAction, deleteMyBandAction, cancelAction].forEach {
+            actionSheet.addAction($0)
+        }
+        self.present(actionSheet, animated: true)
+    }
+    
     func didBandSelectButtonTapped(isBandSelectButton: Bool) {
         isBandSelectButton ? dropdownBandSelectMenu() : removeBandSelectMenu()
     }
@@ -314,3 +346,12 @@ extension BandDetailViewController {
     }
 }
 
+extension BandDetailViewController: DeleteBandViewControllerDelegate {
+    func didDeleteBandButtonTapped() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        let viewController = MainMapViewController(isFromSignUp: false)
+        viewController.setupLayoutDeleteBandNoticeView()
+        window.rootViewController = viewController
+        window.makeKeyAndVisible()
+    }
+}

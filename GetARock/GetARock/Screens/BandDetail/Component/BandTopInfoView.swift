@@ -9,6 +9,7 @@ import UIKit
 
 protocol BandTopInfoViewDelegate: AnyObject {
     func didBandSelectButtonTapped(isBandSelectButton: Bool)
+    func showBandOptionActionSheet()
 }
 
 final class BandTopInfoView: UIView {
@@ -52,6 +53,20 @@ final class BandTopInfoView: UIView {
         button.setImage(ImageLiteral.chevronDownSymbol, for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(didBandSelectToggleButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var optionButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        let button = UIButton(configuration: configuration)
+        button.setImage(ImageLiteral.ellipsisSymbol, for: .normal)
+        button.tintColor = .white
+        button.transform = button.transform.rotated(by: .pi / 2)
+        let action = UIAction { [weak self] _ in
+            self?.showOptionActionSheet()
+        }
+        button.addAction(action, for: .touchUpInside)
         return button
     }()
     
@@ -138,8 +153,13 @@ final class BandTopInfoView: UIView {
             top: self.topAnchor,
             leading: self.leadingAnchor,
             trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 30, left: 16, bottom: 0, right: 16)
+            padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         )
+        
+        self.addSubview(optionButton)
+        optionButton.constraint(top: self.topAnchor,
+                                trailing: self.trailingAnchor,
+                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
         
         self.addSubview(divider)
         divider.constraint(
@@ -188,6 +208,11 @@ final class BandTopInfoView: UIView {
         )
     }
 
+    
+    private func showOptionActionSheet() {
+        // TODO: 리더이면 밴드 삭제를 넣고 아님 말고
+        self.delegate?.showBandOptionActionSheet()
+    }
 }
 
 extension BandTopInfoView {
