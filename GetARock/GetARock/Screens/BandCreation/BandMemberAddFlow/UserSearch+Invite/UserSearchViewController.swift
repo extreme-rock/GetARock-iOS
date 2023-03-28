@@ -8,7 +8,6 @@
 import UIKit
 
 
-//TODO: API 업데이트 되면 TableCell에 선택한 여러 악기가 표기 되게 만들기 
 enum BottomScrollSection: Int {
     case main
 }
@@ -211,18 +210,7 @@ extension UserSearchViewController {
         } else {
             Task {
                 let searchedUsers = try await MemberSearchNetworkManager().getSearchedMemberList(with: searchBar.inputText())
-
-                SearchedUserListDTO.dataSet.memberList = searchedUsers.map({
-                    SearchedUserInfo(
-                        memberId: $0.memberId ?? -1,
-                        name: $0.name,
-                        memberState: $0.memberState,
-                        //MARK: 여기 데이터 변환 과정 궁금
-                        instrumentList: $0.instrumentList,
-                        gender: $0.gender,
-                        age: $0.age)
-                })
-
+                SearchedUserListDTO.dataSet.memberList = searchedUsers
                 self.searchResultTable.reloadData()
             }
         }

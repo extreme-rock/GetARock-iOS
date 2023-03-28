@@ -412,6 +412,7 @@
 				4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */,
 				9ABC0C2229CB4EAF002DC070 /* BandInformationNetworkManager.swift */,
 				A9BAAFB329CEAF3700C254DD /* MemberSearchNetworkManager.swift */,
+				A9FFA38129D2CE9E0091B792 /* UserInfoNetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -425,7 +426,6 @@
 				B887184929AC5379000026ED /* DeviceTokenDTO.swift */,
 				4A4A6E9329A8F58B005CF076 /* User.swift */,
 				B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */,
-				A9FFA38129D2CE9E0091B792 /* UserInfoNetworkManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

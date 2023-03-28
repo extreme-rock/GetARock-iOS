@@ -205,10 +205,10 @@ extension PracticeRoomSearchViewController: UITableViewDelegate {
         let selectedLocationInfo = searchedLocationList[indexPath.row]
         if selectedLocationInfo.subtitle.isEmpty {
             completion(selectedLocationInfo.title)
-            BasicDataModel.bandCreationData.address = addressInfo
+            BasicDataModel.bandCreationData.address.city = selectedLocationInfo.title
         } else {
             completion(selectedLocationInfo.subtitle)
-            BasicDataModel.bandCreationData.address = addressInfo
+            BasicDataModel.bandCreationData.address.street = selectedLocationInfo.subtitle
         }
         
         // 선택된 주소의 좌표값 추출
