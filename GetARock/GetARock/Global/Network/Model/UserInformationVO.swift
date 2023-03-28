@@ -12,11 +12,11 @@ struct UserInformationVO: Codable {
     let userID: Int
     let name,age, gender: String
     let introduction: String?
-    let bandList: [BandListVO]?
+    let bandList: [BandListVO]
     let instrumentList: [InstrumentListVO]
-    let snsList: [SnsListVO]?
-    let eventList: [EventVO]?
-    let commentEventList: [CommentEventList]?
+    let snsList: [SnsListVO]
+    let eventList: [EventVO]
+    let commentEventList: [CommentEventList]
 
     enum CodingKeys: String, CodingKey {
         case userID = "memberId"

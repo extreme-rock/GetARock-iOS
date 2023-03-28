@@ -388,8 +388,27 @@ extension MainMapViewController {
 extension MainMapViewController {
     private func mybandsButtonTapped() {
         // TODO: band가 없으면 alerview를 띄워줌 있으면 bandDetail로 연결
-        setupAlertViewLayout()
-        
+        Task {
+            let memberID = UserDefaultStorage.memberID
+            guard let user = await UserInfoNetworkManager.shared.fetchUserData(with: memberID) else { return }
+            if user.bandList.isEmpty {
+                setupAlertViewLayout()
+            } else {
+                let bandList = user.bandList.map {
+                    BandList(bandId: $0.bandID,
+                             name: $0.name,
+                             memberCount: $0.memberCount,
+                             memberAge: $0.memberAge)
+                }
+                let viewController = BandDetailViewController(myBands: bandList, entryPoint: .myBand)
+                viewController.modalPresentationStyle = .pageSheet
+                if let sheet = viewController.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                    sheet.prefersGrabberVisible = true
+                }
+                present(viewController, animated: true, completion: nil)
+            }
+        }
     }
 }
 
@@ -419,3 +438,4 @@ extension MainMapViewController {
         }
     }
 }
+

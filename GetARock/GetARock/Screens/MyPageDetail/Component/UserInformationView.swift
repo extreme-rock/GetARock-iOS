@@ -196,19 +196,18 @@ final class UserInformationView: UIView {
     }
     
     private func setUserBandButton() {
-        if let userBand = userData.bandList.map({ $0 }) {
-            if userBand.count == 0 {
-                let emptyView = EmptyView(type: .noBand)
-                self.userBandButtonStackView.addArrangedSubview(emptyView)
-            }
-            else {
-                userBand.forEach{
-                    let bandButton = BandButtonView(bandID: $0.bandID,
-                                                    bandName: $0.name,
-                                                    membersNumber: $0.memberCount,
-                                                    membersAge: $0.memberAge)
-                    self.userBandButtonStackView.addArrangedSubview(bandButton)
-                }
+        let userBand = userData.bandList.map({ $0 })
+        if userBand.count == 0 {
+            let emptyView = EmptyView(type: .noBand)
+            self.userBandButtonStackView.addArrangedSubview(emptyView)
+        }
+        else {
+            userBand.forEach{
+                let bandButton = BandButtonView(bandID: $0.bandID,
+                                                bandName: $0.name,
+                                                membersNumber: $0.memberCount,
+                                                membersAge: $0.memberAge)
+                self.userBandButtonStackView.addArrangedSubview(bandButton)
             }
         }
     }

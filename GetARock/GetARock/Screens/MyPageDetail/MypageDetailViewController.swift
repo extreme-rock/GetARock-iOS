@@ -20,11 +20,11 @@ final class MypageDetailViewController: BaseViewController {
         age: "",
         gender: "",
         introduction: nil,
-        bandList: nil,
+        bandList: [],
         instrumentList: [],
-        snsList: nil,
-        eventList: nil,
-        commentEventList: nil
+        snsList: [],
+        eventList: [],
+        commentEventList: []
     )
     
     // MARK: - View
