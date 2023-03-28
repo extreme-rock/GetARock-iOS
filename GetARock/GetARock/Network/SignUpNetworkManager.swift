@@ -8,7 +8,10 @@
 import Foundation
 
 final class SignUpNetworkManager {
-    static func postUserInformation(user: User) async throws {
+    
+    static let shared = SignUpNetworkManager()
+    
+   func postUserInformation(user: User) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"
@@ -48,7 +51,7 @@ final class SignUpNetworkManager {
         dataTask.resume()
     }
     
-    static func putUserInformation(user: User, completion: @escaping((Result<Bool, Error>) -> Void)) async throws {
+   func putUserInformation(user: User, completion: @escaping((Result<Bool, Error>) -> Void)) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"

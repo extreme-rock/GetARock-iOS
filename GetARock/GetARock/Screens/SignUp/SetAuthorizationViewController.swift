@@ -5,17 +5,25 @@
 //  Created by 최동권 on 2023/02/10.
 //
 
-import CoreLocation
 import UIKit
 
 final class SetAuthorizationViewController: UIViewController {
-    
-    //MARK: - Property
-    
-    private let locationManager = CLLocationManager()
-    private var isFirstAuthorizationChangeRun = true
-    
+
     //MARK: - View
+    
+    private lazy var titleStackView: UIStackView = {
+        $0.axis = .vertical
+        $0.spacing = 20
+        return $0
+    }(UIStackView(arrangedSubviews: [titleLabel, requestAuthorizationLabel]))
+    
+    private let titleLabel: UILabel = {
+        $0.font = UIFont.setFont(.largeTitle01)
+        $0.numberOfLines = 2
+        $0.textColor = .white
+        $0.text = "프로필을 완성했어요.\n축하합니다!"
+        return $0
+    }(UILabel())
     
     private let requestAuthorizationLabel: UILabel = {
         $0.font = UIFont.setFont(.headline01)
@@ -131,9 +139,9 @@ final class SetAuthorizationViewController: UIViewController {
     }(UILabel())
     
     private lazy var approveButton: BottomButton = {
-        $0.setTitle("동의 후 시작하기", for: .normal)
+        $0.setTitle("확인", for: .normal)
         let action = UIAction { _ in
-            self.requestLocationAuthorization()
+            self.view.window?.rootViewController = MainMapViewController(isFromSignUp: true)
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -145,30 +153,27 @@ final class SetAuthorizationViewController: UIViewController {
         super.viewDidLoad()
         setupLayout()
         attribute()
-        setLocationManager()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     //MARK: - Method
-    
-    private func setLocationManager() {
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-   
+
     private func attribute() {
         self.view.backgroundColor = .dark03
     }
     
     private func setupLayout() {
-        
-        self.view.addSubview(requestAuthorizationLabel)
-        requestAuthorizationLabel.constraint(top: view.topAnchor,
-                                             leading: view.leadingAnchor,
-                                             trailing: view.trailingAnchor,
-                                             padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))
+        self.view.addSubview(titleStackView)
+        titleStackView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
+                                  leading: view.leadingAnchor,
+                                  trailing: view.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 65, left: 16, bottom: 0, right: 16))
         
         self.view.addSubview(authorizationContainerView)
-        authorizationContainerView.constraint(top: requestAuthorizationLabel.bottomAnchor,
+        authorizationContainerView.constraint(top: titleStackView.bottomAnchor,
                                               leading: view.leadingAnchor,
                                               trailing: view.trailingAnchor,
                                               padding: UIEdgeInsets(top: 25, left: 16, bottom: 0, right: 16))
@@ -191,73 +196,5 @@ final class SetAuthorizationViewController: UIViewController {
         approveButton.constraint(bottom: view.bottomAnchor,
                                  centerX: view.centerXAnchor,
                                  padding: UIEdgeInsets(top: 42, left: 16, bottom: 40, right: 16))
-    }
-}
-
-//MARK: - 권한 관련 Method
-
-extension SetAuthorizationViewController {
-    private func requestLocationAuthorization() {
-        switch locationManager.authorizationStatus {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .denied:
-            self.showRequestLocationServiceAlert()
-        default:
-            return
-        }
-    }
-    
-    func showRequestLocationServiceAlert() {
-        let requestLocationServiceAlert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n'설정 > 개인정보 보호 및 보안'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
-        let goSetting = UIAlertAction(title: "설정", style: .default) { _ in
-            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSetting)
-            }
-        }
-        let cancel = UIAlertAction(title: "취소", style: .default) { [weak self] _ in
-            self?.requestNotificationAutorization()
-        }
-        requestLocationServiceAlert.addAction(cancel)
-        requestLocationServiceAlert.addAction(goSetting)
-        
-        present(requestLocationServiceAlert, animated: true)
-    }
-    
-    private func requestNotificationAutorization() {
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge]) { isGranted, error in
-                if isGranted {
-                    //TODO: 동의 시 뷰 연결
-                    print(isGranted)
-                } else {
-                    //TODO: 비동의 시 뷰 연결
-                    print(isGranted)
-                }
-            }
-    }
-}
-
-extension SetAuthorizationViewController: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if !isFirstAuthorizationChangeRun {
-            switch manager.authorizationStatus {
-            case .notDetermined, .restricted:
-                return
-            case .authorizedAlways, .authorizedWhenInUse:
-                manager.startUpdatingLocation()
-                self.requestNotificationAutorization()
-            case .denied:
-                self.requestNotificationAutorization()
-            @unknown default:
-                return
-            }
-        }
-        
-        self.isFirstAuthorizationChangeRun = false
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
     }
 }

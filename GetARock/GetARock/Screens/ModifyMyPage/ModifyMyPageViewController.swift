@@ -144,7 +144,7 @@ final class ModifyMyPageViewController: UIViewController {
             }
             
             Task {
-                try await SignUpNetworkManager.putUserInformation(user: userInfo, completion: { result in
+                try await SignUpNetworkManager.shared.putUserInformation(user: userInfo, completion: { result in
                     switch result {
                     case .success(_):
                         // TODO: 성공했을 때 dismiss말고 다른 indicator가 필요할지?

@@ -153,7 +153,7 @@ final class BandCreationFinishGuideViewController: UIViewController {
 
     private lazy var confirmButton: BottomButton = {
         let action = UIAction { _ in
-            self.navigationController?.pushViewController(MainMapViewController(), animated: true)
+            self.navigationController?.pushViewController(MainMapViewController(isFromSignUp: false), animated: true)
         }
         $0.setTitle("확인 완료 😎", for: .normal)
         $0.titleLabel?.font = .setFont(.headline02)
