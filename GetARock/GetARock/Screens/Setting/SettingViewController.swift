@@ -37,10 +37,15 @@ final class SettingViewController: BaseViewController {
         setupTableView()
         setupLayout()
         configureModels()
+        attribute()
     }
     
     // MARK: - Method
-    
+
+    private func attribute() {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+
     private func setupTableView() {
         settingTableView.delegate = self
         settingTableView.dataSource = self
@@ -62,11 +67,12 @@ final class SettingViewController: BaseViewController {
 
 extension SettingViewController {
     private func configureModels() {
-        options.append(CellConfiguration(title: "알림 설정", handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToNotificationSetting()
-            }
-        }))
+        //TODO: 나중에 알림이 생기면 추가
+//        options.append(CellConfiguration(title: "알림 설정", handler: { [weak self] in
+//            DispatchQueue.main.async {
+//                self?.goToNotificationSetting()
+//            }
+//        }))
         
         options.append(CellConfiguration(title: "약관 및 정책", handler: { [weak self] in
             DispatchQueue.main.async {
@@ -145,7 +151,7 @@ extension SettingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 4 { return 70 }
+        if indexPath.row == 3 { return 70 }
         
         return 50
     }
@@ -160,7 +166,7 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = options[indexPath.row]
-        if indexPath.row < 4 {
+        if indexPath.row < 3 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SettingViewDefaultCell.classIdentifier,
                 for: indexPath
@@ -168,7 +174,7 @@ extension SettingViewController: UITableViewDataSource {
             cell.configure(title: model.title)
             
             return cell
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == 3 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SettingViewVersionCell.classIdentifier,
                 for: indexPath

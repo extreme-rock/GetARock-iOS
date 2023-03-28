@@ -77,8 +77,13 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let settingButton: UIButton = {
+    private lazy var settingButton: UIButton = {
         $0.setImage(UIImage(named: "settingButton"), for: .normal)
+        let action = UIAction { [weak self] _ in
+            let viewController = SettingViewController()
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
     
@@ -122,8 +127,13 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.setLocationManager()
         self.requestLocationAuthorization()
+
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         moveMap(to: currentCoordinate)

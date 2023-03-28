@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct SignUpVO: Decodable {
+    let id: Int
+    let success: Bool
+}
+
 final class SignUpNetworkManager {
     
     static let shared = SignUpNetworkManager()
@@ -41,6 +46,14 @@ final class SignUpNetworkManager {
                 switch httpResponse.statusCode {
                 case (200...299):
                     print("success")
+                    //TODO: 받아온 id를 userDefault에 넣어야함
+                    do {
+                        let decodedData = try JSONDecoder().decode(SignUpVO.self, from: data!)
+                        UserDefaultHandler.setMemberID(memberID: decodedData.id)
+                        UserDefaultHandler.setIsLogin(isLogin: true)
+                    } catch {
+                        print(error)
+                    }
                 case (300...599):
                     print(NetworkError.failedRequest(status: httpResponse.statusCode))
                 default:

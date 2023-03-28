@@ -54,7 +54,7 @@ enum Age: String, CaseIterable, Codable {
     case oversixties = "60대 이상"
     
     enum CodingKeys: String, CodingKey {
-        case undertwenties = "UNDERTWENDTIES"
+        case undertwenties = "UNDERTWENTIES"
         case twenties = "TWENTIES"
         case thirties = "THIRTIES"
         case fourties = "FOURTIES"
@@ -82,7 +82,7 @@ enum Age: String, CaseIterable, Codable {
     var inEnglish: String {
         switch self {
         case .undertwenties:
-            return "UNDERTWENDTIES"
+            return "UNDERTWENTIES"
         case .twenties:
             return "TWENTIES"
         case .thirties:

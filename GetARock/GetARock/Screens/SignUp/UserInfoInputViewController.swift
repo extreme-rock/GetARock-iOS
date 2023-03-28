@@ -211,6 +211,7 @@ final class UserInfoInputViewController: UIViewController {
         super.viewDidLoad()
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
+        self.setCustomBackButton()
         self.configureDelegate()
         self.setNotification()
     }

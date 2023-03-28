@@ -28,7 +28,7 @@ final class NotificationListViewController: UITableViewController {
         self.tableView.backgroundColor = .dark01
         self.tableView.separatorStyle = .none
         
-        self.customizeBackButton()
+        self.setCustomBackButton()
         self.fixNavigationBarColorWhenScrollDown()
         self.setNavigationInlineTitle(title: "알림함")
     }

@@ -189,6 +189,7 @@ extension LandingViewController: ASAuthorizationControllerDelegate {
                     // member ID 받아옴 -> 유저디폴트에 저장 후 메인맵으로 연결
                     if self.loginData.memberId != nil {
                         UserDefaultHandler.setMemberID(memberID: self.loginData.memberId!)
+                        UserDefaultHandler.setIsLogin(isLogin: true)
                         DispatchQueue.main.async {
                             self.presentMainMapViewController()
                         }

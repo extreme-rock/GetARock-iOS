@@ -54,24 +54,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     private func getCredentialState() {
+        print(UserDefaultStorage.isLogin, "islogin")
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: UserDefaultStorage.userID) { (credentialState, error) in
             switch credentialState {
             case .authorized:
                 // TODO: isLogin 값 체크 후 자동로그인 (refresh token 필요함)
                 print("authorized")
-                //                DispatchQueue.main.async {
-                //                    self.presentMaipMapViewController()
-                //                }
                 // The Apple ID credential is valid.
+
             case .revoked:
                 print("revoked")
             case .notFound:
                 // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
                 print("notFound")
+                print(error)
             default:
                 break
             }
+//            DispatchQueue.main.async {
+//                if UserDefaultStorage.isLogin {
+//                    self.presentMaipMapViewController()
+//                } else {
+//                    self.presentLandingViewController()
+//                }
+//            }
         }
     }
 }
@@ -125,10 +132,17 @@ extension AppDelegate {
 
 extension AppDelegate {
     private func presentMaipMapViewController() {
-        let viewController = MainMapViewController(isFromSignUp: false)
+        let viewController = UINavigationController(rootViewController: MainMapViewController(isFromSignUp: false))
         viewController.modalPresentationStyle = .fullScreen
         //        viewController.modalTransitionStyle = .crossDissolve
         
-        UIApplication.shared.windows.first?.rootViewController?.present(viewController, animated: false, completion: nil)
+        UIApplication.shared.windows.first?.rootViewController? = viewController
+    }
+
+    private func presentLandingViewController() {
+        let viewController = LandingViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        //        viewController.modalTransitionStyle = .crossDissolve
+        UIApplication.shared.windows.first?.rootViewController? = viewController
     }
 }
