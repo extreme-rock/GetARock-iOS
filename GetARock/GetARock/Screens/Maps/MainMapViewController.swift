@@ -27,8 +27,13 @@ final class MainMapViewController: UIViewController {
     private var previousSelectedMarker: GMSMarker?
     private var locationManager = CLLocationManager()
     private var currentCoordinate = CLLocationCoordinate2D(latitude: 36.014, longitude: 129.32)
-
-
+    private var markers = MapMarkerVO(bandList: [], eventList: [])
+    
+    private var minLatitude: Double = 0.0
+    private var maxLatitude: Double = 0.0
+    private var minLongitude: Double = 0.0
+    private var maxLongitude: Double = 0.0
+    
     private let zoomInRange: Float = 15
     
     private var currentLocationLabel: UILabel = {
@@ -102,7 +107,7 @@ final class MainMapViewController: UIViewController {
         let mapID = GMSMapID(identifier: Bundle.main.gmsMapID)
         
         myLocationMarker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude,
-                                                   longitude: currentCoordinate.longitude)
+                                                           longitude: currentCoordinate.longitude)
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
         myLocationMarker.map = mapView
         
@@ -113,9 +118,8 @@ final class MainMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setupLayout()
-        self.attribute()
         self.setLocationManager()
         self.requestLocationAuthorization()
     }
@@ -124,12 +128,8 @@ final class MainMapViewController: UIViewController {
         super.viewDidAppear(animated)
         moveMap(to: currentCoordinate)
     }
-
-    // MARK: - Method
     
-    private func attribute() {
-        self.setMarkers()
-    }
+    // MARK: - Method
     
     private func setupLayout() {
         self.view.addSubview(self.currentLocationLabel)
@@ -167,20 +167,17 @@ final class MainMapViewController: UIViewController {
     
     private func setMarkers() {
         myLocationMarker.icon = UIImage(named: "myLocationMarker")
-        
-        for band in BandDummyData.testBands {
-            let marker = CustomMarker(bandName: band.name,
-                                      coordinate: band.location.coordinate.toCLLocationCoordinate2D(),
-                                      category: .band)
-            marker.map = mapView
+        Task {
+            await fetchMarkers()
+            mapView.clear()
+            for band in markers.bandList {
+                let marker = CustomMarker(bandName: band.name,
+                                          coordinate: band.toCLLocationCoordinate2D(),
+                                          category: .band)
+                marker.map = mapView
+            }
         }
-        for event in EventDummyData.testEvents {
-            // TODO: 이벤트 이름 -> 밴드 이름으로 변경
-            let marker = CustomMarker(bandName: event.name,
-                                      coordinate: event.location.coordinate.toCLLocationCoordinate2D(),
-                                      category: .event)
-            marker.map = mapView
-        }
+    
     }
     
     private func moveMap(to coordinate: CLLocationCoordinate2D?) {
@@ -214,12 +211,12 @@ extension MainMapViewController: GMSMapViewDelegate {
                 previousSelectedMarker.changeBandMarkerImageWhenDeselected()
             }
         }
-
-        let selectedMarker = marker as! CustomMarker
-        if selectedMarker.category == .band {
-            selectedMarker.changeBandMarkerImageWhenSelected()
+        
+        let selectedMarker = marker as? CustomMarker
+        if selectedMarker?.category == .band {
+            selectedMarker?.changeBandMarkerImageWhenSelected()
         }
-        moveMap(to: selectedMarker.position)
+        moveMap(to: selectedMarker?.position)
         self.previousSelectedMarker = selectedMarker
         
         return true
@@ -233,6 +230,35 @@ extension MainMapViewController: GMSMapViewDelegate {
             }
             self.previousSelectedMarker = nil
         }
+    }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        // 현재 보이는 지도의 경계를 구하기 위해 GMSVisibleRegion 객체를 가져옵니다.
+        let visibleRegion = mapView.projection.visibleRegion()
+        
+        // 경계를 구하기 위해 최소, 최대 위도와 경도를 가져옵니다.
+        let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+        
+        // 최소 위도와 최대 위도를 가져옵니다.
+        let updatedMinLatitude = bounds.southWest.latitude
+        let updatedMaxLatitude = bounds.northEast.latitude
+        
+        // 최소 경도와 최대 경도를 가져옵니다.
+        let updatedMinLongitude = bounds.southWest.longitude
+        let updatedMaxLongitude = bounds.northEast.longitude
+        
+        // 현재 보이는 지도의 경계가 기존의 경계를 벗어나는 경우 새롭게 마커를 로드합니다.
+        if (updatedMinLatitude < minLatitude) || (updatedMinLongitude < minLongitude) || (updatedMaxLatitude > maxLatitude) || (updatedMaxLongitude > maxLongitude) {
+            setMarkers()
+        }
+        
+        // 최소 위도와 최대 위도를 저장합니다.
+        minLatitude = bounds.southWest.latitude - 0.1
+        maxLatitude = bounds.northEast.latitude + 0.3
+        
+        // 최소 경도와 최대 경도를 저장합니다.
+        minLongitude = bounds.southWest.longitude - 0.1
+        maxLongitude = bounds.northEast.longitude + 0.1
     }
 }
 
@@ -350,5 +376,32 @@ extension MainMapViewController {
         // TODO: band가 없으면 alerview를 띄워줌 있으면 bandDetail로 연결
         setupAlertViewLayout()
         
+    }
+}
+
+extension MainMapViewController {
+    private func fetchMarkers() async {
+        var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/map")
+        queryURLComponent?.queryItems = [
+            URLQueryItem(name: "minLatitude", value: "\(minLatitude)"),
+            URLQueryItem(name: "maxLatitude", value: "\(maxLatitude)"),
+            URLQueryItem(name: "minLongitude", value: "\(minLongitude)"),
+            URLQueryItem(name: "maxLongitude", value: "\(maxLongitude)")
+        ]
+        
+        guard let url = queryURLComponent?.url else {
+            print("An error has occurred while creating URL")
+            return
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            let decodedData = try JSONDecoder().decode(MapMarkerVO.self, from: data)
+            print(String(data: data, encoding: String.Encoding.utf8) ?? "no responce")
+            print("응답 내용 : \(response)")
+            self.markers = decodedData
+        } catch {
+            print("An error has occurred while decoding JSONObject: \(error.localizedDescription)")
+        }
     }
 }
