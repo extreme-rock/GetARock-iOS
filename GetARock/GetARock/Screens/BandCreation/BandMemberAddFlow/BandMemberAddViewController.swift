@@ -32,24 +32,32 @@ final class BandMemberAddViewController: BaseViewController {
         $0.backgroundColor = .dark01
         $0.delegate = self
         return $0
-    }(UITableView())
+    }(UITableView(frame: .zero, style: .grouped))
 
     private lazy var dataSource: UITableViewDiffableDataSource<BandMemberAddTableViewSection, SearchedUserInfo> = self.makeDataSource()
 
     private lazy var nextButton: BottomButton = {
         let action = UIAction { _ in
             self.confirmBandMemberList()
+            self.navigationController?.pushViewController(BandInformationSetViewController(), animated: true)
         }
-        $0.setTitle("추가", for: .normal)
+        $0.setTitle("다음", for: .normal)
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
 
     //MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
         setupLayout()
+    }
+
+    // View가 나타나기전 추가된 멤버 정보 업데이트
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateSnapShot(with: self.addedMembers)
     }
 
     //MARK: - Method
@@ -64,7 +72,7 @@ final class BandMemberAddViewController: BaseViewController {
             padding: UIEdgeInsets(top: 20,
                                   left: 16,
                                   bottom: 100,
-                                  right: 16))
+                                  right: 0))
 
         view.addSubview(nextButton)
         nextButton.constraint(
@@ -73,7 +81,7 @@ final class BandMemberAddViewController: BaseViewController {
             padding: UIEdgeInsets(top: 0,
                                   left: 0,
                                   bottom: 16,
-                                  right: 0))
+                                  right: 16))
     }
 
     private func attribute() {
@@ -149,13 +157,22 @@ extension BandMemberAddViewController: UITableViewDelegate {
                         self?.addedMembers.append(data)
                     }
                 }
-                self?.updateSnapShot(with: self?.addedMembers ?? [])
             }
             self?.navigationController?.pushViewController(nextViewController, animated: true)
         }
         headerView.inviteMemberButton.addAction(inviteMemberButtonAction, for: .touchUpInside)
-        //TODO: 미가입 회원추가 관련 코드 작성 예정
-      return headerView
+        
+        //MARK: 미가입 멤버 추가 뷰로 이동
+        let unRegisteredMemberButtonAction = UIAction { _ in
+            let nextViewController = AddUnRegisteredMemberViewController()
+            nextViewController.completion = { newAddedMembers in
+                self.addedMembers = self.addedMembers + newAddedMembers
+            }
+            self.navigationController?.pushViewController(nextViewController, animated: true)
+        }
+        headerView.inviteUnRegisteredMemberButton.addAction(unRegisteredMemberButtonAction, for: .touchUpInside)
+        
+        return headerView
     }
 }
 

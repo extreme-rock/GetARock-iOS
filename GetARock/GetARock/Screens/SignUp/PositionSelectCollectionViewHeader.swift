@@ -20,7 +20,7 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     private lazy var pageIndicatorLabel: UILabel = {
         $0.font = .setFont(.subTitle)
-        $0.text = "1/3"
+        $0.text = "1/2"
         $0.textColor = .gray02
         return $0
     }(UILabel())
@@ -48,6 +48,7 @@ final class PositionSelectCollectionViewHeader: UIView {
         $0.isHidden = true
         let action = UIAction { [weak self] _ in
             self?.postDeselectAllPosition()
+            self?.postToggleNextButtonEnbaled()
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
@@ -76,19 +77,6 @@ final class PositionSelectCollectionViewHeader: UIView {
     
     //MARK: - Method
     
-    private func addObserveHideDeselectAllPositionButton() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(hideDeselectButton),
-            name: Notification.Name.hideDeselectAllPositionButton,
-            object: nil)
-    }
-    
-    @objc
-    private func hideDeselectButton() {
-        self.deselectAllPositionButton.isHidden.toggle()
-    }
-    
     private func setupLayout() {
         self.addSubview(pageIndicatorLabel)
         pageIndicatorLabel.constraint(top: self.topAnchor,
@@ -114,6 +102,11 @@ final class PositionSelectCollectionViewHeader: UIView {
                                              trailing: self.trailingAnchor,
                                              padding: UIEdgeInsets(top: 15, left: 0, bottom: 11, right: 0))
     }
+}
+
+//MARK: Notification 관련
+
+extension PositionSelectCollectionViewHeader {
     
     private func setupLayoutWithoutPageIndicator() {
         self.addSubview(titleLabel)
@@ -139,5 +132,23 @@ final class PositionSelectCollectionViewHeader: UIView {
         NotificationCenter.default.post(
             name: Notification.Name.deselectAllPosition,
             object: nil)
+    }
+    
+    private func postToggleNextButtonEnbaled() {
+        NotificationCenter.default.post(name: Notification.Name.toggleNextButtonEnbaled,
+                                        object: nil)
+    }
+    
+    private func addObserveHideDeselectAllPositionButton() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(hideDeselectButton),
+            name: Notification.Name.hideDeselectAllPositionButton,
+            object: nil)
+    }
+    
+    @objc
+    private func hideDeselectButton() {
+        self.deselectAllPositionButton.isHidden.toggle()
     }
 }
