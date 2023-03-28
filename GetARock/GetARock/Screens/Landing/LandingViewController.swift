@@ -230,7 +230,7 @@ extension LandingViewController: ASAuthorizationControllerPresentationContextPro
 
 extension LandingViewController {
     private func presentMainMapViewController() {
-        let viewController = MainMapViewController()
+        let viewController = MainMapViewController(isFromSignUp: false)
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)

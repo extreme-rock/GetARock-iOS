@@ -125,7 +125,7 @@ extension AppDelegate {
 
 extension AppDelegate {
     private func presentMaipMapViewController() {
-        let viewController = MainMapViewController()
+        let viewController = MainMapViewController(isFromSignUp: false)
         viewController.modalPresentationStyle = .fullScreen
         //        viewController.modalTransitionStyle = .crossDissolve
         
