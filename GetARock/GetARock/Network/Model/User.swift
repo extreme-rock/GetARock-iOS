@@ -97,13 +97,39 @@ enum Age: String, CaseIterable, Codable {
     }
 }
 
-enum Instrument: String {
+enum Instrument: String, CaseIterable {
     case guitar
     case bass
     case keyboard
     case drum
     case vocal
     case etc = ""
+    
+    enum CodingKey: String {
+        case guitar = "기타"
+        case bass = "베이스"
+        case keyboard = "키보드"
+        case drum = "드럼"
+        case vocal = "보컬"
+        case etc = ""
+        
+        var inEnglish: String {
+            switch self {
+            case .guitar:
+                return "guitar"
+            case .bass:
+                return "bass"
+            case .keyboard:
+                return "keyboard"
+            case .drum:
+                return "drum"
+            case .vocal:
+                return "vocal"
+            case .etc:
+                return "etc"
+            }
+        }
+    }
     
     var imageName: String {
         switch self {

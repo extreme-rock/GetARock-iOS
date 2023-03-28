@@ -32,7 +32,7 @@ enum Item: Hashable {
         case .bandMember(let bandMember):
             return bandMember.userName
         case .position(let position):
-            return position.instrumentName
+            return Instrument.CodingKey(rawValue: position.instrumentName)?.inEnglish ?? position.instrumentName
         case .plusPosition:
             return ""
         }

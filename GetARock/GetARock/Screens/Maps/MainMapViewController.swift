@@ -341,10 +341,22 @@ extension MainMapViewController: CLLocationManagerDelegate {
 
 extension MainMapViewController: GetARockInfoPopUpViewDelegate {
     func makeBandButtonTapped() {
-        self.alertView.removeFromSuperview()
-        let viewController = UINavigationController(rootViewController: LeaderPositionSelectViewController())
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true)
+        Task {
+            self.alertView.removeFromSuperview()
+            guard let instrumentList = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.instrumentList else { return }
+            let positions = instrumentList.map {
+                let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
+                return Item.position(Position(
+                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? "",
+                    instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
+                    isETC: isETC)
+                )
+            }
+            
+            let viewController = UINavigationController(rootViewController: LeaderPositionSelectViewController(positions: positions))
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true)
+        }
     }
     
     func dismissButtonTapped() {

@@ -114,10 +114,22 @@ final class MypageDetailViewController: BaseViewController {
     }
     
     @objc private func presentBandCreation(_ notification: Notification) {
-        let bandCreationVC = LeaderPositionSelectViewController()
-//        self.navigationController?.pushViewController(bandCreationVC, animated: true)
-        bandCreationVC.modalPresentationStyle = .fullScreen
-        self.present(bandCreationVC, animated: true)
+        Task {
+            guard let instrumentList = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.instrumentList else { return }
+            let positions = instrumentList.map {
+                let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
+                return Item.position(Position(
+                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? "",
+                    instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
+                    isETC: isETC)
+                )
+            }
+            let bandCreationVC = LeaderPositionSelectViewController(positions: positions)
+            //        self.navigationController?.pushViewController(bandCreationVC, animated: true)
+            bandCreationVC.modalPresentationStyle = .fullScreen
+            self.present(bandCreationVC, animated: true)
+            
+        }
     }
     
     //TODO - 지금 서버에 들어가는 멤버 밴드가 다른데 구엘한테 확인중....
