@@ -50,11 +50,14 @@ final class BandInformationSetViewController: BaseViewController {
         fontStyle: .content,
         textColorInfo: .gray02)
 
-    private lazy var bandNamingTextField: TextLimitTextField = TextLimitTextField(
+    private lazy var bandNamingTextField: TextLimitTextField = {
+        $0.delegate = self
+        return $0
+    }(TextLimitTextField(
         placeholer: "밴드 이름을 입력해주세요.",
         maxCount: 20,
         duplicationCheckType: .bandName,
-        textExpressionCheck: true)
+        textExpressionCheck: true))
 
     private lazy var textFieldVstack: UIStackView = {
         $0.axis = .vertical
@@ -73,7 +76,7 @@ final class BandInformationSetViewController: BaseViewController {
 
     private lazy var practiceRoomSearchButton: BasicBoxView = {
         $0.showRightView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTappracticeRoomSearchButton))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPracticeRoomSearchButton))
         $0.addGestureRecognizer(tapGesture)
         return $0
     }(BasicBoxView(text: "주소 검색"))
@@ -178,9 +181,14 @@ final class BandInformationSetViewController: BaseViewController {
                                      instagramTextField,
                                      soundCloudTextField]))
 
-    private let informationFillCompleteButton: BottomButton = {
-        //TODO: 밴드 정보 POST action 추가 필요
+    private lazy var informationFillCompleteButton: BottomButton = {
+        let action = UIAction { _ in
+            self.navigationController?.pushViewController(BandCreationFinishGuideViewController(), animated: true)
+            self.postBandInformation()
+        }
         $0.setTitle("추가", for: .normal)
+        $0.addAction(action, for: .touchUpInside)
+        $0.isEnabled = false
         return $0
     }(BottomButton())
 
@@ -237,6 +245,12 @@ final class BandInformationSetViewController: BaseViewController {
             selector: #selector(getKeyboardHeight(notification: )),
             name: UIResponder.keyboardWillShowNotification, object: nil
         )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(setAddCompleteButtonState),
+            name: Notification.Name.checkRequiredBandInformationFilled,
+            object: nil)
     }
 
     private func setupLayout() {
@@ -261,18 +275,30 @@ final class BandInformationSetViewController: BaseViewController {
         instagramTextField.textField.delegate = self
         soundCloudTextField.textField.delegate = self
     }
+
+    @objc
+    private func setAddCompleteButtonState() {
+        let isAvailableName = bandNamingTextField.isAvailableName()
+        if isAvailableName && !bandNamingTextField.isTextFieldEmpty() && practiceRoomSearchButton.inputText() != "주소 검색" {
+            informationFillCompleteButton.isEnabled = true
+        } else {
+            informationFillCompleteButton.isEnabled = false
+        }
+    }
 }
 
 // MARK: - Extension
 
 extension BandInformationSetViewController {
 
-    @objc func didTappracticeRoomSearchButton() {
+    @objc func didTapPracticeRoomSearchButton() {
         let nextViewController = PracticeRoomSearchViewController()
         nextViewController.completion = { [weak self] locationInformation in
             self?.practiceRoomSearchButton.configureText(with: locationInformation)
             self?.practiceRoomSearchButton.hideRightView()
             self?.practiceRoomSearchButton.setTextColor(with: .white)
+            NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
+                                            object: nil)
         }
         navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -298,9 +324,22 @@ extension BandInformationSetViewController {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
     }
 
-    //TODO: 밴드 정보를 서버에 POST 하는 코드 추가 예정
     private func postBandInformation() {
+        confirmBandInformation()
+        Task {
+            //TODO: 로딩뷰 삽입 필요
+            try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
+        }
+    }
 
+    private func confirmBandInformation() {
+        BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
+        BasicDataModel.bandCreationData.address.detail = detailpracticeRoomTextField.inputText()
+        //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
+        BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
+        BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),
+                                  instagramTextField.inputText(),
+                                  soundCloudTextField.inputText()]
     }
 }
 
@@ -324,5 +363,12 @@ extension BandInformationSetViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.frame.origin.y += self.keyBoardHeight
+    }
+}
+
+extension BandInformationSetViewController: TextLimitTextFieldDelegate {
+    func textFieldTextDidChanged() {
+        NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
+                                        object: nil)
     }
 }

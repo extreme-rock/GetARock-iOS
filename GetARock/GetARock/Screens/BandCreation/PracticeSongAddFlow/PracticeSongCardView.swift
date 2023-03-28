@@ -111,12 +111,22 @@ final class PracticeSongCardView: UIStackView {
         return practiceSongTextField.textField.text ?? ""
     }
 
+    func linkText() -> String {
+        return linkTextField.inputText()
+    }
+
     func hideDeleteButton() {
         deleteButton.isHidden = true
     }
 
     func showDeleteButton() {
         deleteButton.isHidden = false
+    }
+
+    func configure(with data: SongList) {
+        artistNameTextField.textField.text = data.artist
+        practiceSongTextField.textField.text = data.name
+        linkTextField.textField.text = data.link
     }
     
     func setTextFieldDelegate(controller: UITextFieldDelegate) {

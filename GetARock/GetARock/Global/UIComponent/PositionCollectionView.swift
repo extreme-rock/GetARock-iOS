@@ -194,6 +194,11 @@ final class PositionCollectionView: UIView {
             self.postDeselectAllPositionButtonHiddenToggle()
         }
     }
+    
+    private func postToggleNextButtonEnbaled() {
+        NotificationCenter.default.post(name: Notification.Name.toggleNextButtonEnbaled,
+                                        object: nil)
+    }
 }
 
 // MARK: - DiffableDataSource
@@ -268,6 +273,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
         if selectedCellCount == 1 {
             postDeselectAllPositionButtonHiddenToggle()
             markMainLabel(indexPath: indexPath)
+            postToggleNextButtonEnbaled()
         }
         postDidTapPositionItem()
     }
@@ -289,6 +295,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
         let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
         if selectedCellCount == 0 {
             postDeselectAllPositionButtonHiddenToggle()
+            postToggleNextButtonEnbaled()
         }
         postDidTapPositionItem()
     }

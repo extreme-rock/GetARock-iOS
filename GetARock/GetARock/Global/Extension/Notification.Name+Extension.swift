@@ -16,5 +16,8 @@ extension Notification.Name {
     static let loadBandData = NSNotification.Name("LoadBandData")
     static let didPracticeCardViewTextFieldChange = NSNotification.Name("didPracticeCardViewTextFieldChange")
     static let presentSNSSafariViewController = Notification.Name("presentSNSSafariViewController")
+    static let checkUnRegisteredCardViewInformationFilled = Notification.Name("checkUnRegisteredCardViewInformationFilled")
+    static let checkRequiredBandInformationFilled = Notification.Name("checkRequiredBandInformationFilled")
     static let configureBandData = Notification.Name("configureBandData")
+    static let toggleNextButtonEnbaled = Notification.Name("toggleNextButtonEnbaled")
 }

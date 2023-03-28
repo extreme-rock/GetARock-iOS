@@ -97,7 +97,7 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         deleteButton.constraint(.heightAnchor, constant: 25)
         deleteButton.constraint(trailing: contentView.trailingAnchor,
                                 centerY: contentView.centerYAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 10))
+                                padding: UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 20))
 
         contentView.addSubview(userDetailInfoHstack)
         userDetailInfoHstack.constraint(leading: userNameLabel.trailingAnchor,
@@ -108,26 +108,29 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
     }
 
     func configure(data: SearchedUserInfo) {
-        self.userNameLabel.text = data.name
-        self.instrumentListLabel.text = data.instrumentList.first?.name ?? ""
-        self.id = data.id
+        if data.name.count > 10 {
+            userNameLabel.numberOfLines = 1
+            userNameLabel.adjustsFontSizeToFitWidth = true
+            userNameLabel.minimumScaleFactor = 0.9
+            userNameLabel.lineBreakMode = .byTruncatingTail
+            userNameLabel.constraint(.widthAnchor, constant: 160)
+        }
 
         //Cell 왼쪽 아이콘 케이스 분류
         switch data.memberState {
         case .admin: leftView.image = ImageLiteral.leaderIcon
         case .none: leftView.image = ImageLiteral.memberIcon
-        case .annonymous: leftView.image = ImageLiteral.unRegisteredMemberIcon
+        case .annonymous:
+            leftView.image = ImageLiteral.unRegisteredMemberIcon
+            userDetailInfoHstack.isHidden = true
         default: return
         }
-        
+
+        // Cell 데이터 주입
         self.userNameLabel.text = data.name
         self.userAgeLabel.text = data.age
         self.userGenderLabel.text = data.gender
-
-        switch data.memberState {
-        case .annonymous: userDetailInfoHstack.isHidden = true
-        default:
-            self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
-        }
+        self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
+        self.id = data.id
     }
 }

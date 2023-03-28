@@ -19,7 +19,15 @@ final class PracticeRoomSearchViewController: BaseViewController {
 
     private var searchCompleter: MKLocalSearchCompleter = MKLocalSearchCompleter()
 
-    private var searchResults: [LocationInfo] = []
+    private var searchedLocationList: [LocationInfo] = []
+    
+    private var searchResults = [MKLocalSearchCompletion]()
+
+    private var addressInfo: Address = Address(city: "",
+                                               street: "",
+                                               detail: "",
+                                               longitude: 0,
+                                               latitude: 0)
 
     // MARK: View
 
@@ -105,7 +113,7 @@ final class PracticeRoomSearchViewController: BaseViewController {
 extension PracticeRoomSearchViewController {
     @objc func textFieldDidChange(_ sender: Any?) {
         if searchBar.textField.text == "" {
-            searchResults.removeAll()
+            searchedLocationList.removeAll()
             searchResultTable.reloadData()
         }
         // 사용자가 search bar 에 입력한 text를 자동완성 대상에 넣는다
@@ -131,7 +139,7 @@ extension PracticeRoomSearchViewController: CLLocationManagerDelegate {
     func getCurrentAddressInfo() {
         guard let userLocation = locationManager.location else { return }
         let location = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+        CLGeocoder().reverseGeocodeLocation(location) { [self] (placemarks, error) in
 
             guard let placemark = placemarks?.first else { return }
 
@@ -149,6 +157,7 @@ extension PracticeRoomSearchViewController: CLLocationManagerDelegate {
             if let subThoroughfare = placemark.subThoroughfare {
                 address += " "+subThoroughfare //ex.272-13
             }
+
             self.searchBar.textField.text = address
             self.searchCompleter.queryFragment = address
         }
@@ -160,8 +169,8 @@ extension PracticeRoomSearchViewController: MKLocalSearchCompleterDelegate {
     // 자동완성 완료시 결과를 받는 함수
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         let locationInfoList: [LocationInfo] = completer.results.map { LocationInfo(title: $0.title, subtitle: $0.subtitle) }
-        searchResults = locationInfoList
-
+        searchedLocationList = locationInfoList
+        searchResults = completer.results
         searchResultTable.reloadData()
     }
 
@@ -174,13 +183,13 @@ extension PracticeRoomSearchViewController: MKLocalSearchCompleterDelegate {
 extension PracticeRoomSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+        return searchedLocationList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PracticeRoomSearchTableViewCell.classIdentifier,
                                                        for: indexPath) as? PracticeRoomSearchTableViewCell else { return UITableViewCell() }
-        let searchResult = searchResults[indexPath.row]
+        let searchResult = searchedLocationList[indexPath.row]
         cell.configure(mapSearchResult: searchResult)
         cell.selectionStyle = .none
         return cell
@@ -191,12 +200,34 @@ extension PracticeRoomSearchViewController: UITableViewDataSource {
 extension PracticeRoomSearchViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedResult = searchResults[indexPath.row]
-        if selectedResult.subtitle.isEmpty {
-            completion(selectedResult.title)
+        
+        // 선택된 주소의 텍스트 주소값 추출
+        let selectedLocationInfo = searchedLocationList[indexPath.row]
+        if selectedLocationInfo.subtitle.isEmpty {
+            completion(selectedLocationInfo.title)
+            BasicDataModel.bandCreationData.address = addressInfo
         } else {
-            completion(selectedResult.subtitle)
+            completion(selectedLocationInfo.subtitle)
+            BasicDataModel.bandCreationData.address = addressInfo
         }
+        
+        // 선택된 주소의 좌표값 추출
+        let selectedResult = searchResults[indexPath.row]
+        let searchRequest = MKLocalSearch.Request(completion: selectedResult)
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { (response, error) in
+            guard error == nil else {
+                return
+            }
+            guard let mapItem = response?.mapItems.first else { return }
+            let searchedResultlongitude = mapItem.placemark.coordinate.longitude
+            let searchedResultlatitude = mapItem.placemark.coordinate.latitude
+            
+            BasicDataModel.bandCreationData.address.longitude = searchedResultlongitude
+            BasicDataModel.bandCreationData.address.latitude = searchedResultlatitude
+        }
+        
+        
         self.navigationController?.popViewController(animated: true)
     }
 }
@@ -213,4 +244,3 @@ struct LocationInfo {
     let title: String
     let subtitle: String
 }
-

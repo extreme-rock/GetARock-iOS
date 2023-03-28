@@ -44,14 +44,14 @@ final class BandCreationFinishGuideViewController: UIViewController {
         return $0
     }(UIImageView())
     
-    private let gatherRockTitleLabel: BasicLabel = BasicLabel(contentText: "모여락 이벤트",
+    private let gatherRockTitleLabel: BasicLabel = BasicLabel(contentText: "주변 밴드 살펴보기",
                                                       fontStyle: .contentBold,
                                                       textColorInfo: .white)
     
     private let gatherRockSubtitleLabel: BasicLabel = {
         $0.numberOfLines = 5
         return $0
-    }(BasicLabel(contentText: "모여락 이벤트를 통해 다른 밴드와 소통하고 직접 만날 수 있어요! 올바른 밴드 문화를 위해 주로 공연과 관련된 이벤트를 권장드려요! (예: 합공, 공연홍보, 합주 등)",
+    }(BasicLabel(contentText: "지도를 기반으로 주변에 어떤 밴드들이 있는지 확인해보세요! 올바른 밴드 문화를 만들어봐요! (예: 합공, 공연홍보, 합주 등)",
                  fontStyle: .content,
                  textColorInfo: .white))
     
@@ -150,12 +150,15 @@ final class BandCreationFinishGuideViewController: UIViewController {
                                      gatherRockHstack,
                                      bandTimelineHstack,
                                      commentHstack]))
-    
-    //TODO: 지도 화면으로 navigation 추가 필요
-    private let confirmButton: BottomButton = {
+
+    private lazy var confirmButton: BottomButton = {
+        let action = UIAction { _ in
+            self.navigationController?.pushViewController(MainMapViewController(isFromSignUp: false), animated: true)
+        }
         $0.setTitle("확인 완료 😎", for: .normal)
         $0.titleLabel?.font = .setFont(.headline02)
         $0.titleLabel?.textColor = .white
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
     
@@ -171,14 +174,15 @@ final class BandCreationFinishGuideViewController: UIViewController {
     
     private func attribute() {
         self.view.backgroundColor = .dark03
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     private func setupLayout() {
         self.view.addSubview(titleStackView)
-        titleStackView.constraint(top: view.topAnchor,
+        titleStackView.constraint(top: view.safeAreaLayoutGuide.topAnchor,
                                   leading: view.leadingAnchor,
                                   trailing: view.trailingAnchor,
-                                  padding: UIEdgeInsets(top: 64, left: 16, bottom: 0, right: 16))
+                                  padding: UIEdgeInsets(top: 100, left: 16, bottom: 0, right: 16))
         
         self.view.addSubview(containerStackView)
         containerStackView.constraint(top: titleStackView.bottomAnchor,
