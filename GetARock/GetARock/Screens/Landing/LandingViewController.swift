@@ -190,7 +190,7 @@ extension LandingViewController: ASAuthorizationControllerDelegate {
                     if self.loginData.memberId != nil {
                         UserDefaultHandler.setMemberID(memberID: self.loginData.memberId!)
                         DispatchQueue.main.async {
-                            self.presentMaipMapViewController()
+                            self.presentMainMapViewController()
                         }
                         UserDefaultHandler.setUserID(userID: userIdentifier)
                     } else {
@@ -229,7 +229,7 @@ extension LandingViewController: ASAuthorizationControllerPresentationContextPro
 // MARK: - 뷰 이동 함수
 
 extension LandingViewController {
-    private func presentMaipMapViewController() {
+    private func presentMainMapViewController() {
         let viewController = MainMapViewController()
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
