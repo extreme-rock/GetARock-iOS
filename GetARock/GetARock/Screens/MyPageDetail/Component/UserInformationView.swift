@@ -12,6 +12,7 @@ final class UserInformationView: UIView {
     // MARK: - Property
     
     private var userData: UserInformationVO
+    
     private var userInstrumentCollectionViewItem: [Item] = []
     
     // MARK: - View

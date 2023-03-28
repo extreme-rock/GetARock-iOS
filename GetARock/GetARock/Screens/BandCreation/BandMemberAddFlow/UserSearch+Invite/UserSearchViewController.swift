@@ -135,7 +135,7 @@ extension UserSearchViewController: UITableViewDelegate {
                                     instrumentList: [SearchedUserInstrumentList(
                                         instrumentId: 0,
                                         isMain: true,
-                                        name: selectedCell.userInstrumentLabel.text ?? "")], gender: "MEN", age: "TWENTIES")
+                                        name: selectedCell.userInstrumentLabel.text ?? "")], gender: selectedCell.genderText(), age: selectedCell.ageText())
         data.id = selectedCell.id
         selectedUsers.append(data)
         self.selectedListWithID.append((indexPath: indexPath, id: selectedCell.id))

@@ -8,9 +8,9 @@
 struct BasicDataModel {
     static var bandCreationData: BandCreationDTO = BandCreationDTO(
         name: "user",
-        address: Address(city: "default",
-                         street: "default",
-                         detail: "default",
+        address: Address(city: "",
+                         street: "",
+                         detail: "",
                          longitude: 0.0,
                          latitude: 0.0),
 

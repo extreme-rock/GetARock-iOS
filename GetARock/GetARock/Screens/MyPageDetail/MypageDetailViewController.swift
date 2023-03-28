@@ -37,7 +37,6 @@ final class MypageDetailViewController: BaseViewController {
     
     private lazy var userInfomationView = UserInformationView(userData: userData)
     
-    
     // MARK: - Init
     
     init(userID: Int) {
@@ -61,6 +60,16 @@ final class MypageDetailViewController: BaseViewController {
             setupLayout()
             setNotification()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     // MARK: - Method
@@ -115,9 +124,7 @@ final class MypageDetailViewController: BaseViewController {
     @objc private func presentUserBandDetailViewController(_ notification: Notification) {
         guard let selectbandData = notification.userInfo?["selectbandData"] as? BandList else { return }
         let bandDetailVC = BandDetailViewController(myBands: [selectbandData], entryPoint: .myBand)
-//        self.navigationController?.pushViewController(bandCreationVC, animated: true)
-        bandDetailVC.modalPresentationStyle = .fullScreen
-        self.present(bandDetailVC, animated: true)
+        self.navigationController?.pushViewController(bandDetailVC, animated: true)
     }
 
 }

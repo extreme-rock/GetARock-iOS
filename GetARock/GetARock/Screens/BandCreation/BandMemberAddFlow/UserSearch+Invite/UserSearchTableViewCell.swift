@@ -17,7 +17,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
         textColorInfo: .white)
 
     private let userGenderLabel: BasicLabel = BasicLabel(
-        contentText: "남",
+        contentText: "",
         fontStyle: .content,
         textColorInfo: .white.withAlphaComponent(0.5))
 
@@ -27,7 +27,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
         textColorInfo: .white.withAlphaComponent(0.5))
 
     private let userAgeLabel: BasicLabel = BasicLabel(
-        contentText: "20대",
+        contentText: "",
         fontStyle: .content,
         textColorInfo: .white.withAlphaComponent(0.5))
 
@@ -102,7 +102,19 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
     func configure(data: SearchedUserInfo) {
         self.userNameLabel.text = data.name
         self.userInstrumentLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
+        self.userAgeLabel.text = data.age
+        self.userGenderLabel.text = data.gender
         self.id = data.id
+    }
+    
+    func genderText() -> String {
+        guard let text = userGenderLabel.text else { return "" }
+        return text
+    }
+    
+    func ageText() -> String {
+        guard let text = userAgeLabel.text else { return "" }
+        return text
     }
 }
 

@@ -67,8 +67,13 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let myPageButton: UIButton = {
+    private lazy var myPageButton: UIButton = {
         $0.setImage(UIImage(named: "myPageButton"), for: .normal)
+        let action = UIAction { [weak self] _ in
+            let viewController = UINavigationController(rootViewController: MypageDetailViewController(userID: UserDefaultStorage.memberID))
+            self?.present(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
     
