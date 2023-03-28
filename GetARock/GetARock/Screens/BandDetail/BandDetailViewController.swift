@@ -191,13 +191,15 @@ final class BandDetailViewController: UIViewController {
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         
         let positionModify = UIAlertAction(title: "내 포지션 수정", style: .default) { [weak self] _ in
-            print(" 포지션 수정하기로 연결")
+            print("밴드 포지션 수정하기로 연결")
+            
         }
         let bandModify = UIAlertAction(title: "밴드 수정", style: .default) { [weak self] _ in
-            print("밴드수정하기로 연결")
+            print("밴드 수정하기로 연결 (밴드 어드민만)")
+            //
         }
         let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
-            print("밴드 삭제 연결")
+            print("밴드 삭제 연결 (밴드 어드민만)")
         }
         actionSheet.addAction(positionModify)
         if isCreator == true {
