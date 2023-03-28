@@ -48,6 +48,10 @@
 		7B1F6D2629AF82FF00FC00D5 /* BandInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */; };
 		7B200E3529B03D1F00E3A75F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B200E3429B03D1F00E3A75F /* PaddingLabel.swift */; };
 		7B236A8529854196006AE385 /* IconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B236A8429854196006AE385 /* IconImageView.swift */; };
+		7B287CF529B7651000439254 /* MypageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF429B7651000439254 /* MypageDetailViewController.swift */; };
+		7B287CF729B7655B00439254 /* MypageTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF629B7655B00439254 /* MypageTopInfoView.swift */; };
+		7B287CFA29B76A8E00439254 /* UserInformationVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CF929B76A8E00439254 /* UserInformationVO.swift */; };
+		7B287CFC29B7785300439254 /* UserInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B287CFB29B7785300439254 /* UserInformationView.swift */; };
 		7B3711D029A4F07500CC2F69 /* EventDataVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */; };
 		7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */; };
 		7B56DC3E29A36F2F00672EDD /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */; };
@@ -213,6 +217,10 @@
 		7B1F6D2529AF82FF00FC00D5 /* BandInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandInformationView.swift; sourceTree = "<group>"; };
 		7B200E3429B03D1F00E3A75F /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		7B236A8429854196006AE385 /* IconImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImageView.swift; sourceTree = "<group>"; };
+		7B287CF429B7651000439254 /* MypageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageDetailViewController.swift; sourceTree = "<group>"; };
+		7B287CF629B7655B00439254 /* MypageTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTopInfoView.swift; sourceTree = "<group>"; };
+		7B287CF929B76A8E00439254 /* UserInformationVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationVO.swift; sourceTree = "<group>"; };
+		7B287CFB29B7785300439254 /* UserInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationView.swift; sourceTree = "<group>"; };
 		7B3711CF29A4F07500CC2F69 /* EventDataVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDataVO.swift; sourceTree = "<group>"; };
 		7B43327F2999FD6A0042AD83 /* BandTopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandTopInfoView.swift; sourceTree = "<group>"; };
 		7B56DC3D29A36F2F00672EDD /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -430,6 +438,24 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		7B287CF329B764E400439254 /* MyPageDetail */ = {
+			isa = PBXGroup;
+			children = (
+				7B287CF829B7657600439254 /* Component */,
+				7B287CF429B7651000439254 /* MypageDetailViewController.swift */,
+			);
+			path = MyPageDetail;
+			sourceTree = "<group>";
+		};
+		7B287CF829B7657600439254 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				7B287CF629B7655B00439254 /* MypageTopInfoView.swift */,
+				7B287CFB29B7785300439254 /* UserInformationView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		7B6D3352299A2F3D001FD630 /* BandDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -626,6 +652,7 @@
 		B88E1BCF2977A8CD006072B7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				7B287CF329B764E400439254 /* MyPageDetail */,
 				7B6D3352299A2F3D001FD630 /* BandDetail */,
 				4A268C61299A18000068F200 /* ModifyMyPage */,
 				B863B47F299B7D640016CC48 /* Setting */,
@@ -763,6 +790,7 @@
 				9ACA5859299B71DD00C6C2BC /* MemberState.swift */,
 				9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */,
 				A96F368F299E301700376620 /* SearchedUserListDTO.swift */,
+				7B287CF929B76A8E00439254 /* UserInformationVO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1031,6 +1059,7 @@
 				9ABC0C2329CB4EAF002DC070 /* BandInformationNetworkManager.swift in Sources */,
 				B88E1BD72977AB3D006072B7 /* ImageLiteral.swift in Sources */,
 				4A268C67299A18B10068F200 /* ModifyUserProfileViewController.swift in Sources */,
+				7B287CF529B7651000439254 /* MypageDetailViewController.swift in Sources */,
 				7BFE01A12982643E009608A2 /* Song.swift in Sources */,
 				7B6D3354299A2F76001FD630 /* BandDetailViewController.swift in Sources */,
 				9A82AF2F29B9FCBA0056315D /* PracticeSongBoxView.swift in Sources */,
@@ -1100,6 +1129,7 @@
 				7BC275602987EA10008F4B9F /* EmptyView.swift in Sources */,
 				B8E7181229B64FC20097D7C5 /* MapMarkerVO.swift in Sources */,
 				A96F3686299E2EA200376620 /* BandMemberAddTableViewCell.swift in Sources */,
+				7B287CFA29B76A8E00439254 /* UserInformationVO.swift in Sources */,
 				B88E1BA12977A70E006072B7 /* SceneDelegate.swift in Sources */,
 				B863B481299B7D7E0016CC48 /* SettingViewController.swift in Sources */,
 				B8B17C4F2980B67C00806899 /* Band.swift in Sources */,
@@ -1145,6 +1175,8 @@
 				4A8355E3299F78AD00D82AF3 /* UserInfoInputViewController.swift in Sources */,
 				A97D579B29B6F08E00FEA49F /* PracticeRoomSearchViewController.swift in Sources */,
 				4AC4CE4F2980BD3700BB823C /* SelectCollectionViewCell.swift in Sources */,
+				7B287CF729B7655B00439254 /* MypageTopInfoView.swift in Sources */,
+				7B287CFC29B7785300439254 /* UserInformationView.swift in Sources */,
 				4A4A6E9429A8F58B005CF076 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

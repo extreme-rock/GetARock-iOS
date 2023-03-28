@@ -22,7 +22,7 @@ final class CommentTableViewCell: UITableViewCell {
     )
     
     private let moreButton: UIButton = {
-        $0.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        $0.setImage(ImageLiteral.ellipsisSymbol, for: .normal)
         $0.tintColor = .white
         return $0
     }(UIButton())

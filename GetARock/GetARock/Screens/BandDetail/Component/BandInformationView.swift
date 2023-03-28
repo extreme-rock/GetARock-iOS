@@ -209,11 +209,12 @@ final class BandInformationView: UIView {
         let transformedMemberData = bandMember.map {
             Item.bandMember(
                 BandMember(
+                    memberID: $0.memberID ?? 0,
                     isUser: checkIsUserState(memberState: $0.memberState),
                     isLeader: checkIsLeaderState(memberState: $0.memberState),
                     userName: $0.name,
                     instrumentImageName: checkInstrumentImage(instrumentList: $0.instrumentList),
-                    instrumentNames: $0.instrumentList.map{ $0.name }
+                    instrumentNames: translateInstrumentNames(names: $0.instrumentList.map{ $0.name })
                 )
             )
         }
@@ -221,11 +222,16 @@ final class BandInformationView: UIView {
         bandMemberCollectionViewItem = transformedMemberData
     }
     
+    private func translateInstrumentNames(names: [String]) -> [String] {
+        let InstrumentKr = names.compactMap{
+            Instrument(rawValue: $0)?.inKorean ?? $0
+        }
+        return InstrumentKr
+    }
+    
     private func checkIsUserState(memberState: MemberState) -> Bool {
         switch memberState {
-        case .admin:
-            return true
-        case .member:
+        case .admin, .member:
             return true
         default:
             return false
@@ -245,6 +251,7 @@ final class BandInformationView: UIView {
     
     private func checkInstrumentImage(instrumentList: [InstrumentListVO]) -> Instrument {
         let transformedMemberInstrument = instrumentList.map{ $0.name }
+        
         if let mainInstrument = transformedMemberInstrument.first {
             return Instrument(rawValue: mainInstrument) ?? .etc
         }
@@ -259,6 +266,7 @@ final class BandInformationView: UIView {
         let transformedMemberData = memberList.map {
             Item.bandMember(
                 BandMember(
+                    memberID: $0.memberID ?? 0,
                     isUser: checkIsUserState(memberState: $0.memberState),
                     isLeader: checkIsLeaderState(memberState: $0.memberState),
                     userName: $0.name,
@@ -311,10 +319,10 @@ extension BandInformationView {
 
 extension BandInformationView: PositionCollectionViewDelegate {
     func canSelectPosition(_ collectionView: UICollectionView, indexPath: IndexPath, selectedItemsCount: Int) -> Bool {
-        return false
+        return true
     }
     
     func canDeselectPosition(_ collectionView: UICollectionView, indexPath: IndexPath) -> Bool {
-        return false
+        return true
     }
 }
