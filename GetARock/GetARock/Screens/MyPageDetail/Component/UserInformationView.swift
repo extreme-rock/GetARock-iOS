@@ -152,6 +152,16 @@ final class UserInformationView: UIView {
         setUserPositionCollectionView()
         setUserBandButton()
         setUserIntro()
+        
+        let items = self.userData.instrumentList.map {
+            let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
+            return Item.position(Position(
+                instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? $0.name,
+                instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
+                isETC: isETC)
+            )
+        }
+        self.userPositionCollectionView.applySnapshot(with: items)
     }
 
     private func setupLayout() {

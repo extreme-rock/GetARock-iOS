@@ -186,6 +186,7 @@ extension MypageDetailViewController {
             print("Response data raw : \(data)")
             print("응답 내용 : \(response)")
             self.userData = decodedData
+            print(decodedData.instrumentList, "in mypage")
         } catch {
             print(error)
             print("bad news! decoding error occuerd")

@@ -36,7 +36,7 @@ final class ModifyPositionViewController: UIViewController {
     init(selectedPositions: [InstrumentList]) {
         self.selectedPositions = selectedPositions
         let selectedETCInstrumentList: [InstrumentList] = selectedPositions.filter {
-            !["보컬", "기타", "키보드", "드럼", "베이스"].contains($0.name)
+            !["vocal", "guitar", "keyboard", "drum", "bass"].contains($0.name)
         }
         let selectedETCItem: [Item] = selectedETCInstrumentList.map {
             Item.position(Position(instrumentName: $0.name,

@@ -142,7 +142,7 @@ final class ModifyMyPageViewController: UIViewController {
                 modifiedUserInfo = userInfo
                 modifiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()
             }
-
+            print(modifiedUserInfo, "modified")
             Task {
                 try await SignUpNetworkManager.shared.putUserInformation(user: modifiedUserInfo, completion: { result in
                     switch result {

@@ -119,8 +119,8 @@ final class MypageTopInfoView: UIView {
     }
 
     func configureModifiedUserInfo(name: String, age: String, gender: String) {
-        guard let age = Age.CodingKeys(rawValue: userAge)?.inKorean,
-              let gender = Gender.CodingKeys(rawValue: userGender)?.inKorean else { return }
+        guard let age = Age.CodingKeys(rawValue: age)?.inKorean,
+              let gender = Gender.CodingKeys(rawValue: gender)?.inKorean else { return }
         self.userNameLabel.text = name
         userInfoLabel.text = "\(gender) ⏐ \(age)"
     }

@@ -334,6 +334,7 @@ extension PositionCollectionView {
             let index = $0.item
             return InstrumentList(name: self.items[index].name())
         }
+        print(selectedInstruments, "selectedInstruments")
         return selectedInstruments
     }
 }
