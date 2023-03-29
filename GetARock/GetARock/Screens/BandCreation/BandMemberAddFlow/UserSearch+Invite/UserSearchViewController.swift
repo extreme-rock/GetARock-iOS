@@ -70,6 +70,12 @@ final class UserSearchViewController: BaseViewController {
         updateSnapShot(with: selectedUsers)
     }
 
+    //MARK: 검색 결과 데이터 초기화
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        SearchedUserListDTO.dataSet.memberList = []
+    }
+
     private func setupLayout() {
         view.addSubview(searchBar)
         searchBar.constraint(top: view.safeAreaLayoutGuide.topAnchor,
@@ -211,6 +217,9 @@ extension UserSearchViewController {
             Task {
                 let searchedUsers = try await MemberSearchNetworkManager().getSearchedMemberList(with: searchBar.inputText())
                 SearchedUserListDTO.dataSet.memberList = searchedUsers
+                print("================")
+                print(searchedUsers)
+                print("================")
                 self.searchResultTable.reloadData()
             }
         }

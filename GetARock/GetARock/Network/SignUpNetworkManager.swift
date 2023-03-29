@@ -51,6 +51,10 @@ final class SignUpNetworkManager {
                         let decodedData = try JSONDecoder().decode(SignUpVO.self, from: data!)
                         UserDefaultHandler.setMemberID(memberID: decodedData.id)
                         UserDefaultHandler.setIsLogin(isLogin: true)
+                        Task {
+                            let userInfo = await UserInfoNetworkManager.shared.fetchUserData(with: decodedData.id)
+                            UserDefaultHandler.setUserName(name: userInfo?.name ?? "")
+                        }
                     } catch {
                         print(error)
                     }
@@ -91,6 +95,15 @@ final class SignUpNetworkManager {
             } else if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case (200...299):
+                    do {
+                        let decodedData = try JSONDecoder().decode(SignUpVO.self, from: data!)
+                        Task {
+                            let userInfo = await UserInfoNetworkManager.shared.fetchUserData(with: decodedData.id)
+                            UserDefaultHandler.setUserName(name: userInfo?.name ?? "")
+                        }
+                    } catch {
+                        print(error)
+                    }
                     completion(.success(true))
                 case (300...599):
                     completion(.failure(NetworkError.failedRequest(status: httpResponse.statusCode)))

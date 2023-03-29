@@ -93,7 +93,7 @@ final class BandDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     // MARK: - Init
@@ -184,10 +184,8 @@ final class BandDetailViewController: UIViewController {
     
     @objc private func presentMypageDetailViewController(_ notification: Notification) {
         guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
-        let mypageVC = MypageDetailViewController(userID: memberID)
-        //        self.navigationController?.pushViewController(mypageVC, animated: true)
-        mypageVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        self.present(mypageVC, animated: true)
+        let mypageVC = MypageDetailViewController(userID: memberID, navigationBarOption: .hiddenFalse)
+        self.navigationController?.pushViewController(mypageVC, animated: true)
     }
     
     @objc private func showBandModifyActionSheet(_ notification: Notification) {
@@ -204,7 +202,8 @@ final class BandDetailViewController: UIViewController {
             
         }
         let bandModify = UIAlertAction(title: "밴드 수정", style: .default) { [weak self] _ in
-            print("밴드 수정하기로 연결 (밴드 어드민만)")
+            let viewController = MyBandInfoModifyPageController(bandData: self?.bandData)
+            self?.navigationController?.pushViewController(viewController, animated: true)
             //
         }
         let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
@@ -236,6 +235,8 @@ extension BandDetailViewController {
             print("Response data raw : \(data)")
             print("응답 내용 : \(response)")
             self.bandData = decodedData
+            print("+++++++++++++++++++++++++=")
+            print(decodedData)
         } catch {
             print(error)
             print("bad news! decoding error occuerd")

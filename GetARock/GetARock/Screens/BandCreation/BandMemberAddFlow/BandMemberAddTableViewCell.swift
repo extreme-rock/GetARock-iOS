@@ -128,8 +128,8 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
 
         // Cell 데이터 주입
         self.userNameLabel.text = data.name
-        self.userAgeLabel.text = Age.CodingKeys(rawValue: data.age)?.inKorean
-        self.userGenderLabel.text = Gender.CodingKeys(rawValue: data.gender)?.inKorean
+        self.userAgeLabel.text = data.age
+        self.userGenderLabel.text = data.gender
         self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
         self.id = data.id
     }

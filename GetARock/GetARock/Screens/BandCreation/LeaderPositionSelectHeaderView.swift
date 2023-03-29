@@ -15,7 +15,7 @@ final class LeaderPositionSelectHeaderView: UIView {
     private let titleLabel: BasicLabel = {
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "루키님은 밴드에서\n어떤 포지션인가요?", fontStyle: .largeTitle01, textColorInfo: .white))
+    }(BasicLabel(contentText: "\(UserDefaultStorage.name)님은 밴드에서\n어떤 포지션인가요?", fontStyle: .largeTitle01, textColorInfo: .white))
     
     private let subTitleLabel: BasicLabel = BasicLabel(contentText: "최대 2개까지 선택 가능합니다.",
                                                        fontStyle: .subTitle,

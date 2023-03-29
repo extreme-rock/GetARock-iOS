@@ -102,8 +102,8 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
     func configure(data: SearchedUserInfo) {
         self.userNameLabel.text = data.name
         self.userInstrumentLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
-        self.userAgeLabel.text = data.age
-        self.userGenderLabel.text = data.gender
+        self.userAgeLabel.text = Age.CodingKeys(rawValue: data.age)?.inKorean
+        self.userGenderLabel.text = Gender.CodingKeys(rawValue: data.gender)?.inKorean
         self.id = data.id
     }
     

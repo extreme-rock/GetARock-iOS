@@ -41,7 +41,7 @@ final class MemberSearchNetworkManager {
                              memberState: data.memberState,
                              instrumentList: data.instrumentList,
                              gender: data.gender,
-                             age: data.gender)
+                             age: data.age)
         }
     }
 }

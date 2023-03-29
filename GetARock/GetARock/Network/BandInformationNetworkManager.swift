@@ -58,6 +58,9 @@ final class BandInformationNetworkManager {
         var encodedData = Data()
         
         do {
+            print("+++=======++++")
+            print(data.memberList)
+            print(data.memberList.count)
             let data = try JSONEncoder().encode(data)
             encodedData = data
         } catch {

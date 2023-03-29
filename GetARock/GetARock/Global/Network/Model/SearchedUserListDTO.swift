@@ -14,7 +14,7 @@ struct SearchedUserListDTO: Codable {
 
 struct SearchedUserInfo: Hashable, Codable, Identifiable {
     var id: String = UUID().uuidString
-    let memberId: Int
+    let memberId: Int?
     let name: String
     var memberState: MemberState
     var instrumentList: [SearchedUserInstrumentList]

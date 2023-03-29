@@ -102,7 +102,8 @@ final class BandMemberAddViewController: BaseViewController {
                 name: admin.name,
                 memberState: .admin,
                 instrumentList: transformedInstruments,
-                gender: admin.gender, age: admin.age)
+                gender: Gender.CodingKeys(rawValue: admin.gender)?.inKorean ?? "",
+                age: Age.CodingKeys(rawValue: admin.age)?.inKorean ?? "")
             addedMembers.append(bandAdminData)
             updateSnapShot(with: addedMembers)
         }
@@ -194,6 +195,8 @@ extension BandMemberAddViewController {
 
             confirmedMembers.append(individualMember)
         }
+        print("+++++++++++++++++++++++++++++=")
+        print(confirmedMembers)
         BasicDataModel.bandCreationData.memberList = confirmedMembers
     }
 }

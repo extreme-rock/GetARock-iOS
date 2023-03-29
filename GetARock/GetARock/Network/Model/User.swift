@@ -21,7 +21,7 @@ enum Gender: String, CaseIterable, Codable {
     case man = "남자"
     case woman = "여자"
     
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String {
         case man = "MAN"
         case woman = "WOMAN"
         

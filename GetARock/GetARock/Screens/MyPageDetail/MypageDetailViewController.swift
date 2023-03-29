@@ -11,7 +11,20 @@ import UIKit
 final class MypageDetailViewController: BaseViewController {
     
     // MARK: - Property
-    
+
+    enum NavigationBarOption {
+        case hiddenTrue
+        case hiddenFalse
+
+        var isHidden: Bool {
+            switch self {
+            case .hiddenTrue: return true
+            case .hiddenFalse: return false
+            }
+        }
+    }
+
+    private let navigationBarOption: NavigationBarOption
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
     private var userID = 0
     private lazy var userData = UserInformationVO(
@@ -39,8 +52,9 @@ final class MypageDetailViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(userID: Int) {
+    init(userID: Int, navigationBarOption: NavigationBarOption) {
         self.userID = userID
+        self.navigationBarOption = navigationBarOption
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,14 +78,14 @@ final class MypageDetailViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = self.navigationBarOption.isHidden
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        self.navigationController?.isNavigationBarHidden = false
+//    }
+//
     // MARK: - Method
     
     private func setupLayout() {

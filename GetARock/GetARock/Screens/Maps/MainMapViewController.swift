@@ -46,17 +46,12 @@ final class MainMapViewController: UIViewController {
     private lazy var bottomButtonStackView: UIStackView = {
         $0.axis = .horizontal
         return $0
-    }(UIStackView(arrangedSubviews: [createEventsButton, myBandsButton, myPageButton]))
+    }(UIStackView(arrangedSubviews: [myBandsButton, myPageButton]))
     
     private lazy var topButtonStackView: UIStackView = {
         $0.axis = .vertical
         return $0
     }(UIStackView(arrangedSubviews: [notificationButton, settingButton, moveToCurrentLocationButton]))
-    
-    private let createEventsButton: UIButton = {
-        $0.setImage(UIImage(named: "createEventsButton"), for: .normal)
-        return $0
-    }(UIButton())
     
     private lazy var myBandsButton: UIButton = {
         $0.setImage(UIImage(named: "myBandsButton"), for: .normal)
@@ -70,7 +65,7 @@ final class MainMapViewController: UIViewController {
     private lazy var myPageButton: UIButton = {
         $0.setImage(UIImage(named: "myPageButton"), for: .normal)
         let action = UIAction { [weak self] _ in
-            let viewController = UINavigationController(rootViewController: MypageDetailViewController(userID: UserDefaultStorage.memberID))
+            let viewController = UINavigationController(rootViewController: MypageDetailViewController(userID: UserDefaultStorage.memberID, navigationBarOption: .hiddenTrue))
             self?.present(viewController, animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
