@@ -10,6 +10,8 @@ final class BandInfoModifyViewController: BaseViewController {
 
     // MARK: - Properties
 
+    private let rootViewController: UIViewController
+
     private let bandData: BandInformationVO
 
     private var keyBoardHeight: CGFloat = 280
@@ -223,8 +225,9 @@ final class BandInfoModifyViewController: BaseViewController {
         )
     }
 
-    init(bandData: BandInformationVO) {
+    init(navigateDelegate: UIViewController, bandData: BandInformationVO) {
         self.bandData = bandData
+        self.rootViewController = navigateDelegate
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -269,6 +272,18 @@ final class BandInfoModifyViewController: BaseViewController {
         instagramTextField.textField.delegate = self
         soundCloudTextField.textField.delegate = self
     }
+
+    private func songListData() -> [SongList] {
+        var songList: [SongList] = []
+        print(practiceSongList.arrangedSubviews, "dddd")
+        for (index, data) in practiceSongList.arrangedSubviews.enumerated() {
+            if index >= 1 {
+                let songBox = data as! PracticeSongBoxView
+                songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+            }
+        }
+        return songList
+    }
 }
 
 // MARK: - Extension
@@ -284,12 +299,12 @@ extension BandInfoModifyViewController {
             NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
                                             object: nil)
         }
-        navigationController?.pushViewController(nextViewController, animated: true)
+        rootViewController.navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
-        let nextViewController = AddPracticeSongViewController()
+        let nextViewController = AddPracticeSongViewController(option: .editing)
         nextViewController.completion = { [weak self] songs in
             let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
             for song in addedSongs {
@@ -297,7 +312,7 @@ extension BandInfoModifyViewController {
                 self?.practiceSongList.addArrangedSubview(song)
             }
         }
-        navigationController?.pushViewController(nextViewController, animated: true)
+        rootViewController.navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     @objc func didTouchScreen() {
@@ -320,6 +335,7 @@ extension BandInfoModifyViewController {
         BasicDataModel.bandPUTData.name = bandNamingTextField.inputText()
         BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
         //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
+        BasicDataModel.bandPUTData.songList = self.songListData()
         BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
                                   instagramTextField.inputText(),
@@ -338,7 +354,7 @@ extension BandInfoModifyViewController {
                 tempCardViewList.append(practiceSongCard)
             }
             let songListBox = makePracticeSongBoxes(with: tempCardViewList)
-            songListBox.forEach { practiceSongVstack.addArrangedSubview($0) }
+            songListBox.forEach { practiceSongList.addArrangedSubview($0) }
         }
         self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
         

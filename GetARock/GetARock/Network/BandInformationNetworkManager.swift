@@ -117,7 +117,8 @@ final class BandInformationNetworkManager {
             } else if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case (200...299):
-                    print("success")
+                    print("++++++++++")
+                    print("BandModify PUT success")
                 case (300...599):
                     print(NetworkError.failedRequest(status: httpResponse.statusCode))
                 default:

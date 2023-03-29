@@ -305,7 +305,7 @@ extension BandInformationSetViewController {
 
     //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
-        let nextViewController = AddPracticeSongViewController()
+        let nextViewController = AddPracticeSongViewController(option: .making)
         nextViewController.completion = { [weak self] songs in
             let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
             for song in addedSongs {

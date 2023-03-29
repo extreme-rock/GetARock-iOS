@@ -17,7 +17,7 @@ struct BandList {
 
 final class BandDetailViewController: UIViewController {
     
-    // MARK: - Property
+    // MARK: - enum case
     
     enum BandSelectMenuDefaultSize {
         static let width: CGFloat = 250
@@ -28,12 +28,13 @@ final class BandDetailViewController: UIViewController {
         case myBand
         case otherBand
     }
+
+    // MARK: - Property
     
     private let myBands: [BandList]?
+
     private let entryPoint: EntryPoint
-    
-    //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "25"
+
     private var bandData = BandInformationVO(
         bandID: 0,
         name: "",
@@ -66,9 +67,7 @@ final class BandDetailViewController: UIViewController {
         $0.delegate = self
         switch self.entryPoint {
         case .myBand:
-            if self.myBands?.count ?? 0 > 1 {
-                $0.setupToggleButtonLayout()
-            }
+            if self.myBands?.count ?? 0 > 1 { $0.setupToggleButtonLayout() }
         case .otherBand:
             break
         }
@@ -94,6 +93,13 @@ final class BandDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        Task {
+            await fetchBandData(with: self.myBands?.first?.bandId)
+            NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
+                                            object: nil,
+                                            userInfo: ["bandInfo": self.bandData])
+            bandDetailContentView.configureBandDetail(with: self.bandData)
+        }
     }
     
     // MARK: - Init
@@ -192,29 +198,6 @@ final class BandDetailViewController: UIViewController {
         // TODO - 유저 정보에 따라 분기처리 해야함..
 //        showActionSheet(isCreator: true)
     }
-    
-//    func showActionSheet(isCreator: Bool) {
-//        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        let cancel = UIAlertAction(title: "취소", style: .cancel)
-//
-//        let positionModify = UIAlertAction(title: "내 포지션 수정", style: .default) { [weak self] _ in
-//            print("밴드 포지션 수정하기로 연결")
-//
-//        }
-//        let bandModify = UIAlertAction(title: "밴드 수정", style: .default) {  _ in
-//
-//        }
-//        let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
-//            print("밴드 삭제 연결 (밴드 어드민만)")
-//        }
-//        actionSheet.addAction(positionModify)
-//        if isCreator == true {
-//            actionSheet.addAction(bandModify)
-//            actionSheet.addAction(banddelete)
-//        }
-//        actionSheet.addAction(cancel)
-//        present(actionSheet, animated: true)
-//    }
 }
 
 // MARK: - Get BandData

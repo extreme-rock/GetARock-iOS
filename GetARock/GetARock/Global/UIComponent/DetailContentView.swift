@@ -171,6 +171,31 @@ final class DetailContentView: UIView {
     private func changeValue(control: UISegmentedControl) {
         self.currentPage = control.selectedSegmentIndex
     }
+
+    func configureBandDetail(with data: BandInformationVO) {
+        let bandInfoVC: UIViewController = {
+            let bandInfo = BandInformationView(
+                member: bandData.memberList,
+                song: bandData.songList,
+                intro: bandData.introduction,
+                sns: bandData.snsList,
+                age: bandData.age
+            )
+            $0.view.addSubview(bandInfo)
+            bandInfo.constraint(
+                top: $0.view.topAnchor,
+                leading: $0.view.leadingAnchor,
+                bottom: $0.view.bottomAnchor,
+                trailing: $0.view.trailingAnchor
+            )
+            return $0
+        }(UIViewController())
+
+        let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList)
+
+        // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
+        detailContentViewControllers = [bandInfoVC, bandCommentListVC]
+    }
 }
 
 // MARK: - UIPageViewControllerDataSource

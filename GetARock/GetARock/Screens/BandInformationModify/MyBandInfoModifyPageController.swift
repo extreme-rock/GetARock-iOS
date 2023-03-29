@@ -15,7 +15,7 @@ final class MyBandInfoModifyPageController: UIViewController {
 
     private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self, bandData: bandInfo)
     
-    private lazy var bandInfoModifyViewController = BandInfoModifyViewController(bandData: bandInfo)
+    private lazy var bandInfoModifyViewController = BandInfoModifyViewController(navigateDelegate: self, bandData: bandInfo)
     
     private lazy var pageViewControllers: [UIViewController] = [
         bandMemberModifyViewController,
@@ -57,11 +57,17 @@ final class MyBandInfoModifyPageController: UIViewController {
             // MARK: 수정된 정보 확정
             Task {
                 // 맨 처음
-                self.setConfirmedModifiedData()
+                self.setOriginalBandData()
                 // 합주곡, 위치는 각각의 VC에서 입력 완료하면 바로 전역 데이터가 수정됨.
                 self.bandMemberModifyViewController.confirmModifiedMembers()
                 self.bandInfoModifyViewController.confirmModifiedBandInformation()
                 // MARK: Band 생성과 수정의 모델이 같아서 creation을 그대로 사용함
+                print(BasicDataModel.bandPUTData.name)
+                print(BasicDataModel.bandPUTData.songList)
+                print(BasicDataModel.bandPUTData.address)
+                print(BasicDataModel.bandPUTData.snsList)
+                print(BasicDataModel.bandPUTData.introduction)
+                print(BasicDataModel.bandPUTData.memberList)
                 try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandPUTData)
             }
             self.showAlertForEditComplete()
@@ -158,7 +164,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         currentPageNumber = self.segmentedController.selectedSegmentIndex
     }
 
-    private func setConfirmedModifiedData() {
+    private func setOriginalBandData() {
         BasicDataModel.bandPUTData.bandId = bandInfo.bandID
         let originalAddress = bandInfo.address
         let originalSongList = bandInfo.songList
@@ -167,9 +173,6 @@ final class MyBandInfoModifyPageController: UIViewController {
                                                      detail: originalAddress.detail,
                                                      longitude: originalAddress.longitude,
                                                      latitude: originalAddress.latitude)
-        BasicDataModel.bandPUTData.songList = originalSongList?.compactMap({ SongList(name: $0.name,
-                                                                                      artist: $0.artist,
-                                                                                      link: $0.link)})
     }
 }
 
@@ -217,10 +220,10 @@ extension MyBandInfoModifyPageController {
         let alertTitle = "밴드 정보 편집 완료"
         let alertMessage = "새롭게 입력해주신 정보로 밴드 정보가 편집되었어요!"
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-        
         let okayActionTitle = "확인"
-        
-        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default, handler: { _ in
+            self.dismiss(animated: true)
+        }))
         present(alertController, animated: true)
     }
 }

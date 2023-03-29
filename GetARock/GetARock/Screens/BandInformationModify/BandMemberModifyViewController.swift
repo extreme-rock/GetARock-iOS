@@ -292,6 +292,10 @@ extension BandMemberModifyViewController {
         )}
         
         BasicDataModel.bandPUTData.memberList = addedMembers + invitingMembers
+        print("+++++++++++++++")
+        print("PUT할 밴드 정보가 수정되었습니다")
+        print("수정된 정보")
+        print(BasicDataModel.bandPUTData.memberList.count)
     }
 }
 

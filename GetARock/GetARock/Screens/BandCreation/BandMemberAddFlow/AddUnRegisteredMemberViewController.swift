@@ -22,7 +22,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         memberState: .annonymous,
         instrumentList: [SearchedUserInstrumentList(instrumentId: 0,
                                                     isMain: true,
-                                                    name: firstUnRegisteredCard.otherPositionTextField.textField.text ?? "")], gender: "NONE", age: "NONE")
+                                                    name: firstUnRegisteredCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
 
     //MARK: - View
 
@@ -78,17 +78,17 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
         for subview in self.contentView.arrangedSubviews {
             guard let card = subview as? UnRegisteredMemberCardView else { return }
             let mainPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
-                instrumentId: nil,
+                instrumentId: 0,
                 isMain: true,
                 name: card.positionSelectCollectionView.selectedItem() )
             
             let otherPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
-                instrumentId: nil,
+                instrumentId: 0,
                 isMain: true,
                 name: card.otherPositionTextField.inputText())
             
             let data = SearchedUserInfo(
-                memberId: nil,
+                memberId: 0,
                 name: card.nickNameTextField.textField.text ?? "",
                 memberState: .annonymous,
                 instrumentList: [mainPosition, otherPosition],
