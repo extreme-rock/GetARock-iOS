@@ -53,15 +53,18 @@ final class MyBandInfoModifyPageController: UIViewController {
         $0.setTitle("완료", for: .normal)
         $0.setTitleColor(.blue01, for: .normal)
         $0.titleLabel?.font = .setFont(.headline04)
-        let action = UIAction { [weak self] _ in
+        let action = UIAction { _ in
+            // MARK: 수정된 정보 확정
             Task {
-                // MARK: 수정된 정보 확정
-                self?.bandMemberModifyViewController.confirmModifiedMembers()
-                self?.bandInfoModifyViewController.confirmModifiedBandInformation()
+                // 맨 처음
+                self.setConfirmedModifiedData()
+                // 합주곡, 위치는 각각의 VC에서 입력 완료하면 바로 전역 데이터가 수정됨.
+                self.bandMemberModifyViewController.confirmModifiedMembers()
+                self.bandInfoModifyViewController.confirmModifiedBandInformation()
                 // MARK: Band 생성과 수정의 모델이 같아서 creation을 그대로 사용함
-                try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandCreationData)
+                try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandPUTData)
             }
-            self?.showAlertForEditComplete()
+            self.showAlertForEditComplete()
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setContentHuggingPriority(
@@ -125,7 +128,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: dismissButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
         //TODO: 추후 수정 필요
-        self.navigationItem.title = "밴드 수정"
+        setNavigationInlineTitle(title: "밴드 수정")
     }
 
     private func dismissButtonTapped() {
@@ -153,6 +156,20 @@ final class MyBandInfoModifyPageController: UIViewController {
     @objc
     private func segmentedControlValueChanged(_ sender: ModifyPageSegmentedControl) {
         currentPageNumber = self.segmentedController.selectedSegmentIndex
+    }
+
+    private func setConfirmedModifiedData() {
+        BasicDataModel.bandPUTData.bandId = bandInfo.bandID
+        let originalAddress = bandInfo.address
+        let originalSongList = bandInfo.songList
+        BasicDataModel.bandPUTData.address = Address(city: originalAddress.city,
+                                                     street: originalAddress.street,
+                                                     detail: originalAddress.detail,
+                                                     longitude: originalAddress.longitude,
+                                                     latitude: originalAddress.latitude)
+        BasicDataModel.bandPUTData.songList = originalSongList?.compactMap({ SongList(name: $0.name,
+                                                                                      artist: $0.artist,
+                                                                                      link: $0.link)})
     }
 }
 

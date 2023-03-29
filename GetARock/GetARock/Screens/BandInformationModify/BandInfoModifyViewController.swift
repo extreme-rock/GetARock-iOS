@@ -276,7 +276,7 @@ final class BandInfoModifyViewController: BaseViewController {
 extension BandInfoModifyViewController {
 
     @objc func didTapPracticeRoomSearchButton() {
-        let nextViewController = PracticeRoomSearchViewController()
+        let nextViewController = PracticeRoomSearchViewController(option: .editing)
         nextViewController.completion = { [weak self] locationInformation in
             self?.practiceRoomSearchButton.configureText(with: locationInformation)
             self?.practiceRoomSearchButton.hideRightView()
@@ -315,12 +315,13 @@ extension BandInfoModifyViewController {
         }
     }
 
+    //MARK: 수정된 정보 확정
     func confirmModifiedBandInformation() {
-        BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
-        BasicDataModel.bandCreationData.address.detail = detailPracticeRoomTextField.inputText()
+        BasicDataModel.bandPUTData.name = bandNamingTextField.inputText()
+        BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
         //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
-        BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
-        BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),
+        BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
+        BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
                                   instagramTextField.inputText(),
                                   soundCloudTextField.inputText()]
     }

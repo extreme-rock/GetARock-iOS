@@ -26,9 +26,8 @@ final class MypageDetailViewController: BaseViewController {
 
     private let navigationBarOption: NavigationBarOption
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
-    private var userID = 0
-    private lazy var userData = UserInformationVO(
-        userID: userID,
+    private lazy var userData: UserInformationVO = UserInformationVO(
+        userID: UserDefaultStorage.memberID,
         name: "",
         age: "",
         gender: "",
@@ -38,7 +37,15 @@ final class MypageDetailViewController: BaseViewController {
         snsList: [],
         eventList: [],
         commentEventList: []
-    )
+    ) {
+        didSet {
+            self.mypageTopInfoView.configureModifiedUserInfo(name: userData.name,
+                                                             age: userData.age,
+                                                             gender: userData.gender)
+            //TODO: SNS 변경되는 함수 만들어야함.
+            self.userInfomationView.configureModifiedUserInfo(with: self.userData)
+        }
+    }
     
     // MARK: - View
     
@@ -52,8 +59,7 @@ final class MypageDetailViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(userID: Int, navigationBarOption: NavigationBarOption) {
-        self.userID = userID
+    init(navigationBarOption: NavigationBarOption) {
         self.navigationBarOption = navigationBarOption
         super.init(nibName: nil, bundle: nil)
     }
@@ -73,12 +79,16 @@ final class MypageDetailViewController: BaseViewController {
             await fetchUserData()
             setupLayout()
             setNotification()
+            configureDelegate()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = self.navigationBarOption.isHidden
+        Task {
+            await fetchUserData()
+        }
     }
 //
 //    override func viewWillDisappear(_ animated: Bool) {
@@ -87,7 +97,11 @@ final class MypageDetailViewController: BaseViewController {
 //    }
 //
     // MARK: - Method
-    
+
+    private func configureDelegate() {
+        self.mypageTopInfoView.delegate = self
+    }
+
     private func setupLayout() {
         view.addSubview(mypageTopInfoView)
         mypageTopInfoView.constraint(
@@ -162,7 +176,7 @@ extension MypageDetailViewController {
     
     func fetchUserData() async {
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/member")
-        let idQuery = URLQueryItem(name: "id", value: String(userID))
+        let idQuery = URLQueryItem(name: "id", value: String(UserDefaultStorage.memberID))
         queryURLComponent?.queryItems = [idQuery]
         guard let url = queryURLComponent?.url else { return }
         
@@ -178,4 +192,24 @@ extension MypageDetailViewController {
         }
     }
     
+}
+
+extension MypageDetailViewController: MypageTopInfoViewDelegate {
+    func presentModifyMyPageViewController() {
+        let userInfo =  User(memberId: self.userData.userID,
+                             name: self.userData.name,
+                             age: self.userData.age,
+                             gender: self.userData.gender,
+                             introduction: self.userData.introduction,
+                             instrumentList: self.userData.instrumentList.map {
+            InstrumentList(name: $0.name)
+        },
+                             snsList: self.userData.snsList.map {
+            SnsList(type: $0.snsType, link: $0.link)
+        })
+
+        let viewController = ModifyMyPageViewController(userInfo: userInfo)
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
+    }
 }

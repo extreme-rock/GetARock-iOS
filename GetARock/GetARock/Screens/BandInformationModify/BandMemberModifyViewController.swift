@@ -291,7 +291,7 @@ extension BandMemberModifyViewController {
                     InstrumentList(name: searchedInstrument.name)})
         )}
         
-        BasicDataModel.bandCreationData.memberList = addedMembers + invitingMembers
+        BasicDataModel.bandPUTData.memberList = addedMembers + invitingMembers
     }
 }
 

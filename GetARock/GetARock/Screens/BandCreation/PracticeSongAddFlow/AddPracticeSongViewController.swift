@@ -227,7 +227,7 @@ extension AddPracticeSongViewController {
             songListData.append(SongList(name: songData.songName(), artist: songData.artistName(), link: songData.linkText()))
         }
 
-        BasicDataModel.bandCreationData.songList = songListData
+        BasicDataModel.bandPUTData.songList = songListData
         completion(addedSongs)
 
         self.navigationController?.popViewController(animated: true)

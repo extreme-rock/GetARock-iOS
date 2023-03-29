@@ -13,6 +13,13 @@ final class PracticeRoomSearchViewController: BaseViewController {
 
     // MARK: Property
 
+    enum SearchViewOption {
+        case making
+        case editing
+    }
+
+    private let searchViewOption: SearchViewOption
+
     var completion: (_ locationInfo: String) -> Void = { locationInfo in }
 
     private let locationManager: CLLocationManager = CLLocationManager()
@@ -62,6 +69,15 @@ final class PracticeRoomSearchViewController: BaseViewController {
     }()
 
     // MARK: Life Cycle
+
+    init(option: SearchViewOption) {
+        self.searchViewOption = option
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,10 +221,24 @@ extension PracticeRoomSearchViewController: UITableViewDelegate {
         let selectedLocationInfo = searchedLocationList[indexPath.row]
         if selectedLocationInfo.subtitle.isEmpty {
             completion(selectedLocationInfo.title)
-            BasicDataModel.bandCreationData.address.city = selectedLocationInfo.title
+            switch searchViewOption {
+            case .editing:
+                BasicDataModel.bandPUTData.address.city = selectedLocationInfo.title
+                BasicDataModel.bandPUTData.address.street = selectedLocationInfo.subtitle
+            case .making:
+                BasicDataModel.bandCreationData.address.city = selectedLocationInfo.title
+                BasicDataModel.bandCreationData.address.street = selectedLocationInfo.subtitle
+            }
         } else {
             completion(selectedLocationInfo.subtitle)
-            BasicDataModel.bandCreationData.address.street = selectedLocationInfo.subtitle
+            switch searchViewOption {
+            case .editing:
+                BasicDataModel.bandPUTData.address.city = selectedLocationInfo.title
+                BasicDataModel.bandPUTData.address.street = selectedLocationInfo.subtitle
+            case .making:
+                BasicDataModel.bandCreationData.address.city = selectedLocationInfo.title
+                BasicDataModel.bandCreationData.address.street = selectedLocationInfo.subtitle
+            }
         }
         
         // 선택된 주소의 좌표값 추출
@@ -222,9 +252,15 @@ extension PracticeRoomSearchViewController: UITableViewDelegate {
             guard let mapItem = response?.mapItems.first else { return }
             let searchedResultlongitude = mapItem.placemark.coordinate.longitude
             let searchedResultlatitude = mapItem.placemark.coordinate.latitude
-            
-            BasicDataModel.bandCreationData.address.longitude = searchedResultlongitude
-            BasicDataModel.bandCreationData.address.latitude = searchedResultlatitude
+
+            switch self.searchViewOption {
+            case .editing:
+                BasicDataModel.bandPUTData.address.longitude = searchedResultlongitude
+                BasicDataModel.bandPUTData.address.latitude = searchedResultlatitude
+            case .making:
+                BasicDataModel.bandCreationData.address.longitude = searchedResultlongitude
+                BasicDataModel.bandCreationData.address.latitude = searchedResultlatitude
+            }
         }
         
         

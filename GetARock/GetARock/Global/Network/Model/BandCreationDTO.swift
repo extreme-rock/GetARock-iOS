@@ -25,6 +25,26 @@ class BandCreationDTO: Codable {
     }
 }
 
+class BandPUTDTO: Codable {
+    var bandId:Int
+    var name: String
+    var address: Address
+    var songList: [SongList]? // 정보 입력시 선택사항
+    var memberList: [MemberList]
+    var introduction: String? // 정보 입력시 선택사항
+    var snsList: [SnsList]? // 정보 입력시 선택사항
+
+    init(bandId: Int ,name: String, address: Address, songList: [SongList]?, memberList: [MemberList], introduction: String?, snsList: [SnsList]?) {
+        self.bandId = bandId
+        self.name = name
+        self.address = address
+        self.songList = songList
+        self.memberList = memberList
+        self.introduction = introduction
+        self.snsList = snsList
+    }
+}
+
 struct Address: Codable {
     var city, street, detail: String
     var longitude, latitude: Double

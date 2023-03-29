@@ -184,39 +184,37 @@ final class BandDetailViewController: UIViewController {
     
     @objc private func presentMypageDetailViewController(_ notification: Notification) {
         guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
-        let mypageVC = MypageDetailViewController(userID: memberID, navigationBarOption: .hiddenFalse)
+        let mypageVC = MypageDetailViewController(navigationBarOption: .hiddenFalse)
         self.navigationController?.pushViewController(mypageVC, animated: true)
     }
     
     @objc private func showBandModifyActionSheet(_ notification: Notification) {
         // TODO - 유저 정보에 따라 분기처리 해야함..
-        showActionSheet(isCreator: true)
+//        showActionSheet(isCreator: true)
     }
     
-    func showActionSheet(isCreator: Bool) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        let positionModify = UIAlertAction(title: "내 포지션 수정", style: .default) { [weak self] _ in
-            print("밴드 포지션 수정하기로 연결")
-            
-        }
-        let bandModify = UIAlertAction(title: "밴드 수정", style: .default) { [weak self] _ in
-            let viewController = MyBandInfoModifyPageController(bandData: self?.bandData)
-            self?.navigationController?.pushViewController(viewController, animated: true)
-            //
-        }
-        let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
-            print("밴드 삭제 연결 (밴드 어드민만)")
-        }
-        actionSheet.addAction(positionModify)
-        if isCreator == true {
-            actionSheet.addAction(bandModify)
-            actionSheet.addAction(banddelete)
-        }
-        actionSheet.addAction(cancel)
-        present(actionSheet, animated: true)
-    }
+//    func showActionSheet(isCreator: Bool) {
+//        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        let cancel = UIAlertAction(title: "취소", style: .cancel)
+//
+//        let positionModify = UIAlertAction(title: "내 포지션 수정", style: .default) { [weak self] _ in
+//            print("밴드 포지션 수정하기로 연결")
+//
+//        }
+//        let bandModify = UIAlertAction(title: "밴드 수정", style: .default) {  _ in
+//
+//        }
+//        let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
+//            print("밴드 삭제 연결 (밴드 어드민만)")
+//        }
+//        actionSheet.addAction(positionModify)
+//        if isCreator == true {
+//            actionSheet.addAction(bandModify)
+//            actionSheet.addAction(banddelete)
+//        }
+//        actionSheet.addAction(cancel)
+//        present(actionSheet, animated: true)
+//    }
 }
 
 // MARK: - Get BandData
@@ -235,8 +233,6 @@ extension BandDetailViewController {
             print("Response data raw : \(data)")
             print("응답 내용 : \(response)")
             self.bandData = decodedData
-            print("+++++++++++++++++++++++++=")
-            print(decodedData)
         } catch {
             print(error)
             print("bad news! decoding error occuerd")
@@ -249,7 +245,9 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let modifyBandAction = UIAlertAction(title: "밴드 수정", style: .default) { _ in
-            print("밴드수정")
+            let viewController = UINavigationController(rootViewController: MyBandInfoModifyPageController(bandData: self.bandData))
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true)
         }
         
         let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in

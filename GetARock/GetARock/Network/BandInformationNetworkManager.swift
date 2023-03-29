@@ -88,7 +88,7 @@ final class BandInformationNetworkManager {
         dataTask.resume()
     }
 
-    func putModifiedBandMemberInformation(data: BandCreationDTO) async throws {
+    func putModifiedBandMemberInformation(data: BandPUTDTO) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"

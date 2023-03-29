@@ -292,7 +292,7 @@ final class BandInformationSetViewController: BaseViewController {
 extension BandInformationSetViewController {
 
     @objc func didTapPracticeRoomSearchButton() {
-        let nextViewController = PracticeRoomSearchViewController()
+        let nextViewController = PracticeRoomSearchViewController(option: .making)
         nextViewController.completion = { [weak self] locationInformation in
             self?.practiceRoomSearchButton.configureText(with: locationInformation)
             self?.practiceRoomSearchButton.hideRightView()
@@ -329,6 +329,13 @@ extension BandInformationSetViewController {
         Task {
             //TODO: 로딩뷰 삽입 필요
             try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
+            print("++++++++++++++++++")
+            print(BasicDataModel.bandCreationData.name)
+            print(BasicDataModel.bandCreationData.songList)
+            print(BasicDataModel.bandCreationData.address)
+            print(BasicDataModel.bandCreationData.snsList)
+            print(BasicDataModel.bandCreationData.introduction)
+            print(BasicDataModel.bandCreationData.memberList)
         }
     }
 

@@ -65,7 +65,7 @@ final class MainMapViewController: UIViewController {
     private lazy var myPageButton: UIButton = {
         $0.setImage(UIImage(named: "myPageButton"), for: .normal)
         let action = UIAction { [weak self] _ in
-            let viewController = UINavigationController(rootViewController: MypageDetailViewController(userID: UserDefaultStorage.memberID, navigationBarOption: .hiddenTrue))
+            let viewController = UINavigationController(rootViewController: MypageDetailViewController(navigationBarOption: .hiddenTrue))
             self?.present(viewController, animated: true)
         }
         $0.addAction(action, for: .touchUpInside)
@@ -417,6 +417,9 @@ extension MainMapViewController {
         Task {
             let memberID = UserDefaultStorage.memberID
             guard let user = await UserInfoNetworkManager.shared.fetchUserData(with: memberID) else { return }
+            print("++++++++++++++++++++++")
+            print(user)
+            print(user.bandList)
             if user.bandList.isEmpty {
                 setupAlertViewLayout()
             } else {
