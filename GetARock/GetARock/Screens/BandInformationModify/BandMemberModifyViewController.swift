@@ -249,9 +249,9 @@ extension BandMemberModifyViewController {
                 name: data.name,
                 memberState: data.memberState,
                 instrumentList: instrumentListInfo,
-                //MARK: 성별, 나이 정보가 memberList에 없음
-                gender: "남",
-                age: "20대")
+                //TODO: 성별, 나이 정보가 memberList에 없음
+                gender: "",
+                age: "")
             
             resultData.append(transformedData)
         }

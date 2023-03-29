@@ -17,7 +17,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     var completion: (_ registeredMember: [SearchedUserInfo]) -> Void = { addedMembers in }
 
     private lazy var firstData: SearchedUserInfo = SearchedUserInfo(
-        memberId: 0,
+        memberId: nil,
         name: firstUnRegisteredCard.nickNameTextField.textField.text ?? "",
         memberState: .annonymous,
         instrumentList: [SearchedUserInstrumentList(instrumentId: 0,
@@ -88,7 +88,7 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
                 name: card.otherPositionTextField.inputText())
             
             let data = SearchedUserInfo(
-                memberId: 0,
+                memberId: nil,
                 name: card.nickNameTextField.textField.text ?? "",
                 memberState: .annonymous,
                 instrumentList: [mainPosition, otherPosition],

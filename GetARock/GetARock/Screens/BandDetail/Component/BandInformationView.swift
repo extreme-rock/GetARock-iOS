@@ -290,7 +290,6 @@ final class BandInformationView: UIView {
         
         //MARK: band정보 바뀔 떄 memberCollectionView 높이 재설정
         self.setupCollectionViewHeight()
-        
     }
     
     private func setupCollectionViewHeight() {

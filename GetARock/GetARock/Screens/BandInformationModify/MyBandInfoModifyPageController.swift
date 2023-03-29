@@ -166,13 +166,6 @@ final class MyBandInfoModifyPageController: UIViewController {
 
     private func setOriginalBandData() {
         BasicDataModel.bandPUTData.bandId = bandInfo.bandID
-        let originalAddress = bandInfo.address
-        let originalSongList = bandInfo.songList
-        BasicDataModel.bandPUTData.address = Address(city: originalAddress.city,
-                                                     street: originalAddress.street,
-                                                     detail: originalAddress.detail,
-                                                     longitude: originalAddress.longitude,
-                                                     latitude: originalAddress.latitude)
     }
 }
 

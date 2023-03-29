@@ -187,6 +187,13 @@ final class BandTopInfoView: UIView {
         // TODO: 리더이면 밴드 삭제를 넣고 아님 말고
         self.delegate?.showBandOptionActionSheet()
     }
+
+    func configure(bandInfo: BandInformationVO) {
+        self.bandNameLabel.text = bandInfo.name
+        self.bandAddress = bandInfo.address
+        setBandAddress()
+        self.isBandButtonSelect = false
+    }
 }
 
 extension BandTopInfoView {

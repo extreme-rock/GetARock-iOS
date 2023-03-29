@@ -35,7 +35,7 @@ final class BandDetailViewController: UIViewController {
 
     private let entryPoint: EntryPoint
 
-    private var bandData = BandInformationVO(
+    private lazy var bandData = BandInformationVO(
         bandID: 0,
         name: "",
         age: "",
@@ -58,6 +58,10 @@ final class BandDetailViewController: UIViewController {
                 object: nil,
                 userInfo: bandDataDict as [AnyHashable : Any]
             )
+            // MARK: bandTopInfo 수정, bandDetail수정
+            NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
+                                            object: nil,
+                                            userInfo: ["bandInfo": self.bandData])
         }
     }
     
@@ -67,7 +71,8 @@ final class BandDetailViewController: UIViewController {
         $0.delegate = self
         switch self.entryPoint {
         case .myBand:
-            if self.myBands?.count ?? 0 > 1 { $0.setupToggleButtonLayout() }
+            if self.myBands?.count ?? 0 > 1 { $0.setupToggleButtonLayout()
+            }
         case .otherBand:
             break
         }
@@ -95,11 +100,8 @@ final class BandDetailViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         Task {
             await fetchBandData(with: self.myBands?.first?.bandId)
-            NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
-                                            object: nil,
-                                            userInfo: ["bandInfo": self.bandData])
-            bandDetailContentView.configureBandDetail(with: self.bandData)
         }
+
     }
     
     // MARK: - Init
@@ -216,6 +218,8 @@ extension BandDetailViewController {
             print("Response data raw : \(data)")
             print("응답 내용 : \(response)")
             self.bandData = decodedData
+            print(decodedData.memberList, "decodedData")
+            print(decodedData.address, "decodedData")
         } catch {
             print(error)
             print("bad news! decoding error occuerd")
