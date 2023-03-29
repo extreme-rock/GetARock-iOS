@@ -52,8 +52,6 @@ final class PositionCollectionView: UIView {
     
     // MARK: - Property
     
-    
-    
     private var cellType: CellType
     weak var delegate: PositionCollectionViewDelegate?
     
@@ -245,6 +243,7 @@ extension PositionCollectionView {
     }
     
     func applySnapshot(with items: [Item]) {
+        self.items = items
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)

@@ -347,7 +347,7 @@ extension MainMapViewController: GetARockInfoPopUpViewDelegate {
             let positions = instrumentList.map {
                 let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
                 return Item.position(Position(
-                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? "",
+                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? $0.name,
                     instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
                     isETC: isETC)
                 )

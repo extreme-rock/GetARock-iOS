@@ -117,9 +117,10 @@ final class MypageDetailViewController: BaseViewController {
         Task {
             guard let instrumentList = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.instrumentList else { return }
             let positions = instrumentList.map {
+                print($0.name)
                 let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
                 return Item.position(Position(
-                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? "",
+                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? $0.name,
                     instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
                     isETC: isETC)
                 )
