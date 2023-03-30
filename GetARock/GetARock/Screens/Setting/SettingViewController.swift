@@ -93,9 +93,7 @@ extension SettingViewController {
         }))
         
         options.append(CellConfiguration(title: "버전 정보", handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.showAlertForLogout()
-            }
+            // TODO: 앱스토어 연결
         }))
         
         options.append(CellConfiguration(title: "로그아웃", handler: { [weak self] in
