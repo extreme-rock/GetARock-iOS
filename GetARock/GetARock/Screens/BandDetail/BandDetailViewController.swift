@@ -96,14 +96,14 @@ final class BandDetailViewController: UIViewController {
         configureDelegate()
         setNotification()
         attribute()
+        setCustomBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = entryPoint == .myBand ? false : true
         Task {
             await fetchBandData(with: self.myBands?.first?.bandId)
         }
-
     }
     
     // MARK: - Init

@@ -22,7 +22,7 @@ final class SignUpNetworkManager {
             "content-type": "application/json",
             "social-token": "\(UserDefaultStorage.identityToken)"
         ]
-       print(UserDefaultStorage.identityToken, "identityTokenmember")
+
         guard let url = URL(string: "https://api.ryomyom.com/member") else { throw NetworkError.badURL }
         var request = URLRequest(url: url,
                                  cachePolicy: .useProtocolCachePolicy,
