@@ -134,7 +134,12 @@ extension SettingViewController {
     }
     
     private func goToLogOut() {
-
+        UserDefaultHandler.clearAllData()
+        DispatchQueue.main.async { [weak self] in
+            let viewController = LandingViewController()
+            viewController.delegate = self
+            self?.present(viewController, animated: true)
+        }
     }
     
     private func goToDeleteAccount() {
