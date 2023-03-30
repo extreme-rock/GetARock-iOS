@@ -14,7 +14,7 @@ extension String {
     func checkStringExpression() -> Bool{
         do {
             let regex = try NSRegularExpression(
-                pattern: "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\s]$",
+                pattern: "^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ_\\s]$",
                 options: .caseInsensitive)
             
             if let _ = regex.firstMatch(
