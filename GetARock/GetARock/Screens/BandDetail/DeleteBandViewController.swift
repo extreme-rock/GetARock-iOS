@@ -23,7 +23,7 @@ final class DeleteBandViewController: UIViewController {
     private lazy var titleLabel: BasicLabel = {
         $0.numberOfLines = 0
         return $0
-    }(BasicLabel(contentText: "\(self.bandData.name)를\n해체 하시겠습니까?",
+    }(BasicLabel(contentText: "\(self.bandData.name)을(를)\n해체 하시겠습니까?",
                  fontStyle: .largeTitle01,
                  textColorInfo: .white))
     
