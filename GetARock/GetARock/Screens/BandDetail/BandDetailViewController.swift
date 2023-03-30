@@ -28,6 +28,7 @@ final class BandDetailViewController: UIViewController {
         case myBand
         case myBandFromMap
         case otherBand
+        case otherBandFromMap
     }
 
     // MARK: - Property
@@ -76,7 +77,7 @@ final class BandDetailViewController: UIViewController {
                 $0.setupToggleButtonLayout()
             }
             $0.setupOptionButtonLayout()
-        case .otherBand:
+        case .otherBand, .otherBandFromMap:
             break
         }
         return $0
@@ -101,7 +102,18 @@ final class BandDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = entryPoint == .myBand ? false : true
+        switch self.entryPoint {
+        case .myBand:
+            self.navigationController?.isNavigationBarHidden = false
+        case .myBandFromMap:
+            self.navigationController?.isNavigationBarHidden = true
+        case .otherBand:
+            self.navigationController?.isNavigationBarHidden = false
+        case .otherBandFromMap:
+            self.navigationController?.isNavigationBarHidden = true
+        }
+
+
         Task {
             await fetchBandData(with: self.myBands?.first?.bandId)
         }
@@ -152,7 +164,7 @@ final class BandDetailViewController: UIViewController {
         switch self.entryPoint {
         case .myBand, .myBandFromMap:
             view.addSubview(bandSelectMenuView)
-        case .otherBand:
+        case .otherBand, .otherBandFromMap:
             break
         }
         

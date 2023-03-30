@@ -141,9 +141,6 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.setLocationManager()
         self.requestLocationAuthorization()
-
-        print("")
-        print(UserDefaultStorage.memberID)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -260,13 +257,13 @@ extension MainMapViewController: GMSMapViewDelegate {
             bandData.append(BandList(bandId: selectedBandInfo.bandID, name: selectedBandInfo.name, memberCount: selectedBandInfo.memberList.count, memberAge: selectedBandInfo.age))
 
             guard let userBandData: [BandListVO] = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.bandList else { return }
-            let isMyBand = userBandData.filter({ bandList in
+            let isMyBand = !userBandData.filter({ bandList in
                 bandList.bandID == selectedBandInfo.bandID
             }).isEmpty
-
             let viewController = UINavigationController(
+
                 rootViewController: BandDetailViewController(myBands: bandData,
-                                                             entryPoint: isMyBand ? .myBand : .otherBand)
+                                                             entryPoint: isMyBand ? .myBandFromMap : .otherBandFromMap)
             )
             viewController.modalPresentationStyle = .pageSheet
             if let sheet = viewController.sheetPresentationController {
