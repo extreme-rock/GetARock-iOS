@@ -288,10 +288,13 @@ extension PositionCollectionView: UICollectionViewDelegate {
             guard let cell = self.collectionView.cellForItem(at: indexPath) as? BandMemberCollectionViewCell else { return }
             
             let userID = cell.memberData.memberID
-            print(userID, "userID")
-            NotificationCenter.default.post(name: NSNotification.Name.presentMypageDetailViewController,
-                                            object: nil,
-                                            userInfo: ["memberID":userID])
+            if cell.memberData.isUser {
+                NotificationCenter.default.post(name: NSNotification.Name.presentMypageDetailViewController,
+                                                object: nil,
+                                                userInfo: ["memberID":userID])
+            } else {
+                return
+            }
             
         case .position:
             guard let indexOfSelectedCell = self.selectedCellIndexPaths.firstIndex(where: { element in
