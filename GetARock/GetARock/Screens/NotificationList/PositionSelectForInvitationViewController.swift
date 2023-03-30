@@ -11,14 +11,9 @@ final class PositionSelectForInvitationViewController: BaseViewController {
     
     //MARK: - Property
 
-    //TODO: 추후 유저 데이터에서 유저가 가능하다고 응답한 악기들로 대체되어야함.
-    private let positions: [Item] = [
-        .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
-        .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
-        .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
-        .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
-        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false))
-    ]
+    private let notification: NotificationInfo
+
+    private let positions: [Item]
     
     //MARK: - View
     
@@ -46,7 +41,17 @@ final class PositionSelectForInvitationViewController: BaseViewController {
         configureDelegate()
         setObserver()
     }
-    
+
+    init(notificationInfo: NotificationInfo, positions: [Item]) {
+        self.notification = notificationInfo
+        self.positions = positions
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -104,12 +109,12 @@ extension PositionSelectForInvitationViewController {
     private func navigateToNext() {
         //TODO: 추후 유저 정보에 따른 쿼리 컴포넌트 변경 필요 + 실패할경우 completion 처리 필요
         NotificationNetworkManager.shared.acceptInvitation(
-            alertId: 0,
-            bandId: 0,
-            memberId: 0,
+            alertId: notification.alertID,
+            bandId: notification.bandID!,
+            memberId: UserDefaultStorage.memberID,
             memberInstrument: getSelectedInstrumentList(),
             completion: {
-                //TODO: 지도 View로 navigate하도록 바꿔야함
+                self.navigationController?.pushViewController(MainMapViewController(isFromSignUp: false), animated: true)
             })
     }
 }

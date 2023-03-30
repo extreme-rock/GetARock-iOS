@@ -13,6 +13,16 @@ final class NotificationTableViewCell: UITableViewCell {
 
     private var isInvitation: Bool = false
 
+    var notificationInfo: NotificationInfo = NotificationInfo(alertID: 0,
+                                                                      isInvitation: false,
+                                                                      alertType: "",
+                                                                      title: "",
+                                                                      content: "",
+                                                                      isChecked: false,
+                                                                      updatedDate: "",
+                                                                      bandID: 0,
+                                                                      eventID: 0)
+
     //MARK: View
 
     private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline02, textColorInfo: .white)
@@ -101,6 +111,7 @@ extension NotificationTableViewCell {
         self.titleLabel.text = data.title
         self.subtitleLabel.text = data.content
         self.uploadTime.text = data.updatedDate.toDateWithDateComponents().abbreviatedRelativeKRTime
+        self.notificationInfo = data
         self.isInvitation = data.isInvitation ?? true
         if isInvitation {
             contentInformationVstack.addArrangedSubview(buttonHstack)

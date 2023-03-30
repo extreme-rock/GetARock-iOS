@@ -154,11 +154,9 @@ final class MypageDetailViewController: BaseViewController {
                     isETC: isETC)
                 )
             }
-            let bandCreationVC = UINavigationController(rootViewController: LeaderPositionSelectViewController(positions: positions)) 
-            //        self.navigationController?.pushViewController(bandCreationVC, animated: true)
+            let bandCreationVC = UINavigationController(rootViewController: LeaderPositionSelectViewController(positions: positions))
             bandCreationVC.modalPresentationStyle = .fullScreen
             self.present(bandCreationVC, animated: true)
-            
         }
     }
     
