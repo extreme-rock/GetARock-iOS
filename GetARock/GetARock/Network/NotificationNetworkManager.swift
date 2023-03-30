@@ -12,8 +12,8 @@ final class NotificationNetworkManager {
     
     static let shared = NotificationNetworkManager()
     
-    func getNotificationList(memberID: Int) async throws -> [NotificationInfo] {
-        var returnData: [NotificationInfo] = []
+    func getNotificationList(memberID: Int) async throws -> NotificationListVO {
+        var returnData: NotificationListVO = NotificationListVO(alertList: [])
         let baseURL = "https://api.ryomyom.com/alerts"
         
         var queryURLComponent = URLComponents(string: baseURL)
@@ -24,10 +24,10 @@ final class NotificationNetworkManager {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
 
-            guard let httpResponse = response as? HTTPURLResponse else { return [] }
+            guard let httpResponse = response as? HTTPURLResponse else { return NotificationListVO(alertList: []) }
             
             if (200..<300).contains(httpResponse.statusCode) {
-                let decodedData = try JSONDecoder().decode([NotificationInfo].self, from: data)
+                let decodedData = try JSONDecoder().decode(NotificationListVO.self, from: data)
                 returnData = decodedData
             } else {
                 throw NetworkError.failedRequest(status: httpResponse.statusCode)

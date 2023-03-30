@@ -67,7 +67,7 @@ extension NotificationListViewController {
     private func fetchNotificationList(with memberID: Int) {
         Task {
             do {
-                let serverData: [NotificationInfo] = try await NotificationNetworkManager.shared.getNotificationList(memberID: memberID)
+                let serverData: [NotificationInfo] = try await NotificationNetworkManager.shared.getNotificationList(memberID: memberID).alertList
                 self.notificationList = serverData
                 print("++++++++NotificationList++++++++")
                 print(self.notificationList)

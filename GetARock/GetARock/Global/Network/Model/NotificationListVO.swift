@@ -15,12 +15,12 @@ struct NotificationListVO: Codable {
 // MARK: - AlertList
 struct NotificationInfo: Codable {
     let alertID: Int
-    let isInvitation: Bool
+    let isInvitation: Bool?
     let alertType, title: String
     let content: String
     let isChecked: Bool
     let updatedDate: String
-    let bandID, eventID: Int
+    let bandID, eventID: Int?
 
     enum CodingKeys: String, CodingKey {
         case alertID = "alertId"
