@@ -236,11 +236,11 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
             viewController.modalPresentationStyle = .fullScreen
             self.present(viewController, animated: true)
         }
-        
-        let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in
-            print("내 포지션 수정")
-        }
-        [modifyBandAction, modifyMyPositionAction].forEach {
+        // TODO: 나중에 밴드내의 나의 포지션 변경하는 View 만들어서 연결 & 백엔드 코드가 없음
+        //        let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in
+        //            print("내 포지션 수정")
+        //        }
+        [modifyBandAction].forEach {
             actionSheet.addAction($0)
         }
         let bandLeader = self.bandData.memberList.filter { $0.memberState == .admin }
@@ -251,7 +251,8 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
                 viewController.delegate = self
                 self.navigationController?.pushViewController(viewController, animated: true)
             }
-            actionSheet.addAction(deleteMyBandAction)        }
+            actionSheet.addAction(deleteMyBandAction)
+        }
 
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         actionSheet.addAction(cancelAction)

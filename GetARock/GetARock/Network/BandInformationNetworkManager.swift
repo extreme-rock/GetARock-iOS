@@ -8,8 +8,9 @@
 import Foundation
 
 final class BandInformationNetworkManager {
+    static let shared = BandInformationNetworkManager()
 
-    func getBandData(bandId: Int) async throws -> BandInformationVO {
+    func fetchBandData(bandId: Int) async throws -> BandInformationVO {
         var result: BandInformationVO = BandInformationVO(bandID: 0,
                                                           name: "",
                                                           age: "",

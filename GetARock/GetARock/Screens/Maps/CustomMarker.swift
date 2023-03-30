@@ -24,9 +24,13 @@ final class CustomMarker: GMSMarker {
             }
         }
     }
-    
+
+    let bandId: Int
+
     private var bandName: String
+
     private var coordinate: CLLocationCoordinate2D
+
     var category: MarkerCategory
     
     private var label: UILabel = {
@@ -46,11 +50,11 @@ final class CustomMarker: GMSMarker {
     
     // MARK: - Init
     
-    init(bandName: String, coordinate: CLLocationCoordinate2D, category: MarkerCategory) {
+    init(bandId: Int, bandName: String, coordinate: CLLocationCoordinate2D, category: MarkerCategory) {
+        self.bandId = bandId
         self.bandName = bandName
         self.coordinate = coordinate
         self.category = category
-
         super.init()
         
         label.text = bandName

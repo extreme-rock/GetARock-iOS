@@ -51,7 +51,7 @@ final class MainMapViewController: UIViewController {
     private lazy var topButtonStackView: UIStackView = {
         $0.axis = .vertical
         return $0
-    }(UIStackView(arrangedSubviews: [notificationButton, settingButton, moveToCurrentLocationButton]))
+    }(UIStackView(arrangedSubviews: [notificationButton, settingButton]))
     
     private lazy var myBandsButton: UIButton = {
         $0.setImage(UIImage(named: "myBandsButton"), for: .normal)
@@ -91,11 +91,12 @@ final class MainMapViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
-    
-    private let moveToCurrentLocationButton: UIButton = {
-        $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
-        return $0
-    }(UIButton())
+
+    //MARK: 추후 현재 위치로 돌아오는 기능 추가해야함
+//    private let moveToCurrentLocationButton: UIButton = {
+//        $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
+//        return $0
+//    }(UIButton())
     
     private lazy var deleteBandNoticeView: DeleteBandNoticeView = {
         $0.delegate = self
@@ -199,7 +200,7 @@ final class MainMapViewController: UIViewController {
             await fetchMarkers()
             mapView.clear()
             for band in markers.bandList {
-                let marker = CustomMarker(bandName: band.name,
+                let marker = CustomMarker(bandId: band.id, bandName: band.name,
                                           coordinate: band.toCLLocationCoordinate2D(),
                                           category: .band)
                 marker.map = mapView
@@ -246,6 +247,20 @@ extension MainMapViewController: GMSMapViewDelegate {
         }
         moveMap(to: selectedMarker?.position)
         self.previousSelectedMarker = selectedMarker
+
+        Task {
+            var bandData: [BandList] = []
+            let selectedBandInfo = try await BandInformationNetworkManager.shared.fetchBandData(bandId: selectedMarker?.bandId ?? 0)
+            bandData.append(BandList(bandId: selectedBandInfo.bandID, name: selectedBandInfo.name, memberCount: selectedBandInfo.memberList.count, memberAge: selectedBandInfo.age))
+            let viewController = UINavigationController(rootViewController: BandDetailViewController(myBands: bandData, entryPoint: .otherBand))
+            viewController.modalPresentationStyle = .pageSheet
+            if let sheet = viewController.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+            }
+            present(viewController, animated: true, completion: nil)
+        }
+        print("Marker 선택")
         
         return true
     }
@@ -464,6 +479,33 @@ extension MainMapViewController {
             self.markers = decodedData
         } catch {
             print("An error has occurred while decoding JSONObject: \(error.localizedDescription)")
+        }
+    }
+
+    private func navigateToSelectedBandInfo(with bandId: Int) {
+        Task {
+            let memberID = UserDefaultStorage.memberID
+            guard let user = await UserInfoNetworkManager.shared.fetchUserData(with: memberID) else { return }
+            print("++++++++++++++++++++++")
+            print(user)
+            print(user.bandList)
+            if user.bandList.isEmpty {
+                setupAlertViewLayout()
+            } else {
+                let bandList = user.bandList.map {
+                    BandList(bandId: $0.bandID,
+                             name: $0.name,
+                             memberCount: $0.memberCount,
+                             memberAge: $0.memberAge)
+                }
+                let viewController = UINavigationController(rootViewController: BandDetailViewController(myBands: bandList, entryPoint: .myBand))
+                viewController.modalPresentationStyle = .pageSheet
+                if let sheet = viewController.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                    sheet.prefersGrabberVisible = true
+                }
+                present(viewController, animated: true, completion: nil)
+            }
         }
     }
 }
