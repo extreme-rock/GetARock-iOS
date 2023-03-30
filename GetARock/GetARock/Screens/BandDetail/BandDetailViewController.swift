@@ -26,6 +26,7 @@ final class BandDetailViewController: UIViewController {
     
     enum EntryPoint {
         case myBand
+        case myBandFromMap
         case otherBand
     }
 
@@ -70,7 +71,7 @@ final class BandDetailViewController: UIViewController {
     lazy var bandTopInfoView: BandTopInfoView = {
         $0.delegate = self
         switch self.entryPoint {
-        case .myBand:
+        case .myBand, .myBandFromMap:
             if self.myBands?.count ?? 0 > 1 {
                 $0.setupToggleButtonLayout()
             }
@@ -149,7 +150,7 @@ final class BandDetailViewController: UIViewController {
         )
         
         switch self.entryPoint {
-        case .myBand:
+        case .myBand, .myBandFromMap:
             view.addSubview(bandSelectMenuView)
         case .otherBand:
             break

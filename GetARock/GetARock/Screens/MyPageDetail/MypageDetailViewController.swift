@@ -167,7 +167,6 @@ final class MypageDetailViewController: BaseViewController {
         let bandDetailVC = BandDetailViewController(myBands: [selectbandData], entryPoint: .myBand)
         self.navigationController?.pushViewController(bandDetailVC, animated: true)
     }
-
 }
 
 // MARK: - fetchBandData
