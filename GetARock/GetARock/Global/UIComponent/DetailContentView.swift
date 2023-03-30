@@ -125,7 +125,7 @@ final class DetailContentView: UIView {
                 return $0
             }(UIViewController())
             
-            let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList)
+            let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList, bandId: bandData.bandID)
             
             // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
             detailContentViewControllers = [bandInfoVC, bandCommentListVC]
@@ -191,7 +191,7 @@ final class DetailContentView: UIView {
             return $0
         }(UIViewController())
 
-        let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList)
+        let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList, bandId: bandData.bandID)
 
         // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
         detailContentViewControllers = [bandInfoVC, bandCommentListVC]

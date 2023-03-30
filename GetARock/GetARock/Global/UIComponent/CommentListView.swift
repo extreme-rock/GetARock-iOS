@@ -21,6 +21,7 @@ final class CommentListView: UIView {
     
     private var commentData: [CommentList]?
     private var totalCommentNumber: Int = 0
+    private let bandId: Int
     private let tableviewRefreshControl = UIRefreshControl()
     weak var delegate: CheckCellIndexDelegate?
     
@@ -50,11 +51,12 @@ final class CommentListView: UIView {
         return $0
     }(UIStackView(arrangedSubviews: [totalCommentNumberLabel, tableView]))
     
-    private let commentWriteTextView = WriteCommentTextView()
+    private lazy var commentWriteTextView = WriteCommentTextView(bandId: bandId)
     
     // MARK: - Life Cycle
     
-    init(data: [CommentList]?) {
+    init(data: [CommentList]?, bandId: Int) {
+        self.bandId = bandId
         self.commentData = data
         super.init(frame: .zero)
         attribute()

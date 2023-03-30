@@ -16,14 +16,16 @@ class CommentListViewController: UIViewController {
     private var commentID = 0
     private var selectedcommentID: CommentList? = nil
     private var commentData: [CommentList]?
+    private let bandId: Int
     
     // MARK: - View
     
-    private lazy var bandCommentList = CommentListView(data: commentData)
+    private lazy var bandCommentList = CommentListView(data: commentData, bandId: bandId)
     
     // MARK: - init
     
-    init(commentData: [CommentList]?) {
+    init(commentData: [CommentList]?, bandId: Int) {
+        self.bandId = bandId
         self.commentData = commentData
         super.init(nibName: nil, bundle: nil)
         }

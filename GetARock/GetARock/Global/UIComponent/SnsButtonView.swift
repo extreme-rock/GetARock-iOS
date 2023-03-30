@@ -86,7 +86,7 @@ final class SNSButtonView: UIView {
     private func attribute() {
         snsLabel.text = snsType.rawValue
         snsIcon.image = snsType.snsIconImage
-        if self.snsURI != nil { activateSNSButton() }
+        if self.snsURI != "" { activateSNSButton() }
     }
     
     private func setupLayout() {

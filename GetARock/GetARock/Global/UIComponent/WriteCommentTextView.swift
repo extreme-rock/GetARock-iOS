@@ -19,7 +19,7 @@ final class WriteCommentTextView: UIView {
     //TODO: - 추후 로그인한 사용자 ID로 변경 해야함
     private var memberId = "1"
     //TODO: - 추후 사용자가 들어간 밴드의 ID로 변경해야함
-    private var bandId = "25"
+    private let bandId: Int
     private var contentText = ""
     
     // MARK: - View
@@ -50,7 +50,8 @@ final class WriteCommentTextView: UIView {
     
     // MARK: - Init
     
-    init() {
+    init(bandId: Int) {
+        self.bandId = bandId
         super.init(frame: .zero)
         attribute()
         setupLayout()
@@ -234,7 +235,7 @@ extension WriteCommentTextView {
             
             let memberIdQuery = URLQueryItem(name: "memberId", value: memberId)
             
-            let bandIdQuery = URLQueryItem(name: "bandId", value: bandId)
+            let bandIdQuery = URLQueryItem(name: "bandId", value: String(bandId))
             
             let content = URLQueryItem(name: "content", value: contentText)
             
@@ -249,9 +250,12 @@ extension WriteCommentTextView {
             Task {
                 //TODO: 유저디폴트의 Band와 ID가 같으면 유저디폴트의 밴드 리스트와 엔트리포인트 마이밴드로 수정
 //                await BandDetailViewController(
-//                    myBands: <#[BandList]#>, -> 유저디폴트의 유저의 밴드 리스트 받아오기
+//                    myBands: [], -> 유저디폴트의 유저의 밴드 리스트 받아오기
 //                    entryPoint: <#BandDetailViewController.EntryPoint#> -> 유저디폴트의 배열 속 밴드ID값이 지도에서 불러온 밴드 ID과 일치하면 .myband
 //                ).fetchBandData(with: <#Int?#>) -> 지도에서 받아온 밴드 ID
+                await BandDetailViewController(
+                    myBands: [],
+                    entryPoint: .myBand).fetchBandData(with: self.bandId)
             }
             
             let dataTask = URLSession.shared.dataTask(with: request,
