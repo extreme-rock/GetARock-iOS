@@ -69,6 +69,8 @@ extension NotificationListViewController {
             do {
                 let serverData: [NotificationInfo] = try await NotificationNetworkManager.shared.getNotificationList(memberID: memberID)
                 self.notificationList = serverData
+                print("++++++++NotificationList++++++++")
+                print(self.notificationList)
             } catch {
                 print(error)
             }

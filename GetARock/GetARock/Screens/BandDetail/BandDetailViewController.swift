@@ -207,7 +207,7 @@ final class BandDetailViewController: UIViewController {
     
     @objc private func presentMypageDetailViewController(_ notification: Notification) {
         guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
-        let mypageVC = MypageDetailViewController(navigationBarOption: .hiddenFalse)
+        let mypageVC = MypageDetailViewController(navigationBarOption: .hiddenFalse, memberId: memberID)
         self.navigationController?.pushViewController(mypageVC, animated: true)
     }
     

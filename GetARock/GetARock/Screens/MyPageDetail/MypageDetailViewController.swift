@@ -23,7 +23,7 @@ final class MypageDetailViewController: BaseViewController {
             }
         }
     }
-
+    private let memberId: Int
     private let navigationBarOption: NavigationBarOption
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
     private lazy var userData: UserInformationVO = UserInformationVO(
@@ -59,8 +59,9 @@ final class MypageDetailViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(navigationBarOption: NavigationBarOption) {
+    init(navigationBarOption: NavigationBarOption, memberId: Int) {
         self.navigationBarOption = navigationBarOption
+        self.memberId = memberId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -76,7 +77,7 @@ final class MypageDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            await fetchUserData()
+            await fetchUserData(with: self.memberId)
             setupLayout()
             setNotification()
             configureDelegate()
@@ -87,7 +88,7 @@ final class MypageDetailViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = self.navigationBarOption.isHidden
         Task {
-            await fetchUserData()
+            await fetchUserData(with: self.memberId)
         }
     }
 //
@@ -173,9 +174,9 @@ final class MypageDetailViewController: BaseViewController {
 
 extension MypageDetailViewController {
     
-    func fetchUserData() async {
+    func fetchUserData(with memberId: Int) async {
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/member")
-        let idQuery = URLQueryItem(name: "id", value: String(UserDefaultStorage.memberID))
+        let idQuery = URLQueryItem(name: "id", value: String(memberId))
         queryURLComponent?.queryItems = [idQuery]
         guard let url = queryURLComponent?.url else { return }
         
