@@ -248,11 +248,6 @@ extension WriteCommentTextView {
             request.httpMethod = "POST"
             request.allHTTPHeaderFields = headers
             Task {
-                //TODO: 유저디폴트의 Band와 ID가 같으면 유저디폴트의 밴드 리스트와 엔트리포인트 마이밴드로 수정
-//                await BandDetailViewController(
-//                    myBands: [], -> 유저디폴트의 유저의 밴드 리스트 받아오기
-//                    entryPoint: <#BandDetailViewController.EntryPoint#> -> 유저디폴트의 배열 속 밴드ID값이 지도에서 불러온 밴드 ID과 일치하면 .myband
-//                ).fetchBandData(with: <#Int?#>) -> 지도에서 받아온 밴드 ID
                 await BandDetailViewController(
                     myBands: [],
                     entryPoint: .myBand).fetchBandData(with: self.bandId)
