@@ -106,7 +106,7 @@ extension SettingViewController {
         
         options.append(CellConfiguration(title: "탈퇴하기", handler: { [weak self] in
             DispatchQueue.main.async {
-                self?.goToDeleteAccount()
+                self?.sendAccountDeleteMail()
             }
         }))
     }
@@ -222,6 +222,36 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             composeVC.setSubject("[문의 사항]")
             composeVC.setMessageBody(messageBody, isHTML: false)
             
+            self.present(composeVC, animated: true, completion: nil)
+        }
+        else {
+            self.showSendMailErrorAlert()
+        }
+    }
+
+    func sendAccountDeleteMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let getarockEmail = "ryomyomyom@gmail.com"
+            // TODO: 유저디폴트에서 닉네임 가져오기
+            let messageBody = """
+
+                              -----------------------------
+
+                              - 문의하는 닉네임:
+                              - 문의 날짜: \(Date())
+
+                              ------------------------------
+
+                              탈퇴 사유를 알려주실 수 있나요?
+
+                              """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([getarockEmail])
+            composeVC.setSubject("[탈퇴 하기]")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+
             self.present(composeVC, animated: true, completion: nil)
         }
         else {

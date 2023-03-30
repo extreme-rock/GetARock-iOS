@@ -20,11 +20,11 @@ final class DetailContentView: UIView {
     private lazy var segmentTitle: [String] = {
         switch detailInfoType {
         case .band:
-            return ["밴드상세", "방명록"]
+            return ["밴드상세", "하고싶은 말"]
         case .event:
             return ["모여락상세", "댓글"]
         case .myPage:
-            return ["프로필", "타임라인", "방명록"]
+            return ["프로필", "타임라인", "하고싶은 말"]
         }
     }()
     

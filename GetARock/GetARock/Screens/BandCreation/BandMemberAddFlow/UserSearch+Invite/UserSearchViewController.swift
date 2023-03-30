@@ -135,13 +135,12 @@ extension UserSearchViewController: UITableViewDelegate {
 
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? UserSearchTableViewCell else { return }
         //TODO: 추후 백엔드 데이터 모델 확정 후 이대로 init시 이상없는지 체크 필요
-        var data = SearchedUserInfo(memberId: 0,
+        var data = SearchedUserInfo(memberId: selectedCell.memberId,
                                     name: selectedCell.userNameLabel.text ?? "",
-                                    memberState: .none,
-                                    instrumentList: [SearchedUserInstrumentList(
-                                        instrumentId: 0,
-                                        isMain: true,
-                                        name: selectedCell.userInstrumentLabel.text ?? "")], gender: selectedCell.genderText(), age: selectedCell.ageText())
+                                    memberState: selectedCell.memberState,
+                                    instrumentList: selectedCell.instrument,
+                                    gender: selectedCell.genderText(),
+                                    age: selectedCell.ageText())
         data.id = selectedCell.id
         selectedUsers.append(data)
         self.selectedListWithID.append((indexPath: indexPath, id: selectedCell.id))

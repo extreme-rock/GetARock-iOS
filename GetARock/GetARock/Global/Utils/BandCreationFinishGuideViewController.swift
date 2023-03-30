@@ -112,14 +112,14 @@ final class BandCreationFinishGuideViewController: UIViewController {
         return $0
     }(UIImageView())
     
-    private let commentTitleLabel: BasicLabel = BasicLabel(contentText: "밴드 방명록",
+    private let commentTitleLabel: BasicLabel = BasicLabel(contentText: "밴드 하고싶은 말",
                                                       fontStyle: .contentBold,
                                                       textColorInfo: .white)
     
     private let commentSubtitleLabel: BasicLabel = {
         $0.numberOfLines = 3
         return $0
-    }(BasicLabel(contentText: "관심있는 밴드에 방명록을 남겨 소통할 수 있어요! 서로 성장하고 응원해주는 아름다운 밴드 문화를 만들어주세요!",
+    }(BasicLabel(contentText: "관심있는 밴드에 하고싶은 말을 남겨 소통할 수 있어요! 서로 성장하고 응원해주는 아름다운 밴드 문화를 만들어주세요!",
                  fontStyle: .content,
                  textColorInfo: .white))
     

@@ -61,7 +61,7 @@ final class DeleteBandViewController: UIViewController {
         $0.addLabelSpacing(lineSpacing: 10)
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "*밴드 정보, 방명록 등 밴드의 모든 활동 정보가 삭제 되며, 삭제된 데이터는 복구할 수 없어요",
+    }(BasicLabel(contentText: "*밴드 정보, 하고싶은 말 등 밴드의 모든 활동 정보가 삭제 되며, 삭제된 데이터는 복구할 수 없어요",
                  fontStyle: .contentLight,
                  textColorInfo: .white))
     

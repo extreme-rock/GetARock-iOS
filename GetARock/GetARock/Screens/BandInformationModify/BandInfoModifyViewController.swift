@@ -333,10 +333,10 @@ extension BandInfoModifyViewController {
     //MARK: 수정된 정보 확정
     func confirmModifiedBandInformation() {
         BasicDataModel.bandPUTData.name = bandNamingTextField.inputText()
-        BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
         BasicDataModel.bandPUTData.address.street = practiceRoomSearchButton.inputText()
+        BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
         //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
-        BasicDataModel.bandPUTData.songList = self.songListData()
+        BasicDataModel.bandPUTData.songList = songListData()
         BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
                                   instagramTextField.inputText(),

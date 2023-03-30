@@ -130,6 +130,7 @@ final class BandMemberModifyViewController: UIViewController {
     
     private lazy var abandonMemberButton: BottomButton = {
         $0.setTitle("내보내기", for: .normal)
+        $0.setBackgroundColor(.dark02, for: .normal)
         $0.isEnabled = false
         $0.addTarget(self, action: #selector(showAlertForMemberAbandon), for: .touchUpInside)
         return $0
@@ -239,13 +240,17 @@ extension BandMemberModifyViewController {
     // 데이터는 memberList 형태로 받아오지만, cell을 만들 때는 SearchedUserInfo 모델을 맞춰야하기 때문에 데이터를 변형시키는 메소드
     private func transformVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
-        //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
         for data in self.bandData.memberList {
+            print("++++++++++bandData PUT Test++++++")
+            print(data.name)
+            print(data.memberState)
+            print(data.memberID)
+            print("++++++++++bandData PUT Test++++++")
             let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
                 SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
             }
             let transformedData: SearchedUserInfo = SearchedUserInfo(
-                memberId: data.memberID ?? 0,
+                memberId: data.memberID!,
                 name: data.name,
                 memberState: data.memberState,
                 instrumentList: instrumentListInfo,
@@ -295,7 +300,7 @@ extension BandMemberModifyViewController {
         print("+++++++++++++++")
         print("PUT할 밴드 정보가 수정되었습니다")
         print("수정된 정보")
-        print(BasicDataModel.bandPUTData.memberList.count)
+        print(BasicDataModel.bandPUTData.memberList)
     }
 }
 

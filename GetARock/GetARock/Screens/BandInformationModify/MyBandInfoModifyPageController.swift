@@ -124,6 +124,11 @@ final class MyBandInfoModifyPageController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationInlineTitle(title: "밴드 수정")
+    }
+
     //MARK: - Method
 
     private func attribute() {
