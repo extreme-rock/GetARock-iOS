@@ -37,7 +37,7 @@ final class BandTopInfoView: UIView {
         $0.numberOfLines = 2
         return $0
     }(BasicLabel(contentText: bandName,
-                 fontStyle: .headline04,
+                 fontStyle: .headline01,
                  textColorInfo: .white))
     
     private lazy var bandNameStackView: UIStackView = {
@@ -72,7 +72,7 @@ final class BandTopInfoView: UIView {
     
     //TODO: 추후 밴드 데이터를 이용해 이름을 각 라벨 업데이트 필요
     private lazy var locationLabel: BasicLabel = {
-        $0.numberOfLines = 2
+        $0.numberOfLines = 0
         return $0
     }(BasicLabel(
         contentText: "",
@@ -95,7 +95,7 @@ final class BandTopInfoView: UIView {
     
     private lazy var infoStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = 5
+        $0.spacing = 10
         $0.alignment = .leading
         return $0
     }(UIStackView(arrangedSubviews: [bandNameStackView,locationStackView]))
@@ -137,7 +137,7 @@ final class BandTopInfoView: UIView {
             top: self.topAnchor,
             leading: self.leadingAnchor,
             trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
+            padding: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 35)
         )
 //
 //        self.addSubview(optionButton)
