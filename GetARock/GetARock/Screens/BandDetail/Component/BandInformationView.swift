@@ -82,7 +82,7 @@ final class BandInformationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandSongTitleLabel,bandSongListView]))
+    }(UIStackView(arrangedSubviews: [bandSongTitleLabel]))
     
     private let bandIntroTitleLabel = BasicLabel(
         contentText: "밴드 소개 📢",
@@ -107,7 +107,7 @@ final class BandInformationView: UIView {
         $0.axis = .vertical
         $0.spacing = 15
         return $0
-    }(UIStackView(arrangedSubviews: [bandIntroTitleLabel, bandIntroLabel]))
+    }(UIStackView(arrangedSubviews: [bandIntroTitleLabel]))
     
     private let bandSNSTitleLabel = BasicLabel(
         contentText: "밴드 SNS 🙌",
@@ -163,7 +163,6 @@ final class BandInformationView: UIView {
     private func setupLayout() {
         
         self.addSubview(scrollView)
-        
         scrollView.constraint(
             top: self.topAnchor,
             leading: self.leadingAnchor,
@@ -172,6 +171,7 @@ final class BandInformationView: UIView {
         )
         
         setLayoutForBandMembeCollectionView()
+        setBandSong()
         setBandInfo()
         scrollView.addSubview(bandInfoStackView)
         bandInfoStackView.constraint(
@@ -183,13 +183,25 @@ final class BandInformationView: UIView {
         )
     }
     
-    private func setBandInfo() {
-        if bandIntro == nil {
-            let emptyView = EmptyView(type: .noBand)
+    private func setBandInfo()  {
+        if bandIntro == "" {
+            let emptyView = EmptyView(type: .noIntroduction)
             bandIntroStackView.removeArrangedSubview(bandIntroLabel)
             bandIntroStackView.addArrangedSubview(emptyView)
         } else {
+            bandIntroStackView.addArrangedSubview(bandIntroLabel)
             bandIntroLabel.text = bandIntro
+        }
+    }
+    
+    private func setBandSong() {
+        guard let bandSong = self.bandSong else { return }
+        if bandSong.isEmpty {
+            let emptyView = EmptyView(type: .noSong)
+            bandSongStackView.removeArrangedSubview(bandSongListView)
+            bandSongStackView.addArrangedSubview(emptyView)
+        } else {
+            bandSongStackView.addArrangedSubview(bandSongListView)
         }
     }
     
