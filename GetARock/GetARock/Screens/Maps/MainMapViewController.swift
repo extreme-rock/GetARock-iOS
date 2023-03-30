@@ -141,6 +141,9 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.setLocationManager()
         self.requestLocationAuthorization()
+
+        print("")
+        print(UserDefaultStorage.memberID)
     }
 
     override func viewWillAppear(_ animated: Bool) {
