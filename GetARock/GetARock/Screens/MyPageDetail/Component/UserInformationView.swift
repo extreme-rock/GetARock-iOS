@@ -216,15 +216,14 @@ final class UserInformationView: UIView {
     private func setUserBandButton() {
         // TODO: addarragedSubView가 계속 실행됨 setUserBandButton이 실행되면서.
         let userBand = userData.bandList.map({ $0 })
+        userBandButtonStackView.subviews.forEach {
+            $0.removeFromSuperview()
+        }
         if userBand.count == 0 {
             let emptyView = EmptyView(type: .noBand)
             self.userBandButtonStackView.addArrangedSubview(emptyView)
         }
         else {
-            userBandButtonStackView.subviews.forEach {
-                $0.removeFromSuperview()
-            }
-
             userBand.forEach{
                 let bandButton = BandButtonView(bandID: $0.bandID,
                                                 bandName: $0.name,

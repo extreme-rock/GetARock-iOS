@@ -35,4 +35,8 @@ struct UserDefaultHandler {
     static func setUserName(name: String) {
         UserData.setValue(name, forKey: .name)
     }
+
+    static func setIdentityToken(identityToken: String) {
+        UserData.setValue(identityToken, forKey: .identityToken)
+    }
 }

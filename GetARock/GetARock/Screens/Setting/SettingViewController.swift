@@ -94,13 +94,13 @@ extension SettingViewController {
         
         options.append(CellConfiguration(title: "버전 정보", handler: { [weak self] in
             DispatchQueue.main.async {
-                self?.getVersionInfo()
+                self?.showAlertForLogout()
             }
         }))
         
         options.append(CellConfiguration(title: "로그아웃", handler: { [weak self] in
             DispatchQueue.main.async {
-                self?.goToLogOut()
+                self?.showAlertForLogout()
             }
         }))
         
@@ -128,17 +128,27 @@ extension SettingViewController {
             self.present(notionSafariView, animated: true, completion: nil)
         }
     }
-    
-    private func getVersionInfo() {
-        
+
+    private func showAlertForLogout() {
+        let alertTitle = "로그아웃"
+        let alertMessage = "정말 로그아웃 하시겠어요?"
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let changeActionTitle = "로그아웃"
+        let okayActionTitle = "취소"
+
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
+            self.goToLogOut()
+        }))
+        present(alertController, animated: true)
     }
     
     private func goToLogOut() {
         UserDefaultHandler.clearAllData()
         DispatchQueue.main.async { [weak self] in
             let viewController = LandingViewController()
-            viewController.delegate = self
-            self?.present(viewController, animated: true)
+            self?.view.window?.rootViewController = viewController
         }
     }
     

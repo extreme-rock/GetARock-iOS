@@ -19,9 +19,10 @@ final class SignUpNetworkManager {
    func postUserInformation(user: User) async throws {
         let headers = [
             "accept": "application/json",
-            "content-type": "application/json"
+            "content-type": "application/json",
+            "social-token": "\(UserDefaultStorage.identityToken)"
         ]
-        
+       print(UserDefaultStorage.identityToken, "identityTokenmember")
         guard let url = URL(string: "https://api.ryomyom.com/member") else { throw NetworkError.badURL }
         var request = URLRequest(url: url,
                                  cachePolicy: .useProtocolCachePolicy,
