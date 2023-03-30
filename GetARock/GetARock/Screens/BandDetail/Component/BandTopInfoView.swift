@@ -139,11 +139,11 @@ final class BandTopInfoView: UIView {
             trailing: self.trailingAnchor,
             padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
         )
-        
-        self.addSubview(optionButton)
-        optionButton.constraint(top: self.topAnchor,
-                                trailing: self.trailingAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
+//
+//        self.addSubview(optionButton)
+//        optionButton.constraint(top: self.topAnchor,
+//                                trailing: self.trailingAnchor,
+//                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
         
         self.addSubview(divider)
         divider.constraint(
@@ -155,7 +155,15 @@ final class BandTopInfoView: UIView {
         )
         self.divider.constraint(.heightAnchor, constant: DividerSize.height)
     }
-    
+
+    func setupOptionButtonLayout() {
+        self.addSubview(optionButton)
+        optionButton.constraint(top: self.topAnchor,
+                                trailing: self.trailingAnchor,
+                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
+
+    }
+
     private func setBandAddress() {
         let city = bandAddress.city
         let street = bandAddress.street
@@ -169,15 +177,7 @@ final class BandTopInfoView: UIView {
         self.isBandButtonSelect.toggle()
         delegate?.didBandSelectButtonTapped(isBandSelectButton: self.isBandButtonSelect)
     }
-    
-    @objc
-    private func configure(with notification: Notification) {
-        guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
-        self.bandNameLabel.text = bandInfo.name
-        self.bandAddress = bandInfo.address
-        setBandAddress()
-        self.isBandButtonSelect = false
-    }
+
     
     func setupToggleButtonLayout() {
         self.bandNameStackView.addArrangedSubview(self.bandListDisclosureButton)
@@ -204,5 +204,14 @@ extension BandTopInfoView {
             name: NSNotification.Name.configureBandData,
             object: nil
         )
+    }
+
+    @objc
+    private func configure(with notification: Notification) {
+        guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
+        self.bandNameLabel.text = bandInfo.name
+        self.bandAddress = bandInfo.address
+        setBandAddress()
+        self.isBandButtonSelect = false
     }
 }

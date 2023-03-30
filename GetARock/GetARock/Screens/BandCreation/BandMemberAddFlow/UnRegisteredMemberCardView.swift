@@ -57,7 +57,7 @@ final class UnRegisteredMemberCardView: UIStackView, Identifiable {
     private let mainPositionGuideLabel = InformationGuideLabel(guideText: "포지션", type: .required)
 
     lazy var positionSelectCollectionView: SelectCollectionView = {
-        $0.constraint(.heightAnchor, constant: 110)
+        $0.constraint(.heightAnchor, constant: 160)
         $0.delegate = self
         return $0
     }(SelectCollectionView(widthOption: .fixed, items: ["보컬", "기타", "베이스", "드럼", "키보드"],

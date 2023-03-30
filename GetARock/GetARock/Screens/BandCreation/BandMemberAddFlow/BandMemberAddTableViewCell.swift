@@ -130,7 +130,11 @@ final class BandMemberAddTableViewCell: UITableViewCell, Identifiable {
         self.userNameLabel.text = data.name
         self.userAgeLabel.text = data.age
         self.userGenderLabel.text = data.gender
-        self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
+        if data.instrumentList.count <= 1 {
+            self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: " ")
+        } else {
+            self.instrumentListLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
+        }
         self.id = data.id
     }
 }

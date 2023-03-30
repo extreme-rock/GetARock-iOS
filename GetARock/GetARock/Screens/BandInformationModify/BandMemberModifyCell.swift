@@ -115,8 +115,16 @@ final class BandMemberModifyCell: UIStackView, Identifiable {
         }
         
         userNameLabel.text = data.name
-        instrumentListLabel.text = data.instrumentList.map({ Instrument(rawValue: $0.name)?.inKorean ?? $0.name }).joined(separator: ", ")
-        print(data.gender, data.age, "dddddddd")
+        if data.instrumentList.count >= 2 {
+            instrumentListLabel.text = data.instrumentList.map({ Instrument(rawValue: $0.name)?.inKorean ?? $0.name }).joined(separator: ", ")
+        } else {
+            instrumentListLabel.text = data.instrumentList.map({ Instrument(rawValue: $0.name)?.inKorean ?? $0.name }).joined(separator: "")
+        }
+        print("++++ConfigureState++++")
+        print(data.memberState)
+        print(data.instrumentList)
+        print("+++++++++++++++")
+
         userGenderAgeLabel.text = (Gender.CodingKeys(rawValue: data.gender)?.inKorean ?? "")  + (Age.CodingKeys(rawValue: data.age)?.inKorean ?? "")
         id = data.id
         

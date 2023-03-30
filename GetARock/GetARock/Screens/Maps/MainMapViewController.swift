@@ -51,7 +51,7 @@ final class MainMapViewController: UIViewController {
     private lazy var topButtonStackView: UIStackView = {
         $0.axis = .vertical
         return $0
-    }(UIStackView(arrangedSubviews: [notificationButton, settingButton]))
+    }(UIStackView(arrangedSubviews: [notificationButton, settingButton, moveToCurrentLocationButton]))
     
     private lazy var myBandsButton: UIButton = {
         $0.setImage(UIImage(named: "myBandsButton"), for: .normal)
@@ -92,11 +92,14 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
 
-    //MARK: 추후 현재 위치로 돌아오는 기능 추가해야함
-//    private let moveToCurrentLocationButton: UIButton = {
-//        $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
-//        return $0
-//    }(UIButton())
+    private lazy var moveToCurrentLocationButton: UIButton = {
+        let action = UIAction { _ in
+            self.moveMap(to: self.currentCoordinate)
+        }
+        $0.addAction(action, for: .touchUpInside)
+        $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
+        return $0
+    }(UIButton())
     
     private lazy var deleteBandNoticeView: DeleteBandNoticeView = {
         $0.delegate = self
@@ -252,7 +255,16 @@ extension MainMapViewController: GMSMapViewDelegate {
             var bandData: [BandList] = []
             let selectedBandInfo = try await BandInformationNetworkManager.shared.fetchBandData(bandId: selectedMarker?.bandId ?? 0)
             bandData.append(BandList(bandId: selectedBandInfo.bandID, name: selectedBandInfo.name, memberCount: selectedBandInfo.memberList.count, memberAge: selectedBandInfo.age))
-            let viewController = UINavigationController(rootViewController: BandDetailViewController(myBands: bandData, entryPoint: .otherBand))
+
+            guard let userBandData: [BandListVO] = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.bandList else { return }
+            let isMyBand = userBandData.filter({ bandList in
+                bandList.bandID == selectedBandInfo.bandID
+            }).isEmpty
+
+            let viewController = UINavigationController(
+                rootViewController: BandDetailViewController(myBands: bandData,
+                                                             entryPoint: isMyBand ? .myBand : .otherBand)
+            )
             viewController.modalPresentationStyle = .pageSheet
             if let sheet = viewController.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
