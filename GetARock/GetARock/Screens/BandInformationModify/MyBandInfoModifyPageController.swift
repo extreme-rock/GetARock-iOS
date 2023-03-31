@@ -11,6 +11,8 @@ final class MyBandInfoModifyPageController: UIViewController {
 
     //MARK: - Property
 
+    private var isBandInfoModifyTapped: Bool = false
+
     private var bandInfo: BandInformationVO
 
     private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self, bandData: bandInfo)
@@ -58,20 +60,20 @@ final class MyBandInfoModifyPageController: UIViewController {
             Task {
                 self.setOriginalBandData()
 
-                if self.bandInfoModifyViewController.isViewLoaded {
-                    print("Modified BandInfo MidifedMember")
-                    self.bandMemberModifyViewController.confirmModifiedMembers()
-                }
+                self.bandMemberModifyViewController.confirmModifiedMembers()
 
-                if self.bandMemberModifyViewController.isViewLoaded {
-                    print("Modified BandInfo MidifedInfo")
+                //MARK: 밴드 정보뷰가 탭된 경우에만 데이터 업데이트
+                if self.isBandInfoModifyTapped {
                     self.bandInfoModifyViewController.confirmModifiedBandInformation()
                 }
 
-                print("Modified Data Set")
-                print(BasicDataModel.bandPUTData.address)
+                print("서버로 보내는 수정 정보 데이터")
                 print(BasicDataModel.bandPUTData.name)
+                print(BasicDataModel.bandPUTData.address.street)
+                print(BasicDataModel.bandPUTData.address.detail)
+                print(BasicDataModel.bandPUTData.songList)
                 print(BasicDataModel.bandPUTData.introduction)
+                print(BasicDataModel.bandPUTData.snsList)
 
                 try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandPUTData)
             }
@@ -118,6 +120,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         attribute()
         setNavigationItem()
         setupLayout()
+        setNotification()
     }
 
     init(bandData: BandInformationVO) {
@@ -145,6 +148,21 @@ final class MyBandInfoModifyPageController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
         //TODO: 추후 수정 필요
         setNavigationInlineTitle(title: "밴드 수정")
+    }
+
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(toggleBandInfoTapped),
+            name: Notification.Name.toggleBandInfoTapped,
+            object:nil
+        )
+    }
+
+    @objc
+    private func toggleBandInfoTapped() {
+        self.isBandInfoModifyTapped = true
+        self.bandInfoModifyViewController.confirmModifiedBandInformation()
     }
 
     private func dismissButtonTapped() {

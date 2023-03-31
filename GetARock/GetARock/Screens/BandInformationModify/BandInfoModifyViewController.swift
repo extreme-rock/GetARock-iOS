@@ -272,12 +272,16 @@ final class BandInfoModifyViewController: BaseViewController {
         soundCloudTextField.textField.delegate = self
     }
 
-    private func songListData() -> [SongList] {
+    private func songListData() -> [SongList]? {
         var songList: [SongList] = []
         for (index, data) in practiceSongList.arrangedSubviews.enumerated() {
-            if index >= 1 {
-                let songBox = data as! PracticeSongBoxView
-                songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+            if practiceSongList.arrangedSubviews.count > 1 {
+                if index > 0 {
+                    let songBox = data as! PracticeSongBoxView
+                    songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+                }
+            } else {
+                return nil
             }
         }
         return songList
@@ -330,18 +334,20 @@ extension BandInfoModifyViewController {
 
     //MARK: 수정된 정보 확정
     func confirmModifiedBandInformation() {
+        BasicDataModel.clearData()
         BasicDataModel.bandPUTData.name = bandNamingTextField.inputText()
         BasicDataModel.bandPUTData.address.street = practiceRoomSearchButton.inputText()
         BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
-        //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
         BasicDataModel.bandPUTData.songList = songListData()
+        print("+++++++수정된 곡의 개수+++++")
+        print(BasicDataModel.bandPUTData.songList?.count)
         BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
                                               instagramTextField.inputText(),
                                               soundCloudTextField.inputText()]
     }
 
-    private func configure(with bandData: BandInformationVO) {
+    func configure(with bandData: BandInformationVO) {
         self.bandNamingTextField.configureText(with: bandData.name)
         self.practiceRoomSearchButton.configureText(with: bandData.address.street)
         self.detailPracticeRoomTextField.configureText(with: bandData.address.detail)
@@ -370,6 +376,10 @@ extension BandInfoModifyViewController {
                 self.soundCloudTextField.configureText(with: sns.link)
             }
         }
+
+        NotificationCenter.default.post(
+            name: Notification.Name.toggleBandInfoTapped,
+            object: nil)
     }
 }
 

@@ -38,5 +38,24 @@ struct BasicDataModel {
 
         snsList: nil
     )
+
+    static func clearData() {
+        BasicDataModel.bandPUTData = BandPUTDTO(
+            bandId: 0,
+            name: "user",
+            address: Address(city: "",
+                             street: "",
+                             detail: "",
+                             longitude: 0.0,
+                             latitude: 0.0),
+
+            songList: nil,
+
+            memberList: [],
+            introduction: nil,
+
+            snsList: nil
+        )
+    }
 }
 
