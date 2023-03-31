@@ -324,6 +324,17 @@ extension BandInformationSetViewController {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
     }
 
+    private func songListData() -> [SongList] {
+        var songList: [SongList] = []
+        for (index, data) in practiceSongList.arrangedSubviews.enumerated() {
+            if index >= 1 {
+                let songBox = data as! PracticeSongBoxView
+                songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+            }
+        }
+        return songList
+    }
+
     private func postBandInformation() {
         confirmBandInformation()
         Task {
@@ -342,6 +353,7 @@ extension BandInformationSetViewController {
     private func confirmBandInformation() {
         BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
         BasicDataModel.bandCreationData.address.detail = detailpracticeRoomTextField.inputText()
+        BasicDataModel.bandCreationData.songList = songListData()
         //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
         BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),

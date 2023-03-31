@@ -213,8 +213,8 @@ final class BandInfoModifyViewController: BaseViewController {
         setTextFieldDelegate()
         setKeyboardDismiss()
         setNotification()
-        //TODO: 추후 백엔드 데이터 확인 과정에서 바꿔야함
         configure(with: bandData)
+        setOriginalForPUTData()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -275,7 +275,6 @@ final class BandInfoModifyViewController: BaseViewController {
 
     private func songListData() -> [SongList] {
         var songList: [SongList] = []
-        print(practiceSongList.arrangedSubviews, "dddd")
         for (index, data) in practiceSongList.arrangedSubviews.enumerated() {
             if index >= 1 {
                 let songBox = data as! PracticeSongBoxView
@@ -343,10 +342,35 @@ extension BandInfoModifyViewController {
                                   soundCloudTextField.inputText()]
     }
 
+    private func setOriginalForPUTData() {
+        let originalData = BandPUTDTO(bandId: bandData.bandID,
+
+                                      name: bandData.name,
+
+                                      address: Address(city: bandData.address.city,
+                                                         street: bandData.address.street,
+                                                         detail: bandData.address.detail,
+                                                         longitude: bandData.address.longitude,
+                                                         latitude: bandData.address.latitude),
+
+                                      songList: bandData.songList?.compactMap({ SongList(name: $0.name, artist: $0.artist, link: $0.link)}),
+
+                                      memberList: bandData.memberList.map({ MemberList(memberId: $0.memberID,
+                                                                                       name: $0.name,
+                                                                                       memberState: $0.memberState,
+                                                                                       instrumentList: $0.instrumentList.map({ data in InstrumentList(name: data.name) }))}),
+                                      introduction: bandData.introduction,
+
+                                      snsList: bandData.snsList.map({ SnsList(type: $0.snsType, link: $0.link) }))
+
+        BasicDataModel.bandPUTData = originalData
+    }
+
     private func configure(with bandData: BandInformationVO) {
         self.bandNamingTextField.configureText(with: bandData.name)
         self.practiceRoomSearchButton.configureText(with: bandData.address.city + " " + bandData.address.street)
-        self.detailPracticeRoomTextField.configureText(with: bandData.address.detail)
+        self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
+
         if let songList = bandData.songList {
             var tempCardViewList: [PracticeSongCardView] = []
             for song in songList {
@@ -357,7 +381,6 @@ extension BandInfoModifyViewController {
             let songListBox = makePracticeSongBoxes(with: tempCardViewList)
             songListBox.forEach { practiceSongList.addArrangedSubview($0) }
         }
-        self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
         
         let snsList = bandData.snsList
         

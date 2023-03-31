@@ -241,11 +241,11 @@ extension BandMemberModifyViewController {
     private func transformVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
         for data in self.bandData.memberList {
-            print("++++++++++bandData PUT Test++++++")
+            print("++++++++기존의 밴드 멤버 데이터들++++++")
             print(data.name)
             print(data.memberState)
             print(data.memberID)
-            print("++++++++++bandData PUT Test++++++")
+            print("++++++++기존의 밴드 멤버 데이터들++++++")
             let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
                 SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
             }
