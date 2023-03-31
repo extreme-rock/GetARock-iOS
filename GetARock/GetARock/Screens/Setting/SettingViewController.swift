@@ -14,8 +14,8 @@ final class SettingViewController: BaseViewController {
     // MARK: - Property
     
     private struct CellConfiguration {
-      let title: String
-      let handler: () -> Void
+        let title: String
+        let handler: () -> Void
     }
     
     private var options = [CellConfiguration]()
@@ -60,7 +60,7 @@ final class SettingViewController: BaseViewController {
             trailing: self.view.safeAreaLayoutGuide.trailingAnchor
         )
     }
-
+    
 }
 
 // MARK: - Table Cell Method
@@ -104,13 +104,13 @@ extension SettingViewController {
         
         options.append(CellConfiguration(title: "탈퇴하기", handler: { [weak self] in
             DispatchQueue.main.async {
-                self?.sendAccountDeleteMail()
+                self?.goToDeleteAccount()
             }
         }))
     }
     
     private func goToNotificationSetting() {
-
+        
     }
     
     private func goToPrivacyPolicy() {
@@ -151,7 +151,8 @@ extension SettingViewController {
     }
     
     private func goToDeleteAccount() {
-      
+        let viewcontroller = ApproveDeletionViewController()
+        self.navigationController?.pushViewController(viewcontroller, animated: true)
     }
 }
 
