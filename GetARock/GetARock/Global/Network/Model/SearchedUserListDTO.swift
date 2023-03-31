@@ -28,13 +28,10 @@ struct SearchedUserInstrumentList: Hashable, Codable {
     let name: String
 }
 
-#if DEBUG
 extension SearchedUserListDTO {
     static var dataSet =
     SearchedUserListDTO(memberList: [])
 }
-#endif
-
 
 struct SearchedUserListTempDTO: Codable {
     let memberList: [SearchedUserInfoVO]
