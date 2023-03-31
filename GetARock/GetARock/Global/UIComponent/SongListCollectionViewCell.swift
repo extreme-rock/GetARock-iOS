@@ -151,7 +151,7 @@ final class SongListCollectionViewCell: UICollectionViewCell {
         case .create:
             self.setupDeleteButtonLayout()
         case .detail:
-            if song.link != nil {
+            if song.link != "" {
                 self.setupLinkButtonLayout()
             }
         }
