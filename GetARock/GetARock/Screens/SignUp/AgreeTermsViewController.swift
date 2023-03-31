@@ -27,7 +27,7 @@ final class AgreeTermsViewController: UIViewController {
         return $0
     }(BasicLabel(
         contentText: "모여락을 시작하기 위해\n약관에 동의해 주세요",
-        fontStyle: .headline01,
+        fontStyle: .largeTitle01,
         textColorInfo: .white
     ))
     
