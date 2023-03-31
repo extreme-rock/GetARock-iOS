@@ -214,7 +214,6 @@ final class BandInfoModifyViewController: BaseViewController {
         setKeyboardDismiss()
         setNotification()
         configure(with: bandData)
-        setOriginalForPUTData()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -273,12 +272,16 @@ final class BandInfoModifyViewController: BaseViewController {
         soundCloudTextField.textField.delegate = self
     }
 
-    private func songListData() -> [SongList] {
+    private func songListData() -> [SongList]? {
         var songList: [SongList] = []
         for (index, data) in practiceSongList.arrangedSubviews.enumerated() {
-            if index >= 1 {
-                let songBox = data as! PracticeSongBoxView
-                songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+            if practiceSongList.arrangedSubviews.count > 1 {
+                if index > 0 {
+                    let songBox = data as! PracticeSongBoxView
+                    songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+                }
+            } else {
+                return nil
             }
         }
         return songList
@@ -331,44 +334,23 @@ extension BandInfoModifyViewController {
 
     //MARK: 수정된 정보 확정
     func confirmModifiedBandInformation() {
+        BasicDataModel.clearData()
         BasicDataModel.bandPUTData.name = bandNamingTextField.inputText()
         BasicDataModel.bandPUTData.address.street = practiceRoomSearchButton.inputText()
         BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
-        //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
         BasicDataModel.bandPUTData.songList = songListData()
+        print("+++++++수정된 곡의 개수+++++")
+        print(BasicDataModel.bandPUTData.songList?.count)
         BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
-                                  instagramTextField.inputText(),
-                                  soundCloudTextField.inputText()]
+                                              instagramTextField.inputText(),
+                                              soundCloudTextField.inputText()]
     }
 
-    private func setOriginalForPUTData() {
-        let originalData = BandPUTDTO(bandId: bandData.bandID,
-
-                                      name: bandData.name,
-
-                                      address: Address(city: bandData.address.city,
-                                                         street: bandData.address.street,
-                                                         detail: bandData.address.detail,
-                                                         longitude: bandData.address.longitude,
-                                                         latitude: bandData.address.latitude),
-
-                                      songList: bandData.songList?.compactMap({ SongList(name: $0.name, artist: $0.artist, link: $0.link)}),
-
-                                      memberList: bandData.memberList.map({ MemberList(memberId: $0.memberID,
-                                                                                       name: $0.name,
-                                                                                       memberState: $0.memberState,
-                                                                                       instrumentList: $0.instrumentList.map({ data in InstrumentList(name: data.name) }))}),
-                                      introduction: bandData.introduction,
-
-                                      snsList: bandData.snsList.map({ SnsList(type: $0.snsType, link: $0.link) }))
-
-        BasicDataModel.bandPUTData = originalData
-    }
-
-    private func configure(with bandData: BandInformationVO) {
+    func configure(with bandData: BandInformationVO) {
         self.bandNamingTextField.configureText(with: bandData.name)
-        self.practiceRoomSearchButton.configureText(with: bandData.address.city + " " + bandData.address.street)
+        self.practiceRoomSearchButton.configureText(with: bandData.address.street)
+        self.detailPracticeRoomTextField.configureText(with: bandData.address.detail)
         self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
 
         if let songList = bandData.songList {
@@ -394,6 +376,10 @@ extension BandInfoModifyViewController {
                 self.soundCloudTextField.configureText(with: sns.link)
             }
         }
+
+        NotificationCenter.default.post(
+            name: Notification.Name.toggleBandInfoTapped,
+            object: nil)
     }
 }
 

@@ -119,7 +119,10 @@ final class LeaderPositionSelectViewController: UIViewController {
 extension LeaderPositionSelectViewController {
     private func addSelectedPositionData() {
         let selectedInstruments: [InstrumentList] = self.positionCollectionView.getSelectedInstruments()
-        let firstMember: MemberList = MemberList(memberId: 0, name: "\(UserDefaultStorage.name)", memberState: .admin, instrumentList: selectedInstruments)
+        let firstMember: MemberList = MemberList(memberId: UserDefaultStorage.memberID,
+                                                 name: UserDefaultStorage.name,
+                                                 memberState: .admin,
+                                                 instrumentList: selectedInstruments)
         if self.memberList.isEmpty {
             self.memberList.append(firstMember)
         } else {

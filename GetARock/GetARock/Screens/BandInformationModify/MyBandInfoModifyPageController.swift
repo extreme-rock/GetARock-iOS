@@ -11,6 +11,8 @@ final class MyBandInfoModifyPageController: UIViewController {
 
     //MARK: - Property
 
+    private var isBandInfoModifyTapped: Bool = false
+
     private var bandInfo: BandInformationVO
 
     private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self, bandData: bandInfo)
@@ -56,18 +58,23 @@ final class MyBandInfoModifyPageController: UIViewController {
         let action = UIAction { _ in
             // MARK: 수정된 정보 확정
             Task {
-                // 맨 처음
                 self.setOriginalBandData()
-                // 합주곡, 위치는 각각의 VC에서 입력 완료하면 바로 전역 데이터가 수정됨.
+
                 self.bandMemberModifyViewController.confirmModifiedMembers()
-                self.bandInfoModifyViewController.confirmModifiedBandInformation()
-                // MARK: Band 생성과 수정의 모델이 같아서 creation을 그대로 사용함
+
+                //MARK: 밴드 정보뷰가 탭된 경우에만 데이터 업데이트
+                if self.isBandInfoModifyTapped {
+                    self.bandInfoModifyViewController.confirmModifiedBandInformation()
+                }
+
+                print("서버로 보내는 수정 정보 데이터")
                 print(BasicDataModel.bandPUTData.name)
+                print(BasicDataModel.bandPUTData.address.street)
+                print(BasicDataModel.bandPUTData.address.detail)
                 print(BasicDataModel.bandPUTData.songList)
-                print(BasicDataModel.bandPUTData.address)
-                print(BasicDataModel.bandPUTData.snsList)
                 print(BasicDataModel.bandPUTData.introduction)
-                print(BasicDataModel.bandPUTData.memberList)
+                print(BasicDataModel.bandPUTData.snsList)
+
                 try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandPUTData)
             }
             self.showAlertForEditComplete()
@@ -113,6 +120,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         attribute()
         setNavigationItem()
         setupLayout()
+        setNotification()
     }
 
     init(bandData: BandInformationVO) {
@@ -140,6 +148,21 @@ final class MyBandInfoModifyPageController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
         //TODO: 추후 수정 필요
         setNavigationInlineTitle(title: "밴드 수정")
+    }
+
+    private func setNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(toggleBandInfoTapped),
+            name: Notification.Name.toggleBandInfoTapped,
+            object:nil
+        )
+    }
+
+    @objc
+    private func toggleBandInfoTapped() {
+        self.isBandInfoModifyTapped = true
+        self.bandInfoModifyViewController.confirmModifiedBandInformation()
     }
 
     private func dismissButtonTapped() {
@@ -170,7 +193,30 @@ final class MyBandInfoModifyPageController: UIViewController {
     }
 
     private func setOriginalBandData() {
-        BasicDataModel.bandPUTData.bandId = bandInfo.bandID
+
+        let originalData = BandPUTDTO(bandId: bandInfo.bandID,
+
+                                      name: bandInfo.name,
+
+                                      address: Address(city: bandInfo.address.city,
+                                                         street: bandInfo.address.street,
+                                                         detail: bandInfo.address.detail,
+                                                         longitude: bandInfo.address.longitude,
+                                                         latitude: bandInfo.address.latitude),
+
+                                      songList: bandInfo.songList?.compactMap({ SongList(name: $0.name, artist: $0.artist, link: $0.link)}),
+
+                                      memberList: bandInfo.memberList.map({ MemberList(memberId: $0.memberID,
+                                                                                       name: $0.name,
+                                                                                       memberState: $0.memberState,
+                                                                                       instrumentList: $0.instrumentList.map({ data in InstrumentList(name: data.name) }))}),
+                                      introduction: bandInfo.introduction,
+
+                                      snsList: bandInfo.snsList.map({ SnsList(type: $0.snsType, link: $0.link) }))
+
+        BasicDataModel.bandPUTData = originalData
+        print("original data Set")
+        print(originalData)
     }
 }
 
