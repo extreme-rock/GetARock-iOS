@@ -20,14 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = PositionSelectViewController()
-//        DispatchQueue.main.async {
-//            if UserDefaultStorage.isLogin {
-//                window.rootViewController = UINavigationController(rootViewController: MainMapViewController(isFromSignUp: false))
-//            } else {
-//                window.rootViewController = LandingViewController()
-//            }
-//        }
+        DispatchQueue.main.async {
+            if UserDefaultStorage.isLogin {
+                window.rootViewController = UINavigationController(rootViewController: MainMapViewController(isFromSignUp: false))
+            } else {
+                window.rootViewController = LandingViewController()
+            }
+        }
         window.makeKeyAndVisible()
         self.window = window
     }
