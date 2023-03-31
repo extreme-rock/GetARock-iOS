@@ -130,6 +130,7 @@
 		A9FFA38029D2B6D20091B792 /* NameDuplicationCheckVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FFA37F29D2B6D20091B792 /* NameDuplicationCheckVO.swift */; };
 		A9FFA38229D2CE9E0091B792 /* UserInfoNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FFA38129D2CE9E0091B792 /* UserInfoNetworkManager.swift */; };
 		B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B6962982A85F00A1A9E2 /* CustomMarker.swift */; };
+		B815631529D7177F00356D8A /* DeleteAccountVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B815631429D7177F00356D8A /* DeleteAccountVO.swift */; };
 		B815631829D71D8300356D8A /* ApproveDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B815631729D71D8300356D8A /* ApproveDeletionViewController.swift */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
 		B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */; };
@@ -308,6 +309,7 @@
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B808B6962982A85F00A1A9E2 /* CustomMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarker.swift; sourceTree = "<group>"; };
 		B80EC99129A4EFAA0058577C /* GetARock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GetARock.entitlements; sourceTree = "<group>"; };
+		B815631429D7177F00356D8A /* DeleteAccountVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVO.swift; sourceTree = "<group>"; };
 		B815631729D71D8300356D8A /* ApproveDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveDeletionViewController.swift; sourceTree = "<group>"; };
 		B8468F5E29797E7D00A9E77E /* MapsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MapsInfo.plist; sourceTree = "<group>"; };
 		B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 				B887184929AC5379000026ED /* DeviceTokenDTO.swift */,
 				4A4A6E9329A8F58B005CF076 /* User.swift */,
 				B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */,
+				B815631429D7177F00356D8A /* DeleteAccountVO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1144,6 +1147,7 @@
 				A9FFA38229D2CE9E0091B792 /* UserInfoNetworkManager.swift in Sources */,
 				9A53CFB629C6F89C002F6E56 /* BandInfoModifyViewController.swift in Sources */,
 				9AA0BB5629A4FD1800871A05 /* Date+Extension.swift in Sources */,
+				B815631529D7177F00356D8A /* DeleteAccountVO.swift in Sources */,
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
 				9AA0BB5329A4E83400871A05 /* NotificationTableViewCell.swift in Sources */,
 				4A08A9B4297BB0A300822FF9 /* PositionCollectionView.swift in Sources */,
