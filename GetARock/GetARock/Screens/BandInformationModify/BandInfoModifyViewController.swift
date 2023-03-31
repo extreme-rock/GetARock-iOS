@@ -214,7 +214,6 @@ final class BandInfoModifyViewController: BaseViewController {
         setKeyboardDismiss()
         setNotification()
         configure(with: bandData)
-        setOriginalForPUTData()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -338,37 +337,14 @@ extension BandInfoModifyViewController {
         BasicDataModel.bandPUTData.songList = songListData()
         BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
-                                  instagramTextField.inputText(),
-                                  soundCloudTextField.inputText()]
-    }
-
-    private func setOriginalForPUTData() {
-        let originalData = BandPUTDTO(bandId: bandData.bandID,
-
-                                      name: bandData.name,
-
-                                      address: Address(city: bandData.address.city,
-                                                         street: bandData.address.street,
-                                                         detail: bandData.address.detail,
-                                                         longitude: bandData.address.longitude,
-                                                         latitude: bandData.address.latitude),
-
-                                      songList: bandData.songList?.compactMap({ SongList(name: $0.name, artist: $0.artist, link: $0.link)}),
-
-                                      memberList: bandData.memberList.map({ MemberList(memberId: $0.memberID,
-                                                                                       name: $0.name,
-                                                                                       memberState: $0.memberState,
-                                                                                       instrumentList: $0.instrumentList.map({ data in InstrumentList(name: data.name) }))}),
-                                      introduction: bandData.introduction,
-
-                                      snsList: bandData.snsList.map({ SnsList(type: $0.snsType, link: $0.link) }))
-
-        BasicDataModel.bandPUTData = originalData
+                                              instagramTextField.inputText(),
+                                              soundCloudTextField.inputText()]
     }
 
     private func configure(with bandData: BandInformationVO) {
         self.bandNamingTextField.configureText(with: bandData.name)
-        self.practiceRoomSearchButton.configureText(with: bandData.address.city + " " + bandData.address.street)
+        self.practiceRoomSearchButton.configureText(with: bandData.address.street)
+        self.detailPracticeRoomTextField.configureText(with: bandData.address.detail)
         self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
 
         if let songList = bandData.songList {

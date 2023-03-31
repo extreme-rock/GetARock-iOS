@@ -142,7 +142,7 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.setLocationManager()
         self.requestLocationAuthorization()
-        print("++++++++++++")
+        print("++++++myId++++++")
         print(UserDefaultStorage.memberID)
     }
 
