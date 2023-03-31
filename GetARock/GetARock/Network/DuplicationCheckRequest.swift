@@ -7,8 +7,7 @@
 import Foundation
 
 final class DuplicationCheckRequest {
-    
-    //MARK: Authorization 추가 후 header 추가해서 request 필요
+
     static func checkDuplication(checkCase: DuplicationCheckType, word: String) async throws -> Bool {
         var result = false
         var baseURL = ""
@@ -24,11 +23,12 @@ final class DuplicationCheckRequest {
         guard let url = queryURLComponent?.url else { throw NetworkError.badURL }
         
         do {
-            let (_, response) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await URLSession.shared.data(from: url)
             let httpResponse = response as! HTTPURLResponse
             
             if (200..<300).contains(httpResponse.statusCode) {
-                result = false
+                let decodedResponse = try JSONDecoder().decode(NameDuplicationCheckVO.self, from: data)
+                result = decodedResponse.success
             } else {
                 throw NetworkError.failedRequest(status: httpResponse.statusCode)
             }

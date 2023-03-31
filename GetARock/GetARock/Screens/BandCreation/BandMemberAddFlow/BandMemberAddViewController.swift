@@ -90,18 +90,23 @@ final class BandMemberAddViewController: BaseViewController {
     }
 
     private func configureAdminCell() {
-        guard let admin: MemberList = BasicDataModel.bandCreationData.memberList.first else { return }
-        let transformedInstruments: [SearchedUserInstrumentList] = admin.instrumentList.map { SearchedUserInstrumentList(instrumentId: 0, isMain: false, name: $0.name)
+        Task {
+            guard let admin = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID) else { return }
+            let transformedInstruments: [SearchedUserInstrumentList] = admin.instrumentList.map {
+                SearchedUserInstrumentList(instrumentId: 0,
+                                           isMain: false,
+                                           name: $0.name)
+            }
+            let bandAdminData: SearchedUserInfo = SearchedUserInfo(
+                memberId: admin.userID,
+                name: admin.name,
+                memberState: .admin,
+                instrumentList: transformedInstruments,
+                gender: Gender.CodingKeys(rawValue: admin.gender)?.inKorean ?? "",
+                age: Age.CodingKeys(rawValue: admin.age)?.inKorean ?? "")
+            addedMembers.append(bandAdminData)
+            updateSnapShot(with: addedMembers)
         }
-        //MARK: 성별과 나이 정보는 추후 개인 유저 정보를 바탕으로 업데이트 해야함
-        let bandAdminData: SearchedUserInfo = SearchedUserInfo(
-            memberId: admin.memberId ?? -1,
-            name: admin.name,
-            memberState: admin.memberState,
-            instrumentList: transformedInstruments,
-            gender: "MEN", age: "20대")
-        addedMembers.append(bandAdminData)
-        updateSnapShot(with: addedMembers)
     }
 }
 
@@ -190,6 +195,8 @@ extension BandMemberAddViewController {
 
             confirmedMembers.append(individualMember)
         }
+        print("+++++++++++++++++++++++++++++=")
+        print(confirmedMembers)
         BasicDataModel.bandCreationData.memberList = confirmedMembers
     }
 }

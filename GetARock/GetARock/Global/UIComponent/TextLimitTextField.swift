@@ -169,17 +169,13 @@ extension TextLimitTextField {
     @objc func didTapCheckButton() {
         Task {
             do {
-                //TODO: 추후 API 완성 이후 duplicationCheck 결과가 true일 경우의 코드 수정 필요
-                if textField.text == "모여락" {
-                    showDuplicationCheckLabel(with: true)
-                    self.isDuplicated = true
+                let isDuplicated = try await DuplicationCheckRequest.checkDuplication(
+                    checkCase: type,
+                    word: textField.text ?? "")
+                showDuplicationCheckLabel(with: isDuplicated)
+                self.isDuplicated = isDuplicated
+                if self.isDuplicated {
                     self.availableName = textField.text
-                } else {
-                    let isDuplicated = try await DuplicationCheckRequest.checkDuplication(
-                        checkCase: type,
-                        word: textField.text ?? "")
-                    showDuplicationCheckLabel(with: isDuplicated)
-                    self.isDuplicated = isDuplicated
                 }
                 delegate?.textFieldTextDidChanged()
             } catch {

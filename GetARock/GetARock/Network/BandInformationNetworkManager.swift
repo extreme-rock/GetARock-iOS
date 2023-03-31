@@ -8,8 +8,9 @@
 import Foundation
 
 final class BandInformationNetworkManager {
+    static let shared = BandInformationNetworkManager()
 
-    func getBandData(bandId: Int) async throws -> BandInformationVO {
+    func fetchBandData(bandId: Int) async throws -> BandInformationVO {
         var result: BandInformationVO = BandInformationVO(bandID: 0,
                                                           name: "",
                                                           age: "",
@@ -58,6 +59,9 @@ final class BandInformationNetworkManager {
         var encodedData = Data()
         
         do {
+            print("+++=======++++")
+            print(data.memberList)
+            print(data.memberList.count)
             let data = try JSONEncoder().encode(data)
             encodedData = data
         } catch {
@@ -85,7 +89,7 @@ final class BandInformationNetworkManager {
         dataTask.resume()
     }
 
-    func putModifiedBandMemberInformation(data: BandCreationDTO) async throws {
+    func putModifiedBandMemberInformation(data: BandPUTDTO) async throws {
         let headers = [
             "accept": "application/json",
             "content-type": "application/json"
@@ -114,7 +118,8 @@ final class BandInformationNetworkManager {
             } else if let httpResponse = response as? HTTPURLResponse {
                 switch httpResponse.statusCode {
                 case (200...299):
-                    print("success")
+                    print("++++++++++")
+                    print("BandModify PUT success")
                 case (300...599):
                     print(NetworkError.failedRequest(status: httpResponse.statusCode))
                 default:

@@ -11,13 +11,19 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     var id: String = "default"
 
+    var memberId: Int = 0
+
+    var instrument: [SearchedUserInstrumentList] = []
+
+    var memberState: MemberState = .none
+
     let userNameLabel: BasicLabel = BasicLabel(
         contentText: "",
         fontStyle: .headline01,
         textColorInfo: .white)
 
     private let userGenderLabel: BasicLabel = BasicLabel(
-        contentText: "남",
+        contentText: "",
         fontStyle: .content,
         textColorInfo: .white.withAlphaComponent(0.5))
 
@@ -27,7 +33,7 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
         textColorInfo: .white.withAlphaComponent(0.5))
 
     private let userAgeLabel: BasicLabel = BasicLabel(
-        contentText: "20대",
+        contentText: "",
         fontStyle: .content,
         textColorInfo: .white.withAlphaComponent(0.5))
 
@@ -101,8 +107,22 @@ final class UserSearchTableViewCell: UITableViewCell, Identifiable {
 
     func configure(data: SearchedUserInfo) {
         self.userNameLabel.text = data.name
-        self.userInstrumentLabel.text = data.instrumentList.map({ $0.name }).joined(separator: ", ")
+        self.userInstrumentLabel.text = data.instrumentList.map({ Instrument(rawValue: $0.name)?.inKorean ?? "" }).joined(separator: ", ")
+        self.userAgeLabel.text = Age.CodingKeys(rawValue: data.age)?.inKorean
+        self.userGenderLabel.text = Gender.CodingKeys(rawValue: data.gender)?.inKorean
         self.id = data.id
+        self.memberId = data.memberId ?? -1
+        self.instrument = data.instrumentList
+    }
+    
+    func genderText() -> String {
+        guard let text = userGenderLabel.text else { return "" }
+        return text
+    }
+    
+    func ageText() -> String {
+        guard let text = userAgeLabel.text else { return "" }
+        return text
     }
 }
 

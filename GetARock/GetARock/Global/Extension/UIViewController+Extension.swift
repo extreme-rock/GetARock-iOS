@@ -18,7 +18,7 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    func customizeBackButton() {
+    func setCustomBackButton() {
         let backButton = UIButton(type: .system)
         backButton.setImage(ImageLiteral.chevronLeftSymbol, for: .normal)
         backButton.tintColor = .white

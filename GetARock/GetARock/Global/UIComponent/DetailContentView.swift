@@ -20,11 +20,11 @@ final class DetailContentView: UIView {
     private lazy var segmentTitle: [String] = {
         switch detailInfoType {
         case .band:
-            return ["밴드상세", "방명록"]
+            return ["밴드상세", "하고싶은 말"]
         case .event:
             return ["모여락상세", "댓글"]
         case .myPage:
-            return ["프로필", "타임라인", "방명록"]
+            return ["프로필", "타임라인", "하고싶은 말"]
         }
     }()
     
@@ -125,7 +125,7 @@ final class DetailContentView: UIView {
                 return $0
             }(UIViewController())
             
-            let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList)
+            let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList, bandId: bandData.bandID)
             
             // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
             detailContentViewControllers = [bandInfoVC, bandCommentListVC]
@@ -170,6 +170,31 @@ final class DetailContentView: UIView {
     @objc
     private func changeValue(control: UISegmentedControl) {
         self.currentPage = control.selectedSegmentIndex
+    }
+
+    func configureBandDetail(with data: BandInformationVO) {
+        let bandInfoVC: UIViewController = {
+            let bandInfo = BandInformationView(
+                member: bandData.memberList,
+                song: bandData.songList,
+                intro: bandData.introduction,
+                sns: bandData.snsList,
+                age: bandData.age
+            )
+            $0.view.addSubview(bandInfo)
+            bandInfo.constraint(
+                top: $0.view.topAnchor,
+                leading: $0.view.leadingAnchor,
+                bottom: $0.view.bottomAnchor,
+                trailing: $0.view.trailingAnchor
+            )
+            return $0
+        }(UIViewController())
+
+        let  bandCommentListVC = CommentListViewController(commentData: bandData.commentList, bandId: bandData.bandID)
+
+        // TODO: - 2차에서 밴드 타임라인 VC 추가 예정
+        detailContentViewControllers = [bandInfoVC, bandCommentListVC]
     }
 }
 

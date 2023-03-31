@@ -32,7 +32,7 @@ enum Item: Hashable {
         case .bandMember(let bandMember):
             return bandMember.userName
         case .position(let position):
-            return position.instrumentName
+            return Instrument.CodingKey(rawValue: position.instrumentName)?.inEnglish ?? position.instrumentName
         case .plusPosition:
             return ""
         }
@@ -51,8 +51,6 @@ enum CellType {
 final class PositionCollectionView: UIView {
     
     // MARK: - Property
-    
-    
     
     private var cellType: CellType
     weak var delegate: PositionCollectionViewDelegate?
@@ -211,6 +209,8 @@ extension PositionCollectionView {
             case .bandMember(let bandMember):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemberCollectionViewCell.classIdentifier, for: indexPath) as? BandMemberCollectionViewCell else { return UICollectionViewCell() }
                 cell.configure(data: bandMember)
+                print("+++++++++++++++++++++++++==")
+                print(bandMember)
                 if bandMember.isUser {
                     self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
                 }
@@ -245,6 +245,7 @@ extension PositionCollectionView {
     }
     
     func applySnapshot(with items: [Item]) {
+        self.items = items
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
@@ -287,9 +288,13 @@ extension PositionCollectionView: UICollectionViewDelegate {
             guard let cell = self.collectionView.cellForItem(at: indexPath) as? BandMemberCollectionViewCell else { return }
             
             let userID = cell.memberData.memberID
-            NotificationCenter.default.post(name: NSNotification.Name.presentMypageDetailViewController,
-                                            object: nil,
-                                            userInfo: ["memberID":userID])
+            if cell.memberData.isUser {
+                NotificationCenter.default.post(name: NSNotification.Name.presentMypageDetailViewController,
+                                                object: nil,
+                                                userInfo: ["memberID":userID])
+            } else {
+                return
+            }
             
         case .position:
             guard let indexOfSelectedCell = self.selectedCellIndexPaths.firstIndex(where: { element in
@@ -333,6 +338,7 @@ extension PositionCollectionView {
             let index = $0.item
             return InstrumentList(name: self.items[index].name())
         }
+        print(selectedInstruments, "selectedInstruments")
         return selectedInstruments
     }
 }

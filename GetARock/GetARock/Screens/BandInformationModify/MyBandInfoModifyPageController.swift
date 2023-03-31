@@ -15,7 +15,7 @@ final class MyBandInfoModifyPageController: UIViewController {
 
     private lazy var bandMemberModifyViewController = BandMemberModifyViewController(navigateDelegate: self, bandData: bandInfo)
     
-    private lazy var bandInfoModifyViewController = BandInfoModifyViewController(bandData: bandInfo)
+    private lazy var bandInfoModifyViewController = BandInfoModifyViewController(navigateDelegate: self, bandData: bandInfo)
     
     private lazy var pageViewControllers: [UIViewController] = [
         bandMemberModifyViewController,
@@ -53,15 +53,24 @@ final class MyBandInfoModifyPageController: UIViewController {
         $0.setTitle("완료", for: .normal)
         $0.setTitleColor(.blue01, for: .normal)
         $0.titleLabel?.font = .setFont(.headline04)
-        let action = UIAction { [weak self] _ in
+        let action = UIAction { _ in
+            // MARK: 수정된 정보 확정
             Task {
-                // MARK: 수정된 정보 확정
-                self?.bandMemberModifyViewController.confirmModifiedMembers()
-                self?.bandInfoModifyViewController.confirmModifiedBandInformation()
+                // 맨 처음
+                self.setOriginalBandData()
+                // 합주곡, 위치는 각각의 VC에서 입력 완료하면 바로 전역 데이터가 수정됨.
+                self.bandMemberModifyViewController.confirmModifiedMembers()
+                self.bandInfoModifyViewController.confirmModifiedBandInformation()
                 // MARK: Band 생성과 수정의 모델이 같아서 creation을 그대로 사용함
-                try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandCreationData)
+                print(BasicDataModel.bandPUTData.name)
+                print(BasicDataModel.bandPUTData.songList)
+                print(BasicDataModel.bandPUTData.address)
+                print(BasicDataModel.bandPUTData.snsList)
+                print(BasicDataModel.bandPUTData.introduction)
+                print(BasicDataModel.bandPUTData.memberList)
+                try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandPUTData)
             }
-            self?.showAlertForEditComplete()
+            self.showAlertForEditComplete()
         }
         $0.addAction(action, for: .touchUpInside)
         $0.setContentHuggingPriority(
@@ -115,6 +124,11 @@ final class MyBandInfoModifyPageController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationInlineTitle(title: "밴드 수정")
+    }
+
     //MARK: - Method
 
     private func attribute() {
@@ -125,7 +139,7 @@ final class MyBandInfoModifyPageController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: dismissButton)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
         //TODO: 추후 수정 필요
-        self.navigationItem.title = "밴드 수정"
+        setNavigationInlineTitle(title: "밴드 수정")
     }
 
     private func dismissButtonTapped() {
@@ -153,6 +167,10 @@ final class MyBandInfoModifyPageController: UIViewController {
     @objc
     private func segmentedControlValueChanged(_ sender: ModifyPageSegmentedControl) {
         currentPageNumber = self.segmentedController.selectedSegmentIndex
+    }
+
+    private func setOriginalBandData() {
+        BasicDataModel.bandPUTData.bandId = bandInfo.bandID
     }
 }
 
@@ -200,10 +218,10 @@ extension MyBandInfoModifyPageController {
         let alertTitle = "밴드 정보 편집 완료"
         let alertMessage = "새롭게 입력해주신 정보로 밴드 정보가 편집되었어요!"
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-        
         let okayActionTitle = "확인"
-        
-        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default, handler: { _ in
+            self.dismiss(animated: true)
+        }))
         present(alertController, animated: true)
     }
 }

@@ -37,10 +37,15 @@ final class SettingViewController: BaseViewController {
         setupTableView()
         setupLayout()
         configureModels()
+        attribute()
     }
     
     // MARK: - Method
-    
+
+    private func attribute() {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+
     private func setupTableView() {
         settingTableView.delegate = self
         settingTableView.dataSource = self
@@ -62,11 +67,12 @@ final class SettingViewController: BaseViewController {
 
 extension SettingViewController {
     private func configureModels() {
-        options.append(CellConfiguration(title: "알림 설정", handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.goToNotificationSetting()
-            }
-        }))
+        //TODO: 나중에 알림이 생기면 추가
+//        options.append(CellConfiguration(title: "알림 설정", handler: { [weak self] in
+//            DispatchQueue.main.async {
+//                self?.goToNotificationSetting()
+//            }
+//        }))
         
         options.append(CellConfiguration(title: "약관 및 정책", handler: { [weak self] in
             DispatchQueue.main.async {
@@ -87,20 +93,18 @@ extension SettingViewController {
         }))
         
         options.append(CellConfiguration(title: "버전 정보", handler: { [weak self] in
-            DispatchQueue.main.async {
-                self?.getVersionInfo()
-            }
+            // TODO: 앱스토어 연결
         }))
         
         options.append(CellConfiguration(title: "로그아웃", handler: { [weak self] in
             DispatchQueue.main.async {
-                self?.goToLogOut()
+                self?.showAlertForLogout()
             }
         }))
         
         options.append(CellConfiguration(title: "탈퇴하기", handler: { [weak self] in
             DispatchQueue.main.async {
-                self?.goToDeleteAccount()
+                self?.sendAccountDeleteMail()
             }
         }))
     }
@@ -122,13 +126,28 @@ extension SettingViewController {
             self.present(notionSafariView, animated: true, completion: nil)
         }
     }
-    
-    private func getVersionInfo() {
-        
+
+    private func showAlertForLogout() {
+        let alertTitle = "로그아웃"
+        let alertMessage = "정말 로그아웃 하시겠어요?"
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let changeActionTitle = "로그아웃"
+        let okayActionTitle = "취소"
+
+        alertController.addAction(UIAlertAction(title: okayActionTitle, style: .default))
+        alertController.addAction(UIAlertAction(title: changeActionTitle, style: .destructive, handler: { _ in
+            self.goToLogOut()
+        }))
+        present(alertController, animated: true)
     }
     
     private func goToLogOut() {
-
+        UserDefaultHandler.clearAllData()
+        DispatchQueue.main.async { [weak self] in
+            let viewController = LandingViewController()
+            self?.view.window?.rootViewController = viewController
+        }
     }
     
     private func goToDeleteAccount() {
@@ -145,7 +164,7 @@ extension SettingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 4 { return 70 }
+        if indexPath.row == 3 { return 70 }
         
         return 50
     }
@@ -160,7 +179,7 @@ extension SettingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = options[indexPath.row]
-        if indexPath.row < 4 {
+        if indexPath.row < 3 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SettingViewDefaultCell.classIdentifier,
                 for: indexPath
@@ -168,7 +187,7 @@ extension SettingViewController: UITableViewDataSource {
             cell.configure(title: model.title)
             
             return cell
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == 3 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: SettingViewVersionCell.classIdentifier,
                 for: indexPath
@@ -216,6 +235,36 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
             composeVC.setSubject("[문의 사항]")
             composeVC.setMessageBody(messageBody, isHTML: false)
             
+            self.present(composeVC, animated: true, completion: nil)
+        }
+        else {
+            self.showSendMailErrorAlert()
+        }
+    }
+
+    func sendAccountDeleteMail() {
+        if MFMailComposeViewController.canSendMail() {
+            let composeVC = MFMailComposeViewController()
+            let getarockEmail = "ryomyomyom@gmail.com"
+            // TODO: 유저디폴트에서 닉네임 가져오기
+            let messageBody = """
+
+                              -----------------------------
+
+                              - 문의하는 닉네임:
+                              - 문의 날짜: \(Date())
+
+                              ------------------------------
+
+                              탈퇴 사유를 알려주실 수 있나요?
+
+                              """
+
+            composeVC.mailComposeDelegate = self
+            composeVC.setToRecipients([getarockEmail])
+            composeVC.setSubject("[탈퇴 하기]")
+            composeVC.setMessageBody(messageBody, isHTML: false)
+
             self.present(composeVC, animated: true, completion: nil)
         }
         else {

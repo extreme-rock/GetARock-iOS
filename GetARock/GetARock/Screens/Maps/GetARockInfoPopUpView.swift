@@ -131,7 +131,7 @@ final class GetARockInfoPopUpView: UIView {
         $0.spacing = 6
         
         let titleLabel = BasicLabel(
-            contentText: "밴드 방명록 남기기",
+            contentText: "밴드 하고싶은 말 남기기",
             fontStyle: .contentBold,
             textColorInfo: .white
         )
@@ -141,7 +141,7 @@ final class GetARockInfoPopUpView: UIView {
             $0.addLabelSpacing(lineSpacing: 3)
             return $0
         }(BasicLabel(
-            contentText: "주변 밴드 방명록에 내 포지션과 실력을 남기고,\n자랑하고, 소통해보세요.",
+            contentText: "주변 밴드 하고싶은 말에 내 포지션과 실력을 남기고,\n자랑하고, 소통해보세요.",
             fontStyle: .caption,
             textColorInfo: .white))
         

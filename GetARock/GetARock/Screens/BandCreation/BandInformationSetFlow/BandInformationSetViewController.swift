@@ -292,7 +292,7 @@ final class BandInformationSetViewController: BaseViewController {
 extension BandInformationSetViewController {
 
     @objc func didTapPracticeRoomSearchButton() {
-        let nextViewController = PracticeRoomSearchViewController()
+        let nextViewController = PracticeRoomSearchViewController(option: .making)
         nextViewController.completion = { [weak self] locationInformation in
             self?.practiceRoomSearchButton.configureText(with: locationInformation)
             self?.practiceRoomSearchButton.hideRightView()
@@ -305,7 +305,7 @@ extension BandInformationSetViewController {
 
     //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
-        let nextViewController = AddPracticeSongViewController()
+        let nextViewController = AddPracticeSongViewController(option: .making)
         nextViewController.completion = { [weak self] songs in
             let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
             for song in addedSongs {
@@ -324,17 +324,36 @@ extension BandInformationSetViewController {
         keyBoardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
     }
 
+    private func songListData() -> [SongList] {
+        var songList: [SongList] = []
+        for (index, data) in practiceSongList.arrangedSubviews.enumerated() {
+            if index >= 1 {
+                let songBox = data as! PracticeSongBoxView
+                songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+            }
+        }
+        return songList
+    }
+
     private func postBandInformation() {
         confirmBandInformation()
         Task {
             //TODO: 로딩뷰 삽입 필요
             try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
+            print("++++++++++++++++++")
+            print(BasicDataModel.bandCreationData.name)
+            print(BasicDataModel.bandCreationData.songList)
+            print(BasicDataModel.bandCreationData.address)
+            print(BasicDataModel.bandCreationData.snsList)
+            print(BasicDataModel.bandCreationData.introduction)
+            print(BasicDataModel.bandCreationData.memberList)
         }
     }
 
     private func confirmBandInformation() {
         BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
         BasicDataModel.bandCreationData.address.detail = detailpracticeRoomTextField.inputText()
+        BasicDataModel.bandCreationData.songList = songListData()
         //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
         BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),

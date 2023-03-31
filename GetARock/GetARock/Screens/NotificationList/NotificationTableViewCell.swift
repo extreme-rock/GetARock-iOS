@@ -13,6 +13,16 @@ final class NotificationTableViewCell: UITableViewCell {
 
     private var isInvitation: Bool = false
 
+    var notificationInfo: NotificationInfo = NotificationInfo(alertID: 0,
+                                                                      isInvitation: false,
+                                                                      alertType: "",
+                                                                      title: "",
+                                                                      content: "",
+                                                                      isChecked: false,
+                                                                      updatedDate: "",
+                                                                      bandID: 0,
+                                                                      eventID: 0)
+
     //MARK: View
 
     private let titleLabel: BasicLabel = BasicLabel(contentText: "", fontStyle: .headline02, textColorInfo: .white)
@@ -101,16 +111,17 @@ extension NotificationTableViewCell {
         self.titleLabel.text = data.title
         self.subtitleLabel.text = data.content
         self.uploadTime.text = data.updatedDate.toDateWithDateComponents().abbreviatedRelativeKRTime
-        self.isInvitation = data.isInvitation
+        self.notificationInfo = data
+        self.isInvitation = data.isInvitation ?? true
         if isInvitation {
             contentInformationVstack.addArrangedSubview(buttonHstack)
         }
 
         //TODO: 추후 밴드 알람인지 모여락 알람인지 어떻게 구분할지 논의 필요
-        if data.bandID > 0 {
+        if data.bandID! > 0 {
             self.cellImage.image = ImageLiteral.bandIcon
         }
-        if data.eventID > 0 {
+        if data.eventID ?? 0 > 0 {
             self.cellImage.image = ImageLiteral.eventIcon
         }
     }

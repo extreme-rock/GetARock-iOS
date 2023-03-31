@@ -37,7 +37,7 @@ final class BandTopInfoView: UIView {
         $0.numberOfLines = 2
         return $0
     }(BasicLabel(contentText: bandName,
-                 fontStyle: .headline04,
+                 fontStyle: .headline01,
                  textColorInfo: .white))
     
     private lazy var bandNameStackView: UIStackView = {
@@ -70,25 +70,9 @@ final class BandTopInfoView: UIView {
         return button
     }()
     
-    private let moreButton: UIButton = {
-        let action = UIAction { _ in
-            print("버튼눌림")
-            NotificationCenter.default.post(name: NSNotification.Name.showBandModifyActionSheet,
-                                            object: nil,
-                                            userInfo: nil)
-        }
-        $0.addAction(action, for: .touchUpInside)
-        $0.setImage(ImageLiteral.ellipsisSymbol, for: .normal)
-        $0.tintColor = .white
-        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        $0.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 760),
-                                                   for: .horizontal)
-        return $0
-    }(UIButton())
-    
     //TODO: 추후 밴드 데이터를 이용해 이름을 각 라벨 업데이트 필요
     private lazy var locationLabel: BasicLabel = {
-        $0.numberOfLines = 2
+        $0.numberOfLines = 0
         return $0
     }(BasicLabel(
         contentText: "",
@@ -111,7 +95,7 @@ final class BandTopInfoView: UIView {
     
     private lazy var infoStackView: UIStackView = {
         $0.axis = .vertical
-        $0.spacing = 5
+        $0.spacing = 10
         $0.alignment = .leading
         return $0
     }(UIStackView(arrangedSubviews: [bandNameStackView,locationStackView]))
@@ -153,13 +137,13 @@ final class BandTopInfoView: UIView {
             top: self.topAnchor,
             leading: self.leadingAnchor,
             trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+            padding: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 35)
         )
-        
-        self.addSubview(optionButton)
-        optionButton.constraint(top: self.topAnchor,
-                                trailing: self.trailingAnchor,
-                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
+//
+//        self.addSubview(optionButton)
+//        optionButton.constraint(top: self.topAnchor,
+//                                trailing: self.trailingAnchor,
+//                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
         
         self.addSubview(divider)
         divider.constraint(
@@ -171,7 +155,15 @@ final class BandTopInfoView: UIView {
         )
         self.divider.constraint(.heightAnchor, constant: DividerSize.height)
     }
-    
+
+    func setupOptionButtonLayout() {
+        self.addSubview(optionButton)
+        optionButton.constraint(top: self.topAnchor,
+                                trailing: self.trailingAnchor,
+                                padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16))
+
+    }
+
     private func setBandAddress() {
         let city = bandAddress.city
         let street = bandAddress.street
@@ -185,33 +177,22 @@ final class BandTopInfoView: UIView {
         self.isBandButtonSelect.toggle()
         delegate?.didBandSelectButtonTapped(isBandSelectButton: self.isBandButtonSelect)
     }
-    
-    @objc
-    private func configure(with notification: Notification) {
-        guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
-        self.bandNameLabel.text = bandInfo.name
-        self.bandAddress = bandInfo.address
-        setBandAddress()
-        self.isBandButtonSelect = false
-    }
+
     
     func setupToggleButtonLayout() {
         self.bandNameStackView.addArrangedSubview(self.bandListDisclosureButton)
     }
-    
-    func setupMoreButton() {
-        self.addSubview(moreButton)
-        moreButton.constraint(
-            top: self.topAnchor,
-            trailing: self.trailingAnchor,
-            padding: UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 16)
-        )
-    }
 
-    
     private func showOptionActionSheet() {
         // TODO: 리더이면 밴드 삭제를 넣고 아님 말고
         self.delegate?.showBandOptionActionSheet()
+    }
+
+    func configure(bandInfo: BandInformationVO) {
+        self.bandNameLabel.text = bandInfo.name
+        self.bandAddress = bandInfo.address
+        setBandAddress()
+        self.isBandButtonSelect = false
     }
 }
 
@@ -223,5 +204,14 @@ extension BandTopInfoView {
             name: NSNotification.Name.configureBandData,
             object: nil
         )
+    }
+
+    @objc
+    private func configure(with notification: Notification) {
+        guard let bandInfo = notification.userInfo?["bandInfo"] as? BandInformationVO else { return }
+        self.bandNameLabel.text = bandInfo.name
+        self.bandAddress = bandInfo.address
+        setBandAddress()
+        self.isBandButtonSelect = false
     }
 }

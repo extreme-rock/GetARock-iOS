@@ -126,7 +126,7 @@ final class ModifyMyPageViewController: UIViewController {
         guard let modifyPositionViewController = self.pageViewControllers.first as? ModifyPositionViewController,
               let modifyUserProfileViewController = self.pageViewControllers.last as? ModifyUserProfileViewController else { return }
         
-        var modifiedUserInfo = self.userInfo
+        var modifiedUserInfo: User = self.userInfo
         // ModifyUserProfileViewController가 열리지 않으면 상태를 체크할 수 없어서 viewDidLoad를 체크하여, load되지 않았으면 기존 userInfo를 입력하고, load되었다면 현재 입력된 info값을 가져옴
         
         let isModifyUserProfileAllFilled = !modifyUserProfileViewController.isViewLoaded
@@ -142,9 +142,9 @@ final class ModifyMyPageViewController: UIViewController {
                 modifiedUserInfo = userInfo
                 modifiedUserInfo.instrumentList = modifyPositionViewController.instrumentList()
             }
-            
+            print(modifiedUserInfo, "modified")
             Task {
-                try await SignUpNetworkManager.shared.putUserInformation(user: userInfo, completion: { result in
+                try await SignUpNetworkManager.shared.putUserInformation(user: modifiedUserInfo, completion: { result in
                     switch result {
                     case .success(_):
                         // TODO: 성공했을 때 dismiss말고 다른 indicator가 필요할지?

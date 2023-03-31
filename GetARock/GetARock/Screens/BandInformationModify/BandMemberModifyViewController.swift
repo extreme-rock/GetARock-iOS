@@ -130,6 +130,7 @@ final class BandMemberModifyViewController: UIViewController {
     
     private lazy var abandonMemberButton: BottomButton = {
         $0.setTitle("내보내기", for: .normal)
+        $0.setBackgroundColor(.dark02, for: .normal)
         $0.isEnabled = false
         $0.addTarget(self, action: #selector(showAlertForMemberAbandon), for: .touchUpInside)
         return $0
@@ -239,19 +240,23 @@ extension BandMemberModifyViewController {
     // 데이터는 memberList 형태로 받아오지만, cell을 만들 때는 SearchedUserInfo 모델을 맞춰야하기 때문에 데이터를 변형시키는 메소드
     private func transformVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
-        //MARK: 추후 더미데이터가 아니라 API 데이터로 해야함
         for data in self.bandData.memberList {
+            print("++++++++기존의 밴드 멤버 데이터들++++++")
+            print(data.name)
+            print(data.memberState)
+            print(data.memberID)
+            print("++++++++기존의 밴드 멤버 데이터들++++++")
             let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
                 SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
             }
             let transformedData: SearchedUserInfo = SearchedUserInfo(
-                memberId: data.memberID ?? 0,
+                memberId: data.memberID!,
                 name: data.name,
                 memberState: data.memberState,
                 instrumentList: instrumentListInfo,
-                //MARK: 성별, 나이 정보가 memberList에 없음
-                gender: "남",
-                age: "20대")
+                //TODO: 성별, 나이 정보가 memberList에 없음
+                gender: "",
+                age: "")
             
             resultData.append(transformedData)
         }
@@ -291,7 +296,11 @@ extension BandMemberModifyViewController {
                     InstrumentList(name: searchedInstrument.name)})
         )}
         
-        BasicDataModel.bandCreationData.memberList = addedMembers + invitingMembers
+        BasicDataModel.bandPUTData.memberList = addedMembers + invitingMembers
+        print("+++++++++++++++")
+        print("PUT할 밴드 정보가 수정되었습니다")
+        print("수정된 정보")
+        print(BasicDataModel.bandPUTData.memberList)
     }
 }
 

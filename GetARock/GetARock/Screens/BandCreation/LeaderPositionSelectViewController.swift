@@ -16,13 +16,7 @@ final class LeaderPositionSelectViewController: UIViewController {
     private var memberList: [MemberList] = []
     
     //TODO: 추후 유저 데이터에서 유저가 가능하다고 응답한 악기들로 대체되어야함.
-    private var positions: [Item] = [
-        .position(Position(instrumentName: "보컬", instrumentImageName: .vocal, isETC: false)),
-        .position(Position(instrumentName: "기타", instrumentImageName: .guitar, isETC: false)),
-        .position(Position(instrumentName: "키보드", instrumentImageName: .keyboard, isETC: false)),
-        .position(Position(instrumentName: "드럼", instrumentImageName: .drum, isETC: false)),
-        .position(Position(instrumentName: "베이스", instrumentImageName: .bass, isETC: false))
-    ]
+    private let positions: [Item]
     
     //MARK: - View
     
@@ -45,6 +39,15 @@ final class LeaderPositionSelectViewController: UIViewController {
     }(BottomButton())
     
     //MARK: - Life Cycle
+    
+    init(positions: [Item]) {
+        self.positions = positions
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,8 +119,7 @@ final class LeaderPositionSelectViewController: UIViewController {
 extension LeaderPositionSelectViewController {
     private func addSelectedPositionData() {
         let selectedInstruments: [InstrumentList] = self.positionCollectionView.getSelectedInstruments()
-        //TODO: 추후 밴드를 생성하려는 유저의 닉네임으로 바꿔야함
-        let firstMember: MemberList = MemberList(memberId: 0, name: "user", memberState: .admin, instrumentList: selectedInstruments)
+        let firstMember: MemberList = MemberList(memberId: 0, name: "\(UserDefaultStorage.name)", memberState: .admin, instrumentList: selectedInstruments)
         if self.memberList.isEmpty {
             self.memberList.append(firstMember)
         } else {

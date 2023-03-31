@@ -120,7 +120,7 @@ final class SNSBoxView: UIView {
     
     func inputText() -> SnsList {
         if let text = self.textField.text {
-            let link = self.type.rawValue + text
+            let link = text
             let snsList = SnsList(type: type.snsType, link: link)
             return snsList
         } else {

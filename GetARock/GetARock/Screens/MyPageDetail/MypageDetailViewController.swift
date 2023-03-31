@@ -11,21 +11,41 @@ import UIKit
 final class MypageDetailViewController: BaseViewController {
     
     // MARK: - Property
-    
+
+    enum NavigationBarOption {
+        case hiddenTrue
+        case hiddenFalse
+
+        var isHidden: Bool {
+            switch self {
+            case .hiddenTrue: return true
+            case .hiddenFalse: return false
+            }
+        }
+    }
+    private let memberId: Int
+    private let navigationBarOption: NavigationBarOption
     //TODO: - 추후 상세페이지의 멤버 아이디를 지도로부터 받아와야함
-    private var userID = 0
-    private lazy var userData = UserInformationVO(
-        userID: userID,
+    private lazy var userData: UserInformationVO = UserInformationVO(
+        userID: UserDefaultStorage.memberID,
         name: "",
         age: "",
         gender: "",
         introduction: nil,
-        bandList: nil,
+        bandList: [],
         instrumentList: [],
-        snsList: nil,
-        eventList: nil,
-        commentEventList: nil
-    )
+        snsList: [],
+        eventList: [],
+        commentEventList: []
+    ) {
+        didSet {
+            self.mypageTopInfoView.configureModifiedUserInfo(name: userData.name,
+                                                             age: userData.age,
+                                                             gender: userData.gender)
+            //TODO: SNS 변경되는 함수 만들어야함.
+            self.userInfomationView.configureModifiedUserInfo(with: self.userData)
+        }
+    }
     
     // MARK: - View
     
@@ -37,11 +57,11 @@ final class MypageDetailViewController: BaseViewController {
     
     private lazy var userInfomationView = UserInformationView(userData: userData)
     
-    
     // MARK: - Init
     
-    init(userID: Int) {
-        self.userID = userID
+    init(navigationBarOption: NavigationBarOption, memberId: Int) {
+        self.navigationBarOption = navigationBarOption
+        self.memberId = memberId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,14 +77,32 @@ final class MypageDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            await fetchUserData()
+            await fetchUserData(with: self.memberId)
             setupLayout()
             setNotification()
+            configureDelegate()
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = self.navigationBarOption.isHidden
+        Task {
+            await fetchUserData(with: self.memberId)
+        }
+    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        self.navigationController?.isNavigationBarHidden = false
+//    }
+//
     // MARK: - Method
-    
+
+    private func configureDelegate() {
+        self.mypageTopInfoView.delegate = self
+    }
+
     private func setupLayout() {
         view.addSubview(mypageTopInfoView)
         mypageTopInfoView.constraint(
@@ -105,30 +143,38 @@ final class MypageDetailViewController: BaseViewController {
     }
     
     @objc private func presentBandCreation(_ notification: Notification) {
-        let bandCreationVC = LeaderPositionSelectViewController()
-//        self.navigationController?.pushViewController(bandCreationVC, animated: true)
-        bandCreationVC.modalPresentationStyle = .fullScreen
-        self.present(bandCreationVC, animated: true)
+        Task {
+            guard let instrumentList = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.instrumentList else { return }
+            let positions = instrumentList.map {
+                print($0.name)
+                let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
+                return Item.position(Position(
+                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? $0.name,
+                    instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
+                    isETC: isETC)
+                )
+            }
+            let bandCreationVC = UINavigationController(rootViewController: LeaderPositionSelectViewController(positions: positions))
+            bandCreationVC.modalPresentationStyle = .fullScreen
+            self.present(bandCreationVC, animated: true)
+        }
     }
     
     //TODO - 지금 서버에 들어가는 멤버 밴드가 다른데 구엘한테 확인중....
     @objc private func presentUserBandDetailViewController(_ notification: Notification) {
         guard let selectbandData = notification.userInfo?["selectbandData"] as? BandList else { return }
         let bandDetailVC = BandDetailViewController(myBands: [selectbandData], entryPoint: .myBand)
-//        self.navigationController?.pushViewController(bandCreationVC, animated: true)
-        bandDetailVC.modalPresentationStyle = .fullScreen
-        self.present(bandDetailVC, animated: true)
+        self.navigationController?.pushViewController(bandDetailVC, animated: true)
     }
-
 }
 
 // MARK: - fetchBandData
 
 extension MypageDetailViewController {
     
-    func fetchUserData() async {
+    func fetchUserData(with memberId: Int) async {
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/member")
-        let idQuery = URLQueryItem(name: "id", value: String(userID))
+        let idQuery = URLQueryItem(name: "id", value: String(memberId))
         queryURLComponent?.queryItems = [idQuery]
         guard let url = queryURLComponent?.url else { return }
         
@@ -138,10 +184,31 @@ extension MypageDetailViewController {
             print("Response data raw : \(data)")
             print("응답 내용 : \(response)")
             self.userData = decodedData
+            print(decodedData.instrumentList, "in mypage")
         } catch {
             print(error)
             print("bad news! decoding error occuerd")
         }
     }
     
+}
+
+extension MypageDetailViewController: MypageTopInfoViewDelegate {
+    func presentModifyMyPageViewController() {
+        let userInfo =  User(memberId: self.userData.userID,
+                             name: self.userData.name,
+                             age: self.userData.age,
+                             gender: self.userData.gender,
+                             introduction: self.userData.introduction,
+                             instrumentList: self.userData.instrumentList.map {
+            InstrumentList(name: $0.name)
+        },
+                             snsList: self.userData.snsList.map {
+            SnsList(type: $0.snsType, link: $0.link)
+        })
+
+        let viewController = ModifyMyPageViewController(userInfo: userInfo)
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true)
+    }
 }

@@ -17,12 +17,12 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     var completion: (_ registeredMember: [SearchedUserInfo]) -> Void = { addedMembers in }
 
     private lazy var firstData: SearchedUserInfo = SearchedUserInfo(
-        memberId: 0,
+        memberId: nil,
         name: firstUnRegisteredCard.nickNameTextField.textField.text ?? "",
         memberState: .annonymous,
-        instrumentList: [SearchedUserInstrumentList(instrumentId: 0,
+        instrumentList: [SearchedUserInstrumentList(instrumentId: -1,
                                                     isMain: true,
-                                                    name: firstUnRegisteredCard.otherPositionTextField.textField.text ?? "")], gender: "WOMEN", age: "TWENTIES")
+                                                    name: firstUnRegisteredCard.otherPositionTextField.textField.text ?? "")], gender: "Unknown", age: "Unknown")
 
     //MARK: - View
 
@@ -77,22 +77,29 @@ final class AddUnRegisteredMemberViewController: BaseViewController {
     private lazy var addCompletionAction = UIAction { _ in
         for subview in self.contentView.arrangedSubviews {
             guard let card = subview as? UnRegisteredMemberCardView else { return }
+
+            var instrumentList: [SearchedUserInstrumentList] = []
+
             let mainPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
-                instrumentId: 0,
+                instrumentId: -1,
                 isMain: true,
                 name: card.positionSelectCollectionView.selectedItem() )
-            
-            let otherPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
-                instrumentId: 0,
-                isMain: true,
-                name: card.otherPositionTextField.inputText())
+
+            instrumentList.append(mainPosition)
+
+            if !card.otherPositionTextField.inputText().isEmpty {
+                let otherPosition: SearchedUserInstrumentList = SearchedUserInstrumentList(
+                    instrumentId: -1,
+                    isMain: false,
+                    name: card.otherPositionTextField.inputText())
+                instrumentList.append(otherPosition)
+            }
             
             let data = SearchedUserInfo(
-                memberId: 0,
+                memberId: nil,
                 name: card.nickNameTextField.textField.text ?? "",
                 memberState: .annonymous,
-                instrumentList: [mainPosition, otherPosition],
-                //MARK: 미가입멤버 회원이라서 성별과 나이 정보가 없음
+                instrumentList: instrumentList,
                 gender: "Unknown",
                 age: "Unknown")
             self.addedMembers.append(data)

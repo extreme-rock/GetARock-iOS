@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol MypageTopInfoViewDelegate: AnyObject {
+    func presentModifyMyPageViewController()
+}
+
 final class MypageTopInfoView: UIView {
     
     // MARK: - Property
-    
+
+    weak var delegate: MypageTopInfoViewDelegate?
     private var userName = ""
     private var userGender = ""
     private var userAge = ""
@@ -27,9 +32,9 @@ final class MypageTopInfoView: UIView {
     )
     
     //TODO: - 추후 본인의 계정에만 노출 되어야함
-    private let modifyButton: UIButton = {
-        let action = UIAction {_ in
-            print("수정버튼 눌림 ^^")
+    private lazy var modifyButton: UIButton = {
+        let action = UIAction { [weak self] _ in
+            self?.delegate?.presentModifyMyPageViewController()
         }
         $0.setTitle("수정", for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
@@ -110,6 +115,13 @@ final class MypageTopInfoView: UIView {
         guard let age = Age.CodingKeys(rawValue: userAge)?.inKorean,
               let gender = Gender.CodingKeys(rawValue: userGender)?.inKorean else { return }
         
+        userInfoLabel.text = "\(gender) ⏐ \(age)"
+    }
+
+    func configureModifiedUserInfo(name: String, age: String, gender: String) {
+        guard let age = Age.CodingKeys(rawValue: age)?.inKorean,
+              let gender = Gender.CodingKeys(rawValue: gender)?.inKorean else { return }
+        self.userNameLabel.text = name
         userInfoLabel.text = "\(gender) ⏐ \(age)"
     }
 }

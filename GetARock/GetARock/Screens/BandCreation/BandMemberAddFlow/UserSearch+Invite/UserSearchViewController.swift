@@ -8,7 +8,6 @@
 import UIKit
 
 
-//TODO: API 업데이트 되면 TableCell에 선택한 여러 악기가 표기 되게 만들기 
 enum BottomScrollSection: Int {
     case main
 }
@@ -71,6 +70,12 @@ final class UserSearchViewController: BaseViewController {
         updateSnapShot(with: selectedUsers)
     }
 
+    //MARK: 검색 결과 데이터 초기화
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        SearchedUserListDTO.dataSet.memberList = []
+    }
+
     private func setupLayout() {
         view.addSubview(searchBar)
         searchBar.constraint(top: view.safeAreaLayoutGuide.topAnchor,
@@ -130,13 +135,12 @@ extension UserSearchViewController: UITableViewDelegate {
 
         guard let selectedCell = tableView.cellForRow(at: indexPath) as? UserSearchTableViewCell else { return }
         //TODO: 추후 백엔드 데이터 모델 확정 후 이대로 init시 이상없는지 체크 필요
-        var data = SearchedUserInfo(memberId: 0,
+        var data = SearchedUserInfo(memberId: selectedCell.memberId,
                                     name: selectedCell.userNameLabel.text ?? "",
-                                    memberState: .none,
-                                    instrumentList: [SearchedUserInstrumentList(
-                                        instrumentId: 0,
-                                        isMain: true,
-                                        name: selectedCell.userInstrumentLabel.text ?? "")], gender: "MEN", age: "TWENTIES")
+                                    memberState: selectedCell.memberState,
+                                    instrumentList: selectedCell.instrument,
+                                    gender: selectedCell.genderText(),
+                                    age: selectedCell.ageText())
         data.id = selectedCell.id
         selectedUsers.append(data)
         self.selectedListWithID.append((indexPath: indexPath, id: selectedCell.id))
@@ -211,18 +215,10 @@ extension UserSearchViewController {
         } else {
             Task {
                 let searchedUsers = try await MemberSearchNetworkManager().getSearchedMemberList(with: searchBar.inputText())
-
-                SearchedUserListDTO.dataSet.memberList = searchedUsers.map({
-                    SearchedUserInfo(
-                        memberId: $0.memberId ?? -1,
-                        name: $0.name,
-                        memberState: $0.memberState,
-                        //MARK: 여기 데이터 변환 과정 궁금
-                        instrumentList: $0.instrumentList,
-                        gender: $0.gender,
-                        age: $0.age)
-                })
-
+                SearchedUserListDTO.dataSet.memberList = searchedUsers
+                print("================")
+                print(searchedUsers)
+                print("================")
                 self.searchResultTable.reloadData()
             }
         }

@@ -21,7 +21,7 @@ enum Gender: String, CaseIterable, Codable {
     case man = "남자"
     case woman = "여자"
     
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String {
         case man = "MAN"
         case woman = "WOMAN"
         
@@ -54,7 +54,7 @@ enum Age: String, CaseIterable, Codable {
     case oversixties = "60대 이상"
     
     enum CodingKeys: String, CodingKey {
-        case undertwenties = "UNDERTWENDTIES"
+        case undertwenties = "UNDERTWENTIES"
         case twenties = "TWENTIES"
         case thirties = "THIRTIES"
         case fourties = "FOURTIES"
@@ -82,7 +82,7 @@ enum Age: String, CaseIterable, Codable {
     var inEnglish: String {
         switch self {
         case .undertwenties:
-            return "UNDERTWENDTIES"
+            return "UNDERTWENTIES"
         case .twenties:
             return "TWENTIES"
         case .thirties:
@@ -97,13 +97,39 @@ enum Age: String, CaseIterable, Codable {
     }
 }
 
-enum Instrument: String {
+enum Instrument: String, CaseIterable {
     case guitar
     case bass
     case keyboard
     case drum
     case vocal
     case etc = ""
+    
+    enum CodingKey: String {
+        case guitar = "기타"
+        case bass = "베이스"
+        case keyboard = "키보드"
+        case drum = "드럼"
+        case vocal = "보컬"
+        case etc = ""
+        
+        var inEnglish: String {
+            switch self {
+            case .guitar:
+                return "guitar"
+            case .bass:
+                return "bass"
+            case .keyboard:
+                return "keyboard"
+            case .drum:
+                return "drum"
+            case .vocal:
+                return "vocal"
+            case .etc:
+                return "etc"
+            }
+        }
+    }
     
     var imageName: String {
         switch self {

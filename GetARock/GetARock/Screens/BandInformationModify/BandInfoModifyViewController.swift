@@ -10,6 +10,8 @@ final class BandInfoModifyViewController: BaseViewController {
 
     // MARK: - Properties
 
+    private let rootViewController: UIViewController
+
     private let bandData: BandInformationVO
 
     private var keyBoardHeight: CGFloat = 280
@@ -211,8 +213,8 @@ final class BandInfoModifyViewController: BaseViewController {
         setTextFieldDelegate()
         setKeyboardDismiss()
         setNotification()
-        //TODO: 추후 백엔드 데이터 확인 과정에서 바꿔야함
         configure(with: bandData)
+        setOriginalForPUTData()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -223,8 +225,9 @@ final class BandInfoModifyViewController: BaseViewController {
         )
     }
 
-    init(bandData: BandInformationVO) {
+    init(navigateDelegate: UIViewController, bandData: BandInformationVO) {
         self.bandData = bandData
+        self.rootViewController = navigateDelegate
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -269,6 +272,17 @@ final class BandInfoModifyViewController: BaseViewController {
         instagramTextField.textField.delegate = self
         soundCloudTextField.textField.delegate = self
     }
+
+    private func songListData() -> [SongList] {
+        var songList: [SongList] = []
+        for (index, data) in practiceSongList.arrangedSubviews.enumerated() {
+            if index >= 1 {
+                let songBox = data as! PracticeSongBoxView
+                songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
+            }
+        }
+        return songList
+    }
 }
 
 // MARK: - Extension
@@ -276,7 +290,7 @@ final class BandInfoModifyViewController: BaseViewController {
 extension BandInfoModifyViewController {
 
     @objc func didTapPracticeRoomSearchButton() {
-        let nextViewController = PracticeRoomSearchViewController()
+        let nextViewController = PracticeRoomSearchViewController(option: .editing)
         nextViewController.completion = { [weak self] locationInformation in
             self?.practiceRoomSearchButton.configureText(with: locationInformation)
             self?.practiceRoomSearchButton.hideRightView()
@@ -284,12 +298,12 @@ extension BandInfoModifyViewController {
             NotificationCenter.default.post(name: Notification.Name.checkRequiredBandInformationFilled,
                                             object: nil)
         }
-        navigationController?.pushViewController(nextViewController, animated: true)
+        rootViewController.navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     //MARK: 합주곡 추가 기능 관련 로직
     @objc func didTapAddPracticeSong() {
-        let nextViewController = AddPracticeSongViewController()
+        let nextViewController = AddPracticeSongViewController(option: .editing)
         nextViewController.completion = { [weak self] songs in
             let addedSongs: [PracticeSongBoxView] = self?.makePracticeSongBoxes(with: songs) ?? []
             for song in addedSongs {
@@ -297,7 +311,7 @@ extension BandInfoModifyViewController {
                 self?.practiceSongList.addArrangedSubview(song)
             }
         }
-        navigationController?.pushViewController(nextViewController, animated: true)
+        rootViewController.navigationController?.pushViewController(nextViewController, animated: true)
     }
 
     @objc func didTouchScreen() {
@@ -315,20 +329,48 @@ extension BandInfoModifyViewController {
         }
     }
 
+    //MARK: 수정된 정보 확정
     func confirmModifiedBandInformation() {
-        BasicDataModel.bandCreationData.name = bandNamingTextField.inputText()
-        BasicDataModel.bandCreationData.address.detail = detailPracticeRoomTextField.inputText()
+        BasicDataModel.bandPUTData.name = bandNamingTextField.inputText()
+        BasicDataModel.bandPUTData.address.street = practiceRoomSearchButton.inputText()
+        BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
         //SongList는 AddPracticeSongVC에서 추가, Address coordinate는 PracticeRoomSearchVC에서 추가
-        BasicDataModel.bandCreationData.introduction = bandIntroTextView.inputText()
-        BasicDataModel.bandCreationData.snsList = [youtubeTextField.inputText(),
+        BasicDataModel.bandPUTData.songList = songListData()
+        BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
+        BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
                                   instagramTextField.inputText(),
                                   soundCloudTextField.inputText()]
+    }
+
+    private func setOriginalForPUTData() {
+        let originalData = BandPUTDTO(bandId: bandData.bandID,
+
+                                      name: bandData.name,
+
+                                      address: Address(city: bandData.address.city,
+                                                         street: bandData.address.street,
+                                                         detail: bandData.address.detail,
+                                                         longitude: bandData.address.longitude,
+                                                         latitude: bandData.address.latitude),
+
+                                      songList: bandData.songList?.compactMap({ SongList(name: $0.name, artist: $0.artist, link: $0.link)}),
+
+                                      memberList: bandData.memberList.map({ MemberList(memberId: $0.memberID,
+                                                                                       name: $0.name,
+                                                                                       memberState: $0.memberState,
+                                                                                       instrumentList: $0.instrumentList.map({ data in InstrumentList(name: data.name) }))}),
+                                      introduction: bandData.introduction,
+
+                                      snsList: bandData.snsList.map({ SnsList(type: $0.snsType, link: $0.link) }))
+
+        BasicDataModel.bandPUTData = originalData
     }
 
     private func configure(with bandData: BandInformationVO) {
         self.bandNamingTextField.configureText(with: bandData.name)
         self.practiceRoomSearchButton.configureText(with: bandData.address.city + " " + bandData.address.street)
-        self.detailPracticeRoomTextField.configureText(with: bandData.address.detail)
+        self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
+
         if let songList = bandData.songList {
             var tempCardViewList: [PracticeSongCardView] = []
             for song in songList {
@@ -337,9 +379,8 @@ extension BandInfoModifyViewController {
                 tempCardViewList.append(practiceSongCard)
             }
             let songListBox = makePracticeSongBoxes(with: tempCardViewList)
-            songListBox.forEach { practiceSongVstack.addArrangedSubview($0) }
+            songListBox.forEach { practiceSongList.addArrangedSubview($0) }
         }
-        self.bandIntroTextView.configureText(with: bandData.introduction ?? "")
         
         let snsList = bandData.snsList
         

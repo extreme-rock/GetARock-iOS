@@ -211,10 +211,15 @@ final class UserInfoInputViewController: UIViewController {
         super.viewDidLoad()
         self.setupLayout()
         self.hideKeyboardWhenTappedAround()
+        self.setCustomBackButton()
         self.configureDelegate()
         self.setNotification()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(
             self,

@@ -127,6 +127,8 @@
 		A9D72540299B2D4400404E22 /* InformationGuideLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7253F299B2D4400404E22 /* InformationGuideLabel.swift */; };
 		A9DBADB529A4650C00584198 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DBADB429A4650C00584198 /* UIViewController+Extension.swift */; };
 		A9EDD38E299A3115003F5392 /* BasicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EDD38D299A3114003F5392 /* BasicDataModel.swift */; };
+		A9FFA38029D2B6D20091B792 /* NameDuplicationCheckVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FFA37F29D2B6D20091B792 /* NameDuplicationCheckVO.swift */; };
+		A9FFA38229D2CE9E0091B792 /* UserInfoNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FFA38129D2CE9E0091B792 /* UserInfoNetworkManager.swift */; };
 		B808B6972982A85F00A1A9E2 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B808B6962982A85F00A1A9E2 /* CustomMarker.swift */; };
 		B8468F5F29797E7D00A9E77E /* MapsInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8468F5E29797E7D00A9E77E /* MapsInfo.plist */; };
 		B8468F6129797EFE00A9E77E /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8468F6029797EFE00A9E77E /* Bundle+Extension.swift */; };
@@ -151,7 +153,6 @@
 		B8B17C522980B93300806899 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C512980B93300806899 /* Location.swift */; };
 		B8B17C542980B99900806899 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C532980B99900806899 /* Coordinate.swift */; };
 		B8B17C5D29823AC900806899 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B17C5C29823AC900806899 /* Event.swift */; };
-		B8E7181229B64FC20097D7C5 /* MapMarkerVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */; };
 		B8D51C9D29D02A0500F927FC /* LoginVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9C29D02A0500F927FC /* LoginVO.swift */; };
 		B8D51CA029D0AE4B00F927FC /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */; };
 		B8D51CA229D0AE9200F927FC /* UserDefaultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */; };
@@ -301,6 +302,8 @@
 		A9D7253F299B2D4400404E22 /* InformationGuideLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationGuideLabel.swift; sourceTree = "<group>"; };
 		A9DBADB429A4650C00584198 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		A9EDD38D299A3114003F5392 /* BasicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicDataModel.swift; sourceTree = "<group>"; };
+		A9FFA37F29D2B6D20091B792 /* NameDuplicationCheckVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameDuplicationCheckVO.swift; sourceTree = "<group>"; };
+		A9FFA38129D2CE9E0091B792 /* UserInfoNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoNetworkManager.swift; sourceTree = "<group>"; };
 		B7323F5DF501B54C2FAD4892 /* Pods_GetARock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GetARock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B808B6962982A85F00A1A9E2 /* CustomMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarker.swift; sourceTree = "<group>"; };
 		B80EC99129A4EFAA0058577C /* GetARock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GetARock.entitlements; sourceTree = "<group>"; };
@@ -331,7 +334,6 @@
 		B8B17C512980B93300806899 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		B8B17C532980B99900806899 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		B8B17C5C29823AC900806899 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		B8E7181129B64FC20097D7C5 /* MapMarkerVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerVO.swift; sourceTree = "<group>"; };
 		B8D51C9C29D02A0500F927FC /* LoginVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVO.swift; sourceTree = "<group>"; };
 		B8D51C9F29D0AE4B00F927FC /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		B8D51CA129D0AE9200F927FC /* UserDefaultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHandler.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				4A4A6E9529A8F9CC005CF076 /* SignUpNetworkManager.swift */,
 				9ABC0C2229CB4EAF002DC070 /* BandInformationNetworkManager.swift */,
 				A9BAAFB329CEAF3700C254DD /* MemberSearchNetworkManager.swift */,
+				A9FFA38129D2CE9E0091B792 /* UserInfoNetworkManager.swift */,
 				4A063C4B29CC951C00BFD253 /* BandNetworkManager.swift */,
 			);
 			path = Network;
@@ -808,6 +811,7 @@
 				9AA0BB5029A4E81700871A05 /* NotificationListVO.swift */,
 				A96F368F299E301700376620 /* SearchedUserListDTO.swift */,
 				7B287CF929B76A8E00439254 /* UserInformationVO.swift */,
+				A9FFA37F29D2B6D20091B792 /* NameDuplicationCheckVO.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1125,6 +1129,7 @@
 				7B236A8529854196006AE385 /* IconImageView.swift in Sources */,
 				7B56DC3E29A36F2F00672EDD /* UIView+Extension.swift in Sources */,
 				7BB4FA84299B708C00C44184 /* EventStateLabel.swift in Sources */,
+				A9FFA38229D2CE9E0091B792 /* UserInfoNetworkManager.swift in Sources */,
 				9A53CFB629C6F89C002F6E56 /* BandInfoModifyViewController.swift in Sources */,
 				9AA0BB5629A4FD1800871A05 /* Date+Extension.swift in Sources */,
 				4ABFB6342988160D004BF232 /* PositionCollectionReusableView.swift in Sources */,
@@ -1169,6 +1174,7 @@
 				7BEA1875297AA10800A40488 /* UIFont+Extension.swift in Sources */,
 				9A3F07752987E1DB009CD500 /* TextLimitTextField.swift in Sources */,
 				7B4332802999FD6A0042AD83 /* BandTopInfoView.swift in Sources */,
+				A9FFA38029D2B6D20091B792 /* NameDuplicationCheckVO.swift in Sources */,
 				4A32707129CBE44D0046EE0C /* DeleteBandNoticeView.swift in Sources */,
 				4AC4CE4D2980BAE800BB823C /* SelectCollectionView.swift in Sources */,
 				7B76C5E82982D54100076637 /* SongListCollectionViewCell.swift in Sources */,
@@ -1361,7 +1367,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YYP248S73Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetARock/Global/Supports/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -1375,7 +1381,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarockR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1397,7 +1403,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = YYP248S73Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetARock/Global/Supports/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -1411,7 +1417,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryomyomyom.getarockR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

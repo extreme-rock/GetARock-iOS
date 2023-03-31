@@ -8,8 +8,8 @@
 import Foundation
 
 final class MemberSearchNetworkManager {
-    func getSearchedMemberList(with memberName: String) async throws -> [SearchedMemberList] {
-        var result: [SearchedMemberList] = []
+    func getSearchedMemberList(with memberName: String) async throws -> [SearchedUserInfo] {
+        var result = SearchedUserListTempDTO(memberList: [])
         let baseURL = "https://api.ryomyom.com/member/search"
         var queryURLComponent = URLComponents(string: baseURL)
         let nameQuery = URLQueryItem(name: "memberName", value: memberName)
@@ -24,8 +24,9 @@ final class MemberSearchNetworkManager {
 
             if (200..<300).contains(httpResponse.statusCode) {
                 print("Success \(httpResponse.statusCode)")
-                let decodedData = try JSONDecoder().decode([SearchedMemberList].self, from: data)
+                let decodedData = try JSONDecoder().decode(SearchedUserListTempDTO.self, from: data)
                 result = decodedData
+                print(result)
 
             } else {
                 throw NetworkError.failedRequest(status: httpResponse.statusCode)
@@ -34,6 +35,13 @@ final class MemberSearchNetworkManager {
             print(error)
         }
 
-        return result
+        return result.memberList.map { data in
+            SearchedUserInfo(memberId: data.memberId,
+                             name: data.name,
+                             memberState: data.memberState,
+                             instrumentList: data.instrumentList,
+                             gender: data.gender,
+                             age: data.age)
+        }
     }
 }

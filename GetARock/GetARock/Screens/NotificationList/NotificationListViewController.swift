@@ -17,7 +17,7 @@ final class NotificationListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //TODO: 추후에 API를 통해 데이터 업데이트 과정이 필요함
+        fetchNotificationList(with: UserDefaultStorage.memberID)
         attribute()
     }
 
@@ -28,15 +28,16 @@ final class NotificationListViewController: UITableViewController {
         self.tableView.backgroundColor = .dark01
         self.tableView.separatorStyle = .none
         
-        self.customizeBackButton()
+        self.setCustomBackButton()
         self.fixNavigationBarColorWhenScrollDown()
         self.setNavigationInlineTitle(title: "알림함")
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.classIdentifier, for: indexPath) as? NotificationTableViewCell else { return UITableViewCell() }
 
-        cell.configure(with: NotificationListVO.testData[indexPath.row])
+        cell.configure(with: notificationList[indexPath.row])
         cell.selectionStyle = .none
         cell.backgroundColor = .dark01
 
@@ -45,8 +46,20 @@ final class NotificationListViewController: UITableViewController {
         }
 
         let acceptAction = UIAction { [weak self] _ in
-            self?.navigationController?.pushViewController(PositionSelectForInvitationViewController(),
-                                                           animated: true)
+
+            Task {
+                guard let instrumentList = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.instrumentList else { return }
+                let positions = instrumentList.map {
+                    let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
+                    return Item.position(Position(
+                        instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? $0.name,
+                        instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
+                        isETC: isETC)
+                    )
+                }
+                self?.navigationController?.pushViewController(PositionSelectForInvitationViewController(notificationInfo: cell.notificationInfo, positions: positions),
+                                                               animated: true)
+            }
         }
         
         cell.rejectButton.addAction(rejectAction, for: .touchUpInside)
@@ -56,19 +69,20 @@ final class NotificationListViewController: UITableViewController {
     
     //TODO: 추후 API 데이터로 변경 필요
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        NotificationListVO.testData.count
+        notificationList.count
     }
 }
 
 //MARK: - Extension
 
 extension NotificationListViewController {
-    //TODO: 추후 테스트 API는 삭제하고 다른 API로 대체해야함, viewDidload 과정에서 초기 데이터 세팅 과정 필요
-    private func fetchNotificationList() {
+    private func fetchNotificationList(with memberID: Int) {
         Task {
             do {
-                let serverData: [NotificationInfo] = try await NotificationNetworkManager.shared.getNotificationList(memberId: 1)
+                let serverData: [NotificationInfo] = try await NotificationNetworkManager.shared.getNotificationList(memberID: memberID).alertList
                 self.notificationList = serverData
+                print("++++++++NotificationList++++++++")
+                print(self.notificationList)
             } catch {
                 print(error)
             }

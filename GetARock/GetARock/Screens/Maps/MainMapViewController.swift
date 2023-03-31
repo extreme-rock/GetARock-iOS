@@ -46,17 +46,12 @@ final class MainMapViewController: UIViewController {
     private lazy var bottomButtonStackView: UIStackView = {
         $0.axis = .horizontal
         return $0
-    }(UIStackView(arrangedSubviews: [createEventsButton, myBandsButton, myPageButton]))
+    }(UIStackView(arrangedSubviews: [myBandsButton, myPageButton]))
     
     private lazy var topButtonStackView: UIStackView = {
         $0.axis = .vertical
         return $0
     }(UIStackView(arrangedSubviews: [notificationButton, settingButton, moveToCurrentLocationButton]))
-    
-    private let createEventsButton: UIButton = {
-        $0.setImage(UIImage(named: "createEventsButton"), for: .normal)
-        return $0
-    }(UIButton())
     
     private lazy var myBandsButton: UIButton = {
         $0.setImage(UIImage(named: "myBandsButton"), for: .normal)
@@ -67,22 +62,42 @@ final class MainMapViewController: UIViewController {
         return $0
     }(UIButton())
     
-    private let myPageButton: UIButton = {
+    private lazy var myPageButton: UIButton = {
         $0.setImage(UIImage(named: "myPageButton"), for: .normal)
+        let action = UIAction { [weak self] _ in
+            let viewController = UINavigationController(rootViewController: MypageDetailViewController(navigationBarOption: .hiddenTrue,
+                                                                                                       memberId: UserDefaultStorage.memberID))
+            self?.present(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
     
-    private let notificationButton: UIButton = {
+    private lazy var notificationButton: UIButton = {
         $0.setImage(UIImage(named: "notificationButton"), for: .normal)
+        let action = UIAction { [weak self] _ in
+            let viewController = NotificationListViewController()
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
     
-    private let settingButton: UIButton = {
+    private lazy var settingButton: UIButton = {
         $0.setImage(UIImage(named: "settingButton"), for: .normal)
+        let action = UIAction { [weak self] _ in
+            let viewController = SettingViewController()
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
-    
-    private let moveToCurrentLocationButton: UIButton = {
+
+    private lazy var moveToCurrentLocationButton: UIButton = {
+        let action = UIAction { _ in
+            self.moveMap(to: self.currentCoordinate)
+        }
+        $0.addAction(action, for: .touchUpInside)
         $0.setImage(UIImage(named: "currentLocationButton"), for: .normal)
         return $0
     }(UIButton())
@@ -127,15 +142,21 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.setLocationManager()
         self.requestLocationAuthorization()
+        print("++++++++++++")
+        print(UserDefaultStorage.memberID)
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         moveMap(to: currentCoordinate)
     }
     
     // MARK: - Method
-    
+
     private func setupLayout() {
         self.view.addSubview(self.currentLocationLabel)
         self.currentLocationLabel.constraint(
@@ -185,7 +206,7 @@ final class MainMapViewController: UIViewController {
             await fetchMarkers()
             mapView.clear()
             for band in markers.bandList {
-                let marker = CustomMarker(bandName: band.name,
+                let marker = CustomMarker(bandId: band.id, bandName: band.name,
                                           coordinate: band.toCLLocationCoordinate2D(),
                                           category: .band)
                 marker.map = mapView
@@ -232,6 +253,29 @@ extension MainMapViewController: GMSMapViewDelegate {
         }
         moveMap(to: selectedMarker?.position)
         self.previousSelectedMarker = selectedMarker
+
+        Task {
+            var bandData: [BandList] = []
+            let selectedBandInfo = try await BandInformationNetworkManager.shared.fetchBandData(bandId: selectedMarker?.bandId ?? 0)
+            bandData.append(BandList(bandId: selectedBandInfo.bandID, name: selectedBandInfo.name, memberCount: selectedBandInfo.memberList.count, memberAge: selectedBandInfo.age))
+
+            guard let userBandData: [BandListVO] = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.bandList else { return }
+            let isMyBand = !userBandData.filter({ bandList in
+                bandList.bandID == selectedBandInfo.bandID
+            }).isEmpty
+            let viewController = UINavigationController(
+
+                rootViewController: BandDetailViewController(myBands: bandData,
+                                                             entryPoint: isMyBand ? .myBandFromMap : .otherBandFromMap)
+            )
+            viewController.modalPresentationStyle = .pageSheet
+            if let sheet = viewController.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+            }
+            present(viewController, animated: true, completion: nil)
+        }
+        print("Marker 선택")
         
         return true
     }
@@ -322,10 +366,22 @@ extension MainMapViewController: CLLocationManagerDelegate {
 
 extension MainMapViewController: GetARockInfoPopUpViewDelegate {
     func makeBandButtonTapped() {
-        self.alertView.removeFromSuperview()
-        let viewController = UINavigationController(rootViewController: LeaderPositionSelectViewController())
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true)
+        Task {
+            self.alertView.removeFromSuperview()
+            guard let instrumentList = await UserInfoNetworkManager.shared.fetchUserData(with: UserDefaultStorage.memberID)?.instrumentList else { return }
+            let positions = instrumentList.map {
+                let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
+                return Item.position(Position(
+                    instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? $0.name,
+                    instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
+                    isETC: isETC)
+                )
+            }
+            
+            let viewController = UINavigationController(rootViewController: LeaderPositionSelectViewController(positions: positions))
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true)
+        }
     }
     
     func dismissButtonTapped() {
@@ -388,8 +444,30 @@ extension MainMapViewController {
 extension MainMapViewController {
     private func mybandsButtonTapped() {
         // TODO: band가 없으면 alerview를 띄워줌 있으면 bandDetail로 연결
-        setupAlertViewLayout()
-        
+        Task {
+            let memberID = UserDefaultStorage.memberID
+            guard let user = await UserInfoNetworkManager.shared.fetchUserData(with: memberID) else { return }
+            print("++++++++++++++++++++++")
+            print(user)
+            print(user.bandList)
+            if user.bandList.isEmpty {
+                setupAlertViewLayout()
+            } else {
+                let bandList = user.bandList.map {
+                    BandList(bandId: $0.bandID,
+                             name: $0.name,
+                             memberCount: $0.memberCount,
+                             memberAge: $0.memberAge)
+                }
+                let viewController = UINavigationController(rootViewController: BandDetailViewController(myBands: bandList, entryPoint: .myBandFromMap))
+                viewController.modalPresentationStyle = .pageSheet
+                if let sheet = viewController.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                    sheet.prefersGrabberVisible = true
+                }
+                present(viewController, animated: true, completion: nil)
+            }
+        }
     }
 }
 
@@ -416,6 +494,33 @@ extension MainMapViewController {
             self.markers = decodedData
         } catch {
             print("An error has occurred while decoding JSONObject: \(error.localizedDescription)")
+        }
+    }
+
+    private func navigateToSelectedBandInfo(with bandId: Int) {
+        Task {
+            let memberID = UserDefaultStorage.memberID
+            guard let user = await UserInfoNetworkManager.shared.fetchUserData(with: memberID) else { return }
+            print("++++++++++++++++++++++")
+            print(user)
+            print(user.bandList)
+            if user.bandList.isEmpty {
+                setupAlertViewLayout()
+            } else {
+                let bandList = user.bandList.map {
+                    BandList(bandId: $0.bandID,
+                             name: $0.name,
+                             memberCount: $0.memberCount,
+                             memberAge: $0.memberAge)
+                }
+                let viewController = UINavigationController(rootViewController: BandDetailViewController(myBands: bandList, entryPoint: .myBand))
+                viewController.modalPresentationStyle = .pageSheet
+                if let sheet = viewController.sheetPresentationController {
+                    sheet.detents = [.medium(), .large()]
+                    sheet.prefersGrabberVisible = true
+                }
+                present(viewController, animated: true, completion: nil)
+            }
         }
     }
 }

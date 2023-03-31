@@ -14,15 +14,16 @@ protocol DeleteBandViewControllerDelegate: AnyObject {
 final class DeleteBandViewController: UIViewController {
     
     // MARK: - Property
-    
+
+    private let bandData: BandInformationVO
     weak var delegate: DeleteBandViewControllerDelegate?
     
     // MARK: - View
     
-    private let titleLabel: BasicLabel = {
+    private lazy var titleLabel: BasicLabel = {
         $0.numberOfLines = 0
         return $0
-    }(BasicLabel(contentText: "'블랙로즈'를\n해체 하시겠습니까?",
+    }(BasicLabel(contentText: "\(self.bandData.name)을(를)\n해체 하시겠습니까?",
                  fontStyle: .largeTitle01,
                  textColorInfo: .white))
     
@@ -52,7 +53,7 @@ final class DeleteBandViewController: UIViewController {
         return $0
     }(UIImageView(image: ImageLiteral.infoCircleSymbol))
     
-    private let precautionTitleLabel = BasicLabel(contentText: "밴드 삭제시 주의사항",
+    private let precautionTitleLabel = BasicLabel(contentText: "밴드 삭제 시 주의사항",
                                                   fontStyle: .contentLight,
                                                   textColorInfo: .white)
     
@@ -60,7 +61,7 @@ final class DeleteBandViewController: UIViewController {
         $0.addLabelSpacing(lineSpacing: 10)
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "*밴드 정보, 방명록 등 밴드의 모든 활동 정보가 삭제 되며, 삭제된 데이터는 복구할 수 없어요",
+    }(BasicLabel(contentText: "* 밴드 정보, 하고싶은 말 등 밴드의 모든 활동 정보가 삭제 되며, 삭제된 데이터는 복구할 수 없어요",
                  fontStyle: .contentLight,
                  textColorInfo: .white))
     
@@ -68,7 +69,7 @@ final class DeleteBandViewController: UIViewController {
         $0.addLabelSpacing(lineSpacing: 10)
         $0.numberOfLines = 2
         return $0
-    }(BasicLabel(contentText: "*밴드의 리더를 바꾸면 지금의 밴드는 계속 이어갈 수 있어요.",
+    }(BasicLabel(contentText: "* 밴드의 리더를 바꾸면 지금의 밴드는 계속 이어갈 수 있어요.",
                  fontStyle: .contentLight,
                  textColorInfo: .white))
     
@@ -84,7 +85,17 @@ final class DeleteBandViewController: UIViewController {
         $0.addAction(action, for: .touchUpInside)
         return $0
     }(UIButton())
-    
+
+    // MARK: - Init
+    init(bandData: BandInformationVO) {
+        self.bandData = bandData
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -135,7 +146,7 @@ final class DeleteBandViewController: UIViewController {
         let deleteAction = UIAlertAction(title: "해체", style: .destructive) { (action) -> Void in
             self.delegate?.didDeleteBandButtonTapped()
             do {
-                try BandNetworkManager.shared.deleteBand(with: 71)
+                try BandNetworkManager.shared.deleteBand(with: self.bandData.bandID)
             } catch {
                 // TODO: handle error
             }

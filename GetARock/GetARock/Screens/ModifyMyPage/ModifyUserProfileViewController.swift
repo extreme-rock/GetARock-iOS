@@ -233,6 +233,7 @@ final class ModifyUserProfileViewController: UIViewController {
         self.userIntroTextView.configureText(with: userInfo.introduction)
         self.ageSelectCollectionView.selectItem(with: age)
         self.genderSelectCollectionView.selectItem(with: gender)
+        print(userInfo.snsList, "snsList")
         userInfo.snsList.forEach { sns in
             switch sns.type {
             case .youtube:
@@ -254,7 +255,7 @@ final class ModifyUserProfileViewController: UIViewController {
                        instagramTextField.inputText(),
                        soundCloudTextField.inputText()]
         
-        let user = User(memberId: 15,
+        let user = User(memberId: self.userInfo.memberId,
                         name: self.userNamingTextField.inputText(),
                         age: age,
                         gender: gender,

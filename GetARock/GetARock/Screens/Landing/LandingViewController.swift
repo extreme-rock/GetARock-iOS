@@ -185,10 +185,10 @@ extension LandingViewController: ASAuthorizationControllerDelegate {
                     guard let token = appleIDCredential.identityToken else { return }
                     guard let tokenToString = String(data: token, encoding: .utf8) else { return }
                     self.sendIdentityToken(tokenToString)
-                    
                     // member ID 받아옴 -> 유저디폴트에 저장 후 메인맵으로 연결
                     if self.loginData.memberId != nil {
                         UserDefaultHandler.setMemberID(memberID: self.loginData.memberId!)
+                        UserDefaultHandler.setIsLogin(isLogin: true)
                         DispatchQueue.main.async {
                             self.presentMainMapViewController()
                         }
@@ -196,7 +196,12 @@ extension LandingViewController: ASAuthorizationControllerDelegate {
                     } else {
                         // 애플 로그인 성공은 했지만 서버에 member ID는 없음 -> 회원가입
                         // TODO: 회원가입 페이지로 연결
-                        print("아직 없지롱")
+                        DispatchQueue.main.async { [weak self] in
+                            let viewController = AgreeTermsViewController()
+                            viewController.delegate = self
+                            self?.present(viewController, animated: true)
+                        }
+                        UserDefaultHandler.setIdentityToken(identityToken: tokenToString)
                     }
                     
                     break
@@ -230,9 +235,17 @@ extension LandingViewController: ASAuthorizationControllerPresentationContextPro
 
 extension LandingViewController {
     private func presentMainMapViewController() {
-        let viewController = MainMapViewController(isFromSignUp: false)
+        let viewController = UINavigationController(rootViewController: MainMapViewController(isFromSignUp: false)) 
         viewController.modalPresentationStyle = .fullScreen
         viewController.modalTransitionStyle = .crossDissolve
         present(viewController, animated: true)
+    }
+}
+
+extension LandingViewController: AgreeTermsViewControllerDelegate {
+    func presentPositionSelectViewController() {
+        let navigationViewController = UINavigationController(rootViewController: PositionSelectViewController())
+        navigationViewController.modalPresentationStyle = .fullScreen
+        self.present(navigationViewController, animated: true)
     }
 }

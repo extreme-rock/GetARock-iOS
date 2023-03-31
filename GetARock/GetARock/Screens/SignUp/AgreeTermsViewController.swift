@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol AgreeTermsViewControllerDelegate: AnyObject {
+    func presentPositionSelectViewController()
+}
+
 final class AgreeTermsViewController: UIViewController {
     
     // MARK: - Property
-    
+
+    weak var delegate: AgreeTermsViewControllerDelegate?
     private lazy var requiedTermButtons: [CheckMarkButton] = [serviceCheckMarkButton,
                                                               personalInfoCheckMarkButton,
                                                               ageLimitCheckMarkButton]
@@ -101,10 +106,15 @@ final class AgreeTermsViewController: UIViewController {
         isNeedUnderLine: false
     )
     
-    private let nextButton: BottomButton =  {
+    private lazy var nextButton: BottomButton =  {
         $0.setTitle("동의 후 프로필 만들기", for: .normal)
         $0.isEnabled = false
         $0.titleLabel?.font = .setFont(.headline02)
+        let action = UIAction { [weak self]_ in
+            self?.dismiss(animated: true)
+            self?.delegate?.presentPositionSelectViewController()
+        }
+        $0.addAction(action, for: .touchUpInside)
         return $0
     }(BottomButton())
         

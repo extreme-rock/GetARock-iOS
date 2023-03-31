@@ -141,7 +141,7 @@ final class SetAuthorizationViewController: UIViewController {
     private lazy var approveButton: BottomButton = {
         $0.setTitle("확인", for: .normal)
         let action = UIAction { _ in
-            self.view.window?.rootViewController = MainMapViewController(isFromSignUp: true)
+            self.view.window?.rootViewController = UINavigationController(rootViewController: MainMapViewController(isFromSignUp: true)) 
         }
         $0.addAction(action, for: .touchUpInside)
         return $0

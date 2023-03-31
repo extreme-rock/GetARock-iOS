@@ -12,6 +12,7 @@ final class UserInformationView: UIView {
     // MARK: - Property
     
     private var userData: UserInformationVO
+    
     private var userInstrumentCollectionViewItem: [Item] = []
     
     // MARK: - View
@@ -145,7 +146,24 @@ final class UserInformationView: UIView {
     private func attribute() {
         self.backgroundColor = .dark01
     }
-    
+
+    func configureModifiedUserInfo(with user: UserInformationVO) {
+        self.userData = user
+        setUserPositionCollectionView()
+        setUserBandButton()
+        setUserIntro()
+        
+        let items = self.userData.instrumentList.map {
+            let isETC = !["guitar", "drum", "vocal", "bass", "keyboard"].contains($0.name)
+            return Item.position(Position(
+                instrumentName: Instrument(rawValue: $0.name)?.inKorean ?? $0.name,
+                instrumentImageName: Instrument(rawValue: $0.name) ?? .etc,
+                isETC: isETC)
+            )
+        }
+        self.userPositionCollectionView.applySnapshot(with: items)
+    }
+
     private func setupLayout() {
         self.addSubview(scrollView)
         scrollView.constraint(
@@ -196,19 +214,22 @@ final class UserInformationView: UIView {
     }
     
     private func setUserBandButton() {
-        if let userBand = userData.bandList.map({ $0 }) {
-            if userBand.count == 0 {
-                let emptyView = EmptyView(type: .noBand)
-                self.userBandButtonStackView.addArrangedSubview(emptyView)
-            }
-            else {
-                userBand.forEach{
-                    let bandButton = BandButtonView(bandID: $0.bandID,
-                                                    bandName: $0.name,
-                                                    membersNumber: $0.memberCount,
-                                                    membersAge: $0.memberAge)
-                    self.userBandButtonStackView.addArrangedSubview(bandButton)
-                }
+        // TODO: addarragedSubView가 계속 실행됨 setUserBandButton이 실행되면서.
+        let userBand = userData.bandList.map({ $0 })
+        userBandButtonStackView.subviews.forEach {
+            $0.removeFromSuperview()
+        }
+        if userBand.count == 0 {
+            let emptyView = EmptyView(type: .noBand)
+            self.userBandButtonStackView.addArrangedSubview(emptyView)
+        }
+        else {
+            userBand.forEach{
+                let bandButton = BandButtonView(bandID: $0.bandID,
+                                                bandName: $0.name,
+                                                membersNumber: $0.memberCount,
+                                                membersAge: $0.memberAge)
+                self.userBandButtonStackView.addArrangedSubview(bandButton)
             }
         }
     }
@@ -222,5 +243,9 @@ final class UserInformationView: UIView {
         } else {
             userIntroLabel.text = userIntro
         }
+    }
+
+    private func setSNS() {
+//        self.userSNSListView.
     }
 }

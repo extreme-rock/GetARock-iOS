@@ -10,6 +10,13 @@ import UIKit
 final class AddPracticeSongViewController: BaseViewController {
     
     // MARK: - Property
+
+    enum AddOption {
+        case making
+        case editing
+    }
+
+    private let option: AddOption
     
     private var keyBoardHeight: CGFloat = 280
     
@@ -80,7 +87,16 @@ final class AddPracticeSongViewController: BaseViewController {
         setNotificationObserver()
         setNavigationInlineTitle(title: "합주곡 추가")
     }
-    
+
+    init(option: AddOption) {
+        self.option = option
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLayoutSubviews() {
         updateDeleteButtonState()
     }
@@ -227,7 +243,12 @@ extension AddPracticeSongViewController {
             songListData.append(SongList(name: songData.songName(), artist: songData.artistName(), link: songData.linkText()))
         }
 
-        BasicDataModel.bandCreationData.songList = songListData
+        switch option {
+        case.editing:
+            BasicDataModel.bandPUTData.songList = songListData
+        case .making:
+            BasicDataModel.bandCreationData.songList = songListData
+        }
         completion(addedSongs)
 
         self.navigationController?.popViewController(animated: true)

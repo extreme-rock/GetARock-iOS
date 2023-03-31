@@ -17,7 +17,7 @@ struct BandList {
 
 final class BandDetailViewController: UIViewController {
     
-    // MARK: - Property
+    // MARK: - enum case
     
     enum BandSelectMenuDefaultSize {
         static let width: CGFloat = 250
@@ -26,15 +26,18 @@ final class BandDetailViewController: UIViewController {
     
     enum EntryPoint {
         case myBand
+        case myBandFromMap
         case otherBand
+        case otherBandFromMap
     }
+
+    // MARK: - Property
     
     private let myBands: [BandList]?
+
     private let entryPoint: EntryPoint
-    
-    //TODO: - 추후 상세페이지의 밴드 아이디를 지도로부터 받아와야함
-    private var bandID = "25"
-    private var bandData = BandInformationVO(
+
+    private lazy var bandData = BandInformationVO(
         bandID: 0,
         name: "",
         age: "",
@@ -57,6 +60,10 @@ final class BandDetailViewController: UIViewController {
                 object: nil,
                 userInfo: bandDataDict as [AnyHashable : Any]
             )
+            // MARK: bandTopInfo 수정, bandDetail수정
+            NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
+                                            object: nil,
+                                            userInfo: ["bandInfo": self.bandData])
         }
     }
     
@@ -65,12 +72,12 @@ final class BandDetailViewController: UIViewController {
     lazy var bandTopInfoView: BandTopInfoView = {
         $0.delegate = self
         switch self.entryPoint {
-        case .myBand:
-            $0.setupMoreButton()
+        case .myBand, .myBandFromMap:
             if self.myBands?.count ?? 0 > 1 {
                 $0.setupToggleButtonLayout()
             }
-        case .otherBand:
+            $0.setupOptionButtonLayout()
+        case .otherBand, .otherBandFromMap:
             break
         }
         return $0
@@ -90,10 +97,26 @@ final class BandDetailViewController: UIViewController {
         }
         configureDelegate()
         setNotification()
+        attribute()
+        setCustomBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+        switch self.entryPoint {
+        case .myBand:
+            self.navigationController?.isNavigationBarHidden = false
+        case .myBandFromMap:
+            self.navigationController?.isNavigationBarHidden = true
+        case .otherBand:
+            self.navigationController?.isNavigationBarHidden = false
+        case .otherBandFromMap:
+            self.navigationController?.isNavigationBarHidden = true
+        }
+
+
+        Task {
+            await fetchBandData(with: self.myBands?.first?.bandId)
+        }
     }
     
     // MARK: - Init
@@ -112,7 +135,11 @@ final class BandDetailViewController: UIViewController {
     }
     
     // MARK: - Method
-    
+
+    private func attribute() {
+        self.view.backgroundColor = .dark01
+    }
+
     private func configureDelegate() {
         self.bandSelectMenuView.selectDelegate = self
     }
@@ -122,7 +149,8 @@ final class BandDetailViewController: UIViewController {
         bandTopInfoView.constraint(
             top: self.view.safeAreaLayoutGuide.topAnchor,
             leading: self.view.leadingAnchor,
-            trailing: self.view.trailingAnchor
+            trailing: self.view.trailingAnchor,
+            padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         )
         
         view.addSubview(bandDetailContentView)
@@ -134,9 +162,9 @@ final class BandDetailViewController: UIViewController {
         )
         
         switch self.entryPoint {
-        case .myBand:
+        case .myBand, .myBandFromMap:
             view.addSubview(bandSelectMenuView)
-        case .otherBand:
+        case .otherBand, .otherBandFromMap:
             break
         }
         
@@ -179,39 +207,13 @@ final class BandDetailViewController: UIViewController {
     
     @objc private func presentMypageDetailViewController(_ notification: Notification) {
         guard let memberID = notification.userInfo?["memberID"] as? Int else { return }
-        let mypageVC = MypageDetailViewController(userID: memberID)
-        //        self.navigationController?.pushViewController(mypageVC, animated: true)
-        mypageVC.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        self.present(mypageVC, animated: true)
+        let mypageVC = MypageDetailViewController(navigationBarOption: .hiddenFalse, memberId: memberID)
+        self.navigationController?.pushViewController(mypageVC, animated: true)
     }
     
     @objc private func showBandModifyActionSheet(_ notification: Notification) {
         // TODO - 유저 정보에 따라 분기처리 해야함..
-        showActionSheet(isCreator: true)
-    }
-    
-    func showActionSheet(isCreator: Bool) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
-        let positionModify = UIAlertAction(title: "내 포지션 수정", style: .default) { [weak self] _ in
-            print("밴드 포지션 수정하기로 연결")
-            
-        }
-        let bandModify = UIAlertAction(title: "밴드 수정", style: .default) { [weak self] _ in
-            print("밴드 수정하기로 연결 (밴드 어드민만)")
-            //
-        }
-        let banddelete = UIAlertAction(title: "밴드 삭제", style: .destructive) { [weak self] _ in
-            print("밴드 삭제 연결 (밴드 어드민만)")
-        }
-        actionSheet.addAction(positionModify)
-        if isCreator == true {
-            actionSheet.addAction(bandModify)
-            actionSheet.addAction(banddelete)
-        }
-        actionSheet.addAction(cancel)
-        present(actionSheet, animated: true)
+//        showActionSheet(isCreator: true)
     }
 }
 
@@ -231,6 +233,8 @@ extension BandDetailViewController {
             print("Response data raw : \(data)")
             print("응답 내용 : \(response)")
             self.bandData = decodedData
+            print(decodedData.memberList, "decodedData")
+            print(decodedData.address, "decodedData")
         } catch {
             print(error)
             print("bad news! decoding error occuerd")
@@ -243,27 +247,31 @@ extension BandDetailViewController: BandTopInfoViewDelegate {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let modifyBandAction = UIAlertAction(title: "밴드 수정", style: .default) { _ in
-            print("밴드수정")
+            let viewController = UINavigationController(rootViewController: MyBandInfoModifyPageController(bandData: self.bandData))
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true)
         }
-        
-        let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in
-            print("내 포지션 수정")
-        }
-        
-        let bandLeaderID = self.bandData.memberList.filter { $0.memberState == .admin }
-        // TODO: 애플로그인을 통해 userID를 보관하는 곳이 생기면 그때 비교 해야할듯
-        
-        let deleteMyBandAction = UIAlertAction(title: "밴드 삭제", style: .destructive) { _ in
-            let viewController = DeleteBandViewController()
-            viewController.delegate = self
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        
-        [modifyBandAction, modifyMyPositionAction, deleteMyBandAction, cancelAction].forEach {
+        // TODO: 나중에 밴드내의 나의 포지션 변경하는 View 만들어서 연결 & 백엔드 코드가 없음
+        //        let modifyMyPositionAction = UIAlertAction(title: "내 포지션 수정", style: .default) { _ in
+        //            print("내 포지션 수정")
+        //        }
+        [modifyBandAction].forEach {
             actionSheet.addAction($0)
         }
+        let bandLeader = self.bandData.memberList.filter { $0.memberState == .admin }
+        
+        if UserDefaultStorage.memberID == bandLeader.first?.memberID {
+            let deleteMyBandAction = UIAlertAction(title: "밴드 삭제", style: .destructive) { _ in
+                let viewController = DeleteBandViewController(bandData: self.bandData)
+                viewController.delegate = self
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+            actionSheet.addAction(deleteMyBandAction)
+        }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        actionSheet.addAction(cancelAction)
+
         self.present(actionSheet, animated: true)
     }
     

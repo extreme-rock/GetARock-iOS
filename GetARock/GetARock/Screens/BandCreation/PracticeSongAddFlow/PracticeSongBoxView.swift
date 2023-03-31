@@ -10,6 +10,8 @@ import UIKit
 final class PracticeSongBoxView: UIView {
     
     // MARK: - View
+
+    private var songLink: String = ""
     
     private let songTitleLabel: BasicLabel = {
         $0.numberOfLines = 2
@@ -99,6 +101,19 @@ final class PracticeSongBoxView: UIView {
     func configure(data: PracticeSongCardView) {
         songTitleLabel.text = data.songName()
         artistLabel.text = data.artistName()
+        songLink = data.linkText()
+    }
+
+    func artistName() -> String {
+        return artistLabel.text ?? ""
+    }
+
+    func songName() -> String {
+        return songTitleLabel.text ?? ""
+    }
+
+    func linkText() -> String {
+        return songLink
     }
 }
 
