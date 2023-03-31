@@ -313,6 +313,7 @@ extension PositionCollectionView: UICollectionViewDelegate {
             let selectedCellCount = collectionView.indexPathsForSelectedItems?.count
             if selectedCellCount == 0 {
                 postDeselectAllPositionButtonHiddenToggle()
+                postToggleNextButtonEnbaled()
             }
             postDidTapPositionItem()
         }
