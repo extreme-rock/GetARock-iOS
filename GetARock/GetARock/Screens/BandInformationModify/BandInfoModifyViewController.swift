@@ -334,17 +334,24 @@ extension BandInfoModifyViewController {
 
     //MARK: 수정된 정보 확정
     func confirmModifiedBandInformation() {
-        BasicDataModel.clearData()
+        print("=============================")
+        print("수정된 멤버를 확정합니다.")
+        print("=============================")
         BasicDataModel.bandPUTData.name = bandNamingTextField.inputText()
         BasicDataModel.bandPUTData.address.street = practiceRoomSearchButton.inputText()
         BasicDataModel.bandPUTData.address.detail = detailPracticeRoomTextField.inputText()
         BasicDataModel.bandPUTData.songList = songListData()
-        print("+++++++수정된 곡의 개수+++++")
-        print(BasicDataModel.bandPUTData.songList?.count)
         BasicDataModel.bandPUTData.introduction = bandIntroTextView.inputText()
         BasicDataModel.bandPUTData.snsList = [youtubeTextField.inputText(),
                                               instagramTextField.inputText(),
                                               soundCloudTextField.inputText()]
+        print("=========수정된 밴드 정보는 아래와 같습니다=========")
+        print("수정된 밴드 이름: \(BasicDataModel.bandPUTData.name)")
+        print("수정된 밴드 위치: \(BasicDataModel.bandPUTData.address.street)")
+        print("수정된 밴드 상세 주소: \(BasicDataModel.bandPUTData.address.detail)")
+        print("수정된 합주곡: \(String(describing: BasicDataModel.bandPUTData.songList))")
+        print("수정된 밴드소개: \(String(describing: BasicDataModel.bandPUTData.introduction))")
+        print("수정된 SNS: \(String(describing: BasicDataModel.bandPUTData.snsList))")
     }
 
     func configure(with bandData: BandInformationVO) {

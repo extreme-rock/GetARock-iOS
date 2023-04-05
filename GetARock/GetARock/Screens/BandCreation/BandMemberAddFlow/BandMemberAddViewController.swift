@@ -195,8 +195,6 @@ extension BandMemberAddViewController {
 
             confirmedMembers.append(individualMember)
         }
-        print("+++++++++++++++++++++++++++++=")
-        print(confirmedMembers)
         BasicDataModel.bandCreationData.memberList = confirmedMembers
     }
 }

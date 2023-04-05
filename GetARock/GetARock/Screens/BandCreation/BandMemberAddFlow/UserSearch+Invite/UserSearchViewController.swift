@@ -216,9 +216,6 @@ extension UserSearchViewController {
             Task {
                 let searchedUsers = try await MemberSearchNetworkManager().getSearchedMemberList(with: searchBar.inputText())
                 SearchedUserListDTO.dataSet.memberList = searchedUsers
-                print("================")
-                print(searchedUsers)
-                print("================")
                 self.searchResultTable.reloadData()
             }
         }

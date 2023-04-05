@@ -338,15 +338,7 @@ extension BandInformationSetViewController {
     private func postBandInformation() {
         confirmBandInformation()
         Task {
-            //TODO: 로딩뷰 삽입 필요
             try await BandInformationNetworkManager().postBandCreation(data: BasicDataModel.bandCreationData)
-            print("++++++++++++++++++")
-            print(BasicDataModel.bandCreationData.name)
-            print(BasicDataModel.bandCreationData.songList)
-            print(BasicDataModel.bandCreationData.address)
-            print(BasicDataModel.bandCreationData.snsList)
-            print(BasicDataModel.bandCreationData.introduction)
-            print(BasicDataModel.bandCreationData.memberList)
         }
     }
 

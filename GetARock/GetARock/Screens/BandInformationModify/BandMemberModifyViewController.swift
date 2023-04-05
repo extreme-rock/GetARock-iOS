@@ -241,11 +241,7 @@ extension BandMemberModifyViewController {
     private func transformVOData() -> [SearchedUserInfo] {
         var resultData: [SearchedUserInfo] = []
         for data in self.bandData.memberList {
-            print("++++++++기존의 밴드 멤버 데이터들++++++")
-            print(data.name)
-            print(data.memberState)
-            print(data.memberID)
-            print("++++++++기존의 밴드 멤버 데이터들++++++")
+
             let instrumentListInfo: [SearchedUserInstrumentList] = data.instrumentList.map {
                 SearchedUserInstrumentList(instrumentId: $0.instrumentID ?? -1, isMain: $0.isMain ?? false, name: $0.name)
             }
@@ -295,6 +291,14 @@ extension BandMemberModifyViewController {
                 .map({ searchedInstrument in
                     InstrumentList(name: searchedInstrument.name)})
         )}
+
+        print("=============================")
+        print("수정된 멤버를 확정합니다.")
+        print("확정된 멤버는 아래와 같습니다")
+        print(addedMembers)
+        print("=============================")
+        print("초대를 날린 멤버는 아래와 같습니다")
+        print(invitingMembers)
         
         BasicDataModel.bandPUTData.memberList = addedMembers + invitingMembers
     }

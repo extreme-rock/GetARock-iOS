@@ -66,15 +66,6 @@ final class MyBandInfoModifyPageController: UIViewController {
                 if self.isBandInfoModifyTapped {
                     self.bandInfoModifyViewController.confirmModifiedBandInformation()
                 }
-
-                print("서버로 보내는 수정 정보 데이터")
-                print(BasicDataModel.bandPUTData.name)
-                print(BasicDataModel.bandPUTData.address.street)
-                print(BasicDataModel.bandPUTData.address.detail)
-                print(BasicDataModel.bandPUTData.songList)
-                print(BasicDataModel.bandPUTData.introduction)
-                print(BasicDataModel.bandPUTData.snsList)
-
                 try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandPUTData)
             }
             self.showAlertForEditComplete()
@@ -193,7 +184,6 @@ final class MyBandInfoModifyPageController: UIViewController {
     }
 
     private func setOriginalBandData() {
-
         let originalData = BandPUTDTO(bandId: bandInfo.bandID,
 
                                       name: bandInfo.name,
@@ -204,7 +194,7 @@ final class MyBandInfoModifyPageController: UIViewController {
                                                          longitude: bandInfo.address.longitude,
                                                          latitude: bandInfo.address.latitude),
 
-                                      songList: bandInfo.songList?.compactMap({ SongList(name: $0.name, artist: $0.artist, link: $0.link)}),
+                                      songList: bandInfo.songList?.compactMap({ SongList(name: $0.name, artist: $0.artist, link: $0.link) }),
 
                                       memberList: bandInfo.memberList.map({ MemberList(memberId: $0.memberID,
                                                                                        name: $0.name,
@@ -213,10 +203,6 @@ final class MyBandInfoModifyPageController: UIViewController {
                                       introduction: bandInfo.introduction,
 
                                       snsList: bandInfo.snsList.map({ SnsList(type: $0.snsType, link: $0.link) }))
-
-        BasicDataModel.bandPUTData = originalData
-        print("original data Set")
-        print(originalData)
     }
 }
 

@@ -93,6 +93,10 @@ final class LandingViewController: UIViewController {
     // MARK: - 서버에 identity token 전송
     
     private func sendIdentityToken(_ token: String) {
+        print("====================================")
+        print("Start sendIdentity Fuctnion, identityToken: \(token)")
+        print("====================================")
+        print("")
         let semaphore = DispatchSemaphore(value: 0)
         
         let headers = [

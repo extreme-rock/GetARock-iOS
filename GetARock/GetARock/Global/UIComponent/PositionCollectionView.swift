@@ -209,8 +209,7 @@ extension PositionCollectionView {
             case .bandMember(let bandMember):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BandMemberCollectionViewCell.classIdentifier, for: indexPath) as? BandMemberCollectionViewCell else { return UICollectionViewCell() }
                 cell.configure(data: bandMember)
-                print("+++++++++++++++++++++++++==")
-                print(bandMember)
+                
                 if bandMember.isUser {
                     self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
                 }
@@ -339,7 +338,6 @@ extension PositionCollectionView {
             let index = $0.item
             return InstrumentList(name: self.items[index].name())
         }
-        print(selectedInstruments, "selectedInstruments")
         return selectedInstruments
     }
 }

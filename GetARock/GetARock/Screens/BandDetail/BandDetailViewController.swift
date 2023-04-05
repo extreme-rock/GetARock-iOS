@@ -54,13 +54,27 @@ final class BandDetailViewController: UIViewController {
         commentList: []
     ){
         didSet{
+            print("===========didSet 작동=============")
+            print("BandDetailViewController에서 bandData가 변경되었습니다.")
+
+            print("========새롭게 fetch할 bandData는 아래와 같습니다=======")
+            print("밴드 아이디: \(bandData.bandID)")
+            print("밴드 이름: \(bandData.name)")
+            print("밴드 멤버: \(bandData.memberList)")
+            print("밴드 나이대: \(bandData.age)")
+            print("밴드 SNS: \(bandData.snsList)")
+            print("밴드 주소: \(bandData.address.street)")
+            print("밴드 상세 주소: \(bandData.address.detail)")
+            print("밴드 소개: \(String(describing: bandData.introduction))")
+
+            // MARK: CommentList 클래스에서 새로운 comment reload
             let bandDataDict: [String: [CommentList]?] = ["data": bandData.commentList]
             NotificationCenter.default.post(
                 name: NSNotification.Name.loadBandData,
                 object: nil,
                 userInfo: bandDataDict as [AnyHashable : Any]
             )
-            // MARK: bandTopInfo 수정, bandDetail수정
+            // MARK: bandTopInfo 수정, bandDetail 정보 reload
             NotificationCenter.default.post(name: NSNotification.Name.configureBandData,
                                             object: nil,
                                             userInfo: ["bandInfo": self.bandData])
@@ -68,7 +82,8 @@ final class BandDetailViewController: UIViewController {
     }
     
     // MARK: - View
-    
+
+    //MARK: 밴드 이름 및 상세 주소를 나타내는 View
     lazy var bandTopInfoView: BandTopInfoView = {
         $0.delegate = self
         switch self.entryPoint {
@@ -82,9 +97,11 @@ final class BandDetailViewController: UIViewController {
         }
         return $0
     }(BandTopInfoView(name: bandData.name, address: bandData.address))
-    
+
+    //MARK: 밴드 상세 정보 및 하고 싶은 말을 나타내는 PageController
     lazy var bandDetailContentView = DetailContentView(detailInfoType: .band, bandData: bandData)
-    
+
+    //MARK: 여러개의 밴드가 있는 경우 선택할 수 있는 TableView
     private lazy var bandSelectMenuView = BandListMenuTableView(bandNames: self.myBands?.map { $0.name } ?? [])
     
     // MARK: - LifeCycle
@@ -102,6 +119,11 @@ final class BandDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+
+        print("========================")
+        print("BandDetailViewController에서 ViewWillAppear 작동")
+        print("========================")
+
         switch self.entryPoint {
         case .myBand:
             self.navigationController?.isNavigationBarHidden = false
@@ -112,7 +134,6 @@ final class BandDetailViewController: UIViewController {
         case .otherBandFromMap:
             self.navigationController?.isNavigationBarHidden = true
         }
-
 
         Task {
             await fetchBandData(with: self.myBands?.first?.bandId)
@@ -130,6 +151,7 @@ final class BandDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -221,6 +243,7 @@ final class BandDetailViewController: UIViewController {
 
 extension BandDetailViewController {
     func fetchBandData(with id: Int?) async {
+        print("============밴드 데이터를 fetch 합니다 ============")
         guard let id else { return }
         var queryURLComponent = URLComponents(string: "https://api.ryomyom.com/band")
         let idQuery = URLQueryItem(name: "id", value: String(id))

@@ -111,8 +111,6 @@ final class BandButtonView: UIView {
     
     @objc
        func moveBandInfo(_ gesture: UITapGestureRecognizer) {
-           //TO-DO: 밴드 상세페이지로 연결 액션 필요
-           print("\(bandID)버튼 눌림")
            let selectbandData = BandList(bandId: bandID,
                                    name: bandName,
                                    memberCount: membersNumber,

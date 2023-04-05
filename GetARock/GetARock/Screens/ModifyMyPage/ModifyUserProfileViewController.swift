@@ -233,7 +233,6 @@ final class ModifyUserProfileViewController: UIViewController {
         self.userIntroTextView.configureText(with: userInfo.introduction)
         self.ageSelectCollectionView.selectItem(with: age)
         self.genderSelectCollectionView.selectItem(with: gender)
-        print(userInfo.snsList, "snsList")
         userInfo.snsList.forEach { sns in
             switch sns.type {
             case .youtube:

@@ -51,7 +51,6 @@ final class UserInformationView: UIView {
             NotificationCenter.default.post(name: NSNotification.Name.presentLeaderPositionSelectViewController,
                                             object: nil,
                                             userInfo: nil)
-            print("밴드 추가 버튼 눌림!!")
         }
         $0.setImage(ImageLiteral.plusSymbol, for: .normal)
         $0.tintColor = .white

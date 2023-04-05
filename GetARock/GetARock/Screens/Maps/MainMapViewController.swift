@@ -142,8 +142,9 @@ final class MainMapViewController: UIViewController {
         self.setupLayout()
         self.setLocationManager()
         self.requestLocationAuthorization()
-        print("++++++myId++++++")
+        print("=============UserDefaultStorage.memberID===============")
         print(UserDefaultStorage.memberID)
+        print("=============UserDefaultStorage.memberID===============")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -447,9 +448,6 @@ extension MainMapViewController {
         Task {
             let memberID = UserDefaultStorage.memberID
             guard let user = await UserInfoNetworkManager.shared.fetchUserData(with: memberID) else { return }
-            print("++++++++++++++++++++++")
-            print(user)
-            print(user.bandList)
             if user.bandList.isEmpty {
                 setupAlertViewLayout()
             } else {
@@ -501,9 +499,7 @@ extension MainMapViewController {
         Task {
             let memberID = UserDefaultStorage.memberID
             guard let user = await UserInfoNetworkManager.shared.fetchUserData(with: memberID) else { return }
-            print("++++++++++++++++++++++")
-            print(user)
-            print(user.bandList)
+
             if user.bandList.isEmpty {
                 setupAlertViewLayout()
             } else {

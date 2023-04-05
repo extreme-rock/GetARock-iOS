@@ -31,8 +31,6 @@ final class GetARockInfoPopUpView: UIView {
         $0.tintColor = .white
         let action = UIAction { [weak self] _ in
             self?.delegate?.dismissButtonTapped()
-            print(self?.delegate)
-            print("dissmissTapped")
         }
         $0.addAction(action, for: .touchUpInside)
         return $0
