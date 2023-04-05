@@ -62,6 +62,7 @@ final class BandDetailViewController: UIViewController {
             print("밴드 이름: \(bandData.name)")
             print("밴드 멤버: \(bandData.memberList)")
             print("밴드 나이대: \(bandData.age)")
+            print("밴드 합주곡: \(String(describing: bandData.songList))")
             print("밴드 SNS: \(bandData.snsList)")
             print("밴드 주소: \(bandData.address.street)")
             print("밴드 상세 주소: \(bandData.address.detail)")

@@ -67,6 +67,9 @@ final class MyBandInfoModifyPageController: UIViewController {
                     self.bandInfoModifyViewController.confirmModifiedBandInformation()
                 }
                 try await BandInformationNetworkManager().putModifiedBandMemberInformation(data: BasicDataModel.bandPUTData)
+                print("PUT을 요청한 밴드 이름 데이터는 아래와 같습니다")
+                print(BasicDataModel.bandPUTData.name)
+                print("======================")
             }
             self.showAlertForEditComplete()
         }
@@ -203,6 +206,8 @@ final class MyBandInfoModifyPageController: UIViewController {
                                       introduction: bandInfo.introduction,
 
                                       snsList: bandInfo.snsList.map({ SnsList(type: $0.snsType, link: $0.link) }))
+
+        BasicDataModel.bandPUTData = originalData
     }
 }
 

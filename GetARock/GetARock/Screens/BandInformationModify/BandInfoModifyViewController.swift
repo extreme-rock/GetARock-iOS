@@ -281,7 +281,7 @@ final class BandInfoModifyViewController: BaseViewController {
                     songList.append(SongList(name: songBox.songName(), artist: songBox.artistName(), link: songBox.linkText()))
                 }
             } else {
-                return nil
+                return []
             }
         }
         return songList
